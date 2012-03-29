@@ -9,8 +9,8 @@
 
 
 ##Select the build target
-BUILD_TARGET=${1:-win32}
-#BUILD_TARGET=linux
+#BUILD_TARGET=${1:-win32}
+BUILD_TARGET=linux
 #BUILD_TARGET=osx64
 
 ##Do we need to create the final archive
