@@ -226,9 +226,9 @@ p.tagline {
   margin-right: 8px;
 }
 
-a.zip,
-a.zip span {
-  background: transparent url(../images/zip.png) no-repeat 0 0;
+a.win32,
+a.win32 span {
+  background: transparent url(../images/win32.png) no-repeat 0 0;
   width: 30px;
   height: 21px;
   opacity: 0.8;
@@ -239,9 +239,22 @@ a.zip span {
   -webkit-transition: opacity ease-in-out 0.3s;
 }
 
-a.tar,
-a.tar span {
-  background: transparent url(../images/tar.png) no-repeat 0 0;
+a.osx64,
+a.osx64 span {
+  background: transparent url(../images/osx64.png) no-repeat 0 0;
+  width: 30px;
+  height: 21px;
+  opacity: 0.8;
+  display: inline-block;
+  text-indent: -10000px;
+  -moz-opacity: 0.8;
+  filter:alpha(opacity=8);
+  -webkit-transition: opacity ease-in-out 0.3s;
+}
+
+a.linux,
+a.linux span {
+  background: transparent url(../images/linux.png) no-repeat 0 0;
   width: 30px;
   height: 21px;
   opacity: 0.8;
@@ -265,8 +278,9 @@ a.code {
   -webkit-transition: opacity ease-in-out 0.3s;
 }
 
-a.zip:hover,
-a.tar:hover,
+a.win32:hover,
+a.osx64:hover,
+a.linux:hover,
 a.code:hover {
   opacity: 1;
   -moz-opacity: 1;

@@ -12,26 +12,34 @@
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>Cura</title>
-  <meta name="description" content="What started out as a few patches to Skeinforge, has turned into a whole new user interface which is much easier to use.">
+  <meta name="description" content="The complete solution for 3D printing anywhere, by anyone">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
 </head>
 
 <body>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+	<a href="https://github.com/downloads/daid/Cura/linux-Cura-RC4.tar.gz" class="linux">Linux</a>
+	<a href="https://github.com/downloads/daid/Cura/osx64-Cura-RC4.tar.gz" class="osx64">MacOS</a>
+	<a href="https://github.com/downloads/daid/Cura/Cura_RC4.exe" class="win32">Windows</a>
+    <p class="name"></p>
+  </div>
 
   <div class="wrapper">
     <header>
       <h1 class="title">Cura</h1>
     </header>
     <div id="container">
-      <p class="tagline">What started out as a few patches to Skeinforge, has turned into a whole new user interface which is much easier to use.</p>
+      <p class="tagline">The complete solution for 3D printing anywhere, by anyone</p>
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
-          <a href="https://github.com/daid/Cura/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/daid/Cura/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/daid/Cura" class="code">View Cura on GitHub</a>
+          <a href="https://github.com/downloads/daid/Cura/linux-Cura-RC4.tar.gz" class="download-button linux"><span>Download</span></a>
+          <a href="https://github.com/downloads/daid/Cura/osx64-Cura-RC4.tar.gz" class="download-button osx64"><span>Download</span></a>
+          <a href="https://github.com/downloads/daid/Cura/Cura_RC4.exe" class="download-button win32"><span>Download</span></a>
+          <a class="code">Download Cura-RC4</a>
         </div>
         <span class="blc"></span><span class="trc"></span>
         </div>
@@ -39,16 +47,6 @@
           <h1>About - What is Cura?</h1>
 
 <p>Cura is a project which aims to be an single software solution for 3D printing. While it is developed to be used with the Ultimaker 3D printer, it can be used with other RapRap based designs.</p>
-
-<h2>Download</h2>
-
-<h4>Cura-RC4</h4>
-
-<p><a href="https://github.com/downloads/daid/Cura/Cura_RC4.exe">Win32</a><br><a href="https://github.com/downloads/daid/Cura/osx64-Cura-RC4.tar.gz">OSX64</a> ([[MacOS installation issues]])<br><a href="https://github.com/downloads/daid/Cura/linux-Cura-RC4.tar.gz">Linux</a>  </p>
-
-<h4>Older versions</h4>
-
-<p><a href="https://github.com/daid/Cura/downloads">https://github.com/daid/Cura/downloads</a> </p>
 
 <h1>Is Cura good?</h1>
 
@@ -61,28 +59,26 @@
 <li><a href="http://forum.ultimaker.com/viewtopic.php?p=3968#p3968">sliced with cura (standard parameters)= very good</a></li>
 <li><a href="http://forum.ultimaker.com/viewtopic.php?p=3873#p3873">I fixed this by switching to Cura and have Cura update the ultimaker to Marlin. Works perfectly now</a></li>
 <li>In fact I've used nothing but Cura and haven't even touched Netfabb or RepG, I cant see any reason to. (received in email)</li>
-</ul><h1>Status - How is Cura progressing.</h1>
+</ul>
 
-<h3>Current release (RC4)</h3>
+<h1>Status - How is Cura progressing.</h1>
+<h3>Current release (RC4) features</h3>
 
 <ul>
-<li>[[Faster slicing with PyPy|Speed comparison]] - (Done in Alpha1)</li>
-<li>[[Easy to use|Ease of use and the math behind Cura]] UI based on wxWidgets - (Done in Beta2)</li>
-<li>3D model preview with OpenGL - (Done in Beta2)</li>
-<li>Parallel slicing - (Done in Beta2)</li>
-<li>Transparent 3D view - (Done in Beta2)</li>
-<li>GCode path preview - (Done in Beta2)</li>
-<li>[[Joris]] addon - (Done in Beta2)</li>
-<li>Improved GCode path preview with topdown view - (Done in Beta3)</li>
-<li>[[X-Ray-vision]] - (Done in Beta3)</li>
-<li>Pure Python firmware update - (Done in Beta3)</li>
-<li>Rotate/Flip 3D model for printing - (Done in Beta3)</li>
-<li>First run configuration wizard - (Done in Beta3)</li>
-<li>Improving the 3D preview so you can switch between model/GCode and even see model and GCode at the same time</li>
-<li>Raft settings and raft enable/disable (For SF users, no, this won't effect support like in SF)</li>
+<li>Up to 4x faster slicing then Skeinforge</li>
+<li>Easy to use GUI, with human understandable values.</li>
+<li>3D model preview before slicing</li>
+<li>Running multiple slice actions in parallel</li>
+<li>Transparent 3D view</li>
+<li>GCode path preview</li>
+<li>[[Joris]] addon</li>
+<li>[[X-Ray-vision]]</li>
+<li>Firmware update tool for Ultimaker machines</li>
+<li>Rotate/Flip 3D model for printing</li>
+<li>First run configuration wizard</li>
 <li>Cool minimal feedrate (so cool never makes your print crawl)</li>
 <li>Show errors from slicing in 3D model (identify faulty edges)</li>
-<li>Printing from within Cura</li>
+<li>Printing interface intigrated with Cura</li>
 <li>Simple mode, just select a profile, a material type, a model, and hit "print". So "Everyone Can Print (TM)"</li>
 <li>Skin option</li>
 <li>Thicker bottom layer option</li>
@@ -90,36 +86,38 @@
 <li>More rotate options (swap XZ, YZ)</li>
 <li>Option to save the used profile when slicing, so you know which settings where used with the slice</li>
 <li>More statistics about print when using the Cura print interface (filament used, filament weight, filament costs)</li>
-<li>Toolbar button icons</li>
 <li>Scale to fit machine button</li>
 <li>Open in exporer button</li>
 <li>Multi-extruder slicing</li>
 <li>GCode syntax highlight in start/end gcode editor</li>
 <li>[[Project planner]]</li>
-<li>Improved performance of 3D preview of GCode (faster layer switching)</li>
-</ul><h3>Known bugs</h3>
+</ul>
 
+<h3>Known bugs</h3>
 <ul>
 <li>RC2: First run wizard does not work correctly. Controlling the Ultimaker fails.</li>
 <li>RC2: First layer does not contain enough support material if support is enabled.</li>
 <li>RC3: Crashes on first slice if you never touched the start/end GCode.</li>
-</ul><h3>Ready in development version</h3>
+</ul>
 
+<h3>Ready in development version</h3>
 <ul>
 <li>Cut up a "plate" STL file into multiple parts for the project planner.</li>
-</ul><h3>Future</h3>
+</ul>
 
+<h3>Future</h3>
 <ul>
-<li>Add support for <a href="http://printrbot.com/">PrintrBot</a>
-</li>
+<li>Add support for <a href="http://printrbot.com/">PrintrBot</a></li>
 <li>Slic3r backend support</li>
-</ul><h1>Running the development version</h1>
+<li>2D SVG Slicer</li>
+</ul>
 
-<p>See: [[Installing development version]]</p>
+<h1>Running the development version</h1>
+<p>For instructions check out: <a href="https://github.com/daid/Cura/wiki/Installing-development-version">Installing development version</a></p>
 
 <h1>History</h1>
 
-<p>The name SkeinPyPy came from the software package <a href="http://skeinforge.com/">Skeinforge</a> in combination with <a href="http://pypy.org/">PyPy</a>. Skeinforge is a "slicer" which turns a 3D model into machine instructions. However, Skeinforge is quite slow and can take well over a hour to slice complex models.</p>
+<p>Origonally Cura was named SkeinPyPy. This name came from the software package <a href="http://skeinforge.com/">Skeinforge</a> in combination with <a href="http://pypy.org/">PyPy</a>. Skeinforge is a "slicer" which turns a 3D model into machine instructions. However, Skeinforge is quite slow and can take well over a hour to slice complex models.</p>
 
 <p>Skeinforge is made in Python, and there is a project called <a href="http://pypy.org/">PyPy</a> which is a faster Python implementation. Combining the two made "SkeinforgePyPy" which I later renamed to "SkeinPyPy".</p>
 
@@ -144,16 +142,9 @@
       <p><a href="https://github.com/daid" class="avatar"><img src="https://secure.gravatar.com/avatar/4876484da6d14453f987aae0cd6e3bdc?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" width="48" height="48"/></a> <a href="https://github.com/daid">daid</a> maintains <a href="https://github.com/daid/Cura">Cura</a></p>
       </div>
       <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+        <small>Theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
       </div>
     </footer>
   </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/daid/Cura/tarball/master" class="tar">tar</a><a href="https://github.com/daid/Cura/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-  
 </body>
 </html>
