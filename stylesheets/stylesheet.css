@@ -72,8 +72,9 @@ h1.title {
   font-size: 60px;
   font-weight: bold;
   font-style: italic;
-  font-family:Georgia, serif;
+  #font-family: Georgia, serif;
   text-align: center;
+  background: url("../images/logo.png") no-repeat scroll 0 0 transparent
 }
 
 .wrapper {
