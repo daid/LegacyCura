@@ -1,6 +1,12 @@
 =About - What is Cura?=
 Cura is a project which aims to be an single software solution for 3D printing. While it is developed to be used with the Ultimaker 3D printer, it can be used with other RapRap based designs.
 
+* Cura helps you to setup an Ultimaker
+* Cura shows your 3D model, allows for scaling/positioning
+* Cura can slice the model to 3D GCode, with sane editable configuration settings
+* Cura can send this GCode to the 3D printer for printing
+* And more...
+
 =Is Cura good?=
 You do not have to take my word for it. Other people are liking it:
 
