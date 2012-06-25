@@ -1,6 +1,26 @@
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
 (function($) {
 $(document).ready(function(){
 
+  page = getURLParameter('page');
+  if (page == null) page = 'main';
+  if (!/^[a-zA-Z ]*$/.test(page)) page = 'main';
+
+  $.ajax({
+    url: page + '.page', 
+    success: function(data, statusText, xhr) {
+      $(".markdown-body").html(xhr.responseText.wiki2html());
+      afterLoad();
+    },error: function(xhr, statusText, errorThrown) {
+      $(".markdown-body").html("Error loading page");
+    }
+  });
+});
+
+function afterLoad() {
   // putting lines by the pre blocks
   $("pre").each(function(){
     var pre = $(this).text().split("\n");
@@ -48,5 +68,6 @@ $(document).ready(function(){
     $(window).scrollTop(0);
     return false;
   })
-});
+}
+
 })(jQuery)

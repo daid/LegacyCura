@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
   <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/wiki2html.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>Cura</title>
@@ -43,99 +44,7 @@
         </div>
         <span class="blc"></span><span class="trc"></span>
         </div>
-        <article class="markdown-body">
-          <h1>About - What is Cura?</h1>
-
-<p>Cura is a project which aims to be an single software solution for 3D printing. While it is developed to be used with the Ultimaker 3D printer, it can be used with other RapRap based designs.</p>
-
-<h1>Is Cura good?</h1>
-
-<p>You do not have to take my word for it. Other people are liking it:</p>
-
-<ul>
-<li><a href="http://forum.ultimaker.com/viewtopic.php?p=4210#p4210">I have no links to cura software, but I suggest you use it, once you have done a few prints, you will not look back. Good luck</a></li>
-<li><a href="http://forum.ultimaker.com/viewtopic.php?p=4145#p4145">Et bien merci pour les conseils, après avoir un peu galéré pour mettre Cura, c'est que du bonheur et ca marche nickel !</a></li>
-<li><a href="http://forum.ultimaker.com/viewtopic.php?p=3982#p3982">I think CURA is great and reliable every time</a></li>
-<li><a href="http://forum.ultimaker.com/viewtopic.php?p=3968#p3968">sliced with cura (standard parameters)= very good</a></li>
-<li><a href="http://forum.ultimaker.com/viewtopic.php?p=3873#p3873">I fixed this by switching to Cura and have Cura update the ultimaker to Marlin. Works perfectly now</a></li>
-<li>In fact I've used nothing but Cura and haven't even touched Netfabb or RepG, I cant see any reason to. (received in email)</li>
-<li><a href="http://flashgamer.com/arduino/comments/adding-a-heated-build-platform-to-your-ultimaker">Speaking of Daid - if you're not using his Cura software for your Ultimaker - you're missing out Big Time. To me it's been the difference between a good purchase and a bad one!</a></li>
-</ul>
-
-<h1>Status - How is Cura progressing.</h1>
-<h3>Current release (RC4) features</h3>
-
-<ul>
-<li>Up to 4x faster slicing then Skeinforge</li>
-<li>Easy to use GUI, with human understandable values.</li>
-<li>3D model preview before slicing</li>
-<li>Running multiple slice actions in parallel</li>
-<li>Transparent 3D view</li>
-<li>GCode path preview</li>
-<li>[[Joris]] addon</li>
-<li>[[X-Ray-vision]]</li>
-<li>Firmware update tool for Ultimaker machines</li>
-<li>Rotate/Flip 3D model for printing</li>
-<li>First run configuration wizard</li>
-<li>Cool minimal feedrate (so cool never makes your print crawl)</li>
-<li>Show errors from slicing in 3D model (identify faulty edges)</li>
-<li>Printing interface intigrated with Cura</li>
-<li>Simple mode, just select a profile, a material type, a model, and hit "print". So "Everyone Can Print (TM)"</li>
-<li>Skin option</li>
-<li>Thicker bottom layer option</li>
-<li>Improved retraction (only retract when comb couldn't avoid holes)</li>
-<li>More rotate options (swap XZ, YZ)</li>
-<li>Option to save the used profile when slicing, so you know which settings where used with the slice</li>
-<li>More statistics about print when using the Cura print interface (filament used, filament weight, filament costs)</li>
-<li>Scale to fit machine button</li>
-<li>Open in exporer button</li>
-<li>Multi-extruder slicing</li>
-<li>GCode syntax highlight in start/end gcode editor</li>
-<li>[[Project planner]]</li>
-</ul>
-
-<h3>Known bugs</h3>
-<ul>
-<li>RC2: First run wizard does not work correctly. Controlling the Ultimaker fails.</li>
-<li>RC2: First layer does not contain enough support material if support is enabled.</li>
-<li>RC3: Crashes on first slice if you never touched the start/end GCode.</li>
-</ul>
-
-<h3>Ready in development version</h3>
-<ul>
-<li>Cut up a "plate" STL file into multiple parts for the project planner.</li>
-</ul>
-
-<h3>Future</h3>
-<ul>
-<li>Add support for <a href="http://printrbot.com/">PrintrBot</a></li>
-<li>Slic3r backend support</li>
-<li>2D SVG Slicer</li>
-</ul>
-
-<h1>Running the development version</h1>
-<p>For instructions check out: <a href="https://github.com/daid/Cura/wiki/Installing-development-version">Installing development version</a></p>
-
-<h1>History</h1>
-
-<p>Origonally Cura was named SkeinPyPy. This name came from the software package <a href="http://skeinforge.com/">Skeinforge</a> in combination with <a href="http://pypy.org/">PyPy</a>. Skeinforge is a "slicer" which turns a 3D model into machine instructions. However, Skeinforge is quite slow and can take well over a hour to slice complex models.</p>
-
-<p>Skeinforge is made in Python, and there is a project called <a href="http://pypy.org/">PyPy</a> which is a faster Python implementation. Combining the two made "SkeinforgePyPy" which I later renamed to "SkeinPyPy".</p>
-
-<p>Originally SkeinPyPy was just a package combining Skeinforge with PyPy and a few patches to make it easier to use. The package was made so it was ready to run and didn't require you to install anything else. It was also packaged with <a href="http://reprap.org/wiki/Printrun">PrintRun</a> which handles the machine communication. These where the <strong>Alpha</strong> versions.</p>
-
-<p>But it still was Skeinforge. The Skeinforge user-interface, with 260 configuration options, is a bit difficult to use. Many of the options don't apply to 3D printing. And configuration changes where not easy. Also, sharing configuration was not made easy.</p>
-
-<p>So, the <strong>NewUI</strong> project was started. With input from many people, a new, easy to use, user-interface was created. Still using Skeinforge as backend, but without showing any of the Skeinforge horrible user-interface screens. And SkeinPyPy started to evolve from a "make Skeinforge faster" to "make a all in one, easy to use, 3D printing software package". These packages are the <strong>Beta</strong> versions.</p>
-
-<p>Finally, it was decided to rename the package from SkeinPyPy to Cura. Because it surpassed the "Skeinforge with PyPy" goal.</p>
-
-<h1>Show your support</h1>
-
-<p>The best way to support Cura is to report <a href="https://github.com/daid/Cura/issues">issues</a> this way Cura can become even better. Report problems, as well as ideas for new features or improvements.</p>
-
-<p>People have also asked me if they can show support by donating money. You can make donations trough PayPal to the email address <a href="mailto:daid303@gmail.com">daid303@gmail.com</a> (transfer money as gift), however, this is just to show your appreciation. It will not entitle you for any direct support, or will buy you features you want. Cura is maintained as a hobby project right now.</p>
-        </article>
+        <article class="markdown-body">Loading...</article>
       </div>
     </div>
     <footer>

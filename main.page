@@ -1,0 +1,78 @@
+=About - What is Cura?=
+Cura is a project which aims to be an single software solution for 3D printing. While it is developed to be used with the Ultimaker 3D printer, it can be used with other RapRap based designs.
+
+=Is Cura good?=
+You do not have to take my word for it. Other people are liking it:
+
+* [http://forum.ultimaker.com/viewtopic.php?p=4210#p4210 I have no links to cura software, but I suggest you use it, once you have done a few prints, you will not look back. Good luck]
+* [http://forum.ultimaker.com/viewtopic.php?p=4145#p4145 Et bien merci pour les conseils, après avoir un peu galéré pour mettre Cura, c'est que du bonheur et ca marche nickel!]
+* [http://forum.ultimaker.com/viewtopic.php?p=3982#p3982 I think CURA is great and reliable every time]
+* [http://forum.ultimaker.com/viewtopic.php?p=3968#p3968 sliced with cura (standard parameters) = very good]
+* [http://forum.ultimaker.com/viewtopic.php?p=3873#p3873 I fixed this by switching to Cura and have Cura update the ultimaker to Marlin. Works perfectly now]
+* In fact I've used nothing but Cura and haven't even touched Netfabb or RepG, I cant see any reason to. (received in email)
+* [http://flashgamer.com/arduino/comments/adding-a-heated-build-platform-to-your-ultimaker Speaking of Daid - if you're not using his Cura software for your Ultimaker - you're missing out Big Time. To me it's been the difference between a good purchase and a bad one!]
+
+=Status - How is Cura progressing=
+===Current release (RC4) features===
+
+* Up to 4x faster slicing then Skeinforge
+* Easy to use GUI, with human understandable values.
+* 3D model preview before slicing
+* Running multiple slice actions in parallel
+* Transparent 3D view
+* GCode path preview
+* [[Joris]] addon
+* [[X-Ray-vision]]
+* Firmware update tool for Ultimaker machines
+* Rotate/Flip 3D model for printing
+* First run configuration wizard
+* Cool minimal feedrate (so cool never makes your print crawl)
+* Show errors from slicing in 3D model (identify faulty edges)
+* Printing interface intigrated with Cura
+* Simple mode, just select a profile, a material type, a model, and hit "print". So "Everyone Can Print (TM)"
+* Skin option
+* Thicker bottom layer option
+* Improved retraction (only retract when comb couldn't avoid holes)
+* More rotate options (swap XZ, YZ)
+* Option to save the used profile when slicing, so you know which settings where used with the slice
+* More statistics about print when using the Cura print interface (filament used, filament weight, filament costs)
+* Scale to fit machine button
+* Open in exporer button
+* Multi-extruder slicing
+* GCode syntax highlight in start/end gcode editor
+* [[Project planner]]
+
+===Known bugs===
+* RC2: First run wizard does not work correctly. Controlling the Ultimaker fails.
+* RC2: First layer does not contain enough support material if support is enabled.
+* RC3: Crashes on first slice if you never touched the start/end GCode.
+
+===Ready in development version===
+* Cut up a "plate" STL file into multiple parts for the project planner.
+
+===Future===
+* Add support for [http://printrbot.com/ PrintrBot]
+* Slic3r backend support
+* 2D SVG Slicer
+
+=Running the development version=
+For instructions check out: [https://github.com/daid/Cura/wiki/Installing-development-version Installing development version]
+
+=History=
+
+Origonally Cura was named SkeinPyPy. This name came from the software package [http://skeinforge.com/ Skeinforge] in combination with [http://pypy.org/ PyPy]. Skeinforge is a "slicer" which turns a 3D model into machine instructions. However, Skeinforge is quite slow and can take well over a hour to slice complex models.
+Skeinforge is made in Python, and there is a project called [http://pypy.org/ PyPy] which is a faster Python implementation. Combining the two made "SkeinforgePyPy" which I later renamed to "SkeinPyPy".
+
+Originally SkeinPyPy was just a package combining Skeinforge with PyPy and a few patches to make it easier to use. The package was made so it was ready to run and didn't require you to install anything else. It was also packaged with [http://reprap.org/wiki/Printrun PrintRun] which handles the machine communication. These where the '''Alpha''' versions.
+
+But it still was Skeinforge. The Skeinforge user-interface, with 260 configuration options, is a bit difficult to use. Many of the options don't apply to 3D printing. And configuration changes where not easy. Also, sharing configuration was not made easy.
+
+So, the '''NewUI''' project was started. With input from many people, a new, easy to use, user-interface was created. Still using Skeinforge as backend, but without showing any of the Skeinforge horrible user-interface screens. And SkeinPyPy started to evolve from a "make Skeinforge faster" to "make a all in one, easy to use, 3D printing software package". These packages are the '''Beta''' versions.
+
+Finally, it was decided to rename the package from SkeinPyPy to Cura. Because it surpassed the "Skeinforge with PyPy" goal.
+
+=Show your support=
+
+The best way to support Cura is to report [https://github.com/daid/Cura/issues issues] this way Cura can become even better. Report problems, as well as ideas for new features or improvements.
+
+People have also asked me if they can show support by donating money. You can make donations trough PayPal to the email address daid303@gmail.com (transfer money as gift), however, this is just to show your appreciation. It will not entitle you for any direct support, or will buy you features you want. Cura is maintained as a hobby project right now.
