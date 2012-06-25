@@ -49,6 +49,11 @@ You do not have to take my word for it. Other people are liking it:
 
 ===Ready in development version===
 * Cut up a "plate" STL file into multiple parts for the project planner.
+* Use project planner to assemble plates, save plates as 1 STL file.
+* Better retraction visualisation in GCode preview
+* Better "retraction only on jump" support
+* Arduino Mega 2560 Rev3 driver included for windows
+* Option to reset profile to default in normal mode.
 
 ===Future===
 * Add support for [http://printrbot.com/ PrintrBot]
