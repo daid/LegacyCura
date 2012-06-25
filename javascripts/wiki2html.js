@@ -77,13 +77,13 @@ function wiki2html(s) {
         })
     
         .replace(/[^\[](http[^\[\s]*)/g, function (m, l) { // normal link
-            return '<a href="' + l + '">' + l + '</a>';
+            return '<a class="external" href="' + l + '">' + l + '</a>';
         })
     
         .replace(/[\[](http.*?)\]/g, function (m, l) { // external link
             var p = l.replace(/[\[\]]/g, '').split(/ /);
             var link = p.shift();
-            return '<a href="' + link + '">' + (p.length ? p.join(' ') : link) + '</a>';
+            return '<a class="external" href="' + link + '">' + (p.length ? p.join(' ') : link) + '</a>';
         })
     
         .replace(/\[\[(.*?)\]\]/g, function (m, l) { // internal link or image

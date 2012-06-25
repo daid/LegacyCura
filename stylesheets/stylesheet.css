@@ -61,6 +61,10 @@ a {
   text-decoration: none;
   -webkit-transition: color ease-in-out 0.3s;
 }
+a.external {
+  background: url("../images/link.png") no-repeat scroll right center transparent;
+  padding-right: 12px;
+}
 
 a:hover {
   text-decoration: underline;
