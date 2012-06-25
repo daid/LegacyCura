@@ -46,6 +46,7 @@ You do not have to take my word for it. Other people are liking it:
 * RC2: First run wizard does not work correctly. Controlling the Ultimaker fails.
 * RC2: First layer does not contain enough support material if support is enabled.
 * RC3: Crashes on first slice if you never touched the start/end GCode.
+* RC4: Slicing of files with accents or Russian characters in the filename or path fails.
 
 ===Ready in development version===
 * Cut up a "plate" STL file into multiple parts for the project planner.

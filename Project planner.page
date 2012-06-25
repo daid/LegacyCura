@@ -1,0 +1,7 @@
+The Cura project planner is a tool to facilitate printing more then 1 object at a time. While this sounds a lot like [http://www.thingiverse.com/tag:plates plates], there is a very distinct difference.
+
+Plates are printed all at the same time. This means you will get more strings, and a printer jam means all your objects failed to print.
+
+The project planner is different. The project planner prints all the objects one after another. So it first finishes one object before continuing with the next. With the large build area and the small printer head of the Ultimaker, this enables you to do a lot of prints after each other. The project planner helps you in placing the objects on the printer bed so they won't get hit after printing by the printer head.
+
+The project planner can be accessed from the "File" menu in "Normal mode".

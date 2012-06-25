@@ -1,0 +1,15 @@
+The [[Joris]] setting is named after [http://www.rooiejoris.nl/ Joris van Tubergen] [http://www.facebook.com/europerminutedesign FB]
+
+He prints lots of vase/cup like objects, which are single walled, and fast to print. But the default printer settings caused a 'ridge' to build up on the location where the height in increased.
+
+And thus, came the Joris setting. What the Joris setting does, it increases the Z height over the whole outer wall. So you get a constant upwards movement, without Z increase interruptions that cause the ridge buildup. This only works correctly if the outer wall is exactly one line thick, and if you have no infill. But with the right settings you can print perfect vases/cups.
+
+The easiest way to use this setting is to use the "quickprint mode" which has a profile for this.
+
+Another way is to adjust the following settings:
+* Set infill density to 0, so your object is not filled.
+* Set wall thickness to 0.6 (with a nozzle of 0.4 this will make 1 line of 0.6mm)
+* Set the minimal layer time to only 2 seconds, else it will take forever to print
+* A layer thickness of 0.3 is no problem in this case, but 0.2 might give nicer results.
+* To get a waterthight bottom you can set the extra wall thickness to 15mm in the expert settings.
+
