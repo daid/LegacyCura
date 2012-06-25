@@ -1,0 +1,15 @@
+=Model inspection=
+On the 3D preview window you view your 3D model in 3 different modes:
+* Normal view
+* Transparent view
+* X-Ray view
+
+=Normal view=
+This view the model in it's normal fasion as you would expect from any 3D tool.
+
+=Transparent view=
+This makes the model transparent, allowing you to view parts inside of it. It's great for spotting hidden hollow parts.
+
+=X-Ray view=
+The X-Ray view shows troubled areas in the model as red. These red area indicate holes in the model or extra faces that don't belong in the model. For better slicing you should fix these problems.
+

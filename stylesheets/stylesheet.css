@@ -442,11 +442,19 @@ footer .owner p a {
   list-style-type: disc;
 }
 
+.markdown-body ol {
+  list-style-type: decimal;
+}
+
 .markdown-body li,
 .markdown-body li p,
 .markdown-body dd,
 .markdown-body dd p {
   margin-bottom: 10px;
+}
+
+.markdown-body ol li {
+  margin-bottom: 0px;
 }
 
 .markdown-body li pre,

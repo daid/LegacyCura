@@ -7,6 +7,12 @@ Cura is a project which aims to be an single software solution for 3D printing. 
 * Cura can send this GCode to the 3D printer for printing
 * And more...
 
+=Manual=
+# [[Quickprint]]
+# [[Model inspection]]
+# [[Normal mode]]
+# [[Project planner]]
+
 =Is Cura good?=
 You do not have to take my word for it. Other people are liking it:
 

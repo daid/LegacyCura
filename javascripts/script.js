@@ -9,6 +9,7 @@ $(document).ready(function(){
   if (page == null) page = 'main';
   if (!/^[a-zA-Z ]*$/.test(page)) page = 'main';
 
+  document.title = 'Cura - ' + page
   $.ajax({
     url: page + '.page', 
     success: function(data, statusText, xhr) {

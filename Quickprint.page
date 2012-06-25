@@ -1,0 +1,14 @@
+=Quickprint=
+Quickprint is the initial mode in which Cura starts. Quickprint condenses all configuration settings into a selecting of just a print quality and a material type.
+
+With quickprint you will always produce gcode which should give a decent print. This will allow you to concentrate on mechanical problems and your 3D models.
+
+The proper procedure to print an 3D model is:
+# Make an 3D model (outside of Cura), and export this as STL file
+# Load the STL file into Cura
+# Slice the STL file into an GCode file
+# Print this GCode file
+
+Quickprint already allows [[Model inspection]], which can be used to check your model for flaws before slicing and printing.
+
+More flexibility can be achieved with [[Normal mode]], which gives access to a wide range of settings.
