@@ -7,11 +7,11 @@ $(document).ready(function(){
 
   page = getURLParameter('page');
   if (page == null) page = 'main';
-  if (!/^[a-zA-Z ]*$/.test(page)) page = 'main';
+  if (!/^[a-zA-Z\- ]*$/.test(page)) page = 'main';
 
   document.title = 'Cura - ' + page
   $.ajax({
-    url: page + '.page', 
+    url: 'pages/' + page + '.page', 
     success: function(data, statusText, xhr) {
       $(".markdown-body").html(xhr.responseText.wiki2html());
       afterLoad();
