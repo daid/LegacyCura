@@ -2,7 +2,7 @@ The [[Joris]] setting is named after [http://www.rooiejoris.nl/ Joris van Tuberg
 
 He prints lots of vase/cup like objects, which are single walled, and fast to print. But the default printer settings caused a 'ridge' to build up on the location where the height in increased.
 
-And thus, came the Joris setting. What the Joris setting does, it increases the Z height over the whole outer wall. So you get a constant upwards movement, without Z increase interruptions that cause the ridge buildup. This only works correctly if the outer wall is exactly one line thick, and if you have no infill. But with the right settings you can print perfect vases/cups.
+And thus, came the Joris setting. What the Joris setting does, it increases the Z height over the whole outer wall. So you get a constant upwards movement, without Z increase interruptions that cause the ridge buildup. Another name you could give this is '''spiralize'''. This only works correctly if the outer wall is exactly one line thick, and if you have no infill. But with the right settings you can print perfect vases/cups.
 
 The easiest way to use this setting is to use the "quickprint mode" which has a profile for this.
 
