@@ -68,6 +68,14 @@ You do not have to take my word for it. Other people are liking it:
 * Better "retraction only on jump" support
 * Arduino Mega 2560 Rev3 driver included for windows
 * Option to reset profile to default in normal mode.
+* Drop stl files into the window to load them
+* Min/Max fan speed support, effected by slowdown due to cooling
+* Auto baudrate detection
+* Batch run tool
+* M0/M1 pause support
+* Realtime speed controls in printer interface
+* Fixed critcal bug with none ascii filenames under windows
+* Changed comb to move a greater distance inside the model, so combing doesn't scar the outer surface
 
 ===Future===
 * Add support for [http://printrbot.com/ PrintrBot]
