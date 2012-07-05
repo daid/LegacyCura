@@ -1,0 +1,59 @@
+Installing the MacOS version of Cura is a bit more difficult then installing a normal MacOS package. So far all attempts to make a properly packaged MacOS .app have failed.
+
+However, with a tiny bit of work in the terminal, and the following instructions from [http://www.extrudable.me/2012/06/30/cura_on_mac_os_x/ Simon]
+
+==Instructions for install Cura on MacOS==
+These instructions are based on experiments with Cura RC4. Running this version requires Python 2.7, and the associated versions of wxPython (which is the version that uses the OS X ‘Cocoa’ libraries, and hence requires a 64-bit capable version of Python).
+
+It can be tricky to satisfy all of these dependencies at once, especially since Snow Leopard (OS X 10.6) ships only with Python 2.6. On Lion (OS X 10.7) things are simpler, since the OS ships with 64-bit Python 2.7 as the default.  However, the following steps should get everything working in either case. You will need administrator/sudo privileges on the machine.
+
+===Downloads===
+====Snow Leopard (10.6) only====
+Start by downloading the files you will need. If you are running Snow Leopard, download these two modules:
+
+# Download Python 2.7.3 for Mac OS X 10.6 and 10.7 from http://www.python.org/download/releases/2.7.3/
+# Download  the Python 2.7 version of setup tools from http://pypi.python.org/pypi/setuptools#files. This will provide the Python 2.7 version of easy_install. If the file gets downloaded with a ‘.sh’ extension, rename it to end ‘.egg’. To do this, open a terminal window, cd to the directory you downloaded the file into, and type the following command (adjusting the name of the file if the current version you downloaded was different):
+
+  mv setuptools-0.6c11-py2.7.egg.sh setuptools-0.6c11-py2.7.egg
+
+====Snow Leopard (10.6) and Lion (10.7) or higher====
+Then, whether you are running either Snow Leopard or Lion:
+# Download the Python 2.7/Cocoa version of wxPython as listed on http://www.wxpython.org/download.php
+# Download Cura RC4 https://github.com/downloads/daid/Cura/osx64-Cura-RC4.tar.gz
+
+===Installation===
+====Snow Leopard (10.6) only====
+# Open the Python 2.7.3 disk image file from the first step, and run the installer ‘python.mpkg’.
+# Open a new terminal window, cd to the directory that you downloaded the setuptools egg file into in the above step, and run:
+
+  sh setuptools-0.6c11-py2.7.egg
+
+====Snow Leopard (10.6) and Lion (10.7) or higher====
+Open the wxPython disk image, and run the wxPython installer you downloaded earlier
+
+Next, install a couple more Python modules needed by Cura:
+
+In a new terminal window, run:
+  sudo easy_install PyOpenGL
+Log in with your Mac OS password, if prompted for a password.
+
+Then run:
+  sudo easy_install pyserial
+
+Now you should be ready to run Cura. Download it, if necessary, and then you have two options to run it, as follows:
+
+In terminal, cd into the cura folder and then type:
+
+       ./cura.sh
+
+''Alternatively, in the finder, change the file named cura.sh to cura.command, and then simply double-click it to run it''
+
+The above steps have been tested on a fresh install of OS X 10.7 and OS X 10.6.8. However, if you have previously tried other methods to install the necessary components, it is easy to end up with a mess of different versions of the tools, installed into different versions of Python. It may be helpful to remember that you can specifically run the version 2.7 instances of python and easy_install by using the version-specific flavors:
+
+  python2.7
+
+and
+
+  easy_install-2.7
+
+For instance, to force Cura to run under Python 2.7, even if that is not the default version of Python on your system then you can replace all the occurrences of the command ‘python’ in cura.sh, with ‘python2.7′ (assuming that you have at least installed Python 2.7 either using the installer referenced above, or a similar package via MacPorts, fink or similar tools).
