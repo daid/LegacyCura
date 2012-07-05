@@ -55,7 +55,7 @@ function wiki2html(s) {
 
         .replace(/(?:^|\n)[\:]{2}(.*)+/g, function (m, l) { // blockquotes
             if (l.match(/^\s+$/)) return m;
-            return '<blockquote>' + l + '</pre>';
+            return '<blockquote>' + l + '</blockquote>';
         })
 
         .replace(/((?:^|\n)[ ]+.*)+/g, function (m) { // code
