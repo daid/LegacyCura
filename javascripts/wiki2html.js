@@ -53,11 +53,11 @@ function wiki2html(s) {
             return "\n<p>" + l + "</p>\n";
         })
 
-        .replace(/(?:^|\n)[ ]{2}(.*)+/g, function (m, l) { // blockquotes
+        .replace(/(?:^|\n)[\:]{2}(.*)+/g, function (m, l) { // blockquotes
             if (l.match(/^\s+$/)) return m;
             return '<blockquote>' + l + '</pre>';
         })
-        
+
         .replace(/((?:^|\n)[ ]+.*)+/g, function (m) { // code
             if (m.match(/^\s+$/)) return m;
             return '<pre>' + m.replace(/(^|\n)[ ]+/g, "$1") + '</pre>';
@@ -76,8 +76,8 @@ function wiki2html(s) {
             return '<em>' + l + '</em>';
         })
     
-        .replace(/[^\[](http[^\[\s]*)/g, function (m, l) { // normal link
-            return '<a class="external" href="' + l + '">' + l + '</a>';
+        .replace(/([^\[])(http[^\[\s]*)/g, function (m, p, l) { // normal link
+            return p + '<a class="external" href="' + l + '">' + l + '</a>';
         })
     
         .replace(/[\[](http.*?)\]/g, function (m, l) { // external link
