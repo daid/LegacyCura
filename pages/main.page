@@ -76,6 +76,11 @@ You do not have to take my word for it. Other people are liking it:
 * Realtime speed controls in printer interface
 * Fixed critcal bug with none ascii filenames under windows
 * Changed comb to move a greater distance inside the model, so combing doesn't scar the outer surface
+* Added terminal interface to print window
+* Newer start/end code
+* More tags to be used in the start/end code to save information in your GCode file
+* Removal of the log file (it's no longer needed)
+* Option to load a profile from a sliced GCode file
 
 ===Future===
 * Add support for [http://printrbot.com/ PrintrBot]
