@@ -19,7 +19,7 @@ Start by downloading the files you will need. If you are running Snow Leopard, d
 ====Snow Leopard (10.6) and Lion (10.7) or higher====
 Then, whether you are running either Snow Leopard or Lion:
 # Download the Python 2.7/Cocoa version of wxPython as listed on http://www.wxpython.org/download.php
-# Download Cura RC4 https://github.com/downloads/daid/Cura/osx64-Cura-RC4.tar.gz
+# Download Cura 12.07 https://github.com/downloads/daid/Cura/osx64-Cura-12.07.tar.gz
 
 ===Installation===
 ====Snow Leopard (10.6) only====

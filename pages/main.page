@@ -26,7 +26,7 @@ You do not have to take my word for it. Other people are liking it:
 * [http://forum.ultimaker.com/viewtopic.php?p=6309#p6309 Never mind. I changed to Cura and suddenly all my problems are solved! My third print is almost perfect!]
 
 =Status - How is Cura progressing=
-===Current release (RC4) features===
+===Current release (12.07) features===
 
 * Up to 4x faster slicing then Skeinforge
 * Easy to use GUI, with human understandable values.
@@ -54,14 +54,6 @@ You do not have to take my word for it. Other people are liking it:
 * Multi-extruder slicing
 * GCode syntax highlight in start/end gcode editor
 * [[Project planner]]
-
-===Known bugs===
-* RC2: First run wizard does not work correctly. Controlling the Ultimaker fails.
-* RC2: First layer does not contain enough support material if support is enabled.
-* RC3: Crashes on first slice if you never touched the start/end GCode.
-* RC4: Slicing of files with accents or Russian characters in the filename or path fails.
-
-===Ready in development version===
 * Cut up a "plate" STL file into multiple parts for the project planner.
 * Use project planner to assemble plates, save plates as 1 STL file.
 * Better retraction visualisation in GCode preview
@@ -81,6 +73,14 @@ You do not have to take my word for it. Other people are liking it:
 * More tags to be used in the start/end code to save information in your GCode file
 * Removal of the log file (it's no longer needed)
 * Option to load a profile from a sliced GCode file
+
+===Known bugs===
+* RC2: First run wizard does not work correctly. Controlling the Ultimaker fails. (Fixed in RC3)
+* RC2: First layer does not contain enough support material if support is enabled. (Fixed in RC3)
+* RC3: Crashes on first slice if you never touched the start/end GCode. (Fixed in RC4)
+* RC4: Slicing of files with accents or Russian characters in the filename or path fails. (Fixed in 12.07)
+
+===Ready in development version===
 
 ===Future===
 * Add support for [http://printrbot.com/ PrintrBot]
