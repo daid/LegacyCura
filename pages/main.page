@@ -13,6 +13,10 @@ Cura is a project which aims to be an single software solution for 3D printing. 
 # [[Normal mode]]
 # [[Project planner]]
 
+=Issues=
+If you have an issue with Cura, please check [https://github.com/daid/Cura/issues Cura's github issue tracker]. Someone might have already reported the problem. Else report the problem.
+You can also file feature requests into the issue tracker.
+
 =Is Cura good?=
 You do not have to take my word for it. Other people are liking it:
 
