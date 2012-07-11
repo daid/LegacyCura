@@ -7,6 +7,11 @@ Cura is a project which aims to be an single software solution for 3D printing. 
 * Cura can send this GCode to the 3D printer for printing
 * And more...
 
+=Download=
+* [https://github.com/downloads/daid/Cura/Cura_12.07.exe Windows]
+* [http://daid.github.com/Cura/?page=MacOS Mac OS X]
+* [https://github.com/downloads/daid/Cura/linux-Cura-12.07.tar.gz Linux]
+
 =Manual=
 # [[Quickprint]]
 # [[Model inspection]]
