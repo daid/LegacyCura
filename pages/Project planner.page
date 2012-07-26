@@ -1,6 +1,6 @@
 The Cura project planner is a tool to facilitate printing more then 1 object at a time. Some tools call this a "virtual table" or "platter". However, Cura's project planner has a few more advanced features.
 
-==Tutorial==
+==Tutorial 1 - Basic planning==
 ``Note: This tutorial assumes you have an Ultimaker, without modifications. If you modified the fan shrout, you might need to configure the head size.``
 
 For this tutorial, we are going to print the [http://www.thingiverse.com/thing:27257 Pocket Tactics by DutchMongul] set in as few jobs as possible.
