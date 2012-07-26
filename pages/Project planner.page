@@ -59,4 +59,4 @@ The locations on the platform are still wrong, as the copied objects intersect w
 [[Image:pp/druidArmy3.png]]
 
 Now we are ready to slice this into a gcode file. Which can be done with the button next to the auto place buttons.
-``Note: I exausted 3GB of memory with this tutorial. It seems that Cura 12.07 is a bit memory hungry with the project planner and large files. But the same princible works for the screwless cube gears, which are simpler models and use less memory.``
+``Note: I exausted 3GB of memory with this tutorial. It seems that Cura 12.07 is a bit memory hungry with the project planner and large files. But the same princible works for the screwless cube gears, which are simpler models and use less memory. Cura 12.08 will be less memory hungry.``
