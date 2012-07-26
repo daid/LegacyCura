@@ -1,7 +1,62 @@
-The Cura project planner is a tool to facilitate printing more then 1 object at a time. While this sounds a lot like [http://www.thingiverse.com/tag:plates plates], there is a very distinct difference.
+The Cura project planner is a tool to facilitate printing more then 1 object at a time. Some tools call this a "virtual table" or "platter". However, Cura's project planner has a few more advanced features.
 
-Plates are printed all at the same time. This means you will get more strings, and a printer jam means all your objects failed to print.
+==Tutorial==
+``Note: This tutorial assumes you have an Ultimaker, without modifications. If you modified the fan shrout, you might need to configure the head size.``
 
-The project planner is different. The project planner prints all the objects one after another. So it first finishes one object before continuing with the next. With the large build area and the small printer head of the Ultimaker, this enables you to do a lot of prints after each other. The project planner helps you in placing the objects on the printer bed so they won't get hit after printing by the printer head.
+For this tutorial, we are going to print the [http://www.thingiverse.com/thing:27257 Pocket Tactics by DutchMongul] set in as few jobs as possible.
+[[Image:pp/Pocket_TacticsA_preview_card.jpg]]
 
-The project planner can be accessed from the "File" menu in "Normal mode".
+First, goto the thingiverse page of [http://www.thingiverse.com/thing:27257 Pocket Tactics], and download the following files:
+* [http://www.thingiverse.com/download:81109 druid circle.stl]
+* [http://www.thingiverse.com/download:81110 beaststalker15mm.stl]
+* [http://www.thingiverse.com/download:81111 beastmarauder15mm.stl]
+* [http://www.thingiverse.com/download:81112 juggernaut15mm.stl]
+* [http://www.thingiverse.com/download:81121 forestwitch15mm.stl]
+* [http://www.thingiverse.com/download:81122 cursedranger5mm.stl]
+* [http://www.thingiverse.com/download:81124 druid15mm.stl]
+* [http://www.thingiverse.com/download:81129 village tile.stl]
+* [http://www.thingiverse.com/download:81130 water tile.stl]
+* [http://www.thingiverse.com/download:81131 hills tile.stl]
+* [http://www.thingiverse.com/download:81132 field tile.stl]
+* [http://www.thingiverse.com/download:81133 foresttile.stl]
+* [http://www.thingiverse.com/download:81454 legionhighking.stl]
+``Note: No need to download the rest of the files, as they are included in the legionhighking.stl``
+
+Next, open the project planner from the file menu in normal mode:
+[[Image:pp/openmenu.png]]
+
+You will be greeted with the following window:
+[[Image:pp/projectplannerMain.png]]
+The center area with the squares is your build platform, on the right you have the emtpy white box which will contain your files. And then there are a lot of buttons and options.
+
+We'll begin by creating the Druid army, as you need to print those all in the same color.
+Now press the one of the add buttons. Both act the same, and you can use the one you like most.
+[[Image:pp/addButton.png]]
+
+In the file selection window, select all the files of the Druid army. You can select multiple files by holding down the [CTRL] button on your keyboard.
+[[Image:pp/druidArmySelect.png]]
+``Note: After pressing 'Open' it can take a while to load these files, als they are quite detailed.``
+
+After adding the files, you can see all the models are standing in the front left corner, on top of eachother.
+[[Image:pp/druidArmy1.png]]
+
+You can move them manually, but a much easier option is the 'Auto place' button. Once again, there are 2 buttons that do the same.
+[[Image:pp/autoplace.png]]
+
+As you can see, the army is now organized on the build platform.
+[[Image:pp/druidArmy2.png]]
+However, and Druid army has 3 stalkers, 2 marauders, 2 juggernauts and 2 witches. And there are only 1 of each on the platform now.
+
+So, I present you, the "copy button":
+[[Image:pp/copyButton.png]]
+
+First, select the marauder, and press the copy button. Do the same for the juggernaut, and the witch. And copy the stalker twice.
+``Note: Copying these models is a bit slow. They are extreemly detailed and cause some performance problems. Increasing performance is on the list in Cura's improvement program.``
+
+After copying you can re-arrange the order of the items with the blue arrows. I personally like keep the same objects together, but any order works.
+
+The locations on the platform are still wrong, as the copied objects intersect with the origonals. This is why some objects are colors in red right now. Once again, press the auto-place button.
+[[Image:pp/druidArmy3.png]]
+
+Now we are ready to slice this into a gcode file. Which can be done with the button next to the auto place buttons.
+``Note: I exausted 3GB of memory with this tutorial. It seems that Cura 12.07 is a bit memory hungry with the project planner and large files. But the same princible works for the screwless cube gears, which are simpler models and use less memory.``

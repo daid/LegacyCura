@@ -1,8 +1,9 @@
 /*
   @author: remy sharp / http://remysharp.com
+  @modified by: Daid http://daid.mine.nu/
   @url: http://remysharp.com/2008/04/01/wiki-to-html-using-javascript/
   @license: Creative Commons License - ShareAlike http://creativecommons.org/licenses/by-sa/3.0/
-  @version: 1.0
+  @version: 2.0
   
   Can extend String or be used stand alone - just change the flag at the top of the script.
 */
@@ -75,6 +76,9 @@ function wiki2html(s) {
         .replace(/''(.*?)''/g, function (m, l) { // italic
             return '<em>' + l + '</em>';
         })
+        .replace(/``(.*?)``/g, function (m, l) { // small italic
+            return '<em><small>' + l + '</small></em>';
+        })
     
         .replace(/([^\[])(http[^\[\s]*)/g, function (m, p, l) { // normal link
             return p + '<a class="external" href="' + l + '">' + l + '</a>';
@@ -92,7 +96,7 @@ function wiki2html(s) {
 
             if (link.match(/^Image:(.*)/)) {
                 // no support for images - since it looks up the source from the wiki db :-(
-                return m;
+                return '<img src="images/' + link.substr(6) + '">';
             } else {
                 return '<a href="?page=' + link + '">' + (p.length ? p.join('|') : link) + '</a>';
             }
