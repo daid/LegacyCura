@@ -39,6 +39,7 @@ Log in with your Mac OS password, if prompted for a password.
 
 Then run:
   sudo easy_install pyserial
+  sudo easy_install numpy
 
 Now you should be ready to run Cura. Download it, if necessary, and then you have two options to run it, as follows:
 

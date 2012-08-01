@@ -8,9 +8,9 @@ Cura is a project which aims to be an single software solution for 3D printing. 
 * And more...
 
 =Download=
-* [https://github.com/downloads/daid/Cura/Cura_12.07.exe Windows]
+* [https://github.com/downloads/daid/Cura/Cura_12.08.exe Windows]
 * [http://daid.github.com/Cura/?page=MacOS Mac OS X]
-* [https://github.com/downloads/daid/Cura/linux-Cura-12.07.tar.gz Linux]
+* [https://github.com/downloads/daid/Cura/linux-Cura-12.08.tar.gz Linux]
 
 =Manual=
 # [[Quickprint]]
@@ -38,7 +38,7 @@ You do not have to take my word for it. Other people are liking it:
 * [http://forum.ultimaker.com/viewtopic.php?p=6309#p6309 Never mind. I changed to Cura and suddenly all my problems are solved! My third print is almost perfect!]
 
 =Status - How is Cura progressing=
-===Current release (12.07) features===
+===Current release (12.08) features===
 
 * Up to 4x faster slicing then Skeinforge
 * Easy to use GUI, with human understandable values.
