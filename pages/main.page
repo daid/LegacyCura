@@ -1,19 +1,20 @@
 =About - What is Cura?=
-Cura is a project which aims to be an single software solution for 3D printing. While it is developed to be used with the Ultimaker 3D printer, it can be used with other RapRap based designs.
+Cura is a project which aims to be an single software solution for 3D printing. While it is developed to be used with the [http://www.ultimaker.com/ Ultimaker 3D printer], it can be used with other [http://wiki.reprap.org RapRap] based designs.
 
-* Cura helps you to setup an Ultimaker
+* Cura helps you to setup an [http://www.ultimaker.com/ Ultimaker]
 * Cura shows your 3D model, allows for scaling/positioning
 * Cura can slice the model to 3D GCode, with sane editable configuration settings
 * Cura can send this GCode to the 3D printer for printing
 * And more...
 
 =Download=
-* [https://github.com/downloads/daid/Cura/Cura_12.08.exe Windows]
-* [http://daid.github.com/Cura/?page=MacOS Mac OS X]
+* [https://github.com/downloads/daid/Cura/Cura_12.08.exe Windows] (Requires Windows XP or newer)
+* [http://daid.github.com/Cura/?page=MacOS Mac OS X] (Intel based Mac)
 * [https://github.com/downloads/daid/Cura/linux-Cura-12.08.tar.gz Linux]
 
 =Manual=
 # [[Quickprint]]
+# [[Google Sketchup]]
 # [[Model inspection]]
 # [[Normal mode]]
 # [[Project planner]]
@@ -48,7 +49,7 @@ You do not have to take my word for it. Other people are liking it:
 * GCode path preview
 * [[Joris]] addon
 * [[X-Ray-vision]]
-* Firmware update tool for Ultimaker machines
+* Firmware update tool for [http://www.ultimaker.com/ Ultimaker] machines
 * Rotate/Flip 3D model for printing
 * First run configuration wizard
 * Cool minimal feedrate (so cool never makes your print crawl)
@@ -91,13 +92,7 @@ You do not have to take my word for it. Other people are liking it:
 * RC2: First layer does not contain enough support material if support is enabled. (Fixed in RC3)
 * RC3: Crashes on first slice if you never touched the start/end GCode. (Fixed in RC4)
 * RC4: Slicing of files with accents or Russian characters in the filename or path fails. (Fixed in 12.07)
-
-===Ready in development version===
-
-===Future===
-* Add support for [http://printrbot.com/ PrintrBot]
-* Slic3r backend support
-* 2D SVG Slicer
+* 12.08: Project planner "all at once" feature causes the nozzle to dive into the print when finished (Fixed in 12.10)
 
 =Running the development version=
 For instructions check out: [https://github.com/daid/Cura/wiki/Installing-development-version Installing development version]
@@ -113,10 +108,13 @@ But it still was Skeinforge. The Skeinforge user-interface, with 260 configurati
 
 So, the '''NewUI''' project was started. With input from many people, a new, easy to use, user-interface was created. Still using Skeinforge as backend, but without showing any of the Skeinforge horrible user-interface screens. And SkeinPyPy started to evolve from a "make Skeinforge faster" to "make a all in one, easy to use, 3D printing software package". These packages are the '''Beta''' versions.
 
-Finally, it was decided to rename the package from SkeinPyPy to Cura. Because it surpassed the "Skeinforge with PyPy" goal.
+It was decided to rename the package from SkeinPyPy to Cura. Because it surpassed the "Skeinforge with PyPy" goal. The Cura name was choosen within the Ultimaker community.
+
+Finally in October 2012, [http://www.ultimaker.com/ Ultimaker] hired me to put more work into Cura and do other 3D printing related software projects. Cura will remain Free, OpenSource and it will support RepRap machines next to Ultimaker machines. However, it will receive some Ultimaker branding so it can be the offical package for Ultimakers.
 
 =Show your support=
 
 The best way to support Cura is to report [https://github.com/daid/Cura/issues issues] this way Cura can become even better. Report problems, as well as ideas for new features or improvements.
 
-People have also asked me if they can show support by donating money. You can make donations trough PayPal to the email address daid303@gmail.com (transfer money as gift), however, this is just to show your appreciation. It will not entitle you for any direct support, or will buy you features you want. Cura is maintained as a hobby project right now.
+People have also asked me if they can show support by donating money. You can make donations trough PayPal to the email address daid303@gmail.com (transfer money as gift), however, this is just to show your appreciation. It will not entitle you for any direct support, or will buy you features you want.
+Another way to indirectly support Cura development is by buying printers, parts and filament from [https://shop.ultimaker.com/ Ultimaker webshop]

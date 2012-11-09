@@ -1,0 +1,21 @@
+=Google Sketchup=
+
+Cura can print 3D models designed on [http://www.sketchup.com/ SketchUp]. While there are free plugins that can export as STL files this is no longer needed with Cura. [http://www.sketchup.com/ SketchUp] can export as COLLADA (.DAE), which Cura can print.
+
+I will not expain how to make 3D models in [http://www.sketchup.com/ SketchUp]. Sketchup comes lots of tutorials that will help you get started with 3D modeling in [http://www.sketchup.com/ SketchUp].
+
+==Printing a [http://www.sketchup.com/ SketchUp] model==
+
+First model something. For the example we will use this very simple house:
+[[Image:sketchup/house.png]]
+
+First, select "File->Export->3D Model"
+[[Image:sketchup/export.png]]
+
+Export the file as COLLADA (.DAE)
+[[Image:sketchup/exportas.png]]
+
+Notice that in the lower right corner of the save dialog there is an options button. The default options work, but if you changed anything there, make sure "Triangulate All Faces" is enabled. If this is not enabled then Cura will not show any model.
+[[Image:sketchup/options.png]]
+
+You can open and print this .DAE file like any other STL or OBJ file.

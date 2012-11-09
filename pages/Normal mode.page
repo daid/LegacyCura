@@ -1,9 +1,42 @@
 =Normal mode=
-Normal mode is the mode most people will use. It gives access to all the settings and will allow for the best adjustments for your prints.
+Normal mode is the mode most people will use after a few succesful prints. It gives access to all the settings and will allow for the best adjustments for your prints.
 
+==Print config==
 There are 3 locations that contain settings. The first is the '''Print Config''' tab, which contains the most important settings. These are the settings you most likely want to adjust to your liking.
+[[Image:normalMode_printConfig.png]]
+===Accuracy===
+'''Layer height:''' The first setting you will adjust. This controls the thickness of the layers. Which directly effects the quality of your final print. The default of 0.2mm gives decent prints, but for quality prints you want to set this to 0.1mm. Layers as thin as 0.02mm have been achieved.
+'''Wall thickness:''' The thickness of the outside walls. In case of a cube this controls the front, back and side thickness. Normal thickness of 0.8mm gives good results, but small prints it's sometimes better to set this to 0.4mm.
+Wall thickness: [[Image:wallThickness.png]]
+'''Enable retraction:''' Retraction pulls back the filament when moving over a open space. This reduces the string effect in prints, however it also adds in printing time and gives the posibility to grind down your filament.
+===Fill===
+'''Bottom/Top thickness:''' The bottom/top thickness controlls how many layers are fully filled. Setting this higher gives a stronger part, setting it lower gives a weaker part but it will print faster. In general 0.6mm gives strong parts without holes, going lower can cause holes to appear in at the top of your models.
+'''Fill density:''' The fill density controls the amount of ''sparse infill'' that is made. 
+Difference between 20% and 40% fill density: [[Image:fillDensity.png]]
+===Skirt===
+The skirt is the line printed around the object, this line helps in detecting if your printed bed is level, and it helps in priming your nozzle with filament.
+===Speed&Temperature===
+'''Printing speed:''' This is the 2nd most important setting, it controls how fast the printer tries to print. The default of 50mm/s is a decent speed for an Ultimaker. And fast for most RepRap machines. You will need a properly tweaked machine to reach very high speeds. But speeds up to 150mm/s for printing have been achieved.
+'''Printing temperature:''' The temperature at which the print happens. The printerhead heats up to this temperature before starting the print. Depending on your printing speed you can go as low as 190C for PLA.
+===Support structure===
+'''Support type:''' Type of support material. Support material is a structure printed below your print to support areas of the print that would otherwise collapse. You need to remove this material after printing.
+Options are:
+* No support material
+* Exterior only
+* Everywhere
 
-Then there are the '''Advanced Config''', this contains more advanced settings, which you usually only adjust once or twice to your liking.
+'''Add raft:''' A raft is 2 layers of crossing lines printed below your object, this helps keeping your object on the printed bed. With PLA a raft is almost never needed, but with ABS a raft helps keeping the corners from warping up.
+[[Image:raft.png]]
+Same print with and without raft.
 
-Finally there are '''Expert config''' settings which can be found in the menu. These are settings that you usually don't need to adjust. But to get the most out of your printer you might want to change these. Experimental settings can also be found here.
+===Filament===
+'''Diameter:''' This is the diameter of your filament in mm. You need digital calipers to measure your filament up to 2 decimals. Setting this correctly improves your final print quality. Average 3mm filament has a diameter of 2.89mm.
+'''Packing density:''' The packing density is a correction factor on top of your filament diameter, some filaments compress or lose material during printing, this value is used to correct for this. For PLA you set this to 1.00, for ABS you generally need a value between 0.85 and 0.93
 
+==Advanced config==
+Then there is the '''Advanced Config''', this contains more advanced settings, which you usually only adjust once or twice to your liking.
+[[Image:normalMode_advancedConfig.png]]
+
+==Expert config==
+Finally there is '''Expert config''', which can be found in the menu. These are settings that you usually don't need to adjust. But to get the most out of your printer you might want to change these. Experimental settings can also be found here.
+[[Image:normalMode_expertConfig.png]]

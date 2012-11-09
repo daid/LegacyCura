@@ -1,7 +1,7 @@
 The Cura project planner is a tool to facilitate printing more then 1 object at a time. Some tools call this a "virtual table" or "platter". However, Cura's project planner has a few more advanced features.
 
 ==Tutorial 1 - Basic planning==
-``Note: This tutorial assumes you have an Ultimaker, without modifications. If you modified the fan shrout, you might need to configure the head size.``
+[[Image:attention.png]] ``Note: This tutorial assumes you have an Ultimaker, without modifications. If you modified the fan shrout, you might need to configure the head size.``
 
 For this tutorial, we are going to print the [http://www.thingiverse.com/thing:27257 Pocket Tactics by DutchMongul] set in as few jobs as possible.
 [[Image:pp/Pocket_TacticsA_preview_card.jpg]]
@@ -59,4 +59,16 @@ The locations on the platform are still wrong, as the copied objects intersect w
 [[Image:pp/druidArmy3.png]]
 
 Now we are ready to slice this into a gcode file. Which can be done with the button next to the auto place buttons.
-``Note: I exausted 3GB of memory with this tutorial. It seems that Cura 12.07 is a bit memory hungry with the project planner and large files. But the same princible works for the screwless cube gears, which are simpler models and use less memory. Cura 12.08 will be less memory hungry.``
+[[Image:pp/sliceButton.png]]
+
+Save the GCode file as ''druidearmy.gcode''
+[[Image:pp/saveGCode.png]]
+
+The project planner will now prepare your GCode file:
+[[Image:pp/buildingGCode.png]]
+
+After preparation is done, you can print the resulting GCode file or copy it to an SD card for printing with the UltiController.
+[[Image:pp/sliceDone.png]]
+
+Finally, when printed, it should look something like this:
+[[Image:pp/druidArmyPrinted.jpg]]
