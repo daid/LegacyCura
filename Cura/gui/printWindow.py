@@ -8,7 +8,6 @@ import sys
 import time
 import platform
 import os
-import power
 
 import wx
 from wx.lib import buttons
