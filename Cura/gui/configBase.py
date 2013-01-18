@@ -50,11 +50,15 @@ class configPanelBase(wx.Panel):
 	def CreateSimpleConfigPanel(self, parent):
 		configPanel = wx.Panel(parent);
 		leftConfigPanel = wx.Panel(configPanel)
+		
 		sizer = wx.GridBagSizer(2, 2)
 		leftConfigPanel.SetSizer(sizer)
+		sizer.AddGrowableCol(1)
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		configPanel.SetSizer(sizer)
-		sizer.Add(leftConfigPanel)
+		sizer.Add(leftConfigPanel, 1, wx.EXPAND)
+
 		leftConfigPanel.main = self
 		return leftConfigPanel, configPanel
 
