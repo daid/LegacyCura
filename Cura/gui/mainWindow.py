@@ -154,7 +154,7 @@ class mainWindow(wx.Frame):
 			self.filelist = []
 		self.progressPanelList = []
 
-		self.splitter = wx.SplitterWindow(self, style = wx.SP_LIVE_UPDATE)
+		self.splitter = wx.SplitterWindow(self, style = wx.SP_3D | wx.SP_LIVE_UPDATE)
 		self.leftPane = wx.Panel(self.splitter, style=wx.BORDER_NONE)
 		self.rightPane = wx.Panel(self.splitter, style=wx.BORDER_NONE)
 
@@ -163,7 +163,7 @@ class mainWindow(wx.Frame):
 		self.normalSettingsPanel = normalSettingsPanel(self.leftPane)
 
 		self.leftSizer = wx.BoxSizer(wx.VERTICAL)
-		self.leftSizer.Add(self.simpleSettingsPanel, 1, wx.EXPAND)
+		self.leftSizer.Add(self.simpleSettingsPanel)
 		self.leftSizer.Add(self.normalSettingsPanel, 1, wx.EXPAND)
 		self.leftPane.SetSizer(self.leftSizer)
 		
@@ -217,14 +217,13 @@ class mainWindow(wx.Frame):
 
 		self.simpleSettingsPanel.Show(False)
 		self.normalSettingsPanel.Show(False)
-		self.updateSliceMode()
 
 		# Set default window size & position
 		self.SetSize((wx.Display().GetClientArea().GetWidth()/2,wx.Display().GetClientArea().GetHeight()/2))
 		self.Centre()
 
 		# Restore the window position, size & state from the preferences file
-		sashPosition = 320
+		self.normalSashPos = 320
 		try:
 			if profile.getPreference('window_maximized') == 'True':
 				self.Maximize(True)
@@ -235,13 +234,14 @@ class mainWindow(wx.Frame):
 				height = int(profile.getPreference('window_height'))
 				self.SetPosition((posx,posy))
 				self.SetSize((width,height))
-
-			sashPosition = int(profile.getPreference('window_splitter'))
+				
+			self.normalSashPos = int(profile.getPreference('window_normal_sash'))
 		except:
 			pass
 
-		self.splitter.SetMinimumPaneSize(200)
-		self.splitter.SplitVertically(self.leftPane, self.rightPane, sashPosition)
+		self.splitter.SplitVertically(self.leftPane, self.rightPane, self.normalSashPos)
+
+		self.updateSliceMode()
 
 		self.Show(True)
 
@@ -251,23 +251,32 @@ class mainWindow(wx.Frame):
 		self.normalSettingsPanel.Show(not isSimple)
 		self.simpleSettingsPanel.Show(isSimple)
 
-#		self.leftPane.GetSizer().Detach(self.simpleSettingsPanel)
-#		self.leftPane.GetSizer().Detach(self.normalSettingsPanel)
-#		if isSimple:
-#			self.leftPane.GetSizer().Add(self.simpleSettingsPanel, (0,0), span=(1,1), flag=wx.EXPAND|wx.TOP|wx.LEFT|wx.RIGHT, border=6)
-#		else:
-#			self.leftPane.GetSizer().Add(self.normalSettingsPanel, (0,0), span=(1,1), flag=wx.EXPAND|wx.TOP|wx.LEFT|wx.RIGHT, border=6)
-
 		for i in self.normalModeOnlyItems:
 			i.Enable(not isSimple)
 		self.switchToQuickprintMenuItem.Enable(not isSimple)
 		self.switchToNormalMenuItem.Enable(isSimple)
 
 		self.normalSettingsPanel.Layout()
-		self.simpleSettingsPanel.Layout()
-#		self.leftPane.GetSizer().Layout()
-		self.leftPane.Refresh()
+		self.simpleSettingsPanel.Layout()		
+		self.leftPane.GetSizer().Layout()
+		
+		# Set splitter sash position & size
+		if isSimple:
+			# Save normal mode sash
+			self.normalSashPos = self.splitter.GetSashPosition()
+			
+			# Change location of sash to width of quick mode pane 
+			(width, height) = self.simpleSettingsPanel.GetSizer().GetSize() 
+			self.splitter.SetSashPosition(width, True)
+			
+			# Disable sash
+			self.splitter.SetSashSize(0)
+		else:
+			self.splitter.SetSashPosition(self.normalSashPos, True)
 
+			# Enabled sash
+			self.splitter.SetSashSize(4)
+			
 	def OnPreferences(self, e):
 		prefDialog = preferencesDialog.preferencesDialog(self)
 		prefDialog.Centre()
@@ -521,8 +530,11 @@ class mainWindow(wx.Frame):
 			profile.putPreference('window_width', width)
 			profile.putPreference('window_height', height)			
 			
-			sashPosition = self.splitter.GetSashPosition()
-			profile.putPreference('window_splitter', sashPosition)
+			# Save normal sash position.  If in normal mode (!simple mode), get last position of sash before saving it...
+			isSimple = profile.getPreference('startMode') == 'Simple'
+			if not isSimple:
+				self.normalSashPos = self.splitter.GetSashPosition()
+			profile.putPreference('window_normal_sash', self.normalSashPos)
 			
 		self.Destroy()
 
