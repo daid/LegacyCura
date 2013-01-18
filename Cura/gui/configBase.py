@@ -42,6 +42,22 @@ class configPanelBase(wx.Panel):
 		rightConfigPanel.main = self
 		return leftConfigPanel, rightConfigPanel, configPanel
 
+	def CreateSimpleConfigTab(self, nb, name):
+		leftConfigPanel, configPanel = self.CreateSimpleConfigPanel(nb)
+		nb.AddPage(configPanel, name)
+		return leftConfigPanel
+	
+	def CreateSimpleConfigPanel(self, parent):
+		configPanel = wx.Panel(parent);
+		leftConfigPanel = wx.Panel(configPanel)
+		sizer = wx.GridBagSizer(2, 2)
+		leftConfigPanel.SetSizer(sizer)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		configPanel.SetSizer(sizer)
+		sizer.Add(leftConfigPanel)
+		leftConfigPanel.main = self
+		return leftConfigPanel, configPanel
+
 	def OnPopupDisplay(self, setting):
 		self.popup.setting = setting
 		self.UpdatePopup(setting)
