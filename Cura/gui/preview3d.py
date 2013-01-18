@@ -73,6 +73,7 @@ class toolInfo(object):
 
 		glColor(255,255,255)
 		size = size / 2
+		glLineWidth(1)
 		glBegin(GL_LINES)
 		glVertex3f(size[0], size[1], size[2])
 		glVertex3f(size[0], size[1], size[2]/4*3)
@@ -81,18 +82,34 @@ class toolInfo(object):
 		glVertex3f(size[0], size[1], size[2])
 		glVertex3f(size[0]/4*3, size[1], size[2])
 
-		glVertex3f(-size[0], -size[1], -size[2])
-		glVertex3f(-size[0], -size[1], -size[2]/4*3)
-		glVertex3f(-size[0], -size[1], -size[2])
-		glVertex3f(-size[0], -size[1]/4*3, -size[2])
-		glVertex3f(-size[0], -size[1], -size[2])
-		glVertex3f(-size[0]/4*3, -size[1], -size[2])
+		glVertex3f(-size[0], -size[1], size[2])
+		glVertex3f(-size[0], -size[1], size[2]/4*3)
+		glVertex3f(-size[0], -size[1], size[2])
+		glVertex3f(-size[0], -size[1]/4*3, size[2])
+		glVertex3f(-size[0], -size[1], size[2])
+		glVertex3f(-size[0]/4*3, -size[1], size[2])
+
+		glVertex3f(size[0], -size[1], -size[2])
+		glVertex3f(size[0], -size[1], -size[2]/4*3)
+		glVertex3f(size[0], -size[1], -size[2])
+		glVertex3f(size[0], -size[1]/4*3, -size[2])
+		glVertex3f(size[0], -size[1], -size[2])
+		glVertex3f(size[0]/4*3, -size[1], -size[2])
+
+		glVertex3f(-size[0], size[1], -size[2])
+		glVertex3f(-size[0], size[1], -size[2]/4*3)
+		glVertex3f(-size[0], size[1], -size[2])
+		glVertex3f(-size[0], size[1]/4*3, -size[2])
+		glVertex3f(-size[0], size[1], -size[2])
+		glVertex3f(-size[0]/4*3, size[1], -size[2])
 		glEnd()
 
 class toolRotate(object):
 	def __init__(self, parent):
 		self.parent = parent
 		self.rotateRingDist = 1.5
+		self.rotateRingDistMin = 1.3
+		self.rotateRingDistMax = 1.7
 		self.dragPlane = None
 		self.dragStartAngle = None
 		self.dragEndAngle = None
@@ -112,12 +129,12 @@ class toolRotate(object):
 		radius = self.parent.getObjectBoundaryCircle()
 		cursorX0, cursorY0, cursorZ0, cursorYZ, cursorXZ, cursorXY = self._ProjectToPlanes(p0, p1)
 		oldDragPlane = self.dragPlane
-		if radius * (self.rotateRingDist - 0.1) <= cursorXY <= radius * (self.rotateRingDist + 0.1) or radius * (self.rotateRingDist - 0.1) <= cursorYZ <= radius * (self.rotateRingDist + 0.1) or radius * (self.rotateRingDist - 0.1) <= cursorXZ <= radius * (self.rotateRingDist + 0.1):
+		if radius * self.rotateRingDistMin <= cursorXY <= radius * self.rotateRingDistMax or radius * self.rotateRingDistMin <= cursorYZ <= radius * self.rotateRingDistMax or radius * self.rotateRingDistMin <= cursorXZ <= radius * self.rotateRingDistMax:
 			self.parent.SetCursor(wx.StockCursor(wx.CURSOR_SIZING))
 			if self.dragStartAngle is None:
-				if radius * (self.rotateRingDist - 0.1) <= cursorXY <= radius * (self.rotateRingDist + 0.1):
+				if radius * self.rotateRingDistMin <= cursorXY <= radius * self.rotateRingDistMax:
 					self.dragPlane = 'XY'
-				elif radius * (self.rotateRingDist - 0.1) <= cursorXZ <= radius * (self.rotateRingDist + 0.1):
+				elif radius * self.rotateRingDistMin <= cursorXZ <= radius * self.rotateRingDistMax:
 					self.dragPlane = 'XZ'
 				else:
 					self.dragPlane = 'YZ'
@@ -131,11 +148,11 @@ class toolRotate(object):
 	def OnDragStart(self, p0, p1):
 		radius = self.parent.getObjectBoundaryCircle()
 		cursorX0, cursorY0, cursorZ0, cursorYZ, cursorXZ, cursorXY = self._ProjectToPlanes(p0, p1)
-		if radius * (self.rotateRingDist - 0.1) <= cursorXY <= radius * (self.rotateRingDist + 0.1) or radius * (self.rotateRingDist - 0.1) <= cursorYZ <= radius * (self.rotateRingDist + 0.1) or radius * (self.rotateRingDist - 0.1) <= cursorXZ <= radius * (self.rotateRingDist + 0.1):
-			if radius * (self.rotateRingDist - 0.1) <= cursorXY <= radius * (self.rotateRingDist + 0.1):
+		if radius * self.rotateRingDistMin <= cursorXY <= radius * self.rotateRingDistMax or radius * self.rotateRingDistMin <= cursorYZ <= radius * self.rotateRingDistMax or radius * self.rotateRingDistMin <= cursorXZ <= radius * self.rotateRingDistMax:
+			if radius * self.rotateRingDistMin <= cursorXY <= radius * self.rotateRingDistMax:
 				self.dragPlane = 'XY'
 				self.dragStartAngle = math.atan2(cursorZ0[1], cursorZ0[0]) * 180 / math.pi
-			elif radius * (self.rotateRingDist - 0.1) <= cursorXZ <= radius * (self.rotateRingDist + 0.1):
+			elif radius * self.rotateRingDistMin <= cursorXZ <= radius * self.rotateRingDistMax:
 				self.dragPlane = 'XZ'
 				self.dragStartAngle = math.atan2(cursorY0[2], cursorY0[0]) * 180 / math.pi
 			else:
@@ -176,10 +193,12 @@ class toolRotate(object):
 	def OnDraw(self):
 		glDisable(GL_LIGHTING)
 		glDisable(GL_BLEND)
+		glDisable(GL_DEPTH_TEST)
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 		radius = self.parent.getObjectBoundaryCircle()
 		glScalef(self.rotateRingDist * radius, self.rotateRingDist * radius, self.rotateRingDist * radius)
 		if self.dragPlane == 'XY':
+			glLineWidth(3)
 			glColor4ub(255,64,64,255)
 			if self.dragStartAngle is not None:
 				glPushMatrix()
@@ -201,6 +220,7 @@ class toolRotate(object):
 				glColor4ub(255,64,64,255)
 				glPopMatrix()
 		else:
+			glLineWidth(1)
 			glColor4ub(128,0,0,255)
 		glBegin(GL_LINE_LOOP)
 		for i in xrange(0, 64):
@@ -208,6 +228,7 @@ class toolRotate(object):
 		glEnd()
 		if self.dragPlane == 'YZ':
 			glColor4ub(64,255,64,255)
+			glLineWidth(3)
 			if self.dragStartAngle is not None:
 				glPushMatrix()
 				glRotate(self.dragStartAngle, 1,0,0)
@@ -229,11 +250,13 @@ class toolRotate(object):
 				glPopMatrix()
 		else:
 			glColor4ub(0,128,0,255)
+			glLineWidth(1)
 		glBegin(GL_LINE_LOOP)
 		for i in xrange(0, 64):
 			glVertex3f(0, math.cos(i/32.0*math.pi), math.sin(i/32.0*math.pi))
 		glEnd()
 		if self.dragPlane == 'XZ':
+			glLineWidth(3)
 			glColor4ub(255,255,0,255)
 			if self.dragStartAngle is not None:
 				glPushMatrix()
@@ -256,10 +279,179 @@ class toolRotate(object):
 				glPopMatrix()
 		else:
 			glColor4ub(128,128,0,255)
+			glLineWidth(1)
 		glBegin(GL_LINE_LOOP)
 		for i in xrange(0, 64):
 			glVertex3f(math.cos(i/32.0*math.pi), 0, math.sin(i/32.0*math.pi))
 		glEnd()
+		glEnable(GL_DEPTH_TEST)
+
+class toolScale(object):
+	def __init__(self, parent):
+		self.parent = parent
+		self.node = None
+		self.scale = None
+
+	def _pointDist(self, p0, p1, p2):
+		return numpy.linalg.norm(numpy.cross((p0 - p1), (p0 - p2))) / numpy.linalg.norm(p2 - p1)
+
+	def _traceNodes(self, p0, p1):
+		pp0 = p0 - [0,0,self.parent.getObjectSize()[2]/2]
+		pp1 = p1 - [0,0,self.parent.getObjectSize()[2]/2]
+		s = self._nodeSize()
+		if self._pointDist(numpy.array([0,0,0],numpy.float32), pp0, pp1) < s * 2:
+			return 1
+		if self._pointDist(numpy.array([s*15,0,0],numpy.float32), pp0, pp1) < s * 2:
+			return 2
+		if self._pointDist(numpy.array([0,s*15,0],numpy.float32), pp0, pp1) < s * 2:
+			return 3
+		if self._pointDist(numpy.array([0,0,s*15],numpy.float32), pp0, pp1) < s * 2:
+			return 4
+		return None
+
+	def _lineLineCrossingDistOnLine(self, s0, e0, s1, e1):
+		d0 = e0 - s0
+		d1 = e1 - s1
+		a = numpy.dot(d0, d0)
+		b = numpy.dot(d0, d1)
+		e = numpy.dot(d1, d1)
+		d = a*e - b*b
+
+		r = s0 - s1
+		c = numpy.dot(d0, r)
+		f = numpy.dot(d1, r)
+
+		s = (b*f - c*e) / d
+		t = (a*f - b*c) / d
+		return t
+
+	def _nodeSize(self):
+		return self.parent.zoom / self.parent.GetSize().GetWidth() * 6
+
+	def OnMouseMove(self, p0, p1):
+		oldNode = self.node
+		self.node = self._traceNodes(p0, p1)
+		if oldNode != self.node:
+			self.parent.Refresh()
+
+	def OnDragStart(self, p0, p1):
+		if self.node is None:
+			return False
+		return True
+
+	def OnDrag(self, p0, p1):
+		s = self._nodeSize()
+		pp0 = p0 - [0,0,self.parent.getObjectSize()[2]/2]
+		pp1 = p1 - [0,0,self.parent.getObjectSize()[2]/2]
+		endPoint = [1,1,1]
+		if self.node == 2:
+			endPoint = [1,0,0]
+		elif self.node == 3:
+			endPoint = [0,1,0]
+		elif self.node == 4:
+			endPoint = [0,0,1]
+		scale = self._lineLineCrossingDistOnLine(pp0, pp1, numpy.array([0,0,0], numpy.float32), numpy.array(endPoint, numpy.float32)) / 15.0 / s
+		if not wx.GetKeyState(wx.WXK_SHIFT):
+			scale = round(scale * 10) / 10
+		if scale < 0:
+			scale = -scale
+		if scale < 0.1:
+			scale = 0.1
+		self.scale = scale
+		if self.node == 1 or not wx.GetKeyState(wx.WXK_CONTROL):
+			self.parent.tempMatrix = numpy.matrix([[scale,0,0], [0, scale, 0], [0, 0, scale]], numpy.float64)
+		elif self.node == 2:
+			self.parent.tempMatrix = numpy.matrix([[scale,0,0], [0, 1, 0], [0, 0, 1]], numpy.float64)
+		elif self.node == 3:
+			self.parent.tempMatrix = numpy.matrix([[1,0,0], [0, scale, 0], [0, 0, 1]], numpy.float64)
+		elif self.node == 4:
+			self.parent.tempMatrix = numpy.matrix([[1,0,0], [0, 1, 0], [0, 0, scale]], numpy.float64)
+
+	def OnDragEnd(self):
+		self.scale = None
+
+	def OnDraw(self):
+		s = self._nodeSize()
+		sx = s*15
+		sy = s*15
+		sz = s*15
+		if self.node == 2 and self.scale is not None:
+			sx *= self.scale
+		if self.node == 3 and self.scale is not None:
+			sy *= self.scale
+		if self.node == 4 and self.scale is not None:
+			sz *= self.scale
+		scaleX = numpy.linalg.norm(self.parent.parent.matrix[0].getA().flatten())
+		scaleY = numpy.linalg.norm(self.parent.parent.matrix[1].getA().flatten())
+		scaleZ = numpy.linalg.norm(self.parent.parent.matrix[2].getA().flatten())
+		if self.scale is not None:
+			scaleX *= self.scale
+			scaleY *= self.scale
+			scaleZ *= self.scale
+
+		glDisable(GL_LIGHTING)
+		glDisable(GL_DEPTH_TEST)
+		glEnable(GL_BLEND)
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
+		glLineWidth(1)
+		glBegin(GL_LINES)
+		glColor3ub(128,0,0)
+		glVertex3f(0, 0, 0)
+		glVertex3f(sx, 0, 0)
+		glColor3ub(128,128,0)
+		glVertex3f(0, 0, 0)
+		glVertex3f(0, sy, 0)
+		glColor3ub(0,128,0)
+		glVertex3f(0, 0, 0)
+		glVertex3f(0, 0, sz)
+		glEnd()
+
+		glLineWidth(2)
+		if self.node == 1:
+			glColor3ub(255,255,255)
+		else:
+			glColor3ub(192,192,192)
+		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		if self.node == 1:
+			glColor3ub(0,0,0)
+			opengl.glDrawStringCenter("%0.2f" % ((scaleX + scaleY + scaleZ) / 3.0))
+
+		if self.node == 2:
+			glColor3ub(255,64,64)
+		else:
+			glColor3ub(128,0,0)
+		glPushMatrix()
+		glTranslatef(sx,0,0)
+		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		if self.node == 2:
+			glColor3ub(0,0,0)
+			opengl.glDrawStringCenter("%0.2f" % (scaleX))
+		glPopMatrix()
+		if self.node == 3:
+			glColor3ub(255,255,0)
+		else:
+			glColor3ub(128,128,0)
+		glPushMatrix()
+		glTranslatef(0,sy,0)
+		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		if self.node == 3:
+			glColor3ub(0,0,0)
+			opengl.glDrawStringCenter("%0.2f" % (scaleY))
+		glPopMatrix()
+		if self.node == 4:
+			glColor3ub(64,255,64)
+		else:
+			glColor3ub(0,128,0)
+		glPushMatrix()
+		glTranslatef(0,0,sz)
+		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		if self.node == 4:
+			glColor3ub(0,0,0)
+			opengl.glDrawStringCenter("%0.2f" % (scaleZ))
+		glPopMatrix()
+
+		glEnable(GL_DEPTH_TEST)
 
 class previewPanel(wx.Panel):
 	def __init__(self, parent):
@@ -338,10 +530,6 @@ class previewPanel(wx.Panel):
 		self.toolbar2.AddSeparator()
 
 		# Scale
-		self.scaleReset = toolbarUtil.NormalButton(self.toolbar2, self.OnScaleReset, 'object-scale.png', 'Reset model scale')
-		self.scale = wx.TextCtrl(self.toolbar2, -1, profile.getProfileSetting('model_scale'), size=(21*2,21))
-		self.toolbar2.AddControl(self.scale)
-		self.scale.Bind(wx.EVT_TEXT, self.OnScale)
 		self.scaleMax = toolbarUtil.NormalButton(self.toolbar2, self.OnScaleMax, 'object-max-size.png', 'Scale object to fit machine size')
 
 		self.toolbar2.AddSeparator()
@@ -376,6 +564,8 @@ class previewPanel(wx.Panel):
 			self.tool = toolInfo(self.glCanvas)
 		if self.rotateToolButton.GetValue():
 			self.tool = toolRotate(self.glCanvas)
+		if self.scaleToolButton.GetValue():
+			self.tool = toolScale(self.glCanvas)
 		self.returnToModelViewAndUpdateModel()
 
 	def OnMirrorX(self, e):
@@ -397,19 +587,6 @@ class previewPanel(wx.Panel):
 		sx, sy = self.glCanvas.GetClientSizeTuple()
 		self.warningPopup.SetPosition((x, y+sy-self.warningPopup.GetSize().height))
 
-	def OnScaleReset(self, e):
-		self.scale.SetValue('1.0')
-		self.OnScale(None)
-
-	def OnScale(self, e):
-		scale = 1.0
-		if self.scale.GetValue() != '':
-			scale = self.scale.GetValue()
-		profile.putProfileSetting('model_scale', scale)
-		if self.glCanvas.viewMode == 'GCode' or self.glCanvas.viewMode == 'Mixed':
-			self.setViewMode('Normal')
-		self.glCanvas.Refresh()
-
 	def OnScaleMax(self, e = None, onlyScaleDown = False):
 		if self.objectsMinV is None:
 			return
@@ -426,8 +603,6 @@ class previewPanel(wx.Panel):
 		scale = min(scaleX1, scaleY1, scaleX2, scaleY2, scaleZ)
 		if scale > 1.0 and onlyScaleDown:
 			return
-		self.scale.SetValue(str(scale))
-		profile.putProfileSetting('model_scale', self.scale.GetValue())
 		if self.glCanvas.viewMode == 'GCode' or self.glCanvas.viewMode == 'Mixed':
 			self.setViewMode('Normal')
 		self.glCanvas.Refresh()
@@ -718,9 +893,10 @@ class PreviewGLCanvas(glcanvas.GLCanvas):
 
 	def OnMouseMotion(self,e):
 		if self.parent.objectsMaxV is not None and self.viewport is not None and self.viewMode != 'GCode' and self.viewMode != 'Mixed':
-			p0 = numpy.array(gluUnProject(e.GetX(), self.viewport[1] + self.viewport[3] - e.GetY(), 0, self.modelMatrix, self.projMatrix, self.viewport))
-			p1 = numpy.array(gluUnProject(e.GetX(), self.viewport[1] + self.viewport[3] - e.GetY(), 1, self.modelMatrix, self.projMatrix, self.viewport))
-			self.parent.tool.OnMouseMove(p0, p1)
+			p0 = opengl.unproject(e.GetX(), self.viewport[1] + self.viewport[3] - e.GetY(), 0, self.modelMatrix, self.projMatrix, self.viewport)
+			p1 = opengl.unproject(e.GetX(), self.viewport[1] + self.viewport[3] - e.GetY(), 1, self.modelMatrix, self.projMatrix, self.viewport)
+			if not e.Dragging() or self.dragType != 'tool':
+				self.parent.tool.OnMouseMove(p0, p1)
 
 		if e.Dragging() and e.LeftIsDown():
 			if self.dragType == '':
@@ -977,8 +1153,6 @@ class PreviewGLCanvas(glcanvas.GLCanvas):
 				glDisable(GL_LIGHTING)
 				glColor3f(1,1,1)
 				glPushMatrix()
-				modelScale = profile.getProfileSettingFloat('model_scale')
-				glScalef(modelScale, modelScale, modelScale)
 				opengl.DrawMeshOutline(obj.mesh)
 				glPopMatrix()
 			
@@ -986,8 +1160,6 @@ class PreviewGLCanvas(glcanvas.GLCanvas):
 				glDisable(GL_LIGHTING)
 				glColor3f(1,1,1)
 				glPushMatrix()
-				modelScale = profile.getProfileSettingFloat('model_scale')
-				glScalef(modelScale, modelScale, modelScale)
 				glCallList(obj.steepDisplayList)
 				glPopMatrix()
 		
@@ -1004,6 +1176,8 @@ class PreviewGLCanvas(glcanvas.GLCanvas):
 		#	glEnd()
 		#	glEnable(GL_DEPTH_TEST)
 
+		opengl.DrawMachine(machineSize)
+
 		#Draw the current selected tool
 		if self.parent.objectsMaxV is not None and self.viewMode != 'GCode' and self.viewMode != 'Mixed':
 			glPushMatrix()
@@ -1011,24 +1185,19 @@ class PreviewGLCanvas(glcanvas.GLCanvas):
 			self.parent.tool.OnDraw()
 			glPopMatrix()
 
-		opengl.DrawMachine(machineSize)
-		
 		glFlush()
-
-	def convert3x3MatrixTo4x4(self, matrix):
-		return list(matrix.getA()[0]) + [0] + list(matrix.getA()[1]) + [0] + list(matrix.getA()[2]) + [0, 0,0,0,1]
 
 	def drawModel(self, obj):
 		vMin = self.parent.objectsMinV
 		vMax = self.parent.objectsMaxV
 		offset = - vMin - (vMax - vMin) / 2
 
-		matrix = self.convert3x3MatrixTo4x4(obj.mesh.matrix)
+		matrix = opengl.convert3x3MatrixTo4x4(obj.mesh.matrix)
 
 		glPushMatrix()
 		glTranslate(0, 0, self.parent.objectsSize[2]/2)
 		if self.tempMatrix is not None:
-			tempMatrix = self.convert3x3MatrixTo4x4(self.tempMatrix)
+			tempMatrix = opengl.convert3x3MatrixTo4x4(self.tempMatrix)
 			glMultMatrixf(tempMatrix)
 		glTranslate(0, 0, -self.parent.objectsSize[2]/2)
 		glTranslate(offset[0], offset[1], -vMin[2])
