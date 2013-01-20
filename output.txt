@@ -1,0 +1,2 @@
+Missing default setting for: 'window_maximized'
+Missing default setting for: 'window_pos_x'
