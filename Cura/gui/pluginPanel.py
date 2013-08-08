@@ -23,12 +23,12 @@ class pluginPanel(wx.Panel):
 			effectStringList.append(effect['name'])
 		
 		self.listbox = wx.ListBox(self, -1, choices=effectStringList)
-		title = wx.StaticText(self, -1, "Plugins:")
+		title = wx.StaticText(self, -1, "插件:")
 		title.SetFont(wx.Font(wx.SystemSettings.GetFont(wx.SYS_ANSI_VAR_FONT).GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.FONTWEIGHT_BOLD))
 		helpButton = wx.Button(self, -1, '?', style=wx.BU_EXACTFIT)
 		addButton = wx.Button(self, -1, 'V', style=wx.BU_EXACTFIT)
-		openPluginLocationButton = wx.Button(self, -1, 'Open plugin location')
-		sb = wx.StaticBox(self, label="Enabled plugins")
+		openPluginLocationButton = wx.Button(self, -1, '打开插件位置')
+		sb = wx.StaticBox(self, label="已启用插件")
 		boxsizer = wx.StaticBoxSizer(sb, wx.VERTICAL)
 		self.pluginEnabledPanel = scrolledpanel.ScrolledPanel(self)
 		self.pluginEnabledPanel.SetupScrolling(False, True)
@@ -130,7 +130,7 @@ class pluginPanel(wx.Panel):
 	
 	def OnAdd(self, e):
 		if self.listbox.GetSelection() < 0:
-			wx.MessageBox('You need to select a plugin before you can add anything.', 'Error: no plugin selected', wx.OK | wx.ICON_INFORMATION)
+			wx.MessageBox('增加前请选择您要增加的插件', '错误：没有插件被选中', wx.OK | wx.ICON_INFORMATION)
 			return
 		plugin = self.pluginList[self.listbox.GetSelection()]
 		newConfig = {'filename': plugin['filename'], 'params': {}}

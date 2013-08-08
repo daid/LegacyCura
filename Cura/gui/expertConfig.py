@@ -23,7 +23,7 @@ class expertConfigWindow(wx.Dialog):
 					configBase.SettingRow(p, s.getName())
 
 	def __init__(self, callback):
-		super(expertConfigWindow, self).__init__(None, title='Expert config', style=wx.DEFAULT_DIALOG_STYLE)
+		super(expertConfigWindow, self).__init__(None, title='高级设定', style=wx.DEFAULT_DIALOG_STYLE)
 
 		wx.EVT_CLOSE(self, self.OnClose)
 		self.panel = configBase.configPanelBase(self, callback)

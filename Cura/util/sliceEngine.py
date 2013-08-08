@@ -23,10 +23,6 @@ def getEngineFilename():
 		return os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'CuraEngine.exe'))
 	if hasattr(sys, 'frozen'):
 		return os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../..', 'CuraEngine'))
-	if os.path.isfile('/usr/bin/CuraEngine'):
-		return '/usr/bin/CuraEngine'
-	if os.path.isfile('/usr/local/bin/CuraEngine'):
-		return '/usr/local/bin/CuraEngine'
 	return os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'CuraEngine'))
 
 def getTempFilename():
@@ -48,7 +44,6 @@ class Slicer(object):
 		self._printTimeSeconds = None
 		self._filamentMM = None
 		self._modelHash = None
-		self._id = 0
 
 	def cleanup(self):
 		self.abortSlicer()
@@ -79,9 +74,6 @@ class Slicer(object):
 
 	def getSliceLog(self):
 		return self._sliceLog
-
-	def getID(self):
-		return self._id
 
 	def getFilamentWeight(self):
 		#Calculates the weight of the filament in kg
@@ -172,7 +164,6 @@ class Slicer(object):
 			if self._process is not None:
 				self._process.terminate()
 			oldThread.join()
-		self._id += 1
 		self._callback(-1.0, False)
 		try:
 			self._process = self._runSliceProcess(commandList)
@@ -253,13 +244,9 @@ class Slicer(object):
 			'supportAngle': int(-1) if profile.getProfileSetting('support') == 'None' else int(60),
 			'supportEverywhere': int(1) if profile.getProfileSetting('support') == 'Everywhere' else int(0),
 			'supportLineWidth': int(profile.getProfileSettingFloat('support_rate') * profile.calculateEdgeWidth() * 1000 / 100),
-			'supportExtruder': 0 if profile.getProfileSetting('support_dual_extrusion') == 'First extruder' else (1 if profile.getProfileSetting('support_dual_extrusion') == 'Second extruder' else -1),
 			'retractionAmount': int(profile.getProfileSettingFloat('retraction_amount') * 1000) if profile.getProfileSetting('retraction_enable') == 'True' else 0,
 			'retractionSpeed': int(profile.getProfileSettingFloat('retraction_speed')),
-			'retractionMinimalDistance': int(profile.getProfileSettingFloat('retraction_min_travel') * 1000),
 			'retractionAmountExtruderSwitch': int(profile.getProfileSettingFloat('retraction_dual_amount') * 1000),
-			'minimalExtrusionBeforeRetraction': int(profile.getProfileSettingFloat('retraction_minimal_extrusion') * 1000),
-			'enableCombing': 1 if profile.getProfileSetting('retraction_combing') == 'True' else 0,
 			'multiVolumeOverlap': int(profile.getProfileSettingFloat('overlap_dual') * 1000),
 			'objectSink': int(profile.getProfileSettingFloat('object_sink') * 1000),
 			'minimalLayerTime': int(profile.getProfileSettingFloat('cool_min_layer_time')),
@@ -290,7 +277,6 @@ class Slicer(object):
 		else:
 			settings['skirtDistance'] = int(profile.getProfileSettingFloat('skirt_gap') * 1000)
 			settings['skirtLineCount'] = int(profile.getProfileSettingFloat('skirt_line_count'))
-			settings['skirtMinLenght'] = int(profile.getProfileSettingFloat('skirt_minimal_length') * 1000)
 
 		if profile.getProfileSetting('fix_horrible_union_all_type_a') == 'True':
 			settings['fixHorrible'] |= 0x01
@@ -303,8 +289,6 @@ class Slicer(object):
 
 		if settings['layerThickness'] <= 0:
 			settings['layerThickness'] = 1000
-		if profile.getPreference('gcode_flavor') == 'UltiGCode':
-			settings['gcodeFlavor'] = 1
 		return settings
 
 	def _runSliceProcess(self, cmdList):

@@ -111,75 +111,73 @@ class setting(object):
 #########################################################
 ## Settings
 #########################################################
-setting('layer_height',              0.1, float, 'basic',    'Quality').setRange(0.0001).setLabel('Layer height (mm)', 'Layer height in millimeters.\nThis is the most important setting to determen the quality of your print. Normal quality prints are 0.1mm, high quality is 0.06mm. You can go up to 0.25mm with an Ultimaker for very fast prints at low quality.')
-setting('wall_thickness',            0.8, float, 'basic',    'Quality').setRange(0.0).setLabel('Shell thickness (mm)', 'Thickness of the outside shell in the horizontal direction.\nThis is used in combination with the nozzle size to define the number\nof perimeter lines and the thickness of those perimeter lines.')
-setting('retraction_enable',       False, bool,  'basic',    'Quality').setLabel('Enable retraction', 'Retract the filament when the nozzle is moving over a none-printed area. Details about the retraction can be configured in the advanced tab.')
-setting('solid_layer_thickness',     0.6, float, 'basic',    'Fill').setRange(0).setLabel('Bottom/Top thickness (mm)', 'This controls the thickness of the bottom and top layers, the amount of solid layers put down is calculated by the layer thickness and this value.\nHaving this value a multiply of the layer thickness makes sense. And keep it near your wall thickness to make an evenly strong part.')
-setting('fill_density',               20, float, 'basic',    'Fill').setRange(0, 100).setLabel('Fill Density (%)', 'This controls how densely filled the insides of your print will be. For a solid part use 100%, for an empty part use 0%. A value around 20% is usually enough.\nThis won\'t effect the outside of the print and only adjusts how strong the part becomes.')
-setting('nozzle_size',               0.4, float, 'advanced', 'Machine').setRange(0.1,10).setLabel('Nozzle size (mm)', 'The nozzle size is very important, this is used to calculate the line width of the infill, and used to calculate the amount of outside wall lines and thickness for the wall thickness you entered in the print settings.')
-setting('print_speed',                50, float, 'basic',    'Speed & Temperature').setRange(1).setLabel('Print speed (mm/s)', 'Speed at which printing happens. A well adjusted Ultimaker can reach 150mm/s, but for good quality prints you want to print slower. Printing speed depends on a lot of factors. So you will be experimenting with optimal settings for this.')
-setting('print_temperature',         220, int,   'basic',    'Speed & Temperature').setRange(0,340).setLabel('Printing temperature (C)', 'Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required.')
-setting('print_temperature2',          0, int,   'basic',    'Speed & Temperature').setRange(0,340).setLabel('2nd nozzle temperature (C)', 'Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required.')
-setting('print_temperature3',          0, int,   'basic',    'Speed & Temperature').setRange(0,340).setLabel('3th nozzle temperature (C)', 'Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required.')
-setting('print_temperature4',          0, int,   'basic',    'Speed & Temperature').setRange(0,340).setLabel('4th nozzle temperature (C)', 'Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required.')
-setting('print_bed_temperature',      70, int,   'basic',    'Speed & Temperature').setRange(0,340).setLabel('Bed temperature (C)', 'Temperature used for the heated printer bed. Set at 0 to pre-heat yourself.')
-setting('support',                'None', ['None', 'Touching buildplate', 'Everywhere'], 'basic', 'Support').setLabel('Support type', 'Type of support structure build.\n"Touching buildplate" is the most commonly used support setting.\n\nNone does not do any support.\nTouching buildplate only creates support where the support structure will touch the build platform.\nEverywhere creates support even on top of parts of the model.')
-setting('platform_adhesion',      'None', ['None', 'Brim', 'Raft'], 'basic', 'Support').setLabel('Platform adhesion type', 'Different options that help in preventing corners from lifting due to warping.\nBrim adds a single layer thick flat area around your object which is easy to cut off afterwards, and the recommended option.\nRaft adds a thick raster at below the object and a thin interface between this and your object.\n(Note that enabling the brim or raft disables the skirt)')
-setting('support_dual_extrusion',  'Both', ['Both', 'First extruder', 'Second extruder'], 'basic', 'Support').setLabel('Support dual extrusion', 'Which extruder to use for support material, for break-away support you can use both extruders.\nBut if one of the materials is more expensive then the other you could select an extruder to use for support material. This causes more extruder switches.\nYou can also use the 2nd extruder for soluble support materials.')
-setting('filament_diameter',        2.85, float, 'basic',    'Filament').setRange(1).setLabel('Diameter (mm)', 'Diameter of your filament, as accurately as possible.\nIf you cannot measure this value you will have to calibrate it, a higher number means less extrusion, a smaller number generates more extrusion.')
-setting('filament_diameter2',          0, float, 'basic',    'Filament').setRange(0).setLabel('Diameter2 (mm)', 'Diameter of your filament for the 2nd nozzle. Use 0 to use the same diameter as for nozzle 1.')
-setting('filament_diameter3',          0, float, 'basic',    'Filament').setRange(0).setLabel('Diameter3 (mm)', 'Diameter of your filament for the 3th nozzle. Use 0 to use the same diameter as for nozzle 1.')
-setting('filament_diameter4',          0, float, 'basic',    'Filament').setRange(0).setLabel('Diameter4 (mm)', 'Diameter of your filament for the 4th nozzle. Use 0 to use the same diameter as for nozzle 1.')
-setting('filament_flow',            100., float, 'basic',    'Filament').setRange(1,300).setLabel('Flow (%)', 'Flow compensation, the amount of material extruded is multiplied by this value')
-setting('retraction_speed',         40.0, float, 'advanced', 'Retraction').setRange(0.1).setLabel('Speed (mm/s)', 'Speed at which the filament is retracted, a higher retraction speed works better. But a very high retraction speed can lead to filament grinding.')
-setting('retraction_amount',         4.5, float, 'advanced', 'Retraction').setRange(0).setLabel('Distance (mm)', 'Amount of retraction, set at 0 for no retraction at all. A value of 4.5mm seems to generate good results.')
-setting('retraction_dual_amount',   16.5, float, 'advanced', 'Retraction').setRange(0).setLabel('Dual extrusion switch amount (mm)', 'Amount of retraction when switching nozzle with dual-extrusion, set at 0 for no retraction at all. A value of 16.0mm seems to generate good results.')
-setting('retraction_min_travel',     1.5, float, 'expert',   'Retraction').setRange(0).setLabel('Minimum travel (mm)', 'Minimum amount of travel needed for a retraction to happen at all. To make sure you do not get a lot of retractions in a small area.')
-setting('retraction_combing',       True, bool,  'expert',   'Retraction').setLabel('Enable combing', 'Combing is the act of avoiding holes in the print for the head to travel over. If combing is disabled the printer head moves straight from the start point to the end point and it will always retract.')
-setting('retraction_minimal_extrusion',0.5, float,'expert',  'Retraction').setRange(0).setLabel('Minimal extrusion before retracting (mm)', 'The minimal amount of extrusion that needs to be done before retracting again if a retraction needs to happen before this minimal is reached the retraction is ignored.\nThis avoids retraction a lot on the same piece of filament which flattens the filament and causes grinding issues.')
-setting('bottom_thickness',          0.3, float, 'advanced', 'Quality').setRange(0).setLabel('Initial layer thickness (mm)', 'Layer thickness of the bottom layer. A thicker bottom layer makes sticking to the bed easier. Set to 0.0 to have the bottom layer thickness the same as the other layers.')
-setting('object_sink',               0.0, float, 'advanced', 'Quality').setLabel('Cut off object bottom (mm)', 'Sinks the object into the platform, this can be used for objects that do not have a flat bottom and thus create a too small first layer.')
+setting('layer_height',              0.1, float, 'basic',    '质量').setRange(0.0001).setLabel('层厚(mm)', '层厚的单位是毫米。\n这是影响打印质量最重要的设定。0.1mm用于普通质量的打印。\n0.05mm用于高质量的打印。0.2mm用于高速低质量的打印。')
+setting('wall_thickness',            0.4, float, 'basic',    '质量').setRange(0.0).setLabel('壁厚(mm)', '外壁水平方向上的厚度。\n取决于喷头直径和外壁周长。')
+setting('retraction_enable',       False, bool,  'basic',    '质量').setLabel('允许回滚', '在非打印区域时回滚丝料。具体的设定可以在高级打印设置菜单中设置。')
+setting('solid_layer_thickness',     0.9, float, 'basic',    '填充').setRange(0).setLabel('底部/顶部厚度 (mm)', '这个设定决定了顶部和底部的厚度，这里的数量是由顶部和底部实心层数来决定的。\n建议该设定和壁厚一起考虑，建议将顶部\底部厚度设置成壁厚的倍数。\n顶部\底部厚度接近于层厚是比较均衡的设定。')
+setting('fill_density',               20, float, 'basic',    '填充').setRange(0, 100).setLabel('填充率 (%)', '这个参数决定了模型的填充率，实体的填充率一般使用100％\n（一般用到90％足够了），空心体使用0％。\n20％的填充率对一般的模型通常是足够了。\n这个设定一般不影响外观，但会对模型强度造成影响。')
+setting('nozzle_size',               0.4, float, 'advanced', '设备尺寸').setRange(0.1,10).setLabel('喷头直径 (mm)', '喷头直径非常重要，喷头直径是用来计算在打印设定中\n您所选择的填充的线的宽度、外壁线宽以及壁厚。')
+setting('print_speed',                60, float, 'basic',    '速度与温度').setRange(1).setLabel('打印速度 (mm/s)', '打印速度的设置如果需要打印质量提高，可以适当降低打印\n速度。调整好的设备可以将速度提高到150mm/s。\n打印速度和很多因素有关，您需要仔细优化调整你的机器并选择一个合适的打印速度。')
+setting('print_temperature',         220, int,   'basic',    '速度与温度').setRange(0,340).setLabel('打印温度 (C)', '打印时喷头需要的温度设置为0时由用户自行预热。\nPLA一般采用220℃。\nABS一般设置为230℃或更高。')
+setting('print_temperature2',          0, int,   'basic',    '速度与温度').setRange(0,340).setLabel('第2喷头打印温度 (C)', '打印时喷头需要的温度设置为0时由用户自行预热。\nPLA一般采用220℃。\nABS一般设置为230℃或更高。')
+setting('print_temperature3',          0, int,   'basic',    '速度与温度').setRange(0,340).setLabel('第3喷头打印温度 (C)', '打印时喷头需要的温度设置为0时由用户自行预热。\nPLA一般采用220℃。\nABS一般设置为230℃或更高。')
+setting('print_temperature4',          0, int,   'basic',    '速度与温度').setRange(0,340).setLabel('第4喷头打印温度 (C)', '打印时喷头需要的温度设置为0时由用户自行预热。\nPLA一般采用220℃。\nABS一般设置为230℃或更高。')
+setting('print_bed_temperature',      70, int,   'basic',    '速度与温度').setRange(0,340).setLabel('加热板温度 (C)', '加热板温度，设置为0时由用户自行预热')
+setting('support',                'None', ['None', 'Touching buildplate', 'Everywhere'], 'basic', '支撑结构').setLabel('支撑类型', '支撑结构的类型\n"Touching buildplate" 是最常用的支撑结构。\nNone表示不打支撑结构 \n“Touching buildplate”支撑类型仅生成需要从底部到接触面的支撑结构。\n例如T型结构选择Touching buildplate。\n“Everywhere”支撑类型将全面生成支撑。\n例如F型结构选择Everywhere。')
+setting('platform_adhesion',      'None', ['None', 'Brim', 'Raft'], 'basic', '支撑结构').setLabel('平台粘附类型', '不同的选项来防止模型边角的翘曲。\nBrim边缘在整个模型外围增加一圈薄片，这些薄片可以被很容易剥离。推荐选项。\nraft剥离基层是在实体下的几层松散结构。\n（注意如果选择brim边缘或者raft剥离基层将会禁用裙边。）')
+setting('support_dual_extrusion',  False, bool, 'basic', '支撑结构').setLabel('支撑材料（第2喷头）', '在多喷头情况下，采用第2喷头作为支撑材料的打印。')
+setting('filament_diameter',        1.75, float, 'basic',    '材料').setRange(1).setLabel('线径 (mm)', '材料线径。\n如果你无法准确测量该值，你可以校准该值，数字越大，挤出越少，数字越小，挤出越多。')
+setting('filament_diameter2',          0, float, 'basic',    '材料').setRange(0).setLabel('第2喷头线径 (mm)', '第2喷头使用的材料线径，设为0表示和第1喷头使用相同的线径。')
+setting('filament_diameter3',          0, float, 'basic',    '材料').setRange(0).setLabel('第3喷头线径 (mm)', '第3喷头使用的材料线径，设为0表示和第1喷头使用相同的线径。')
+setting('filament_diameter4',          0, float, 'basic',    '材料').setRange(0).setLabel('第4喷头线径 (mm)', '第4喷头使用的材料线径，设为0表示和第1喷头使用相同的线径。')
+setting('filament_flow',            100., float, 'basic',    '材料').setRange(1,300).setLabel('流量 (%)', '流量补偿, 挤出量是原设定值与该值相乘的结果。')
+#setting('retraction_min_travel',     5.0, float, 'advanced', 'Retraction').setRange(0).setLabel('Minimum travel (mm)', 'Minimum amount of travel needed for a retraction to happen at all. To make sure you do not get a lot of retractions in a small area')
+setting('retraction_speed',         60.0, float, 'advanced', '回滚').setRange(0.1).setLabel('回滚速度 (mm/s)', '回滚速度是指线材回滚的速度。高速回滚能够使拉丝减轻，但太高速易导致线材磨损。')
+setting('retraction_amount',         4.5, float, 'advanced', '回滚').setRange(0).setLabel('回滚距离 (mm)', '线材回滚的距离，设置为0则不回滚，4.5mm的回滚距离效果一般不错')
+#setting('retraction_extra',          0.0, float, 'advanced', 'Retraction').setRange(0).setLabel('Extra length on start (mm)', 'Extra extrusion amount when restarting after a retraction, to better "Prime" your extruder after retraction.')
+setting('retraction_dual_amount',   16.5, float, 'advanced', '回滚').setRange(0).setLabel('双头切换回滚距离 (mm)', '在多喷头情况下，切换喷头时回滚丝料的距离。\n设为0表示完全不回滚。设为16.5mm一般效果较好。')
+setting('bottom_thickness',          0.2, float, 'advanced', '质量').setRange(0).setLabel('初始层高度 (mm)', '底层的厚度，厚一些能和底板粘的更牢。设为0则厚度和其他层相同。')
+setting('object_sink',               0.0, float, 'advanced', '质量').setLabel('底部切除距离(mm)', '将模型下沉至平台下部，切除部分模型。\n一般用于模型没有一个较大平面，不利于打印，\n利用此功能可以形成一个较理想的平面，提高打印成功率。')
 #setting('enable_skin',             False, bool,  'advanced', 'Quality').setLabel('Duplicate outlines', 'Skin prints the outer lines of the prints twice, each time with half the thickness. This gives the illusion of a higher print quality.')
-setting('overlap_dual',              0.2, float, 'advanced', 'Quality').setLabel('Dual extrusion overlap (mm)', 'Add a certain amount of overlapping extrusion on dual-extrusion prints. This bonds the different colors better together.')
-setting('travel_speed',            150.0, float, 'advanced', 'Speed').setRange(0.1).setLabel('Travel speed (mm/s)', 'Speed at which travel moves are done, a high quality build Ultimaker can reach speeds of 250mm/s. But some machines might miss steps then.')
-setting('bottom_layer_speed',         20, float, 'advanced', 'Speed').setRange(0.1).setLabel('Bottom layer speed (mm/s)', 'Print speed for the bottom layer, you want to print the first layer slower so it sticks better to the printer bed.')
-setting('infill_speed',              0.0, float, 'advanced', 'Speed').setRange(0.0).setLabel('Infill speed (mm/s)', 'Speed at which infill parts are printed. If set to 0 then the print speed is used for the infill. Printing the infill faster can greatly reduce printing, but this can negatively effect print quality..')
-setting('cool_min_layer_time',         5, float, 'advanced', 'Cool').setRange(0).setLabel('Minimal layer time (sec)', 'Minimum time spend in a layer, gives the layer time to cool down before the next layer is put on top. If the layer will be placed down too fast the printer will slow down to make sure it has spend at least this amount of seconds printing this layer.')
-setting('fan_enabled',              True, bool,  'advanced', 'Cool').setLabel('Enable cooling fan', 'Enable the cooling fan during the print. The extra cooling from the cooling fan is essential during faster prints.')
+setting('overlap_dual',              0.2, float, 'advanced', '质量').setLabel('双头重叠量 (mm)', '在双头打印时增加一定量的重叠部分，这对用两种颜色打印的情况有帮助。')
+setting('travel_speed',            150.0, float, 'advanced', '速度').setRange(0.1).setLabel('空驶速度 (mm/s)', '非打印时移动速度，一般不建议设置超过250mm/s。超过这个数值可能会失步。')
+setting('bottom_layer_speed',         40, float, 'advanced', '速度').setRange(0.1).setLabel('底层打印速度 (mm/s)', '底层打印速度，降低第一层的打印速度可以使打印件更好的和打印平台粘结更好。')
+setting('infill_speed',              120, float, 'advanced', '速度').setRange(0.0).setLabel('填充速度 (mm/s)', '打印填充时的速度。如果设成0，则填充速度和打印速度相同。\n填充打印速度增快可以显著的降低打印时间，但是可能会对打印效果产生负面影响。')
+setting('cool_min_layer_time',         5, float, 'advanced', '冷却设定').setRange(0).setLabel('层最小打印时间 (sec)', '每层最短时间，每次打印下一层之前留够足够的时间来冷却。\n如果打印的太快，将会降低打印速度延长时间来确保冷却。')
+setting('fan_enabled',              True, bool,  'advanced', '冷却设定').setLabel('允许风扇冷却', '允许在打印时用风扇进行冷却。快速打印时风扇是必要的选项。')
 
-setting('skirt_line_count',            1, int,   'expert', 'Skirt').setRange(0).setLabel('Line count', 'The skirt is a line drawn around the object at the first layer. This helps to prime your extruder, and to see if the object fits on your platform.\nSetting this to 0 will disable the skirt. Multiple skirt lines can help priming your extruder better for small objects.')
-setting('skirt_gap',                 3.0, float, 'expert', 'Skirt').setRange(0).setLabel('Start distance (mm)', 'The distance between the skirt and the first layer.\nThis is the minimal distance, multiple skirt lines will be put outwards from this distance.')
-setting('skirt_minimal_length',    150.0, float, 'expert', 'Skirt').setRange(0).setLabel('Minimal length (mm)', 'The minimal length of the skirt, if this minimal length is not reached it will add more skirt lines to reach this minimal lenght.\nNote: If the line count is set to 0 this is ignored.')
+setting('skirt_line_count',            3, int,   'expert', '裙边').setRange(0).setLabel('圈数', '裙边是在打印模型前第一层上围绕模型打印的线。\n这是为了喷头预挤出并帮助查看平台是否适合打印。\n设置为0即表示取消裙边。打印小物体时可设置\n更大的值来帮助预挤出。')
+setting('skirt_gap',                 3.0, float, 'expert', '裙边').setRange(0).setLabel('间距 (mm)', '裙边与模型第一层的距离。\n这是最小距离，若需要更多裙边，\n则会在此距离上向外扩展打印裙边。')
 #setting('max_z_speed',               3.0, float, 'expert',   'Speed').setRange(0.1).setLabel('Max Z speed (mm/s)', 'Speed at which Z moves are done. When you Z axis is properly lubricated you can increase this for less Z blob.')
 #setting('retract_on_jumps_only',    True, bool,  'expert',   'Retraction').setLabel('Retract on jumps only', 'Only retract when we are making a move that is over a hole in the model, else retract on every move. This effects print quality in different ways.')
-setting('fan_layer',                   1, int,   'expert',   'Cool').setRange(0).setLabel('Fan on layer number', 'The layer at which the fan is turned on. The first layer is layer 0. The first layer can stick better if you turn on the fan on, on the 2nd layer.')
-setting('fan_speed',                 100, int,   'expert',   'Cool').setRange(0,100).setLabel('Fan speed min (%)', 'When the fan is turned on, it is enabled at this speed setting. If cool slows down the layer, the fan is adjusted between the min and max speed. Minimal fan speed is used if the layer is not slowed down due to cooling.')
-setting('fan_speed_max',             100, int,   'expert',   'Cool').setRange(0,100).setLabel('Fan speed max (%)', 'When the fan is turned on, it is enabled at this speed setting. If cool slows down the layer, the fan is adjusted between the min and max speed. Maximal fan speed is used if the layer is slowed down due to cooling by more than 200%.')
-setting('cool_min_feedrate',          10, float, 'expert',   'Cool').setRange(0).setLabel('Minimum speed (mm/s)', 'The minimal layer time can cause the print to slow down so much it starts to ooze. The minimal feedrate protects against this. Even if a print gets slown down it will never be slower than this minimal speed.')
-setting('cool_head_lift',          False, bool,  'expert',   'Cool').setLabel('Cool head lift', 'Lift the head if the minimal speed is hit because of cool slowdown, and wait the extra time so the minimal layer time is always hit.')
+setting('fan_layer',                   1, int,   'expert',   '冷却设定').setRange(0).setLabel('风扇启动层数', '风扇将在设定层启动。第一层的设置值是0。建议可以在第一层关闭风扇以帮助更好地黏在底板上，并在第二层开启风扇。')
+setting('fan_speed',                 100, int,   'expert',   '冷却设定').setRange(0,100).setLabel('风扇最小风速 (%)', '当冷却风扇被启动时，这个设定将起作用。开启风扇冷却时，会自动根据温度来调整风速，调整的范围将在最大和最小风速之间自动调节。如果冷却不会降低打印速度，就会启动风扇最小风速。')
+setting('fan_speed_max',             100, int,   'expert',   '冷却设定').setRange(0,100).setLabel('风扇最大风速 (%)', '当冷却风扇被启动时，这个设定将起作用。风扇冷却时，会自动根据温度来调整风速，调整的范围将在最大和最小风速之间自动调节。冷却效果可以设定为200%。')
+setting('cool_min_feedrate',          10, float, 'expert',   '冷却设定').setRange(0).setLabel('最低速度（ (mm/s)', '最少层花的时间会使打印速度降低很多，这样喷头的材料就会溢出。最小进料速度就会防止这个问题发生。即使是打印速度变慢也不会低于这个最低速度。')
+setting('cool_head_lift',          False, bool,  'expert',   '冷却设定').setLabel('抬高打印头冷却', '打印时为确保冷却时间将打印速度降低到最低速度时\n仍不能保证冷却时间时，就抬高打印头，并等一段时间来确保达到打印最少层的时间。')
 #setting('extra_base_wall_thickness', 0.0, float, 'expert',   'Accuracy').setRange(0).setLabel('Extra Wall thickness for bottom/top (mm)', 'Additional wall thickness of the bottom and top layers.')
 #setting('sequence', 'Loops > Perimeter > Infill', ['Loops > Perimeter > Infill', 'Loops > Infill > Perimeter', 'Infill > Loops > Perimeter', 'Infill > Perimeter > Loops', 'Perimeter > Infill > Loops', 'Perimeter > Loops > Infill'], 'expert', 'Sequence')
 #setting('force_first_layer_sequence', True, bool, 'expert', 'Sequence').setLabel('Force first layer sequence', 'This setting forces the order of the first layer to be \'Perimeter > Loops > Infill\'')
 #setting('infill_type', 'Line', ['Line', 'Grid Circular', 'Grid Hexagonal', 'Grid Rectangular'], 'expert', 'Infill').setLabel('Infill pattern', 'Pattern of the none-solid infill. Line is default, but grids can provide a strong print.')
-setting('solid_top', True, bool, 'expert', 'Infill').setLabel('Solid infill top', 'Create a solid top surface, if set to false the top is filled with the fill percentage. Useful for cups/vases.')
-setting('solid_bottom', True, bool, 'expert', 'Infill').setLabel('Solid infill bottom', 'Create a solid bottom surface, if set to false the bottom is filled with the fill percentage. Useful for buildings.')
-setting('fill_overlap', 15, int, 'expert', 'Infill').setRange(0,100).setLabel('Infill overlap (%)', 'Amount of overlap between the infill and the walls. There is a slight overlap with the walls and the infill so the walls connect firmly to the infill.')
-setting('support_rate', 75, int, 'expert', 'Support').setRange(0,100).setLabel('Material amount (%)', 'Amount of material used for support, less material gives a weaker support structure which is easier to remove.')
+setting('solid_top', True, bool, 'expert', '填充').setLabel('顶部实心填充', '在顶部进行实心填充，如果不勾选，将以填充率填充。适用于打印杯或瓶。')
+setting('solid_bottom', True, bool, 'expert', '填充').setLabel('底部实心填充', '在底部进行实心填充，如果不勾选，将以填充率填充。适用于打印建筑。')
+setting('fill_overlap', 15, int, 'expert', '填充').setRange(0,100).setLabel('重叠填充率 (%)', '内部填充与内外壁的重叠比例。轻微的重叠填充能使结构更坚固。')
+setting('support_rate', 60, int, 'expert', '支撑').setRange(0,100).setLabel('材料用量 (%)', '用于支撑的材料用量。较少材料会使支撑更脆弱，也更容易去除。')
 #setting('support_distance',  0.5, float, 'expert', 'Support').setRange(0).setLabel('Distance from object (mm)', 'Distance between the support structure and the object. Empty gap in which no support structure is printed.')
 #setting('joris', False, bool, 'expert', 'Joris').setLabel('Spiralize the outer contour', '[Joris] is a code name for smoothing out the Z move of the outer edge. This will create a steady Z increase over the whole print. It is intended to be used with a single walled wall thickness to make cups/vases.')
 #setting('bridge_speed', 100, int, 'expert', 'Bridge').setRange(0,100).setLabel('Bridge speed (%)', 'Speed at which layers with bridges are printed, compared to normal printing speed.')
-setting('brim_line_count', 20, int, 'expert', 'Brim').setRange(1,100).setLabel('Brim line amount', 'The amount of lines used for a brim, more lines means a larger brim which sticks better, but this also makes your effective print area smaller.')
-setting('raft_margin', 5, float, 'expert', 'Raft').setRange(0).setLabel('Extra margin (mm)', 'If the raft is enabled, this is the extra raft area around the object which is also rafted. Increasing this margin will create a stronger raft while using more material and leaving less are for your print.')
-setting('raft_line_spacing', 1.0, float, 'expert', 'Raft').setRange(0).setLabel('Line spacing (mm)', 'When you are using the raft this is the distance between the centerlines of the raft line.')
-setting('raft_base_thickness', 0.3, float, 'expert', 'Raft').setRange(0).setLabel('Base thickness (mm)', 'When you are using the raft this is the thickness of the base layer which is put down.')
-setting('raft_base_linewidth', 0.7, float, 'expert', 'Raft').setRange(0).setLabel('Base line width (mm)', 'When you are using the raft this is the width of the base layer lines which are put down.')
-setting('raft_interface_thickness', 0.2, float, 'expert', 'Raft').setRange(0).setLabel('Interface thickness (mm)', 'When you are using the raft this is the thickness of the interface layer which is put down.')
-setting('raft_interface_linewidth', 0.2, float, 'expert', 'Raft').setRange(0).setLabel('Interface line width (mm)', 'When you are using the raft this is the width of the interface layer lines which are put down.')
+setting('brim_line_count', 20, int, 'expert', '边缘').setRange(1,100).setLabel('边缘线数量', '用于打印边缘的线的数量。多的话可以形成更大的边缘使得粘附力更强，但有效打印面积会缩小。')
+setting('raft_margin', 5, float, 'expert', '剥离基层').setRange(0).setLabel('额外边缘 (mm)', '如果选择使用剥离基层，则额外边缘将决定在已经有剥离基层的物体外围额外的支撑距离。当你打印需要耗用较多材料而打印件使用的材料不多时，增加边缘数量会使得剥离基层的强度加强。')
+setting('raft_line_spacing', 1.0, float, 'expert', '剥离基层').setRange(0).setLabel('行距 (mm)', '这是使用剥离基层时剥离基层打印线的中心线的距离。')
+setting('raft_base_thickness', 0.3, float, 'expert', '剥离基层').setRange(0).setLabel('基础层厚度 (mm)', '这是使用剥离基层时所打印出的基础层厚度。')
+setting('raft_base_linewidth', 0.7, float, 'expert', '剥离基层').setRange(0).setLabel('基础层线宽 (mm)', '这是使用剥离基层时所打印出的基础层线宽。')
+setting('raft_interface_thickness', 0.2, float, 'expert', '剥离基层').setRange(0).setLabel('接触面厚度 (mm)', '这是使用剥离基层时所打印出的接触面厚度。')
+setting('raft_interface_linewidth', 0.2, float, 'expert', '剥离基层').setRange(0).setLabel('接触面线宽 (mm)', '这是使用剥离基层时所打印出的接触面线宽。')
 #setting('hop_on_move', False, bool, 'expert', 'Hop').setLabel('Enable hop on move', 'When moving from print position to print position, raise the printer head 0.2mm so it does not knock off the print (experimental).')
-setting('fix_horrible_union_all_type_a', False, bool, 'expert', 'Fix horrible').setLabel('Combine everything (Type-A)', 'This expert option adds all parts of the model together. The result is usually that internal cavities disappear. Depending on the model this can be intended or not. Enabling this option is at your own risk. Type-A is depended on the model normals and tries to keep some internal holes intact. Type-B ignores all internal holes and only keeps the outside shape per layer.')
-setting('fix_horrible_union_all_type_b', False, bool, 'expert', 'Fix horrible').setLabel('Combine everything (Type-B)', 'This expert option adds all parts of the model together. The result is usually that internal cavities disappear. Depending on the model this can be intended or not. Enabling this option is at your own risk. Type-A is depended on the model normals and tries to keep some internal holes intact. Type-B ignores all internal holes and only keeps the outside shape per layer.')
-setting('fix_horrible_use_open_bits', False, bool, 'expert', 'Fix horrible').setLabel('Keep open faces', 'This expert option keeps all the open bits of the model intact. Normally Cura tries to stitch up small holes and remove everything with big holes, but this option keeps bits that are not properly part of anything and just goes with whatever it is left. This option is usually not what you want, but it might enable you to slice models otherwise failing to produce proper paths.\nAs with all "Fix horrible" options, results may vary and use at your own risk.')
-setting('fix_horrible_extensive_stitching', False, bool, 'expert', 'Fix horrible').setLabel('Extensive stitching', 'Extrensive stitching tries to fix up open holes in the model by closing the hole with touching polygons. This algorthm is quite expensive and could introduce a lot of processing time.\nAs with all "Fix horrible" options, results may vary and use at your own risk.')
+setting('fix_horrible_union_all_type_a', False, bool, 'expert', '极端修复').setLabel('模型合并 (Type-A)', '这个高级选项是把模型的所有部分结合起来。有时打印会使模型内部腔体消失。\n这个选项可以让你选择是否体现内部腔体。\n您要自行承担选择这个选项的风险。\nA型号基于模型的法向并试图保持内部孔的完整。B型号忽略了内部所有的孔洞，\n以保证模型表面的形状。')
+setting('fix_horrible_union_all_type_b', False, bool, 'expert', '极端修复').setLabel('模型合并 (Type-B)', '这个高级选项是把模型的所有部分结合起来。有时打印会使模型内部腔体消失。\n这个选项可以让你选择是否体现内部腔体。\n您要自行承担选择这个选项的风险。\nA型号基于模型的法向并试图保持内部孔的完整。B型号忽略了内部所有的孔洞，\n以保证模型表面的形状。')
+setting('fix_horrible_use_open_bits', False, bool, 'expert', '极端修复').setLabel('开放面', '这个高级选项完整地保持了完整模型的开孔处。一般来说Cura会尽量填补小的孔隙，\n并用大孔来去除所有内部细节，但这个选项会保留所有的缝隙并按原有形态进行。\n这个选项通常你不会用到，选中这个选项有可能解决以前不能生成合适路径的模型的问题。\n所有的极端修复的选项都会产生很奇怪的情况，你必须自行承担这个风险。')
+setting('fix_horrible_extensive_stitching', False, bool, 'expert', '极端修复').setLabel('封闭间隙', '封闭间隙选项通过构造多边形来帮助封闭和修复开放面、孔洞等。这个算法计算开销很大，会增加很多的生成时间。\n所有的极端修复的选项都会产生很奇怪的情况，你必须自行承担这个风险。')
 
 setting('plugin_config', '', str, 'hidden', 'hidden')
 setting('object_center_x', -1, float, 'hidden', 'hidden')
@@ -294,45 +292,44 @@ G92 E0
 
 setting('startMode', 'Simple', ['Simple', 'Normal'], 'preference', 'hidden')
 setting('lastFile', os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'resources', 'example', 'UltimakerRobot_support.stl')), str, 'preference', 'hidden')
-setting('machine_width', '205', float, 'preference', 'hidden').setLabel('Maximum width (mm)', 'Size of the machine in mm')
-setting('machine_depth', '205', float, 'preference', 'hidden').setLabel('Maximum depth (mm)', 'Size of the machine in mm')
-setting('machine_height', '200', float, 'preference', 'hidden').setLabel('Maximum height (mm)', 'Size of the machine in mm')
+setting('machine_width', '205', float, 'preference', 'hidden').setLabel('最大打印宽度 (mm)', '打印尺寸，以毫米计。')
+setting('machine_depth', '205', float, 'preference', 'hidden').setLabel('最大打印深度 (mm)', '打印尺寸，以毫米计。')
+setting('machine_height', '200', float, 'preference', 'hidden').setLabel('最大打印高度 (mm)', '打印尺寸，以毫米计。')
 setting('machine_type', 'unknown', str, 'preference', 'hidden')
 setting('machine_center_is_zero', 'False', bool, 'preference', 'hidden')
 setting('ultimaker_extruder_upgrade', 'False', bool, 'preference', 'hidden')
-setting('has_heated_bed', 'False', bool, 'preference', 'hidden').setLabel('Heated bed', 'If you have an heated bed, this enabled heated bed settings (requires restart)')
-setting('machine_type', 'unknown', str, 'preference', 'hidden')
-setting('gcode_flavor', 'RepRap (Marlin/Sprinter)', ['RepRap (Marlin/Sprinter)', 'UltiGCode'], 'preference', 'hidden').setLabel('GCode Flavor', 'Flavor of generated GCode.\nRepRap...')
-setting('extruder_amount', '1', ['1','2','3','4'], 'preference', 'hidden').setLabel('Extruder count', 'Amount of extruders in your machine.')
-setting('extruder_offset_x1', '-21.6', float, 'preference', 'hidden').setLabel('Offset X', 'The offset of your secondary extruder compared to the primary.')
-setting('extruder_offset_y1', '0.0', float, 'preference', 'hidden').setLabel('Offset Y', 'The offset of your secondary extruder compared to the primary.')
-setting('extruder_offset_x2', '0.0', float, 'preference', 'hidden').setLabel('Offset X', 'The offset of your secondary extruder compared to the primary.')
-setting('extruder_offset_y2', '0.0', float, 'preference', 'hidden').setLabel('Offset Y', 'The offset of your secondary extruder compared to the primary.')
-setting('extruder_offset_x3', '0.0', float, 'preference', 'hidden').setLabel('Offset X', 'The offset of your secondary extruder compared to the primary.')
-setting('extruder_offset_y3', '0.0', float, 'preference', 'hidden').setLabel('Offset Y', 'The offset of your secondary extruder compared to the primary.')
-setting('filament_physical_density', '1240', float, 'preference', 'hidden').setRange(500.0, 3000.0).setLabel('Density (kg/m3)', 'Weight of the filament per m3. Around 1240 for PLA. And around 1040 for ABS. This value is used to estimate the weight if the filament used for the print.')
-setting('steps_per_e', '0', float, 'preference', 'hidden').setLabel('E-Steps per 1mm filament', 'Amount of steps per mm filament extrusion. If set to 0 then this value is ignored and the value in your firmware is used.')
-setting('serial_port', 'AUTO', str, 'preference', 'hidden').setLabel('Serial port', 'Serial port to use for communication with the printer')
+setting('has_heated_bed', 'False', bool, 'preference', 'hidden').setLabel('加热平台', '如有加热平台，请勾选此项（需要重启）。')
+setting('reprap_name', 'RepRap', str, 'preference', 'hidden')
+setting('extruder_amount', '1', ['1','2','3','4'], 'preference', 'hidden').setLabel('喷头数', '打印机喷头数量。')
+setting('extruder_offset_x1', '-21.6', float, 'preference', 'hidden').setLabel('X轴偏移', '相对于主喷头在X轴方向的偏移。')
+setting('extruder_offset_y1', '0.0', float, 'preference', 'hidden').setLabel('Y轴偏移', '相对于主喷头在Y轴方向的偏移。')
+setting('extruder_offset_x2', '0.0', float, 'preference', 'hidden').setLabel('X轴偏移', '相对于主喷头在X轴方向的偏移。')
+setting('extruder_offset_y2', '0.0', float, 'preference', 'hidden').setLabel('Y轴偏移', '相对于主喷头在Y轴方向的偏移。')
+setting('extruder_offset_x3', '0.0', float, 'preference', 'hidden').setLabel('X轴偏移', '相对于主喷头在X轴方向的偏移。')
+setting('extruder_offset_y3', '0.0', float, 'preference', 'hidden').setLabel('Y轴偏移', '相对于主喷头在Y轴方向的偏移。')
+setting('filament_physical_density', '1240', float, 'preference', 'hidden').setRange(500.0, 3000.0).setLabel('密度 (kg/m3)', '每立方米材料的重量。PLA大约是1250，ABS是1040左右。这个值是用于估测打印材料的重量。')
+setting('steps_per_e', '0', float, 'preference', 'hidden').setLabel('E-Steps值', '每毫米丝料挤出步进数，假如设置为0，则该值会被忽略并直接使用你固件中的值。')
+setting('serial_port', 'AUTO', str, 'preference', 'hidden').setLabel('串口号', '打印机通信串口号。')
 setting('serial_port_auto', '', str, 'preference', 'hidden')
-setting('serial_baud', 'AUTO', str, 'preference', 'hidden').setLabel('Baudrate', 'Speed of the serial port communication\nNeeds to match your firmware settings\nCommon values are 250000, 115200, 57600')
+setting('serial_baud', 'AUTO', str, 'preference', 'hidden').setLabel('波特率', '匹配固件设定的波特率，\n通常数值为250000，115200，57600。')
 setting('serial_baud_auto', '', int, 'preference', 'hidden')
 setting('save_profile', 'False', bool, 'preference', 'hidden').setLabel('Save profile on slice', 'When slicing save the profile as [stl_file]_profile.ini next to the model.')
-setting('filament_cost_kg', '0', float, 'preference', 'hidden').setLabel('Cost (price/kg)', 'Cost of your filament per kg, to estimate the cost of the final print.')
-setting('filament_cost_meter', '0', float, 'preference', 'hidden').setLabel('Cost (price/m)', 'Cost of your filament per meter, to estimate the cost of the final print.')
-setting('auto_detect_sd', 'True', bool, 'preference', 'hidden').setLabel('Auto detect SD card drive', 'Auto detect the SD card. You can disable this because on some systems external hard-drives or USB sticks are detected as SD card.')
-setting('check_for_updates', 'True', bool, 'preference', 'hidden').setLabel('Check for updates', 'Check for newer versions of Cura on startup')
-setting('submit_slice_information', 'False', bool, 'preference', 'hidden').setLabel('Send usage statistics', 'Submit anonymous usage information to improve next versions of Cura')
+setting('filament_cost_kg', '0', float, 'preference', 'hidden').setLabel('成本 (price/kg)', '每千克材料的费，用来估计最终打印的花费。')
+setting('filament_cost_meter', '0', float, 'preference', 'hidden').setLabel('成本 (price/m)', '每米材料的费，用来估计最终打印的花费。')
+setting('auto_detect_sd', 'True', bool, 'preference', 'hidden').setLabel('自动检测SD卡', '自动检测SD卡。如果在一些系统中外置硬盘和u盘被认为是SD卡，可取消该选项。')
+setting('check_for_updates', 'True', bool, 'preference', 'hidden').setLabel('检查更新', '在启动时检测到更新的Cura版本。')
+setting('submit_slice_information', 'False', bool, 'preference', 'hidden').setLabel('发送使用的统计信息', '发送匿名的使用信息来改善下个Cura版本。')
 
-setting('extruder_head_size_min_x', '0.0', float, 'preference', 'hidden').setLabel('Head size towards X min (mm)', 'The head size when printing multiple objects, measured from the tip of the nozzle towards the outer part of the head. 75mm for an Ultimaker if the fan is on the left side.')
-setting('extruder_head_size_min_y', '0.0', float, 'preference', 'hidden').setLabel('Head size towards Y min (mm)', 'The head size when printing multiple objects, measured from the tip of the nozzle towards the outer part of the head. 18mm for an Ultimaker if the fan is on the left side.')
-setting('extruder_head_size_max_x', '0.0', float, 'preference', 'hidden').setLabel('Head size towards X max (mm)', 'The head size when printing multiple objects, measured from the tip of the nozzle towards the outer part of the head. 18mm for an Ultimaker if the fan is on the left side.')
-setting('extruder_head_size_max_y', '0.0', float, 'preference', 'hidden').setLabel('Head size towards Y max (mm)', 'The head size when printing multiple objects, measured from the tip of the nozzle towards the outer part of the head. 35mm for an Ultimaker if the fan is on the left side.')
-setting('extruder_head_size_height', '0.0', float, 'preference', 'hidden').setLabel('Printer gantry height (mm)', 'The height of the gantry holding up the printer head. If an object is higher then this then you cannot print multiple objects one for one. 60mm for an Ultimaker.')
+setting('extruder_head_size_min_x', '75.0', float, 'preference', 'hidden').setLabel('打印头X轴左边距 (mm)', '打印多个物件时，从喷嘴顶端到风扇左边框的距离。\n风扇位于左边的时候，在Ultimaker和DreamMaker上使用的是75mm。')
+setting('extruder_head_size_min_y', '18.0', float, 'preference', 'hidden').setLabel('打印头Y轴下边距 (mm)', '打印多个物件时，从喷嘴顶端到打印头到Y轴下边框的距离。\n风扇位于左边的时候，在Ultimaker和DreamMaker上使用的是18mm。')
+setting('extruder_head_size_max_x', '18.0', float, 'preference', 'hidden').setLabel('打印头X轴右边距(mm)', '打印多个物件时，从喷嘴顶端到打印头到x轴右边框的距离。\n风扇位于左边的时候，在Ultimaker和DreamMaker上使用的是18mm。')
+setting('extruder_head_size_max_y', '35.0', float, 'preference', 'hidden').setLabel('打印头Y轴上边距 (mm)', '打印多个物件时，从喷嘴顶端到打印头到Y轴上边框的距离。\n风扇位于左边的时候，在Ultimaker和DreamMaker上使用的是35mm。')
+setting('extruder_head_size_height', '60.0', float, 'preference', 'hidden').setLabel('打印头机架高度 (mm)', '打印头机架光杆高度，若物体超过此高度就不能依次单独打印多个物体。\n在Ultimaker和DreamMaker上使用的是60mm。')
 
-setting('model_colour', '#7AB645', str, 'preference', 'hidden').setLabel('Model colour')
-setting('model_colour2', '#CB3030', str, 'preference', 'hidden').setLabel('Model colour (2)')
-setting('model_colour3', '#DDD93C', str, 'preference', 'hidden').setLabel('Model colour (3)')
-setting('model_colour4', '#4550D3', str, 'preference', 'hidden').setLabel('Model colour (4)')
+setting('model_colour', '#7AB645', str, 'preference', 'hidden').setLabel('模型颜色')
+setting('model_colour2', '#CB3030', str, 'preference', 'hidden').setLabel('模型颜色 (2)')
+setting('model_colour3', '#DDD93C', str, 'preference', 'hidden').setLabel('模型颜色 (3)')
+setting('model_colour4', '#4550D3', str, 'preference', 'hidden').setLabel('模型颜色 (4)')
 
 setting('window_maximized', 'True', bool, 'preference', 'hidden')
 setting('window_pos_x', '-1', float, 'preference', 'hidden')
@@ -341,22 +338,20 @@ setting('window_width', '-1', float, 'preference', 'hidden')
 setting('window_height', '-1', float, 'preference', 'hidden')
 setting('window_normal_sash', '320', float, 'preference', 'hidden')
 
-validators.warningAbove(settingsDictionary['filament_flow'], 150, "More flow then 150% is rare and usually not recommended.")
-validators.warningBelow(settingsDictionary['filament_flow'], 50, "More flow then 50% is rare and usually not recommended.")
-validators.warningAbove(settingsDictionary['layer_height'], lambda : (float(getProfileSetting('nozzle_size')) * 80.0 / 100.0), "Thicker layers then %.2fmm (80%% nozzle size) usually give bad results and are not recommended.")
+validators.warningAbove(settingsDictionary['layer_height'], lambda : (float(getProfileSetting('nozzle_size')) * 80.0 / 100.0), "层厚超过 %.2fmm (80%% 喷头直径) 通常效果较差，不推荐使用")
 validators.wallThicknessValidator(settingsDictionary['wall_thickness'])
-validators.warningAbove(settingsDictionary['print_speed'], 150.0, "It is highly unlikely that your machine can achieve a printing speed above 150mm/s")
+validators.warningAbove(settingsDictionary['print_speed'], 150.0, "如果您的打印机没有经过仔细优化，强烈建议打印速度不要超过150mm/s")
 validators.printSpeedValidator(settingsDictionary['print_speed'])
-validators.warningAbove(settingsDictionary['print_temperature'], 260.0, "Temperatures above 260C could damage your machine, be careful!")
-validators.warningAbove(settingsDictionary['print_temperature2'], 260.0, "Temperatures above 260C could damage your machine, be careful!")
-validators.warningAbove(settingsDictionary['print_temperature3'], 260.0, "Temperatures above 260C could damage your machine, be careful!")
-validators.warningAbove(settingsDictionary['print_temperature4'], 260.0, "Temperatures above 260C could damage your machine, be careful!")
-validators.warningAbove(settingsDictionary['filament_diameter'], 3.5, "Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm.")
-validators.warningAbove(settingsDictionary['filament_diameter2'], 3.5, "Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm.")
-validators.warningAbove(settingsDictionary['filament_diameter3'], 3.5, "Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm.")
-validators.warningAbove(settingsDictionary['filament_diameter4'], 3.5, "Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm.")
-validators.warningAbove(settingsDictionary['travel_speed'], 300.0, "It is highly unlikely that your machine can achieve a travel speed above 300mm/s")
-validators.warningAbove(settingsDictionary['bottom_thickness'], lambda : (float(getProfileSetting('nozzle_size')) * 3.0 / 4.0), "A bottom layer of more then %.2fmm (3/4 nozzle size) usually give bad results and is not recommended.")
+validators.warningAbove(settingsDictionary['print_temperature'], 260.0, "超过260℃可能会损坏您的打印机，请小心设定!")
+validators.warningAbove(settingsDictionary['print_temperature2'], 260.0, "超过260℃可能会损坏您的打印机，请小心设定!")
+validators.warningAbove(settingsDictionary['print_temperature3'], 260.0, "超过260℃可能会损坏您的打印机，请小心设定!")
+validators.warningAbove(settingsDictionary['print_temperature4'], 260.0, "超过260℃可能会损坏您的打印机，请小心设定!")
+validators.warningAbove(settingsDictionary['filament_diameter'], 3.5, "您确定您的丝料直径有那么大吗？普通的材料应该在3mm或者1.75mm左右！")
+validators.warningAbove(settingsDictionary['filament_diameter2'], 3.5, "您确定您的丝料直径有那么大吗？普通的材料应该在3mm或者1.75mm左右！")
+validators.warningAbove(settingsDictionary['filament_diameter3'], 3.5, "您确定您的丝料直径有那么大吗？普通的材料应该在3mm或者1.75mm左右！")
+validators.warningAbove(settingsDictionary['filament_diameter4'], 3.5, "您确定您的丝料直径有那么大吗？普通的材料应该在3mm或者1.75mm左右！")
+validators.warningAbove(settingsDictionary['travel_speed'], 300.0, "如果您的打印机没有经过仔细优化，强烈建议打印速度不要超过300mm/s")
+validators.warningAbove(settingsDictionary['bottom_thickness'], lambda : (float(getProfileSetting('nozzle_size')) * 3.0 / 4.0), "底层超过 %.2fmm (3/4 喷头直径) 通常效果较差，不推荐使用。")
 
 #Conditions for multiple extruders
 settingsDictionary['print_temperature2'].addCondition(lambda : int(getPreference('extruder_amount')) > 1)
@@ -370,21 +365,6 @@ settingsDictionary['retraction_dual_amount'].addCondition(lambda : int(getPrefer
 #Heated bed
 settingsDictionary['print_bed_temperature'].addCondition(lambda : getPreference('has_heated_bed') == 'True')
 
-#UltiGCode uses less settings
-settingsDictionary['print_temperature'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['print_temperature2'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['print_temperature3'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['print_temperature4'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['filament_diameter'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['filament_diameter2'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['filament_diameter3'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['filament_diameter4'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['filament_flow'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['print_bed_temperature'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['retraction_speed'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['retraction_amount'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-settingsDictionary['retraction_dual_amount'].addCondition(lambda : getPreference('gcode_flavor') != 'UltiGCode')
-
 #########################################################
 ## Profile and preferences functions
 #########################################################
@@ -393,7 +373,7 @@ def getSubCategoriesFor(category):
 	done = {}
 	ret = []
 	for s in settingsList:
-		if s.getCategory() == category and not s.getSubCategory() in done and s.checkConditions():
+		if s.getCategory() == category and not s.getSubCategory() in done:
 			done[s.getSubCategory()] = True
 			ret.append(s.getSubCategory())
 	return ret
@@ -401,7 +381,7 @@ def getSubCategoriesFor(category):
 def getSettingsForCategory(category, subCategory = None):
 	ret = []
 	for s in settingsList:
-		if s.getCategory() == category and (subCategory is None or s.getSubCategory() == subCategory) and s.checkConditions():
+		if s.getCategory() == category and (subCategory is None or s.getSubCategory() == subCategory):
 			ret.append(s)
 	return ret
 
@@ -638,7 +618,7 @@ def calculateEdgeWidth():
 	if wallThickness < nozzleSize:
 		return wallThickness
 
-	lineCount = int(wallThickness / (nozzleSize + 0.0001))
+	lineCount = int(wallThickness / nozzleSize + 0.0001)
 	lineWidth = wallThickness / lineCount
 	lineWidthAlt = wallThickness / (lineCount + 1)
 	if lineWidth > nozzleSize * 1.5:
@@ -654,7 +634,7 @@ def calculateLineCount():
 	if wallThickness < nozzleSize:
 		return 1
 
-	lineCount = int(wallThickness / (nozzleSize + 0.0001))
+	lineCount = int(wallThickness / nozzleSize + 0.0001)
 	lineWidth = wallThickness / lineCount
 	lineWidthAlt = wallThickness / (lineCount + 1)
 	if lineWidth > nozzleSize * 1.5:
@@ -666,7 +646,7 @@ def calculateSolidLayerCount():
 	solidThickness = getProfileSettingFloat('solid_layer_thickness')
 	if layerHeight == 0.0:
 		return 1
-	return int(math.ceil(solidThickness / (layerHeight - 0.0001)))
+	return int(math.ceil(solidThickness / layerHeight - 0.0001))
 
 def calculateObjectSizeOffsets():
 	size = 0.0
@@ -698,11 +678,11 @@ def replaceTagMatch(m):
 	pre = m.group(1)
 	tag = m.group(2)
 	if tag == 'time':
-		return pre + time.strftime('%H:%M:%S')
+		return pre + time.strftime('%H:%M:%S').encode('utf-8', 'replace')
 	if tag == 'date':
-		return pre + time.strftime('%d-%m-%Y')
+		return pre + time.strftime('%d %b %Y').encode('utf-8', 'replace')
 	if tag == 'day':
-		return pre + ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][int(time.strftime('%w'))]
+		return pre + time.strftime('%a').encode('utf-8', 'replace')
 	if tag == 'print_time':
 		return pre + '#P_TIME#'
 	if tag == 'filament_amount':
@@ -759,8 +739,6 @@ def getAlterationFileContents(filename, extruderCount = 1):
 	prefix = ''
 	postfix = ''
 	alterationContents = getAlterationFile(filename)
-	if getPreference('gcode_flavor') == 'UltiGCode':
-		return ''
 	if filename == 'start.gcode':
 		if extruderCount > 1:
 			alterationContents = getAlterationFile("start%d.gcode" % (extruderCount))
@@ -798,6 +776,20 @@ def getAlterationFileContents(filename, extruderCount = 1):
 			alterationContents = getAlterationFile("end%d.gcode" % (extruderCount))
 		#Append the profile string to the end of the GCode, so we can load it from the GCode file later.
 		postfix = ';CURA_PROFILE_STRING:%s\n' % (getProfileString())
+	elif filename == 'replace.csv':
+		#Always remove the extruder on/off M codes. These are no longer needed in 5D printing.
+		prefix = 'M101\nM103\n'
+	elif filename == 'support_start.gcode' or filename == 'support_end.gcode':
+		#Add support start/end code 
+		if getProfileSetting('support_dual_extrusion') == 'True' and int(getPreference('extruder_amount')) > 1:
+			if filename == 'support_start.gcode':
+				setTempOverride('extruder', '1')
+			else:
+				setTempOverride('extruder', '0')
+			alterationContents = getAlterationFileContents('switchExtruder.gcode')
+			clearTempOverride('extruder')
+		else:
+			alterationContents = ''
 	return unicode(prefix + re.sub("(.)\{([^\}]*)\}", replaceTagMatch, alterationContents).rstrip() + '\n' + postfix).strip().encode('utf-8') + '\n'
 
 ###### PLUGIN #####

@@ -39,10 +39,10 @@ def serialList(forAutoDetect=False):
 		except:
 			pass
 	if forAutoDetect:
-		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/cu.usb*")
+		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/tty.usb*") + glob.glob("/dev/cu.usb*")
 		baselist = filter(lambda s: not 'Bluetooth' in s, baselist)
 	else:
-		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/cu.*") + glob.glob("/dev/tty.usb*") + glob.glob("/dev/rfcomm*")
+		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/tty.usb*") + glob.glob("/dev/cu.*") + glob.glob("/dev/rfcomm*")
 	prev = profile.getPreference('serial_port_auto')
 	if prev in baselist:
 		baselist.remove(prev)
@@ -52,9 +52,6 @@ def serialList(forAutoDetect=False):
 	return baselist
 
 def machineIsConnected():
-	#UltiGCode is designed for SD-Card printing, so never auto-detect the serial port.
-	if profile.getPreference('gcode_flavor') == 'UltiGCode':
-		return False
 	port = profile.getPreference('serial_port')
 	if port == 'AUTO':
 		return len(serialList(True)) > 0
@@ -116,7 +113,7 @@ class VirtualPrinter():
 				return ''
 			if self.readList is None:
 				return ''
-		time.sleep(0.1)
+		time.sleep(0.001)
 		#print "Recv: %s" % (self.readList[0].rstrip())
 		return self.readList.pop(0)
 	
@@ -259,7 +256,7 @@ class MachineCom(object):
 		return time.time() - self._printStartTime
 
 	def getPrintTimeRemainingEstimate(self):
-		if self._printStartTime100 is None or self.getPrintPos() < 200:
+		if self._printStartTime100 == None or self.getPrintPos() < 200:
 			return None
 		printTime = (time.time() - self._printStartTime100) / 60
 		printTimeTotal = printTime * (len(self._gcodeList) - 100) / (self.getPrintPos() - 100)
@@ -331,7 +328,7 @@ class MachineCom(object):
 		tempRequestTimeout = timeout
 		while True:
 			line = self._readline()
-			if line is None:
+			if line == None:
 				break
 			
 			#No matter the state, if we see an error, goto the error state and store the error for reference.
@@ -387,7 +384,7 @@ class MachineCom(object):
 							self._testingBaudrate = True
 						except:
 							self._log("Unexpected error while setting baudrate: %d %s" % (baudrate, getExceptionString()))
-				elif 'T:' in line:
+				elif 'ok' in line and 'T:' in line:
 					self._baudrateDetectTestOk += 1
 					if self._baudrateDetectTestOk < 10:
 						self._log("Baudrate test ok: %d" % (self._baudrateDetectTestOk))

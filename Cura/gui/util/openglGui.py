@@ -141,7 +141,6 @@ class glGuiPanel(glcanvas.GLCanvas):
 		self._animationList = []
 		self.glReleaseList = []
 		self._refreshQueued = False
-		self._idleCalled = False
 
 		wx.EVT_PAINT(self, self._OnGuiPaint)
 		wx.EVT_SIZE(self, self._OnSize)
@@ -161,7 +160,6 @@ class glGuiPanel(glcanvas.GLCanvas):
 		wx.EVT_IDLE(self, self._OnIdle)
 
 	def _OnIdle(self, e):
-		self._idleCalled = True
 		if len(self._animationList) > 0 or self._refreshQueued:
 			self._refreshQueued = False
 			for anim in self._animationList:
@@ -199,7 +197,6 @@ class glGuiPanel(glcanvas.GLCanvas):
 			self.OnMouseMotion(e)
 
 	def _OnGuiPaint(self, e):
-		self._idleCalled = False
 		h = self.GetSize().GetHeight()
 		w = self.GetSize().GetWidth()
 		oldButtonSize = self._buttonSize
@@ -312,10 +309,7 @@ class glGuiPanel(glcanvas.GLCanvas):
 		wx.CallAfter(self._queueRefresh)
 
 	def _queueRefresh(self):
-		if self._idleCalled:
-			wx.CallAfter(self.Refresh)
-		else:
-			self._refreshQueued = True
+		self._refreshQueued = True
 
 	def add(self, ctrl):
 		if self._container is not None:

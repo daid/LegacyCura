@@ -53,7 +53,6 @@ class SceneView(openglGui.glGuiPanel):
 		self._platformMesh = meshLoader.loadMeshes(resources.getPathForMesh('ultimaker_platform.stl'))[0]
 		self._platformMesh._drawOffset = numpy.array([0,0,2.5], numpy.float32)
 		self._isSimpleMode = True
-		self._usbPrintMonitor = printWindow.printProcessMonitor(lambda : self._queueRefresh())
 
 		self._viewport = None
 		self._modelMatrix = None
@@ -195,7 +194,7 @@ class SceneView(openglGui.glGuiPanel):
 	def showPrintWindow(self):
 		if self._gcodeFilename is None:
 			return
-		self._usbPrintMonitor.loadFile(self._gcodeFilename, self._slicer.getID())
+		printWindow.printFile(self._gcodeFilename)
 		if self._gcodeFilename == self._slicer.getGCodeFilename():
 			self._slicer.submitSliceInfoOnline()
 
@@ -480,8 +479,6 @@ class SceneView(openglGui.glGuiPanel):
 					self._scene.add(obj)
 					self._scene.centerAll()
 					self._selectObject(obj)
-					if obj.getScale()[0] < 1.0:
-						self.notification.message("Warning: Object scaled down.")
 		self.sceneUpdated()
 
 	def _deleteObject(self, obj):
@@ -513,7 +510,7 @@ class SceneView(openglGui.glGuiPanel):
 	def updateProfileToControls(self):
 		oldSimpleMode = self._isSimpleMode
 		self._isSimpleMode = profile.getPreference('startMode') == 'Simple'
-		if self._isSimpleMode != oldSimpleMode:
+		if self._isSimpleMode and not oldSimpleMode:
 			self._scene.arrangeAll()
 			self.sceneUpdated()
 		self._machineSize = numpy.array([profile.getPreferenceFloat('machine_width'), profile.getPreferenceFloat('machine_depth'), profile.getPreferenceFloat('machine_height')])
@@ -693,8 +690,7 @@ class SceneView(openglGui.glGuiPanel):
 		self.Refresh()
 
 	def OnMouseLeave(self, e):
-		#self._mouseX = -1
-		pass
+		self._mouseX = -1
 
 	def getMouseRay(self, x, y):
 		if self._viewport is None:
@@ -1030,18 +1026,6 @@ void main(void)
 
 		self._drawMachine()
 
-		if self._usbPrintMonitor.getState() == 'PRINTING' and self._usbPrintMonitor.getID() == self._slicer.getID():
-			glEnable(GL_BLEND)
-			z = self._usbPrintMonitor.getZ()
-			size = self._machineSize
-			glColor4ub(255,255,0,128)
-			glBegin(GL_QUADS)
-			glVertex3f(-size[0]/2,-size[1]/2, z)
-			glVertex3f( size[0]/2,-size[1]/2, z)
-			glVertex3f( size[0]/2, size[1]/2, z)
-			glVertex3f(-size[0]/2, size[1]/2, z)
-			glEnd()
-
 		if self.viewMode == 'gcode':
 			if self._gcodeLoadThread is not None and self._gcodeLoadThread.isAlive():
 				glDisable(GL_DEPTH_TEST)
@@ -1134,25 +1118,13 @@ void main(void)
 		glEnable(GL_CULL_FACE)
 		glEnable(GL_BLEND)
 
-		size = [profile.getPreferenceFloat('machine_width'), profile.getPreferenceFloat('machine_depth'), profile.getPreferenceFloat('machine_height')]
-
 		if profile.getPreference('machine_type') == 'ultimaker':
 			glColor4f(1,1,1,0.5)
 			self._objectShader.bind()
 			self._renderObject(self._platformMesh, False, False)
 			self._objectShader.unbind()
-		else:
-			glColor4f(0,0,0,1)
-			glLineWidth(3)
-			glBegin(GL_LINES)
-			glVertex3f(-size[0] / 2, -size[1] / 2, 0)
-			glVertex3f(-size[0] / 2, -size[1] / 2, 10)
-			glVertex3f(-size[0] / 2, -size[1] / 2, 0)
-			glVertex3f(-size[0] / 2+10, -size[1] / 2, 0)
-			glVertex3f(-size[0] / 2, -size[1] / 2, 0)
-			glVertex3f(-size[0] / 2, -size[1] / 2+10, 0)
-			glEnd()
 
+		size = [profile.getPreferenceFloat('machine_width'), profile.getPreferenceFloat('machine_depth'), profile.getPreferenceFloat('machine_height')]
 		v0 = [ size[0] / 2, size[1] / 2, size[2]]
 		v1 = [ size[0] / 2,-size[1] / 2, size[2]]
 		v2 = [-size[0] / 2, size[1] / 2, size[2]]
