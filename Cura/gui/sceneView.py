@@ -480,6 +480,8 @@ class SceneView(openglGui.glGuiPanel):
 					self._scene.add(obj)
 					self._scene.centerAll()
 					self._selectObject(obj)
+					if obj.getScale()[0] < 1.0:
+						self.notification.message("Warning: Object scaled down.")
 		self.sceneUpdated()
 
 	def _deleteObject(self, obj):
@@ -511,7 +513,7 @@ class SceneView(openglGui.glGuiPanel):
 	def updateProfileToControls(self):
 		oldSimpleMode = self._isSimpleMode
 		self._isSimpleMode = profile.getPreference('startMode') == 'Simple'
-		if self._isSimpleMode and not oldSimpleMode:
+		if self._isSimpleMode != oldSimpleMode:
 			self._scene.arrangeAll()
 			self.sceneUpdated()
 		self._machineSize = numpy.array([profile.getPreferenceFloat('machine_width'), profile.getPreferenceFloat('machine_depth'), profile.getPreferenceFloat('machine_height')])

@@ -252,10 +252,16 @@ class Slicer(object):
 			'fanSpeedMax': int(profile.getProfileSettingFloat('fan_speed_max')) if profile.getProfileSetting('fan_enabled') == 'True' else 0,
 			'supportAngle': int(-1) if profile.getProfileSetting('support') == 'None' else int(60),
 			'supportEverywhere': int(1) if profile.getProfileSetting('support') == 'Everywhere' else int(0),
-			'supportLineWidth': int(profile.getProfileSettingFloat('support_rate') * profile.calculateEdgeWidth() * 1000 / 100),
+			'supportLineDistance': int(100 * profile.calculateEdgeWidth() * 1000 / profile.getProfileSettingFloat('support_fill_rate')) if profile.getProfileSettingFloat('support_fill_rate') > 0 else -1,
+			'supportXYDistance': int(1000 * profile.getProfileSettingFloat('support_xy_distance')),
+			'supportZDistance': int(1000 * profile.getProfileSettingFloat('support_z_distance')),
+			'supportExtruder': 0 if profile.getProfileSetting('support_dual_extrusion') == 'First extruder' else (1 if profile.getProfileSetting('support_dual_extrusion') == 'Second extruder' else -1),
 			'retractionAmount': int(profile.getProfileSettingFloat('retraction_amount') * 1000) if profile.getProfileSetting('retraction_enable') == 'True' else 0,
 			'retractionSpeed': int(profile.getProfileSettingFloat('retraction_speed')),
+			'retractionMinimalDistance': int(profile.getProfileSettingFloat('retraction_min_travel') * 1000),
 			'retractionAmountExtruderSwitch': int(profile.getProfileSettingFloat('retraction_dual_amount') * 1000),
+			'minimalExtrusionBeforeRetraction': int(profile.getProfileSettingFloat('retraction_minimal_extrusion') * 1000),
+			'enableCombing': 1 if profile.getProfileSetting('retraction_combing') == 'True' else 0,
 			'multiVolumeOverlap': int(profile.getProfileSettingFloat('overlap_dual') * 1000),
 			'objectSink': int(profile.getProfileSettingFloat('object_sink') * 1000),
 			'minimalLayerTime': int(profile.getProfileSettingFloat('cool_min_layer_time')),
@@ -286,6 +292,7 @@ class Slicer(object):
 		else:
 			settings['skirtDistance'] = int(profile.getProfileSettingFloat('skirt_gap') * 1000)
 			settings['skirtLineCount'] = int(profile.getProfileSettingFloat('skirt_line_count'))
+			settings['skirtMinLenght'] = int(profile.getProfileSettingFloat('skirt_minimal_length') * 1000)
 
 		if profile.getProfileSetting('fix_horrible_union_all_type_a') == 'True':
 			settings['fixHorrible'] |= 0x01
@@ -298,6 +305,8 @@ class Slicer(object):
 
 		if settings['layerThickness'] <= 0:
 			settings['layerThickness'] = 1000
+		if profile.getPreference('gcode_flavor') == 'UltiGCode':
+			settings['gcodeFlavor'] = 1
 		return settings
 
 	def _runSliceProcess(self, cmdList):
