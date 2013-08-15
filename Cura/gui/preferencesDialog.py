@@ -52,8 +52,15 @@ class preferencesDialog(wx.Dialog):
 		validators.validFloat(c, 0.0)
 		
 		configBase.TitleRow(right, 'Communication settings')
+		c = configBase.SettingRow(right, 'Backend', 'backend', ['Serial', 'LPR'], 'Backend to use to print gcode', type = 'preference')
+
+		configBase.TitleRow(right, 'Serial settings')
 		c = configBase.SettingRow(right, 'Serial port', 'serial_port', ['AUTO'] + machineCom.serialList(), 'Serial port to use for communication with the printer', type = 'preference')
 		c = configBase.SettingRow(right, 'Baudrate', 'serial_baud', ['AUTO'] + map(str, machineCom.baudrateList()), 'Speed of the serial port communication\nNeeds to match your firmware settings\nCommon values are 250000, 115200, 57600', type = 'preference')
+
+		configBase.TitleRow(right, 'LPR settings')
+		c = configBase.SettingRow(right, 'Hostname', 'lpr_host', '', 'Hostname of LPR print server', type = 'preference')
+		c = configBase.SettingRow(right, 'Queue', 'lpr_queue', 'lp', 'Queue on LPR print server', type = 'preference')
 
 		configBase.TitleRow(right, 'Slicer settings')
 		#c = configBase.SettingRow(right, 'Slicer selection', 'slicer', ['Cura (Skeinforge based)', 'Slic3r'], 'Which slicer to use to slice objects. Usually the Cura engine produces the best results. But Slic3r is developing fast and is faster with slicing.', type = 'preference')

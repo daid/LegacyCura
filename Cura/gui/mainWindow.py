@@ -14,6 +14,7 @@ from Cura.gui import preferencesDialog
 from Cura.gui import configWizard
 from Cura.gui import firmwareInstall
 from Cura.gui import printWindow
+from Cura.gui import lprWindow
 from Cura.gui import simpleMode
 from Cura.gui import projectPlanner
 from Cura.gui.tools import batchRun
@@ -352,7 +353,14 @@ class mainWindow(wx.Frame):
 		if not os.path.exists(sliceRun.getExportFilename(self.filelist[0])):
 			wx.MessageBox('You need to prepare a print before you can run the actual print.', 'Print error', wx.OK | wx.ICON_INFORMATION)
 			return
-		printWindow.printFile(sliceRun.getExportFilename(self.filelist[0]))
+
+		if profile.getPreference('backend') == 'Serial':
+			printWindow.printFile(sliceRun.getExportFilename(self.filelist[0]))
+		elif profile.getPreference('backend') == 'LPR':
+			lprWindow.printFile(sliceRun.getExportFilename(self.filelist[0]))
+		else:
+			wx.MessageBox('A valid backend must be selected in preferences.', 'Print error', wx.OK | wx.ICON_INFORMATION)
+			
 
 	def OnModelMRU(self, e):
 		fileNum = e.GetId() - self.ID_MRU_MODEL1
