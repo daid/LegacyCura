@@ -7,6 +7,11 @@ import shutil
 import glob
 import warnings
 
+#Force correct WXVersion 
+#	May not be forward compatible but better than 
+#	millions of $PATH edits
+import wxversion
+wxversion.select('2.8')
 #Only import the _core to save import time
 import wx._core
 
