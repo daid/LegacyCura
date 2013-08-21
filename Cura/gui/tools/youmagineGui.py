@@ -35,7 +35,7 @@ class youmagineManager(object):
 	def __init__(self, parent, objectScene):
 		self._mainWindow = parent
 		self._scene = objectScene
-		self._ym = youmagine.Youmagine(profile.getPreference('youmagine_token'))
+		self._ym = youmagine.Youmagine(profile.getPreference('youmagine_token'), self._progressCallback)
 
 		self._indicatorWindow = workingIndicatorWindow(self._mainWindow)
 		self._getAuthorizationWindow = getAuthorizationWindow(self._mainWindow, self._ym)
@@ -44,6 +44,9 @@ class youmagineManager(object):
 		thread = threading.Thread(target=self.checkAuthorizationThread)
 		thread.daemon = True
 		thread.start()
+
+	def _progressCallback(self, progress):
+		self._indicatorWindow.progress(progress)
 
 	#Do all the youmagine communication in a background thread, because it can take a while and block the UI thread otherwise
 	def checkAuthorizationThread(self):
@@ -142,11 +145,15 @@ class workingIndicatorWindow(wx.Frame):
 
 		self._indicatorBitmap = wx.StaticBitmap(self._panel, -1, wx.EmptyBitmapRGBA(24, 24, red=255, green=255, blue=255, alpha=1))
 		self._statusText = wx.StaticText(self._panel, -1, '...')
+		self._progress = wx.Gauge(self._panel, -1)
+		self._progress.SetRange(1000)
+		self._progress.SetMinSize((250, 30))
 
 		self._panel._sizer = wx.GridBagSizer(2, 2)
 		self._panel.SetSizer(self._panel._sizer)
-		self._panel._sizer.Add(self._indicatorBitmap, (0, 0))
-		self._panel._sizer.Add(self._statusText, (0, 1), flag=wx.ALIGN_CENTER_VERTICAL)
+		self._panel._sizer.Add(self._indicatorBitmap, (0, 0), flag=wx.ALL, border=5)
+		self._panel._sizer.Add(self._statusText, (0, 1), flag=wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
+		self._panel._sizer.Add(self._progress, (1, 0), span=(1,2), flag=wx.EXPAND|wx.ALL, border=5)
 
 		self._busyState = 0
 		self._busyTimer = wx.Timer(self)
@@ -161,8 +168,16 @@ class workingIndicatorWindow(wx.Frame):
 			self._busyState = 0
 		self._indicatorBitmap.SetBitmap(self._busyBitmaps[self._busyState])
 
+	def progress(self, progressAmount):
+		wx.CallAfter(self._progress.Show)
+		wx.CallAfter(self._progress.SetValue, progressAmount*1000)
+		wx.CallAfter(self.Layout)
+		wx.CallAfter(self.Fit)
+
 	def showBusy(self, text):
 		self._statusText.SetLabel(text)
+		self._progress.Hide()
+		self.Layout()
 		self.Fit()
 		self.Centre()
 		self.Show()
@@ -182,7 +197,7 @@ class getAuthorizationWindow(wx.Frame):
 		self._panel._sizer = wx.GridBagSizer(5, 5)
 		self._panel.SetSizer(self._panel._sizer)
 
-		self._panel._sizer.Add(wx.StaticBitmap(self._panel, -1, wx.Bitmap(getPathForImage('youmagine-text.png'))), (0,0), span=(1,4), flag=wx.ALIGN_CENTRE | wx.ALL)
+		self._panel._sizer.Add(wx.StaticBitmap(self._panel, -1, wx.Bitmap(getPathForImage('youmagine-text.png'))), (0,0), span=(1,4), flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
 		self._panel._sizer.Add(wx.StaticText(self._panel, -1, 'To share your designs on YouMagine\nyou need an account on YouMagine.com\nand authorize Cura to access your account.'), (1, 1))
 		self._panel._sizer.Add(self._requestButton, (2, 1), flag=wx.ALL)
 		self._panel._sizer.Add(wx.StaticText(self._panel, -1, 'This will open a browser window where you can\nauthorize Cura to access your YouMagine account.\nYou can revoke access at any time\nfrom YouMagine.com'), (3, 1), flag=wx.ALL)
@@ -246,24 +261,24 @@ class newDesignWindow(wx.Frame):
 		s = wx.GridBagSizer(5, 5)
 		p.SetSizer(s)
 
-		s.Add(wx.StaticBitmap(p, -1, wx.Bitmap(getPathForImage('youmagine-text.png'))), (0,0), span=(1,6), flag=wx.ALIGN_CENTRE | wx.ALL)
-		s.Add(wx.StaticText(p, -1, 'Design name:'), (1, 1))
-		s.Add(self._designName, (1, 2), span=(1,2), flag=wx.EXPAND|wx.ALL)
-		s.Add(wx.StaticText(p, -1, 'Description:'), (2, 1))
-		s.Add(self._designDescription, (2, 2), span=(1,2), flag=wx.EXPAND|wx.ALL)
-		s.Add(wx.StaticText(p, -1, 'Category:'), (3, 1))
-		s.Add(self._category, (3, 2), span=(1,2), flag=wx.ALL)
-		s.Add(wx.StaticText(p, -1, 'License:'), (4, 1))
-		s.Add(self._designLicense, (4, 2), span=(1,2), flag=wx.ALL)
-		s.Add(wx.StaticLine(p, -1), (5,0), span=(1,6), flag=wx.EXPAND|wx.ALL)
-		s.Add(wx.StaticText(p, -1, 'Images:'), (6, 1))
-		s.Add(self._imageScroll, (6, 2), span=(1, 2), flag=wx.EXPAND|wx.ALL)
-		s.Add(wx.StaticLine(p, -1), (7,0), span=(1,6), flag=wx.EXPAND|wx.ALL)
-		s.Add(self._shareButton, (8, 2), flag=wx.ALL)
-		s.Add(self._publish, (8, 3), flag=wx.ALL|wx.ALIGN_CENTER_VERTICAL)
+		s.Add(wx.StaticBitmap(p, -1, wx.Bitmap(getPathForImage('youmagine-text.png'))), (0,0), span=(1,3), flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+		s.Add(wx.StaticText(p, -1, 'Design name:'), (1, 0), flag=wx.LEFT|wx.TOP, border=5)
+		s.Add(self._designName, (1, 1), span=(1,2), flag=wx.EXPAND|wx.LEFT|wx.TOP|wx.RIGHT, border=5)
+		s.Add(wx.StaticText(p, -1, 'Description:'), (2, 0), flag=wx.LEFT|wx.TOP, border=5)
+		s.Add(self._designDescription, (2, 1), span=(1,2), flag=wx.EXPAND|wx.LEFT|wx.TOP|wx.RIGHT, border=5)
+		s.Add(wx.StaticText(p, -1, 'Category:'), (3, 0), flag=wx.LEFT|wx.TOP, border=5)
+		s.Add(self._category, (3, 1), span=(1,2), flag=wx.EXPAND|wx.LEFT|wx.TOP|wx.RIGHT, border=5)
+		s.Add(wx.StaticText(p, -1, 'License:'), (4, 0), flag=wx.LEFT|wx.TOP, border=5)
+		s.Add(self._designLicense, (4, 1), span=(1,2), flag=wx.EXPAND|wx.LEFT|wx.TOP|wx.RIGHT, border=5)
+		s.Add(wx.StaticLine(p, -1), (5,0), span=(1,3), flag=wx.EXPAND|wx.ALL)
+		s.Add(wx.StaticText(p, -1, 'Images:'), (6, 0), flag=wx.LEFT|wx.TOP, border=5)
+		s.Add(self._imageScroll, (6, 1), span=(1, 2), flag=wx.EXPAND|wx.LEFT|wx.TOP|wx.RIGHT, border=5)
+		s.Add(wx.StaticLine(p, -1), (7,0), span=(1,3), flag=wx.EXPAND|wx.ALL)
+		s.Add(self._shareButton, (8, 1), flag=wx.BOTTOM, border=15)
+		s.Add(self._publish, (8, 2), flag=wx.BOTTOM|wx.ALIGN_CENTER_VERTICAL, border=15)
 
 		s.AddGrowableRow(2)
-		s.AddGrowableCol(3)
+		s.AddGrowableCol(2)
 
 		self.Bind(wx.EVT_BUTTON, self.OnShare, self._shareButton)
 		self.Bind(wx.EVT_BUTTON, self.OnAddImage, self._addImageButton)
