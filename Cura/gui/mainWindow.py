@@ -369,7 +369,7 @@ class mainWindow(wx.Frame):
 		firmwareInstall.InstallFirmware()
 
 	def OnCustomFirmware(self, e):
-		if profile.getPreference('machine_type') == 'ultimaker':
+		if profile.getPreference('machine_type').startswith('ultimaker'):
 			wx.MessageBox('Warning: Installing a custom firmware does not guarantee that you machine will function correctly, and could damage your machine.', 'Firmware update', wx.OK | wx.ICON_EXCLAMATION)
 		dlg=wx.FileDialog(self, "Open firmware to upload", os.path.split(profile.getPreference('lastFile'))[0], style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST)
 		dlg.SetWildcard("HEX file (*.hex)|*.hex;*.HEX")
@@ -489,8 +489,11 @@ class normalSettingsPanel(configBase.configPanelBase):
 			self.pluginPanel.Show(False)
 
 		#Alteration page
-		self.alterationPanel = alterationPanel.alterationPanel(self.nb, callback)
-		self.nb.AddPage(self.alterationPanel, "Start/End-GCode")
+		if profile.getPreference('gcode_flavor') == 'UltiGCode':
+			self.alterationPanel = None
+		else:
+			self.alterationPanel = alterationPanel.alterationPanel(self.nb, callback)
+			self.nb.AddPage(self.alterationPanel, "Start/End-GCode")
 
 		self.Bind(wx.EVT_SIZE, self.OnSize)
 
@@ -576,5 +579,6 @@ class normalSettingsPanel(configBase.configPanelBase):
 
 	def updateProfileToControls(self):
 		super(normalSettingsPanel, self).updateProfileToControls()
-		self.alterationPanel.updateProfileToControls()
+		if self.alterationPanel is not None:
+			self.alterationPanel.updateProfileToControls()
 		self.pluginPanel.updateProfileToControls()

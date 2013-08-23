@@ -63,7 +63,7 @@ class gcode(object):
 	
 	def _load(self, gcodeFile):
 		self.layerList = []
-		pos = [0.0, 0.0, 0.0]
+		pos = [0.0,0.0,0.0]
 		posOffset = [0.0, 0.0, 0.0]
 		currentE = 0.0
 		totalExtrusion = 0.0
@@ -186,6 +186,10 @@ class gcode(object):
 					P = getCodeFloat(line, 'P')
 					if P is not None:
 						totalMoveTimeMinute += P / 60.0 / 1000.0
+				elif G == 10:	#Retract
+					pass
+				elif G == 11:	#Push back after retract
+					pass
 				elif G == 20:	#Units are inches
 					scale = 25.4
 				elif G == 21:	#Units are mm
@@ -194,10 +198,7 @@ class gcode(object):
 					x = getCodeFloat(line, 'X')
 					y = getCodeFloat(line, 'Y')
 					z = getCodeFloat(line, 'Z')
-					if profile.getPreference('machine_center_is_zero') == 'True':
-						center = [profile.getProfileSettingFloat('machine_width') / 2, profile.getProfileSettingFloat('machine_depth') / 2,0.0]
-					else:
-						center = [0.0,0.0,0.0]
+					center = [0.0,0.0,0.0]
 					if x is None and y is None and z is None:
 						pos = center
 					else:

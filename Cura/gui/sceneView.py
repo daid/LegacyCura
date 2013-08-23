@@ -51,8 +51,7 @@ class SceneView(openglGui.glGuiPanel):
 		self._viewTarget = numpy.array([0,0,0], numpy.float32)
 		self._animView = None
 		self._animZoom = None
-		self._platformMesh = meshLoader.loadMeshes(resources.getPathForMesh('ultimaker_platform.stl'))[0]
-		self._platformMesh._drawOffset = numpy.array([0,0,2.5], numpy.float32)
+		self._platformMesh = None
 		self._isSimpleMode = True
 		self._usbPrintMonitor = printWindow.printProcessMonitor(lambda : self._queueRefresh())
 
@@ -104,7 +103,7 @@ class SceneView(openglGui.glGuiPanel):
 		self.viewSelection = openglGui.glComboButton(self, 'View mode', [7,19,11,15,23], ['Normal', 'Overhang', 'Transparent', 'X-Ray', 'Layers'], (-1,0), self.OnViewChange)
 		self.layerSelect = openglGui.glSlider(self, 10000, 0, 1, (-1,-2), lambda : self.QueueRefresh())
 
-		self.youMagineButton = openglGui.glButton(self, 26, 'YouMagine', (2,0), lambda button: youmagineGui.youmagineManager(self.GetTopLevelParent(), self))
+		self.youMagineButton = openglGui.glButton(self, 26, 'YouMagine upload', (2,0), lambda button: youmagineGui.youmagineManager(self.GetTopLevelParent(), self._scene))
 
 		self.notification = openglGui.glNotification(self, (0, 0))
 
@@ -885,7 +884,8 @@ void main(void)
 				self._gcodeLoadThread.start()
 			if self._gcode is not None and self._gcode.layerList is not None:
 				glPushMatrix()
-				glTranslate(-self._machineSize[0] / 2, -self._machineSize[1] / 2, 0)
+				if profile.getPreference('machine_center_is_zero') != 'True':
+					glTranslate(-self._machineSize[0] / 2, -self._machineSize[1] / 2, 0)
 				t = time.time()
 				drawUpTill = min(len(self._gcode.layerList), self.layerSelect.getValue() + 1)
 				for n in xrange(0, drawUpTill):
@@ -1139,7 +1139,10 @@ void main(void)
 
 		size = [profile.getPreferenceFloat('machine_width'), profile.getPreferenceFloat('machine_depth'), profile.getPreferenceFloat('machine_height')]
 
-		if profile.getPreference('machine_type') == 'ultimaker':
+		if profile.getPreference('machine_type').startswith('ultimaker'):
+			if self._platformMesh is None:
+				self._platformMesh = meshLoader.loadMeshes(resources.getPathForMesh('ultimaker_platform.stl'))[0]
+				self._platformMesh._drawOffset = numpy.array([0,0,2.5], numpy.float32)
 			glColor4f(1,1,1,0.5)
 			self._objectShader.bind()
 			self._renderObject(self._platformMesh, False, False)
@@ -1224,6 +1227,7 @@ void main(void)
 	def _generateGCodeVBOs2(self, layer):
 		filamentRadius = profile.getProfileSettingFloat('filament_diameter') / 2
 		filamentArea = math.pi * filamentRadius * filamentRadius
+		useFilamentArea = profile.getPreference('gcode_flavor') == 'UltiGCode'
 
 		ret = []
 		for extrudeType in ['WALL-OUTER:0', 'WALL-OUTER:1', 'WALL-OUTER:2', 'WALL-OUTER:3', 'WALL-INNER', 'FILL', 'SUPPORT', 'SKIRT']:
@@ -1245,7 +1249,10 @@ void main(void)
 					normal[:,2] /= lens
 
 					ePerDist = path['extrusion'][1:] / lens
-					lineWidth = ePerDist * (filamentArea / path['layerThickness'] / 2)
+					if useFilamentArea:
+						lineWidth = ePerDist / path['layerThickness'] / 2.0
+					else:
+						lineWidth = ePerDist * (filamentArea / path['layerThickness'] / 2)
 
 					normal[:,0] *= lineWidth
 					normal[:,1] *= lineWidth
