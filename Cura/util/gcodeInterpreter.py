@@ -63,7 +63,7 @@ class gcode(object):
 	
 	def _load(self, gcodeFile):
 		self.layerList = []
-		pos = [0.0, 0.0, 0.0]
+		pos = [0.0,0.0,0.0]
 		posOffset = [0.0, 0.0, 0.0]
 		currentE = 0.0
 		totalExtrusion = 0.0
@@ -75,10 +75,11 @@ class gcode(object):
 		scale = 1.0
 		posAbs = True
 		feedRate = 3600.0
+		moveType = 'move'
 		layerThickness = 0.1
-		pathType = 'CUSTOM';
+		pathType = 'CUSTOM'
 		currentLayer = []
-		currentPath = gcodePath('move', pathType, layerThickness, pos[:])
+		currentPath = gcodePath('move', pathType, layerThickness, pos)
 		currentPath['extruder'] = currentExtruder
 
 		currentLayer.append(currentPath)
@@ -131,7 +132,8 @@ class gcode(object):
 					z = getCodeFloat(line, 'Z')
 					e = getCodeFloat(line, 'E')
 					#f = getCodeFloat(line, 'F')
-					oldPos = pos[:]
+					oldPos = pos
+					pos = pos[:]
 					if posAbs:
 						if x is not None:
 							pos[0] = x * scale + posOffset[0]
@@ -175,7 +177,7 @@ class gcode(object):
 						currentPath['extruder'] = currentExtruder
 						currentLayer.append(currentPath)
 
-					currentPath['points'].append(pos[:])
+					currentPath['points'].append(pos)
 					currentPath['extrusion'].append(e * extrudeAmountMultiply)
 				elif G == 4:	#Delay
 					S = getCodeFloat(line, 'S')
@@ -184,6 +186,10 @@ class gcode(object):
 					P = getCodeFloat(line, 'P')
 					if P is not None:
 						totalMoveTimeMinute += P / 60.0 / 1000.0
+				elif G == 10:	#Retract
+					pass
+				elif G == 11:	#Push back after retract
+					pass
 				elif G == 20:	#Units are inches
 					scale = 25.4
 				elif G == 21:	#Units are mm
@@ -192,19 +198,17 @@ class gcode(object):
 					x = getCodeFloat(line, 'X')
 					y = getCodeFloat(line, 'Y')
 					z = getCodeFloat(line, 'Z')
-					if profile.getPreference('machine_center_is_zero') == 'True':
-						center = [profile.getProfileSettingFloat('machine_width') / 2, profile.getProfileSettingFloat('machine_depth') / 2,0.0]
-					else:
-						center = [0.0,0.0,0.0]
+					center = [0.0,0.0,0.0]
 					if x is None and y is None and z is None:
 						pos = center
 					else:
+						pos = pos[:]
 						if x is not None:
 							pos[0] = center[0]
 						if y is not None:
-							pos[0] = center[1]
+							pos[1] = center[1]
 						if z is not None:
-							pos[0] = center[2]
+							pos[2] = center[2]
 				elif G == 90:	#Absolute position
 					posAbs = True
 				elif G == 91:	#Relative position

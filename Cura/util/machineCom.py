@@ -39,10 +39,10 @@ def serialList(forAutoDetect=False):
 		except:
 			pass
 	if forAutoDetect:
-		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/tty.usb*") + glob.glob("/dev/cu.usb*")
+		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/cu.usb*")
 		baselist = filter(lambda s: not 'Bluetooth' in s, baselist)
 	else:
-		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/tty.usb*") + glob.glob("/dev/cu.*") + glob.glob("/dev/rfcomm*")
+		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/cu.*") + glob.glob("/dev/tty.usb*") + glob.glob("/dev/rfcomm*")
 	prev = profile.getPreference('serial_port_auto')
 	if prev in baselist:
 		baselist.remove(prev)
@@ -52,8 +52,11 @@ def serialList(forAutoDetect=False):
 	return baselist
 
 def machineIsConnected():
+	#UltiGCode is designed for SD-Card printing, so never auto-detect the serial port.
 	port = profile.getPreference('serial_port')
 	if port == 'AUTO':
+		if profile.getPreference('gcode_flavor') == 'UltiGCode':
+			return False
 		return len(serialList(True)) > 0
 	if platform.system() == "Windows":
 		return port in serialList()
@@ -256,7 +259,7 @@ class MachineCom(object):
 		return time.time() - self._printStartTime
 
 	def getPrintTimeRemainingEstimate(self):
-		if self._printStartTime100 == None or self.getPrintPos() < 200:
+		if self._printStartTime100 is None or self.getPrintPos() < 200:
 			return None
 		printTime = (time.time() - self._printStartTime100) / 60
 		printTimeTotal = printTime * (len(self._gcodeList) - 100) / (self.getPrintPos() - 100)
@@ -373,7 +376,7 @@ class MachineCom(object):
 					else:
 						baudrate = self._baudrateDetectList.pop(0)
 						try:
-							self._serial.baudrate = baudrate
+							self._setBaudrate(baudrate)
 							self._serial.timeout = 0.5
 							self._log("Trying baudrate: %d" % (baudrate))
 							self._baudrateDetectRetry = 5
@@ -437,7 +440,30 @@ class MachineCom(object):
 						if "rs" in line:
 							self._gcodePos = int(line.split()[1])
 		self._log("Connection closed, closing down monitor")
-	
+
+	def _setBaudrate(self, baudrate):
+		#For linux the pyserial implementation lacks TCGETS2 support. So do that ourselves
+		if sys.platform.startswith('linux'):
+			try:
+				self._serial.baudrate = baudrate
+			except:
+				try:
+					# set custom speed
+					import fcntl, array, termios
+					TCGETS2 = 0x802C542A
+					TCSETS2 = 0x402C542B
+					BOTHER = 0o010000
+					buf = array.array('i', [0] * 64)
+					fcntl.ioctl(self._serial.fd, TCGETS2, buf)
+					buf[2] &= ~termios.CBAUD
+					buf[2] |= BOTHER
+					buf[9] = buf[10] = baudrate
+					fcntl.ioctl(self._serial.fd, TCSETS2, buf)
+				except:
+					print getExceptionString()
+		else:
+			self._serial.baudrate = baudrate
+
 	def _log(self, message):
 		self._callback.mcLog(message)
 		try:

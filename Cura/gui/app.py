@@ -11,12 +11,13 @@ import warnings
 #Only import the _core to save import time
 import wx._core
 
+
 class CuraApp(wx.App):
 	def __init__(self, files):
 		if platform.system() == "Windows" and not 'PYCHARM_HOSTED' in os.environ:
-			super(CuraApp, self).__init__(redirect = True, filename = 'output.txt')
+			super(CuraApp, self).__init__(redirect=True, filename='output.txt')
 		else:
-			super(CuraApp, self).__init__(redirect = False)
+			super(CuraApp, self).__init__(redirect=False)
 
 		self.mainWindow = None
 		self.splash = None
@@ -90,20 +91,24 @@ class CuraApp(wx.App):
 		setFullScreenCapable(self.mainWindow)
 
 if platform.system() == "Darwin":
-	import ctypes, objc
-	_objc = ctypes.PyDLL(objc._objc.__file__)
+	try:
+		import ctypes, objc
+		_objc = ctypes.PyDLL(objc._objc.__file__)
 
-	# PyObject *PyObjCObject_New(id objc_object, int flags, int retain)
-	_objc.PyObjCObject_New.restype = ctypes.py_object
-	_objc.PyObjCObject_New.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int]
+		# PyObject *PyObjCObject_New(id objc_object, int flags, int retain)
+		_objc.PyObjCObject_New.restype = ctypes.py_object
+		_objc.PyObjCObject_New.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int]
 
-	def setFullScreenCapable(frame):
-		frameobj = _objc.PyObjCObject_New(frame.GetHandle(), 0, 1)
+		def setFullScreenCapable(frame):
+			frameobj = _objc.PyObjCObject_New(frame.GetHandle(), 0, 1)
 
-		NSWindowCollectionBehaviorFullScreenPrimary = 1<<7
-		window = frameobj.window()
-		newBehavior = window.collectionBehavior() | NSWindowCollectionBehaviorFullScreenPrimary
-		window.setCollectionBehavior_(newBehavior)
+			NSWindowCollectionBehaviorFullScreenPrimary = 1 << 7
+			window = frameobj.window()
+			newBehavior = window.collectionBehavior() | NSWindowCollectionBehaviorFullScreenPrimary
+			window.setCollectionBehavior_(newBehavior)
+	except:
+		def setFullScreenCapable(frame):
+			pass
 
 else:
 	def setFullScreenCapable(frame):

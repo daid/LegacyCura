@@ -266,24 +266,25 @@ class glGuiPanel(glcanvas.GLCanvas):
 
 		self._container.draw()
 
-		glBindTexture(GL_TEXTURE_2D, self._glRobotTexture)
-		glEnable(GL_TEXTURE_2D)
-		glPushMatrix()
-		glColor4f(1,1,1,1)
-		glTranslate(size.GetWidth() - 8,size.GetHeight() - 32,0)
-		s = self._buttonSize * 1.4
-		glScale(s,s,s)
-		glBegin(GL_QUADS)
-		glTexCoord2f(1, 0)
-		glVertex2f(0,-1)
-		glTexCoord2f(0, 0)
-		glVertex2f(-1,-1)
-		glTexCoord2f(0, 1)
-		glVertex2f(-1, 0)
-		glTexCoord2f(1, 1)
-		glVertex2f(0, 0)
-		glEnd()
-		glDisable(GL_TEXTURE_2D)
+		# glBindTexture(GL_TEXTURE_2D, self._glRobotTexture)
+		# glEnable(GL_TEXTURE_2D)
+		# glPushMatrix()
+		# glColor4f(1,1,1,1)
+		# glTranslate(size.GetWidth(),size.GetHeight(),0)
+		# s = self._buttonSize * 1
+		# glScale(s,s,s)
+		# glTranslate(-1.2,-0.2,0)
+		# glBegin(GL_QUADS)
+		# glTexCoord2f(1, 0)
+		# glVertex2f(0,-1)
+		# glTexCoord2f(0, 0)
+		# glVertex2f(-1,-1)
+		# glTexCoord2f(0, 1)
+		# glVertex2f(-1, 0)
+		# glTexCoord2f(1, 1)
+		# glVertex2f(0, 0)
+		# glEnd()
+		# glDisable(GL_TEXTURE_2D)
 		glPopMatrix()
 
 	def _OnEraseBackground(self,event):
@@ -337,7 +338,7 @@ class glGuiLayoutButtons(object):
 			else:
 				x = pos[0] * gridSize + bs * 0.2
 			if pos[1] < 0:
-				y = h + pos[1] * gridSize * 1.2 - bs * 0.2
+				y = h + pos[1] * gridSize * 1.2 - bs * 0.0
 			else:
 				y = pos[1] * gridSize * 1.2 + bs * 0.2
 			ctrl.setSize(x, y, gridSize, gridSize)
@@ -499,22 +500,26 @@ class glButton(glGuiControl):
 		elif len(self._altTooltip) > 0:
 			glPushMatrix()
 			glTranslatef(pos[0], pos[1], 0)
-			glTranslatef(0.6*bs*scale, 0, 0)
+			glTranslatef(0, 0.6*bs, 0)
+			glTranslatef(0, 6, 0)
+			#glTranslatef(0.6*bs*scale, 0, 0)
 
-			glPushMatrix()
-			glColor4ub(60,60,60,255)
-			glTranslatef(-1, -1, 0)
-			opengl.glDrawStringLeft(self._altTooltip)
-			glTranslatef(0, 2, 0)
-			opengl.glDrawStringLeft(self._altTooltip)
-			glTranslatef(2, 0, 0)
-			opengl.glDrawStringLeft(self._altTooltip)
-			glTranslatef(0, -2, 0)
-			opengl.glDrawStringLeft(self._altTooltip)
-			glPopMatrix()
+			for line in self._altTooltip.split('\n'):
+				glPushMatrix()
+				glColor4ub(60,60,60,255)
+				glTranslatef(-1, -1, 0)
+				opengl.glDrawStringCenter(line)
+				glTranslatef(0, 2, 0)
+				opengl.glDrawStringCenter(line)
+				glTranslatef(2, 0, 0)
+				opengl.glDrawStringCenter(line)
+				glTranslatef(0, -2, 0)
+				opengl.glDrawStringCenter(line)
+				glPopMatrix()
 
-			glColor4ub(255,255,255,255)
-			opengl.glDrawStringLeft(self._altTooltip)
+				glColor4ub(255,255,255,255)
+				opengl.glDrawStringCenter(line)
+				glTranslatef(0, 18, 0)
 			glPopMatrix()
 
 	def _checkHit(self, x, y):
