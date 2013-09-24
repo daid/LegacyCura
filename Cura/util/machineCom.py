@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import os
 import glob
@@ -8,6 +9,7 @@ import math
 import re
 import traceback
 import threading
+import platform
 import Queue as queue
 
 import serial
@@ -23,30 +25,47 @@ try:
 except:
 	pass
 
-def serialList():
+def serialList(forAutoDetect=False):
 	baselist=[]
-	if os.name=="nt":
+	if platform.system() == "Windows":
 		try:
 			key=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"HARDWARE\\DEVICEMAP\\SERIALCOMM")
 			i=0
-			while(1):
-				baselist+=[_winreg.EnumValue(key,i)[1]]
+			while True:
+				values = _winreg.EnumValue(key, i)
+				if not forAutoDetect or 'USBSER' in values[0]:
+					baselist+=[values[1]]
 				i+=1
 		except:
 			pass
-	baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/tty.usb*") + glob.glob("/dev/cu.*") + glob.glob("/dev/rfcomm*")
-	prev = profile.getPreference('serial_port_auto')
+	if forAutoDetect:
+		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/cu.usb*")
+		baselist = filter(lambda s: not 'Bluetooth' in s, baselist)
+	else:
+		baselist = baselist + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*') + glob.glob("/dev/cu.*") + glob.glob("/dev/tty.usb*") + glob.glob("/dev/rfcomm*")
+	prev = profile.getMachineSetting('serial_port_auto')
 	if prev in baselist:
 		baselist.remove(prev)
 		baselist.insert(0, prev)
-	if version.isDevVersion():
+	if version.isDevVersion() and not forAutoDetect:
 		baselist.append('VIRTUAL')
 	return baselist
 
+def machineIsConnected():
+	#UltiGCode is designed for SD-Card printing, so never auto-detect the serial port.
+	port = profile.getMachineSetting('serial_port')
+	if port == 'AUTO':
+		if profile.getMachineSetting('gcode_flavor') == 'UltiGCode':
+			return False
+		return len(serialList(True)) > 0
+	if platform.system() == "Windows":
+		return port in serialList()
+	return os.path.isfile(port)
+
 def baudrateList():
 	ret = [250000, 230400, 115200, 57600, 38400, 19200, 9600]
-	if profile.getPreference('serial_baud_auto') != '':
-		prev = int(profile.getPreference('serial_baud_auto'))
+	if profile.getMachineSetting('serial_baud_auto') != '':
+		prev = int(profile.getMachineSetting('serial_baud_auto'))
 		if prev in ret:
 			ret.remove(prev)
 			ret.insert(0, prev)
@@ -97,7 +116,7 @@ class VirtualPrinter():
 				return ''
 			if self.readList is None:
 				return ''
-		time.sleep(0.001)
+		time.sleep(0.1)
 		#print "Recv: %s" % (self.readList[0].rstrip())
 		return self.readList.pop(0)
 	
@@ -137,14 +156,14 @@ class MachineCom(object):
 	STATE_CLOSED_WITH_ERROR = 10
 	
 	def __init__(self, port = None, baudrate = None, callbackObject = None):
-		if port == None:
-			port = profile.getPreference('serial_port')
-		if baudrate == None:
-			if profile.getPreference('serial_baud') == 'AUTO':
+		if port is None:
+			port = profile.getMachineSetting('serial_port')
+		if baudrate is None:
+			if profile.getMachineSetting('serial_baud') == 'AUTO':
 				baudrate = 0
 			else:
-				baudrate = int(profile.getPreference('serial_baud'))
-		if callbackObject == None:
+				baudrate = int(profile.getMachineSetting('serial_baud'))
+		if callbackObject is None:
 			callbackObject = MachineComPrintCallback()
 
 		self._port = port
@@ -154,9 +173,11 @@ class MachineCom(object):
 		self._serial = None
 		self._baudrateDetectList = baudrateList()
 		self._baudrateDetectRetry = 0
-		self._temp = 0
+		self._extruderCount = int(profile.getMachineSetting('extruder_amount'))
+		self._temperatureRequestExtruder = 0
+		self._temp = [0] * self._extruderCount
+		self._targetTemp = [0] * self._extruderCount
 		self._bedTemp = 0
-		self._targetTemp = 0
 		self._bedTargetTemp = 0
 		self._gcodeList = None
 		self._gcodePos = 0
@@ -238,7 +259,7 @@ class MachineCom(object):
 		return time.time() - self._printStartTime
 
 	def getPrintTimeRemainingEstimate(self):
-		if self._printStartTime100 == None or self.getPrintPos() < 200:
+		if self._printStartTime100 is None or self.getPrintPos() < 200:
 			return None
 		printTime = (time.time() - self._printStartTime100) / 60
 		printTimeTotal = printTime * (len(self._gcodeList) - 100) / (self.getPrintPos() - 100)
@@ -264,13 +285,13 @@ class MachineCom(object):
 		if self._port == 'AUTO':
 			self._changeState(self.STATE_DETECT_SERIAL)
 			programmer = stk500v2.Stk500v2()
-			self._log("Serial port list: %s" % (str(serialList())))
-			for p in serialList():
+			self._log("Serial port list: %s" % (str(serialList(True))))
+			for p in serialList(True):
 				try:
 					self._log("Connecting to: %s" % (p))
 					programmer.connect(p)
 					self._serial = programmer.leaveISP()
-					profile.putPreference('serial_port_auto', p)
+					profile.putMachineSetting('serial_port_auto', p)
 					break
 				except ispBase.IspError as (e):
 					self._log("Error while connecting to %s: %s" % (p, str(e)))
@@ -310,7 +331,7 @@ class MachineCom(object):
 		tempRequestTimeout = timeout
 		while True:
 			line = self._readline()
-			if line == None:
+			if line is None:
 				break
 			
 			#No matter the state, if we see an error, goto the error state and store the error for reference.
@@ -328,7 +349,7 @@ class MachineCom(object):
 					self._errorValue = line[6:]
 					self._changeState(self.STATE_ERROR)
 			if ' T:' in line or line.startswith('T:'):
-				self._temp = float(re.search("[0-9\.]*", line.split('T:')[1]).group(0))
+				self._temp[self._temperatureRequestExtruder] = float(re.search("[0-9\.]*", line.split('T:')[1]).group(0))
 				if ' B:' in line:
 					self._bedTemp = float(re.search("[0-9\.]*", line.split(' B:')[1]).group(0))
 				self._callback.mcTempUpdate(self._temp, self._bedTemp, self._targetTemp, self._bedTargetTemp)
@@ -355,7 +376,7 @@ class MachineCom(object):
 					else:
 						baudrate = self._baudrateDetectList.pop(0)
 						try:
-							self._serial.baudrate = baudrate
+							self._setBaudrate(baudrate)
 							self._serial.timeout = 0.5
 							self._log("Trying baudrate: %d" % (baudrate))
 							self._baudrateDetectRetry = 5
@@ -366,7 +387,7 @@ class MachineCom(object):
 							self._testingBaudrate = True
 						except:
 							self._log("Unexpected error while setting baudrate: %d %s" % (baudrate, getExceptionString()))
-				elif 'ok' in line and 'T:' in line:
+				elif 'T:' in line:
 					self._baudrateDetectTestOk += 1
 					if self._baudrateDetectTestOk < 10:
 						self._log("Baudrate test ok: %d" % (self._baudrateDetectTestOk))
@@ -374,7 +395,7 @@ class MachineCom(object):
 					else:
 						self._sendCommand("M999")
 						self._serial.timeout = 2
-						profile.putPreference('serial_baud_auto', self._serial.baudrate)
+						profile.putMachineSetting('serial_baud_auto', self._serial.baudrate)
 						self._changeState(self.STATE_OPERATIONAL)
 				else:
 					self._testingBaudrate = False
@@ -388,15 +409,23 @@ class MachineCom(object):
 			elif self._state == self.STATE_OPERATIONAL:
 				#Request the temperature on comm timeout (every 2 seconds) when we are not printing.
 				if line == '':
-					self._sendCommand("M105")
+					if self._extruderCount > 0:
+						self._temperatureRequestExtruder = (self._temperatureRequestExtruder + 1) % self._extruderCount
+						self._sendCommand("M105 T%d" % (self._temperatureRequestExtruder))
+					else:
+						self._sendCommand("M105")
 					tempRequestTimeout = time.time() + 5
 			elif self._state == self.STATE_PRINTING:
 				if line == '' and time.time() > timeout:
 					self._log("Communication timeout during printing, forcing a line")
 					line = 'ok'
-				#Even when printing request the temperture every 5 seconds.
+				#Even when printing request the temperature every 5 seconds.
 				if time.time() > tempRequestTimeout:
-					self._commandQueue.put("M105")
+					if self._extruderCount > 0:
+						self._temperatureRequestExtruder = (self._temperatureRequestExtruder + 1) % self._extruderCount
+						self._sendCommand("M105 T%d" % (self._temperatureRequestExtruder))
+					else:
+						self._sendCommand("M105")
 					tempRequestTimeout = time.time() + 5
 				if 'ok' in line:
 					timeout = time.time() + 5
@@ -411,7 +440,30 @@ class MachineCom(object):
 						if "rs" in line:
 							self._gcodePos = int(line.split()[1])
 		self._log("Connection closed, closing down monitor")
-	
+
+	def _setBaudrate(self, baudrate):
+		#For linux the pyserial implementation lacks TCGETS2 support. So do that ourselves
+		if sys.platform.startswith('linux'):
+			try:
+				self._serial.baudrate = baudrate
+			except:
+				try:
+					# set custom speed
+					import fcntl, array, termios
+					TCGETS2 = 0x802C542A
+					TCSETS2 = 0x402C542B
+					BOTHER = 0o010000
+					buf = array.array('i', [0] * 64)
+					fcntl.ioctl(self._serial.fd, TCGETS2, buf)
+					buf[2] &= ~termios.CBAUD
+					buf[2] |= BOTHER
+					buf[9] = buf[10] = baudrate
+					fcntl.ioctl(self._serial.fd, TCSETS2, buf)
+				except:
+					print getExceptionString()
+		else:
+			self._serial.baudrate = baudrate
+
 	def _log(self, message):
 		self._callback.mcLog(message)
 		try:
@@ -459,7 +511,10 @@ class MachineCom(object):
 			self._heatupWaitStartTime = time.time()
 		if 'M104' in cmd or 'M109' in cmd:
 			try:
-				self._targetTemp = float(re.search('S([0-9]+)', cmd).group(1))
+				t = 0
+				if 'T' in cmd:
+					t = int(re.search('T([0-9]+)', cmd).group(1))
+				self._targetTemp[t] = float(re.search('S([0-9]+)', cmd).group(1))
 			except:
 				pass
 		if 'M140' in cmd or 'M190' in cmd:
@@ -473,6 +528,7 @@ class MachineCom(object):
 		except serial.SerialTimeoutException:
 			self._log("Serial timeout while writing to serial port, trying again.")
 			try:
+				time.sleep(0.5)
 				self._serial.write(cmd + '\n')
 			except:
 				self._log("Unexpected error while writing serial port: %s" % (getExceptionString()))
@@ -527,7 +583,7 @@ class MachineCom(object):
 		self._printSection = 'CUSTOM'
 		self._changeState(self.STATE_PRINTING)
 		self._printStartTime = time.time()
-		for i in xrange(0, 6):
+		for i in xrange(0, 4):
 			self._sendNext()
 	
 	def cancelPrint(self):

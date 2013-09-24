@@ -7,6 +7,7 @@
 #Param: parkY(float:190) Head park Y (mm)
 #Param: retractAmount(float:5) Retraction amount (mm)
 
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 import re
 
 def getValue(line, key, default = None):
@@ -24,10 +25,11 @@ def getValue(line, key, default = None):
 with open(filename, "r") as f:
 	lines = f.readlines()
 
-z = 0
-x = 0
-y = 0
+z = 0.
+x = 0.
+y = 0.
 pauseState = 0
+currentSectionType = 'STARTOFFILE'
 with open(filename, "w") as f:
 	for line in lines:
 		if line.startswith(';'):
@@ -35,7 +37,7 @@ with open(filename, "w") as f:
 				currentSectionType = line[6:].strip()
 			f.write(line)
 			continue
-		if getValue(line, 'G', None) == 1:
+		if getValue(line, 'G', None) == 1 or getValue(line, 'G', None) == 0:
 			newZ = getValue(line, 'Z', z)
 			x = getValue(line, 'X', x)
 			y = getValue(line, 'Y', y)
@@ -59,6 +61,8 @@ with open(filename, "w") as f:
 					f.write("G1 E%f F6000\n" % (retractAmount))
 					f.write("G1 E-%f F6000\n" % (retractAmount))
 					#Move the head back
+					if z < 15:
+						f.write("G1 Z%f F300\n" % (z+1))
 					f.write("G1 X%f Y%f F9000\n" % (x, y))
 					f.write("G1 E%f F6000\n" % (retractAmount))
 					f.write("G1 F9000\n")

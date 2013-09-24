@@ -1,10 +1,9 @@
 from __future__ import absolute_import
 from __future__ import division
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import types
 import math
-
-from Cura.util import profile
 
 SUCCESS = 0
 WARNING = 1
@@ -13,49 +12,49 @@ ERROR   = 2
 class validFloat(object):
 	def __init__(self, setting, minValue = None, maxValue = None):
 		self.setting = setting
-		self.setting.validators.append(self)
+		self.setting._validators.append(self)
 		self.minValue = minValue
 		self.maxValue = maxValue
 	
 	def validate(self):
 		try:
-			f = float(eval(self.setting.GetValue().replace(',','.'), {}, {}))
+			f = float(eval(self.setting.getValue().replace(',','.'), {}, {}))
 			if self.minValue is not None and f < self.minValue:
-				return ERROR, 'This setting should not be below ' + str(self.minValue)
-			if self.maxValue != None and f > self.maxValue:
+				return ERROR, 'This setting should not be below ' + str(round(self.minValue, 3))
+			if self.maxValue is not None and f > self.maxValue:
 				return ERROR, 'This setting should not be above ' + str(self.maxValue)
 			return SUCCESS, ''
-		except (ValueError, SyntaxError, TypeError):
-			return ERROR, '"' + str(self.setting.GetValue()) + '" is not a valid number or expression'
+		except (ValueError, SyntaxError, TypeError, NameError):
+			return ERROR, '"' + str(self.setting.getValue()) + '" is not a valid number or expression'
 
 class validInt(object):
 	def __init__(self, setting, minValue = None, maxValue = None):
 		self.setting = setting
-		self.setting.validators.append(self)
+		self.setting._validators.append(self)
 		self.minValue = minValue
 		self.maxValue = maxValue
 	
 	def validate(self):
 		try:
-			f = int(eval(self.setting.GetValue(), {}, {}))
-			if self.minValue != None and f < self.minValue:
+			f = int(eval(self.setting.getValue(), {}, {}))
+			if self.minValue is not None and f < self.minValue:
 				return ERROR, 'This setting should not be below ' + str(self.minValue)
-			if self.maxValue != None and f > self.maxValue:
+			if self.maxValue is not None and f > self.maxValue:
 				return ERROR, 'This setting should not be above ' + str(self.maxValue)
 			return SUCCESS, ''
-		except (ValueError, SyntaxError, TypeError):
-			return ERROR, '"' + str(self.setting.GetValue()) + '" is not a valid whole number or expression'
+		except (ValueError, SyntaxError, TypeError, NameError):
+			return ERROR, '"' + str(self.setting.getValue()) + '" is not a valid whole number or expression'
 
 class warningAbove(object):
 	def __init__(self, setting, minValueForWarning, warningMessage):
 		self.setting = setting
-		self.setting.validators.append(self)
+		self.setting._validators.append(self)
 		self.minValueForWarning = minValueForWarning
 		self.warningMessage = warningMessage
 	
 	def validate(self):
 		try:
-			f = float(eval(self.setting.GetValue().replace(',','.'), {}, {}))
+			f = float(eval(self.setting.getValue().replace(',','.'), {}, {}))
 			if isinstance(self.minValueForWarning, types.FunctionType):
 				if f >= self.minValueForWarning():
 					return WARNING, self.warningMessage % (self.minValueForWarning())
@@ -67,21 +66,47 @@ class warningAbove(object):
 			#We already have an error by the int/float validator in this case.
 			return SUCCESS, ''
 
+class warningBelow(object):
+	def __init__(self, setting, minValueForWarning, warningMessage):
+		self.setting = setting
+		self.setting._validators.append(self)
+		self.minValueForWarning = minValueForWarning
+		self.warningMessage = warningMessage
+
+	def validate(self):
+		try:
+			f = float(eval(self.setting.getValue().replace(',','.'), {}, {}))
+			if isinstance(self.minValueForWarning, types.FunctionType):
+				if f <= self.minValueForWarning():
+					return WARNING, self.warningMessage % (self.minValueForWarning())
+			else:
+				if f <= self.minValueForWarning:
+					return WARNING, self.warningMessage
+			return SUCCESS, ''
+		except (ValueError, SyntaxError, TypeError):
+			#We already have an error by the int/float validator in this case.
+			return SUCCESS, ''
+
 class wallThicknessValidator(object):
 	def __init__(self, setting):
 		self.setting = setting
-		self.setting.validators.append(self)
+		self.setting._validators.append(self)
 	
 	def validate(self):
+		from Cura.util import profile
 		try:
 			wallThickness = profile.getProfileSettingFloat('wall_thickness')
 			nozzleSize = profile.getProfileSettingFloat('nozzle_size')
+			if wallThickness < 0.01:
+				return SUCCESS, ''
 			if wallThickness <= nozzleSize * 0.5:
 				return ERROR, 'Trying to print walls thinner then the half of your nozzle size, this will not produce anything usable'
 			if wallThickness <= nozzleSize * 0.85:
 				return WARNING, 'Trying to print walls thinner then the 0.8 * nozzle size. Small chance that this will produce usable results'
 			if wallThickness < nozzleSize:
 				return SUCCESS, ''
+			if nozzleSize <= 0:
+				return ERROR, 'Incorrect nozzle size'
 			
 			lineCount = int(wallThickness / nozzleSize)
 			lineWidth = wallThickness / lineCount
@@ -96,9 +121,10 @@ class wallThicknessValidator(object):
 class printSpeedValidator(object):
 	def __init__(self, setting):
 		self.setting = setting
-		self.setting.validators.append(self)
+		self.setting._validators.append(self)
 
 	def validate(self):
+		from Cura.util import profile
 		try:
 			nozzleSize = profile.getProfileSettingFloat('nozzle_size')
 			layerHeight = profile.getProfileSettingFloat('layer_height')

@@ -17,11 +17,10 @@ BUILD_TARGET=${1:-all}
 ##Do we need to create the final archive
 ARCHIVE_FOR_DISTRIBUTION=1
 ##Which version name are we appending to the final archive
-BUILD_NAME=13.04
+BUILD_NAME=13.06.5
 TARGET_DIR=Cura-${BUILD_NAME}-${BUILD_TARGET}
 
 ##Which versions of external programs to use
-PYPY_VERSION=1.9
 WIN_PORTABLE_PY_VERSION=2.7.2.1
 
 #############################
@@ -77,6 +76,7 @@ checkTool curl "curl: http://curl.haxx.se/"
 if [ $BUILD_TARGET = "win32" ]; then
 	#Check if we have 7zip, needed to extract and packup a bunch of packages for windows.
 	checkTool 7z "7zip: http://www.7-zip.org/"
+	checkTool mingw32-make "mingw: http://www.mingw.org/"
 fi
 #For building under MacOS we need gnutar instead of tar
 if [ -z `which gnutar` ]; then
@@ -96,21 +96,19 @@ if [ "$BUILD_TARGET" = "darwin" ]; then
 	rm -rf scripts/darwin/build
 	rm -rf scripts/darwin/dist
 
-	python setup.py py2app
+	python build_app.py py2app
 	rc=$?
 	if [[ $rc != 0 ]]; then
 		echo "Cannot build app."
 		exit 1
 	fi
 
-	downloadURL https://bitbucket.org/pypy/pypy/downloads/pypy-${PYPY_VERSION}-osx64.tar.bz2
-	$TAR -xjf pypy-${PYPY_VERSION}-osx64.tar.bz2
-	mv pypy-${PYPY_VERSION} scripts/darwin/dist/Cura.app/Contents/Resources/pypy
-	#For now, just copy all of Cura so pypy can find it
-	cp -a Cura scripts/darwin/dist/Cura.app/Contents/Resources/
-
     #Add cura version file (should read the version from the bundle with pyobjc, but will figure that out later)
     echo $BUILD_NAME > scripts/darwin/dist/Cura.app/Contents/Resources/version
+	rm -rf CuraEngine
+	git clone https://github.com/Ultimaker/CuraEngine
+	make -C CuraEngine
+	cp CuraEngine/CuraEngine scripts/darwin/dist/Cura.app/Contents/Resources/CuraEngine
 
 	cd scripts/darwin
 
@@ -141,14 +139,18 @@ fi
 
 if [ "$BUILD_TARGET" = "debian" ]; then
 	git clone https://github.com/GreatFruitOmsk/Power
+	git clone https://github.com/Ultimaker/CuraEngine
+	make -C CuraEngine
 	rm -rf scripts/linux/debian/usr/share/cura
 	mkdir -p scripts/linux/debian/usr/share/cura
 	cp -a Cura scripts/linux/debian/usr/share/cura/
+	cp -a CuraEngine/CuraEngine scripts/linux/debian/usr/share/cura/
 	cp scripts/linux/cura.py scripts/linux/debian/usr/share/cura/
 	cp -a Power/power scripts/linux/debian/usr/share/cura/
 	echo $BUILD_NAME > scripts/linux/debian/usr/share/cura/Cura/version
-	sudo chown root:root scripts/linux/debian -R
-	sudo chmod 755 scripts/linux/debian/DEBIAN/*
+	sudo chown root:root scripts/linux/debian/usr -R
+	sudo chmod 755 scripts/linux/debian/usr -R
+	sudo chmod 755 scripts/linux/debian/DEBIAN -R
 	cd scripts/linux
 	dpkg-deb --build debian ${TARGET_DIR}.deb
 	sudo chown `id -un`:`id -gn` debian -R
@@ -173,13 +175,11 @@ if [ $BUILD_TARGET = "win32" ]; then
 	downloadURL http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-20120927-git-13f0cd6-win32-static.7z
 	downloadURL http://sourceforge.net/projects/comtypes/files/comtypes/0.6.2/comtypes-0.6.2.win32.exe
 	downloadURL http://www.uwe-sieber.de/files/ejectmedia.zip
-	#Get pypy
-	downloadURL https://bitbucket.org/pypy/pypy/downloads/pypy-${PYPY_VERSION}-win32.zip
 	#Get the power module for python
 	rm -rf Power
 	git clone https://github.com/GreatFruitOmsk/Power
-else
-	downloadURL https://bitbucket.org/pypy/pypy/downloads/pypy-${PYPY_VERSION}-${BUILD_TARGET}.tar.bz2
+	rm -rf CuraEngine
+	git clone https://github.com/Ultimaker/CuraEngine
 fi
 
 #############################
@@ -236,17 +236,10 @@ if [ $BUILD_TARGET = "win32" ]; then
 	rm -rf ${TARGET_DIR}/python/Lib/site-packages/wx-2.8-msw-unicode/wx/locale
 	#Remove the gle files because they require MSVCR71.dll, which is not included. We also don't need gle, so it's safe to remove it.
 	rm -rf ${TARGET_DIR}/python/Lib/OpenGL/DLLS/gle*
-fi
 
-#Extract pypy
-if [ $BUILD_TARGET = "win32" ]; then
-	extract pypy-${PYPY_VERSION}-win32.zip -o${TARGET_DIR}
-else
-	cd ${TARGET_DIR}; $TAR -xjf ../pypy-${PYPY_VERSION}-${BUILD_TARGET}.tar.bz2; cd ..
+    #Build the C++ engine
+	mingw32-make -C CuraEngine
 fi
-mv ${TARGET_DIR}/pypy-* ${TARGET_DIR}/pypy
-#Cleanup pypy
-rm -rf ${TARGET_DIR}/pypy/lib-python/2.7/test
 
 #add Cura
 mkdir -p ${TARGET_DIR}/Cura
@@ -257,6 +250,7 @@ echo $BUILD_NAME > ${TARGET_DIR}/Cura/version
 #add script files
 if [ $BUILD_TARGET = "win32" ]; then
     cp -a scripts/${BUILD_TARGET}/*.bat $TARGET_DIR/
+    cp CuraEngine/CuraEngine.exe $TARGET_DIR
 else
     cp -a scripts/${BUILD_TARGET}/*.sh $TARGET_DIR/
 fi

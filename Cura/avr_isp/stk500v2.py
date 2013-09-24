@@ -1,3 +1,4 @@
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 import os, struct, sys, time
 
 from serial import Serial
@@ -13,7 +14,7 @@ class Stk500v2(ispBase.IspBase):
 		self.progressCallback = None
 	
 	def connect(self, port = 'COM22', speed = 115200):
-		if self.serial != None:
+		if self.serial is not None:
 			self.close()
 		try:
 			self.serial = Serial(str(port), speed, timeout=1, writeTimeout=10000)
@@ -28,7 +29,7 @@ class Stk500v2(ispBase.IspBase):
 		time.sleep(0.1)
 		self.serial.setDTR(0)
 		time.sleep(0.2)
-		
+
 		self.sendMessage([1])
 		if self.sendMessage([0x10, 0xc8, 0x64, 0x19, 0x20, 0x00, 0x53, 0x03, 0xac, 0x53, 0x00, 0x00]) != [0x10, 0x00]:
 			self.close()
@@ -36,14 +37,14 @@ class Stk500v2(ispBase.IspBase):
 		self.serial.timeout = 5
 
 	def close(self):
-		if self.serial != None:
+		if self.serial is not None:
 			self.serial.close()
 			self.serial = None
 
 	#Leave ISP does not reset the serial port, only resets the device, and returns the serial port after disconnecting it from the programming interface.
 	#	This allows you to use the serial port without opening it again.
 	def leaveISP(self):
-		if self.serial != None:
+		if self.serial is not None:
 			if self.sendMessage([0x11]) != [0x11, 0x00]:
 				raise ispBase.IspError("Failed to leave programming mode")
 			ret = self.serial
@@ -52,7 +53,7 @@ class Stk500v2(ispBase.IspBase):
 		return None
 	
 	def isConnected(self):
-		return self.serial != None
+		return self.serial is not None
 	
 	def sendISP(self, data):
 		recv = self.sendMessage([0x1D, 4, 4, 0, data[0], data[1], data[2], data[3]])
@@ -147,7 +148,18 @@ class Stk500v2(ispBase.IspBase):
 
 def main():
 	programmer = Stk500v2()
-	programmer.connect(port = sys.argv[1])
+	if sys.argv[1] == 'AUTO':
+		import _winreg
+		key=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"HARDWARE\\DEVICEMAP\\SERIALCOMM")
+		i=0
+		while True:
+			values = _winreg.EnumValue(key, i)
+			if 'USBSER' in values[0]:
+				programmer.connect(port = values[1])
+				break
+			i+=1
+	else:
+		programmer.connect(port = sys.argv[1])
 	programmer.programChip(intelHex.readHex(sys.argv[2]))
 	sys.exit(1)
 

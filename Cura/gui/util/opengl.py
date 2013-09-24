@@ -1,5 +1,5 @@
-# coding=utf-8
 from __future__ import absolute_import
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import math
 import numpy
@@ -17,179 +17,182 @@ OpenGL.ERROR_CHECKING = False
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from OpenGL.GL import *
+from OpenGL.GL import shaders
 glutInit()
-
-def InitGL(window, view3D, zoom):
-	# set viewing projection
-	glMatrixMode(GL_MODELVIEW)
-	glLoadIdentity()
-	size = window.GetSize()
-	glViewport(0, 0, size.GetWidth(), size.GetHeight())
-
-	glLightfv(GL_LIGHT0, GL_POSITION, [0.2, 0.2, 1.0, 0.0])
-	glLightfv(GL_LIGHT1, GL_POSITION, [1.0, 1.0, 1.0, 0.0])
-
-	glEnable(GL_RESCALE_NORMAL)
-	glEnable(GL_LIGHTING)
-	glEnable(GL_LIGHT0)
-	glEnable(GL_DEPTH_TEST)
-	glEnable(GL_CULL_FACE)
-	glDisable(GL_BLEND)
-
-	glClearColor(1.0, 1.0, 1.0, 1.0)
-	glClearColor(0.8, 0.8, 0.8, 1.0)
-	glClearStencil(0)
-	glClearDepth(1.0)
-
-	glMatrixMode(GL_PROJECTION)
-	glLoadIdentity()
-	aspect = float(size.GetWidth()) / float(size.GetHeight())
-	if view3D:
-		gluPerspective(45.0, aspect, 1.0, 1000.0)
-	else:
-		glOrtho(-aspect * (zoom), aspect * (zoom), -1.0 * (zoom), 1.0 * (zoom), -1000.0, 1000.0)
-
-	glMatrixMode(GL_MODELVIEW)
-	glLoadIdentity()
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT)
 
 platformMesh = None
 
-def DrawMachine(machineSize):
-	glDisable(GL_LIGHTING)
-	glDisable(GL_CULL_FACE)
-	glEnable(GL_BLEND)
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+class GLReferenceCounter(object):
+	def __init__(self):
+		self._refCounter = 1
 
-	sx = machineSize.x
-	sy = machineSize.y
-	for x in xrange(-int(sx/20)-1, int(sx / 20) + 1):
-		for y in xrange(-int(sx/20)-1, int(sy / 20) + 1):
-			x1 = sx/2+x * 10
-			x2 = x1 + 10
-			y1 = sx/2+y * 10
-			y2 = y1 + 10
-			x1 = max(min(x1, sx), 0)
-			y1 = max(min(y1, sy), 0)
-			x2 = max(min(x2, sx), 0)
-			y2 = max(min(y2, sy), 0)
-			if (x & 1) == (y & 1):
-				glColor4ub(5, 171, 231, 127)
+	def incRef(self):
+		self._refCounter += 1
+
+	def decRef(self):
+		self._refCounter -= 1
+		return self._refCounter <= 0
+
+def hasShaderSupport():
+	if bool(glCreateShader):
+		return True
+	return False
+
+class GLShader(GLReferenceCounter):
+	def __init__(self, vertexProgram, fragmentProgram):
+		super(GLShader, self).__init__()
+		self._vertexString = vertexProgram
+		self._fragmentString = fragmentProgram
+		try:
+			vertexShader = shaders.compileShader(vertexProgram, GL_VERTEX_SHADER)
+			fragmentShader = shaders.compileShader(fragmentProgram, GL_FRAGMENT_SHADER)
+
+			#shader.compileProgram tries to return the shader program as a overloaded int. But the return value of a shader does not always fit in a int (needs to be a long). So we do raw OpenGL calls.
+			# self._program = shaders.compileProgram(self._vertexProgram, self._fragmentProgram)
+			self._program = glCreateProgram()
+			glAttachShader(self._program, vertexShader)
+			glAttachShader(self._program, fragmentShader)
+			glLinkProgram(self._program)
+			# Validation has to occur *after* linking
+			glValidateProgram(self._program)
+			if glGetProgramiv(self._program, GL_VALIDATE_STATUS) == GL_FALSE:
+				raise RuntimeError("Validation failure: %s"%(glGetProgramInfoLog(self._program)))
+			if glGetProgramiv(self._program, GL_LINK_STATUS) == GL_FALSE:
+				raise RuntimeError("Link failure: %s" % (glGetProgramInfoLog(self._program)))
+			glDeleteShader(vertexShader)
+			glDeleteShader(fragmentShader)
+		except RuntimeError, e:
+			print str(e)
+			self._program = None
+
+	def bind(self):
+		if self._program is not None:
+			shaders.glUseProgram(self._program)
+
+	def unbind(self):
+		shaders.glUseProgram(0)
+
+	def release(self):
+		if self._program is not None:
+			glDeleteProgram(self._program)
+			self._program = None
+
+	def setUniform(self, name, value):
+		if self._program is not None:
+			if type(value) is float:
+				glUniform1f(glGetUniformLocation(self._program, name), value)
+			elif type(value) is numpy.matrix:
+				glUniformMatrix3fv(glGetUniformLocation(self._program, name), 1, False, value.getA().astype(numpy.float32))
 			else:
-				glColor4ub(5 * 8 / 10, 171 * 8 / 10, 231 * 8 / 10, 128)
-			glBegin(GL_QUADS)
-			glVertex3f(x1, y1, -0.02)
-			glVertex3f(x2, y1, -0.02)
-			glVertex3f(x2, y2, -0.02)
-			glVertex3f(x1, y2, -0.02)
-			glEnd()
+				print 'Unknown type for setUniform: %s' % (str(type(value)))
 
-	glEnable(GL_CULL_FACE)
+	def isValid(self):
+		return self._program is not None
 
-	if profile.getPreference('machine_type') == 'ultimaker':
-		glPushMatrix()
+	def getVertexShader(self):
+		return self._vertexString
+
+	def getFragmentShader(self):
+		return self._fragmentString
+
+	def __del__(self):
+		if self._program is not None and bool(glDeleteProgram):
+			print "Shader was not properly released!"
+
+#A Class that acts as an OpenGL shader, but in reality is not none.
+class GLFakeShader(GLReferenceCounter):
+	def __init__(self):
+		super(GLFakeShader, self).__init__()
+
+	def bind(self):
 		glEnable(GL_LIGHTING)
-		glTranslate(100, 200, -1)
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, [0.8, 0.8, 0.8])
-		glLightfv(GL_LIGHT0, GL_AMBIENT, [0.5, 0.5, 0.5])
-		glEnable(GL_BLEND)
-		glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR)
+		glEnable(GL_LIGHT0)
+		glEnable(GL_COLOR_MATERIAL)
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, [1,1,1,1])
+		glLightfv(GL_LIGHT0, GL_AMBIENT, [0,0,0,0])
+		glLightfv(GL_LIGHT0, GL_SPECULAR, [0,0,0,0])
 
-		global platformMesh
-		if platformMesh is None:
-			try:
-				platformMesh = meshLoader.loadMesh(getPathForMesh('ultimaker_platform.stl'))
-			except:
-				platformMesh = False
-
-		if platformMesh:
-			DrawMesh(platformMesh)
-		glPopMatrix()
+	def unbind(self):
 		glDisable(GL_LIGHTING)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-	glColor4ub(5, 171, 231, 64)
-	glBegin(GL_QUADS)
-	glVertex3f(0, 0, machineSize.z)
-	glVertex3f(0, machineSize.y, machineSize.z)
-	glVertex3f(machineSize.x, machineSize.y, machineSize.z)
-	glVertex3f(machineSize.x, 0, machineSize.z)
-	glEnd()
+	def release(self):
+		pass
 
-	glColor4ub(5, 171, 231, 96)
-	glBegin(GL_QUADS)
-	glVertex3f(0, 0, 0)
-	glVertex3f(0, 0, machineSize.z)
-	glVertex3f(machineSize.x, 0, machineSize.z)
-	glVertex3f(machineSize.x, 0, 0)
+	def setUniform(self, name, value):
+		pass
 
-	glVertex3f(0, machineSize.y, machineSize.z)
-	glVertex3f(0, machineSize.y, 0)
-	glVertex3f(machineSize.x, machineSize.y, 0)
-	glVertex3f(machineSize.x, machineSize.y, machineSize.z)
-	glEnd()
+	def isValid(self):
+		return True
 
-	glColor4ub(5, 171, 231, 128)
-	glBegin(GL_QUADS)
-	glVertex3f(0, 0, machineSize.z)
-	glVertex3f(0, 0, 0)
-	glVertex3f(0, machineSize.y, 0)
-	glVertex3f(0, machineSize.y, machineSize.z)
+	def getVertexShader(self):
+		return ''
 
-	glVertex3f(machineSize.x, 0, 0)
-	glVertex3f(machineSize.x, 0, machineSize.z)
-	glVertex3f(machineSize.x, machineSize.y, machineSize.z)
-	glVertex3f(machineSize.x, machineSize.y, 0)
-	glEnd()
+	def getFragmentShader(self):
+		return ''
 
-	glDisable(GL_BLEND)
+class GLVBO(GLReferenceCounter):
+	def __init__(self, vertexArray, normalArray = None):
+		super(GLVBO, self).__init__()
+		if not bool(glGenBuffers):
+			self._vertexArray = vertexArray
+			self._normalArray = normalArray
+			self._size = len(vertexArray)
+			self._buffer = None
+			self._hasNormals = self._normalArray is not None
+		else:
+			self._buffer = glGenBuffers(1)
+			self._size = len(vertexArray)
+			self._hasNormals = normalArray is not None
+			glBindBuffer(GL_ARRAY_BUFFER, self._buffer)
+			if self._hasNormals:
+				glBufferData(GL_ARRAY_BUFFER, numpy.concatenate((vertexArray, normalArray), 1), GL_STATIC_DRAW)
+			else:
+				glBufferData(GL_ARRAY_BUFFER, vertexArray, GL_STATIC_DRAW)
+			glBindBuffer(GL_ARRAY_BUFFER, 0)
 
-	#Draw the X/Y/Z indicator
-	glPushMatrix()
-	glTranslate(5, 5, 2)
-	glLineWidth(2)
-	glColor3f(0.5, 0, 0)
-	glBegin(GL_LINES)
-	glVertex3f(0, 0, 0)
-	glVertex3f(20, 0, 0)
-	glEnd()
-	glColor3f(0, 0.5, 0)
-	glBegin(GL_LINES)
-	glVertex3f(0, 0, 0)
-	glVertex3f(0, 20, 0)
-	glEnd()
-	glColor3f(0, 0, 0.5)
-	glBegin(GL_LINES)
-	glVertex3f(0, 0, 0)
-	glVertex3f(0, 0, 20)
-	glEnd()
+	def render(self, render_type = GL_TRIANGLES):
+		glEnableClientState(GL_VERTEX_ARRAY)
+		if self._buffer is None:
+			glVertexPointer(3, GL_FLOAT, 0, self._vertexArray)
+			if self._hasNormals:
+				glEnableClientState(GL_NORMAL_ARRAY)
+				glNormalPointer(GL_FLOAT, 0, self._normalArray)
+		else:
+			glBindBuffer(GL_ARRAY_BUFFER, self._buffer)
+			if self._hasNormals:
+				glEnableClientState(GL_NORMAL_ARRAY)
+				glVertexPointer(3, GL_FLOAT, 2*3*4, c_void_p(0))
+				glNormalPointer(GL_FLOAT, 2*3*4, c_void_p(3 * 4))
+			else:
+				glVertexPointer(3, GL_FLOAT, 3*4, c_void_p(0))
 
-	glDisable(GL_DEPTH_TEST)
-	#X
-	glColor3f(1, 0, 0)
-	glPushMatrix()
-	glTranslate(20, 0, 0)
-	noZ = ResetMatrixRotationAndScale()
-	glDrawStringCenter("X")
-	glPopMatrix()
+		batchSize = 996    #Warning, batchSize needs to be dividable by 4, 3 and 2
+		extraStartPos = int(self._size / batchSize) * batchSize
+		extraCount = self._size - extraStartPos
 
-	#Y
-	glColor3f(0, 1, 0)
-	glPushMatrix()
-	glTranslate(0, 20, 0)
-	glDrawStringCenter("Y")
-	glPopMatrix()
+		for i in xrange(0, int(self._size / batchSize)):
+			glDrawArrays(render_type, i * batchSize, batchSize)
+		glDrawArrays(render_type, extraStartPos, extraCount)
+		if self._buffer is not None:
+			glBindBuffer(GL_ARRAY_BUFFER, 0)
 
-	#Z
-	if not noZ:
-		glColor3f(0, 0, 1)
-		glPushMatrix()
-		glTranslate(0, 0, 20)
-		glDrawStringCenter("Z")
-		glPopMatrix()
+		glDisableClientState(GL_VERTEX_ARRAY)
+		if self._hasNormals:
+			glDisableClientState(GL_NORMAL_ARRAY)
 
-	glPopMatrix()
-	glEnable(GL_DEPTH_TEST)
+	def release(self):
+		if self._buffer is not None:
+			glBindBuffer(GL_ARRAY_BUFFER, self._buffer)
+			glBufferData(GL_ARRAY_BUFFER, None, GL_STATIC_DRAW)
+			glBindBuffer(GL_ARRAY_BUFFER, 0)
+			glDeleteBuffers(1, [self._buffer])
+			self._buffer = None
+		self._vertexArray = None
+		self._normalArray = None
+
+	def __del__(self):
+		if self._buffer is not None and bool(glDeleteBuffers):
+			print "VBO was not properly released!"
 
 def glDrawStringCenter(s):
 	glRasterPos2f(0, 0)
@@ -206,14 +209,34 @@ def glGetStringSize(s):
 
 def glDrawStringLeft(s):
 	glRasterPos2f(0, 0)
+	n = 1
 	for c in s:
-		glutBitmapCharacter(OpenGL.GLUT.GLUT_BITMAP_HELVETICA_18, ord(c))
+		if c == '\n':
+			glPushMatrix()
+			glTranslate(0, 18 * n, 0)
+			n += 1
+			glRasterPos2f(0, 0)
+			glPopMatrix()
+		else:
+			glutBitmapCharacter(OpenGL.GLUT.GLUT_BITMAP_HELVETICA_18, ord(c))
 
 def glDrawStringRight(s):
 	glRasterPos2f(0, 0)
 	glBitmap(0,0,0,0, -glGetStringSize(s)[0], 0, None)
 	for c in s:
 		glutBitmapCharacter(OpenGL.GLUT.GLUT_BITMAP_HELVETICA_18, ord(c))
+
+def glDrawQuad(x, y, w, h):
+	glPushMatrix()
+	glTranslatef(x, y, 0)
+	glDisable(GL_TEXTURE_2D)
+	glBegin(GL_QUADS)
+	glVertex2f(w, 0)
+	glVertex2f(0, 0)
+	glVertex2f(0, h)
+	glVertex2f(w, h)
+	glEnd()
+	glPopMatrix()
 
 def glDrawTexturedQuad(x, y, w, h, texID, mirror = 0):
 	tx = float(texID % 4) / 4
@@ -239,6 +262,109 @@ def glDrawTexturedQuad(x, y, w, h, texID, mirror = 0):
 	glTexCoord2f(tx+tsx, ty+tsy)
 	glVertex2f(w, h)
 	glEnd()
+	glPopMatrix()
+
+def glDrawStretchedQuad(x, y, w, h, cornerSize, texID):
+	tx0 = float(texID % 4) / 4
+	ty0 = float(int(texID / 4)) / 8
+	tx1 = tx0 + 0.25 / 2.0
+	ty1 = ty0 + 0.125 / 2.0
+	tx2 = tx0 + 0.25
+	ty2 = ty0 + 0.125
+
+	glPushMatrix()
+	glTranslatef(x, y, 0)
+	glEnable(GL_TEXTURE_2D)
+	glBegin(GL_QUADS)
+	#TopLeft
+	glTexCoord2f(tx1, ty0)
+	glVertex2f( cornerSize, 0)
+	glTexCoord2f(tx0, ty0)
+	glVertex2f( 0, 0)
+	glTexCoord2f(tx0, ty1)
+	glVertex2f( 0, cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, cornerSize)
+	#TopRight
+	glTexCoord2f(tx2, ty0)
+	glVertex2f( w, 0)
+	glTexCoord2f(tx1, ty0)
+	glVertex2f( w - cornerSize, 0)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w - cornerSize, cornerSize)
+	glTexCoord2f(tx2, ty1)
+	glVertex2f( w, cornerSize)
+	#BottomLeft
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, h - cornerSize)
+	glTexCoord2f(tx0, ty1)
+	glVertex2f( 0, h - cornerSize)
+	glTexCoord2f(tx0, ty2)
+	glVertex2f( 0, h)
+	glTexCoord2f(tx1, ty2)
+	glVertex2f( cornerSize, h)
+	#BottomRight
+	glTexCoord2f(tx2, ty1)
+	glVertex2f( w, h - cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w - cornerSize, h - cornerSize)
+	glTexCoord2f(tx1, ty2)
+	glVertex2f( w - cornerSize, h)
+	glTexCoord2f(tx2, ty2)
+	glVertex2f( w, h)
+
+	#Center
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w-cornerSize, cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, h-cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w-cornerSize, h-cornerSize)
+
+	#Right
+	glTexCoord2f(tx2, ty1)
+	glVertex2f( w, cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w-cornerSize, cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w-cornerSize, h-cornerSize)
+	glTexCoord2f(tx2, ty1)
+	glVertex2f( w, h-cornerSize)
+
+	#Left
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, cornerSize)
+	glTexCoord2f(tx0, ty1)
+	glVertex2f( 0, cornerSize)
+	glTexCoord2f(tx0, ty1)
+	glVertex2f( 0, h-cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, h-cornerSize)
+
+	#Top
+	glTexCoord2f(tx1, ty0)
+	glVertex2f( w-cornerSize, 0)
+	glTexCoord2f(tx1, ty0)
+	glVertex2f( cornerSize, 0)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w-cornerSize, cornerSize)
+
+	#Bottom
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( w-cornerSize, h-cornerSize)
+	glTexCoord2f(tx1, ty1)
+	glVertex2f( cornerSize, h-cornerSize)
+	glTexCoord2f(tx1, ty2)
+	glVertex2f( cornerSize, h)
+	glTexCoord2f(tx1, ty2)
+	glVertex2f( w-cornerSize, h)
+
+	glEnd()
+	glDisable(GL_TEXTURE_2D)
 	glPopMatrix()
 
 def unproject(winx, winy, winz, modelMatrix, projMatrix, viewport):
@@ -347,35 +473,36 @@ def DrawMeshOutline(mesh):
 
 def DrawMesh(mesh, insideOut = False):
 	glEnable(GL_CULL_FACE)
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, mesh.vertexes)
-	if insideOut:
-		glNormalPointer(GL_FLOAT, 0, mesh.invNormal)
-	else:
-		glNormalPointer(GL_FLOAT, 0, mesh.normal)
+	glEnableClientState(GL_VERTEX_ARRAY)
+	glEnableClientState(GL_NORMAL_ARRAY)
+	for m in mesh._meshList:
+		glVertexPointer(3, GL_FLOAT, 0, m.vertexes)
+		if insideOut:
+			glNormalPointer(GL_FLOAT, 0, m.invNormal)
+		else:
+			glNormalPointer(GL_FLOAT, 0, m.normal)
 
-	#Odd, drawing in batchs is a LOT faster then drawing it all at once.
-	batchSize = 999    #Warning, batchSize needs to be dividable by 3
-	extraStartPos = int(mesh.vertexCount / batchSize) * batchSize
-	extraCount = mesh.vertexCount - extraStartPos
+		#Odd, drawing in batchs is a LOT faster then drawing it all at once.
+		batchSize = 999    #Warning, batchSize needs to be dividable by 3
+		extraStartPos = int(m.vertexCount / batchSize) * batchSize
+		extraCount = m.vertexCount - extraStartPos
 
-	glCullFace(GL_BACK)
-	for i in xrange(0, int(mesh.vertexCount / batchSize)):
-		glDrawArrays(GL_TRIANGLES, i * batchSize, batchSize)
-	glDrawArrays(GL_TRIANGLES, extraStartPos, extraCount)
+		glCullFace(GL_BACK)
+		for i in xrange(0, int(m.vertexCount / batchSize)):
+			glDrawArrays(GL_TRIANGLES, i * batchSize, batchSize)
+		glDrawArrays(GL_TRIANGLES, extraStartPos, extraCount)
 
-	glCullFace(GL_FRONT)
-	if insideOut:
-		glNormalPointer(GL_FLOAT, 0, mesh.normal)
-	else:
-		glNormalPointer(GL_FLOAT, 0, mesh.invNormal)
-	for i in xrange(0, int(mesh.vertexCount / batchSize)):
-		glDrawArrays(GL_TRIANGLES, i * batchSize, batchSize)
-	extraStartPos = int(mesh.vertexCount / batchSize) * batchSize
-	extraCount = mesh.vertexCount - extraStartPos
-	glDrawArrays(GL_TRIANGLES, extraStartPos, extraCount)
-	glCullFace(GL_BACK)
+		glCullFace(GL_FRONT)
+		if insideOut:
+			glNormalPointer(GL_FLOAT, 0, m.normal)
+		else:
+			glNormalPointer(GL_FLOAT, 0, m.invNormal)
+		for i in xrange(0, int(m.vertexCount / batchSize)):
+			glDrawArrays(GL_TRIANGLES, i * batchSize, batchSize)
+		extraStartPos = int(m.vertexCount / batchSize) * batchSize
+		extraCount = m.vertexCount - extraStartPos
+		glDrawArrays(GL_TRIANGLES, extraStartPos, extraCount)
+		glCullFace(GL_BACK)
 
 	glDisableClientState(GL_VERTEX_ARRAY)
 	glDisableClientState(GL_NORMAL_ARRAY)
@@ -419,7 +546,6 @@ def DrawMeshSteep(mesh, matrix, angle):
 			glEnd()
 	glDepthFunc(GL_LESS)
 
-
 def DrawGCodeLayer(layer, drawQuick = True):
 	filamentRadius = profile.getProfileSettingFloat('filament_diameter') / 2
 	filamentArea = math.pi * filamentRadius * filamentRadius
@@ -449,8 +575,6 @@ def DrawGCodeLayer(layer, drawQuick = True):
 			if path.pathType == 'FILL':
 				c = fillColorCycle[fillCycle]
 				fillCycle = (fillCycle + 1) % len(fillColorCycle)
-				if drawQuick:
-					continue
 			elif path.pathType == 'WALL-INNER':
 				c = innerWallColor
 				zOffset = 0.02
@@ -465,9 +589,9 @@ def DrawGCodeLayer(layer, drawQuick = True):
 		if path.type == 'extrude' and not drawQuick:
 			drawLength = 0.0
 			prevNormal = None
-			for i in xrange(0, len(path.list) - 1):
-				v0 = path.list[i]
-				v1 = path.list[i + 1]
+			for i in xrange(0, len(path.points) - 1):
+				v0 = path.points[i]
+				v1 = path.points[i + 1]
 
 				# Calculate line width from ePerDistance (needs layer thickness and filament diameter)
 				dist = (v0 - v1).vsize()
@@ -513,13 +637,14 @@ def DrawGCodeLayer(layer, drawQuick = True):
 				prevVv1 = vv1
 				prevVv3 = vv3
 		else:
-			glBegin(GL_LINE_STRIP)
 			glColor4fv(c)
-			for v in path.list:
-				glVertex3f(v.x, v.y, v.z)
+			glBegin(GL_TRIANGLES)
+			for v in path.points:
+				glVertex3f(v[0], v[1], v[2])
 			glEnd()
+
 		if not path.type == 'move':
 			prevPathWasRetract = False
-		if path.type == 'retract' and path.list[0].almostEqual(path.list[-1]):
-			prevPathWasRetract = True
+		#if path.type == 'retract' and path.points[0].almostEqual(path.points[-1]):
+		#	prevPathWasRetract = True
 	glEnable(GL_CULL_FACE)

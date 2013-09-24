@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import os
 import sys
@@ -20,7 +21,7 @@ def getVersion(getGitVersion = True):
 	if os.path.exists(gitPath):
 		if not getGitVersion:
 			return "dev"
-		f = open(gitPath + "/refs/heads/master", "r")
+		f = open(gitPath + "/refs/heads/SteamEngine", "r")
 		version = f.readline()
 		f.close()
 		return version.strip()
@@ -61,7 +62,7 @@ def checkForNewerVersion():
 				if version > localVersion:
 					return "%s/current/%s" % (updateBaseURL, filename)
 	except:
-		print sys.exc_info()
+		#print sys.exc_info()
 		return None
 	return None
 
