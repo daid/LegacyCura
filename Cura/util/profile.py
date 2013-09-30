@@ -170,6 +170,7 @@ setting('filament_diameter2',          0, float, 'basic',    _('Filament')).setR
 setting('filament_diameter3',          0, float, 'basic',    _('Filament')).setRange(0).setLabel(_("Diameter3 (mm)"), _("Diameter of your filament for the 3th nozzle. Use 0 to use the same diameter as for nozzle 1."))
 setting('filament_diameter4',          0, float, 'basic',    _('Filament')).setRange(0).setLabel(_("Diameter4 (mm)"), _("Diameter of your filament for the 4th nozzle. Use 0 to use the same diameter as for nozzle 1."))
 setting('filament_flow',            100., float, 'basic',    _('Filament')).setRange(1,300).setLabel(_("Flow (%)"), _("Flow compensation, the amount of material extruded is multiplied by this value"))
+setting('bottom_filament_flow',     100., float, 'basic',    _('Filament')).setRange(1,300).setLabel(_("Bottom Flow (%)"), _("Flow compensation, the amount of material extruded is multiplied by this value"))
 setting('retraction_speed',         40.0, float, 'advanced', _('Retraction')).setRange(0.1).setLabel(_("Speed (mm/s)"), _("Speed at which the filament is retracted, a higher retraction speed works better. But a very high retraction speed can lead to filament grinding."))
 setting('retraction_amount',         4.5, float, 'advanced', _('Retraction')).setRange(0).setLabel(_("Distance (mm)"), _("Amount of retraction, set at 0 for no retraction at all. A value of 4.5mm seems to generate good results."))
 setting('retraction_dual_amount',   16.5, float, 'advanced', _('Retraction')).setRange(0).setLabel(_("Dual extrusion switch amount (mm)"), _("Amount of retraction when switching nozzle with dual-extrusion, set at 0 for no retraction at all. A value of 16.0mm seems to generate good results."))
@@ -387,6 +388,8 @@ setting('extruder_head_size_height', '0.0', float, 'machine', 'hidden').setLabel
 
 validators.warningAbove(settingsDictionary['filament_flow'], 150, "More flow then 150% is rare and usually not recommended.")
 validators.warningBelow(settingsDictionary['filament_flow'], 50, "More flow then 50% is rare and usually not recommended.")
+validators.warningAbove(settingsDictionary['bottom_filament_flow'], 150, "More flow then 150% is rare and usually not recommended.")
+validators.warningBelow(settingsDictionary['bottom_filament_flow'], 50, "More flow then 50% is rare and usually not recommended.")
 validators.warningAbove(settingsDictionary['layer_height'], lambda : (float(getProfileSetting('nozzle_size')) * 80.0 / 100.0), "Thicker layers then %.2fmm (80%% nozzle size) usually give bad results and are not recommended.")
 validators.wallThicknessValidator(settingsDictionary['wall_thickness'])
 validators.warningAbove(settingsDictionary['print_speed'], 150.0, "It is highly unlikely that your machine can achieve a printing speed above 150mm/s")
