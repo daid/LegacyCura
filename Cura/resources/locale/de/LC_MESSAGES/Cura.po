@@ -589,12 +589,12 @@ msgid "Install custom firmware"
 msgstr "Installiere benutzerdefinierte Firmware"
 
 #: Cura/gui/mainWindow.py:398
-msgid "Install default Marlin firmware"
-msgstr "Installiere Standard Marlin Firmware"
+msgid "Install default Marlin firmware..."
+msgstr "Installiere Standard Marlin Firmware..."
 
 #: Cura/gui/mainWindow.py:402
-msgid "Select profile file to load"
-msgstr "Wählen Sie die Profil-Datei zum Laden"
+msgid "Select profile file to load..."
+msgstr "Wählen Sie die Profil-Datei zum Laden..."
 
 #: Cura/gui/mainWindow.py:414
 msgid "Select gcode file to load profile from"
@@ -1351,7 +1351,7 @@ msgid ""
 "This controls how densely filled the insides of your print will be. For a "
 "solid part use 100%, for an empty part use 0%. A value around 20% is usually "
 "enough.\n"
-"This won't effect the outside of the print and only adjusts how strong the "
+"This won't affect the outside of the print and only adjusts how strong the "
 "part becomes."
 msgstr ""
 "Dieser Wert steuert, wie dicht gefüllt Ihr Druckobjekt sein wird. Für ein "

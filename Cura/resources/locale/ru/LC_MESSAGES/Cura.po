@@ -536,11 +536,11 @@ msgid "Add new machine..."
 msgstr ""
 
 #: Cura/gui/mainWindow.py:396
-msgid "Install custom firmware"
+msgid "Install custom firmware..."
 msgstr ""
 
 #: Cura/gui/mainWindow.py:398
-msgid "Install default Marlin firmware"
+msgid "Install default Marlin firmware..."
 msgstr ""
 
 #: Cura/gui/mainWindow.py:402

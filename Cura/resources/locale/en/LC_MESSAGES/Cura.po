@@ -536,11 +536,11 @@ msgid "Add new machine..."
 msgstr ""
 
 #: Cura/gui/mainWindow.py:396
-msgid "Install custom firmware"
+msgid "Install custom firmware..."
 msgstr ""
 
 #: Cura/gui/mainWindow.py:398
-msgid "Install default Marlin firmware"
+msgid "Install default Marlin firmware..."
 msgstr ""
 
 #: Cura/gui/mainWindow.py:402
@@ -1254,7 +1254,7 @@ msgid ""
 "This controls how densely filled the insides of your print will be. For a "
 "solid part use 100%, for an empty part use 0%. A value around 20% is usually "
 "enough.\n"
-"This won't effect the outside of the print and only adjusts how strong the "
+"This won't affect the outside of the print and only adjusts how strong the "
 "part becomes."
 msgstr ""
 
@@ -1605,13 +1605,15 @@ msgstr ""
 
 #: Cura/util/profile.py:187
 msgid "Enable cooling fan"
-msgstr ""
+msgstr "Enable cooling fan(s)"
 
 #: Cura/util/profile.py:187
 msgid ""
 "Enable the cooling fan during the print. The extra cooling from the cooling "
 "fan is essential during faster prints."
 msgstr ""
+"Enable the cooling fan(s) during the print. The extra cooling from the cooling "
+"fan is essential during faster prints."
 
 #: Cura/util/profile.py:189
 msgid "Line count"

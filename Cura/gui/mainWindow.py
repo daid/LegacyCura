@@ -159,7 +159,7 @@ class mainWindow(wx.Frame):
 
 		helpMenu = wx.Menu()
 		i = helpMenu.Append(-1, _("Online documentation..."))
-		self.Bind(wx.EVT_MENU, lambda e: webbrowser.open('http://daid.github.com/Cura'), i)
+		self.Bind(wx.EVT_MENU, lambda e: webbrowser.open('http://blog.ultimaker.com/cura-user-manual/'), i)
 		i = helpMenu.Append(-1, _("Report a problem..."))
 		self.Bind(wx.EVT_MENU, lambda e: webbrowser.open('https://github.com/daid/Cura/issues'), i)
 		i = helpMenu.Append(-1, _("Check for update..."))
@@ -393,9 +393,9 @@ class mainWindow(wx.Frame):
 
 		#Add tools for machines.
 		self.machineMenu.AppendSeparator()
-		i = self.machineMenu.Append(-1, _("Install custom firmware"))
+		i = self.machineMenu.Append(-1, _("Install custom firmware..."))
 		self.Bind(wx.EVT_MENU, self.OnCustomFirmware, i)
-		i = self.machineMenu.Append(-1, _("Install default Marlin firmware"))
+		i = self.machineMenu.Append(-1, _("Install default Marlin firmware..."))
 		self.Bind(wx.EVT_MENU, self.OnDefaultMarlinFirmware, i)
 
 	def OnLoadProfile(self, e):
