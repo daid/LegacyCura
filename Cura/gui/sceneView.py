@@ -241,8 +241,12 @@ class SceneView(openglGui.glGuiPanel):
 					dlg.Destroy()
 				else:
 					drive = drives[0]
-				filename = self._scene._objectList[0].getName() + '.gcode'
-				threading.Thread(target=self._copyFile,args=(self._gcodeFilename, drive[1] + filename, drive[1])).start()
+				if profile.getMachineSetting('gcode_flavor') == 'MakerBot':
+					filename = self._scene._objectList[0].getName() + '.x3g'
+					threading.Thread(target=self._convertGcodeToX3G,args=(self._gcodeFilename, drive[1] + filename, drive[1])).start()
+				else:
+					filename = self._scene._objectList[0].getName() + '.gcode'
+					threading.Thread(target=self._copyFile,args=(self._gcodeFilename, drive[1] + filename, drive[1])).start()
 			elif connectionGroup is not None:
 				connections = connectionGroup.getAvailableConnections()
 				if len(connections) < 2:
@@ -297,16 +301,49 @@ class SceneView(openglGui.glGuiPanel):
 		if len(self._scene._objectList) < 1:
 			return
 		dlg=wx.FileDialog(self, _("Save toolpath"), os.path.dirname(profile.getPreference('lastFile')), style=wx.FD_SAVE)
-		filename = self._scene._objectList[0].getName() + '.gcode'
+
+		if profile.getMachineSetting('gcode_flavor') == 'MakerBot':
+			filename = self._scene._objectList[0].getName() + '.x3g'
+			dlg.SetWildcard('Toolpath (*.x3g)|*.x3g|Toolpath (*.gcode)|*.gcode;*.g')
+		else:
+			filename = self._scene._objectList[0].getName() + '.gcode'
+			dlg.SetWildcard('Toolpath (*.gcode)|*.gcode;*.g')
+
 		dlg.SetFilename(filename)
-		dlg.SetWildcard('Toolpath (*.gcode)|*.gcode;*.g')
+
 		if dlg.ShowModal() != wx.ID_OK:
 			dlg.Destroy()
 			return
 		filename = dlg.GetPath()
 		dlg.Destroy()
 
-		threading.Thread(target=self._copyFile,args=(self._gcodeFilename, filename)).start()
+		if (profile.getMachineSetting('gcode_flavor') == 'MakerBot' and filename.endswith('.x3g')):
+			threading.Thread(target=self._convertGcodeToX3G,args=(self._gcodeFilename, filename)).start()
+		else:
+			threading.Thread(target=self._copyFile,args=(self._gcodeFilename, filename)).start()
+
+	def _convertGcodeToX3G(self, gcode_file, s3g_file, allowEject = False):
+		import shlex
+		import subprocess
+		import sys
+
+		gpx_executable = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'gpx'))
+		param = "%s -m r1d %s %s" % (gpx_executable, gcode_file, s3g_file)
+
+		pararray = [i for i in shlex.split(param)]
+		gcode_to_x3g_converter_process = subprocess.Popen(pararray, stdin = subprocess.PIPE, stderr = subprocess.STDOUT, stdout = subprocess.PIPE)
+		while True:
+			o = gcode_to_x3g_converter_process.stdout.read(1)
+			if o == '' and gcode_to_x3g_converter_process.poll() != None: break
+			sys.stdout.write(o)
+		gcode_to_x3g_converter_process.wait()
+
+		if allowEject:
+			self.notification.message("Saved as %s" % (s3g_file), lambda : self._doEjectSD(allowEject), 31, 'Eject')
+		elif explorer.hasExplorer():
+			self.notification.message("Saved as %s" % (s3g_file), lambda : explorer.openExplorer(s3g_file), 4, 'Open folder')
+		else:
+			self.notification.message("Saved as %s" % (s3g_file))
 
 	def _copyFile(self, fileA, fileB, allowEject = False):
 		try:
