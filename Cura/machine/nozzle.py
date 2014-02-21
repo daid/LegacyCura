@@ -8,6 +8,7 @@ class Nozzle(object):
 		self._diameter = diameter
 		self._max_temp = max_temp
 		self._fillament_size = fillament_size
+		#todo: add offsets of nozzle (needed for multiple nozzles)
 
 	def getDiameter(self):
 		return self._diameter

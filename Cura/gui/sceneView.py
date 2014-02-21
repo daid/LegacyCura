@@ -32,9 +32,17 @@ from Cura.gui.util import engineResultView
 from Cura.gui.tools import youmagineGui
 from Cura.gui.tools import imageToMesh
 
+from Cura.machine.fdmprinter import FDMPrinter
+
 class SceneView(openglGui.glGuiPanel):
 	def __init__(self, parent):
 		super(SceneView, self).__init__(parent)
+
+
+		#TODO: below is a bit of debug code. Just added it here as it was the easiest place.
+		bla = FDMPrinter()
+		print bla.getSettingValueByName('machine_width')
+		#TODO: end debug code
 
 		self._yaw = 30
 		self._pitch = 60

@@ -8,9 +8,10 @@ class FDMPrinter(printer3D.Printer3D):
 	Class that holds settings for any kind of FDMPrinter
 	'''
 	def __init__(self):
+		super(FDMPrinter,self).__init__()
 		self._nozzles = []
 
-		self.addNozzle(Nozzle(0.4,260,2,85))
+		self.addNozzle(Nozzle(0.4,260,2.85))
 		pass
 
 	def addNozzle(self, nozzle):
