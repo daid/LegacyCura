@@ -14,10 +14,15 @@ class Machine(object):
 	def __init__(self):
 		self._setting_list = [] #Create a list with which to fill with settings.
 
-
+		#todo; Settings are currently addeded for completeness sake but often have the wrong type
 		self.addSetting(Setting('machine_width', 10, float, 'basic',    _('Basic')).setRange(0.0001))
 		self.addSetting(Setting('machine_height', 10, float, 'basic',    _('Basic')).setRange(0.0001))
-		self.addSetting(Setting('name', 10, string, 'basic',    _('Basic')))
+		self.addSetting(Setting('machine_depth', 10, float, 'basic',    _('Basic')).setRange(0.0001))
+		self.addSetting(Setting('name','Machine', string, 'basic',    _('Basic')))
+		self.addSetting(Setting('icon', '', string, 'basic',    _('Basic')))
+		self.addSetting(Setting('display_model', '', string, 'basic',    _('Basic')))
+
+		#todo: add
 
 	def addSetting(self, setting):
 		settingRef = self.getSettingByName(setting.getName())
