@@ -13,7 +13,7 @@ class Setting(object):
 		Settings have validators that check if the value is valid, but do not prevent invalid values!
 		Settings have conditions that enable/disable this setting depending on other settings. (Ex: Dual-extrusion)
 	"""
-	def __init__(self, name, default, type, category, subcategory):
+	def __init__(self, name, default, type, category= '', subcategory = ''):
 		self._name = name
 		self._label = name
 		self._tooltip = ''
