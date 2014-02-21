@@ -13,7 +13,28 @@ class Machine(object):
 		self._setting_list = [] #Create a list with which to fill with settings.
 
 
-		self.addSetting(Setting('layer_height',              0.1, float, 'basic',    _('Quality')).setRange(0.0001).setLabel(_("Layer height (mm)"), _("Layer height in millimeters.\nThis is the most important setting to determine the quality of your print. Normal quality prints are 0.1mm, high quality is 0.06mm. You can go up to 0.25mm with an Ultimaker for very fast prints at low quality.")))
+		self.addSetting(Setting('machine_width', 10, float, 'basic',    _('Basic')).setRange(0.0001).setLabel(_(""), _("")))
 
 	def addSetting(self, setting):
 		self._setting_list.append(setting)
+
+	def getSettingByName(self, name):
+		'''
+		Get first setting in the list by name
+		'''
+		return self._findFirstMatch(setting for setting in self._setting_list if setting.getName() == name)
+
+	def setSettingValueByName(self, name, value):
+		self.getSettingByName(name).setValue(value)
+
+	def getSettingValueByName(self, name):
+		return self.getSettingByName(name).getValue()
+
+	def _findFirstMatch(self,iterable, default = None):
+		'''
+		Util function that returns first object from an iteratable.
+		Might need to move this to util.
+		'''
+		for item in iterable:
+			return item
+		return default

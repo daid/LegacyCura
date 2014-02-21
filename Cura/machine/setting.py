@@ -60,7 +60,7 @@ class Setting(object):
 	def getType(self):
 		return self._type
 
-	def getValue(self, index = None):
+	def getValue(self):
 		if self._value == None:
 			return self._default
 		return self._value
