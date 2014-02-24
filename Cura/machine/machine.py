@@ -32,6 +32,9 @@ class Machine(object):
 		else:
 			pass #TODO; add handling if setting already exists. (replace setting?)
 
+	def getShape(self):
+		return self._machine_shape
+
 	def getSettingByName(self, name):
 		'''
 		Get first setting in the list by name

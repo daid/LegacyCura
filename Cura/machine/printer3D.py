@@ -14,3 +14,5 @@ class Printer3D(machine.Machine):
 
 		self._disallowed_zones = [] #List of polys
 
+	def getDisallowedZones(self):
+		return self._disallowed_zones
