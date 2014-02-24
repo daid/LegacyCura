@@ -17,7 +17,8 @@ class mainWindow(wx.Frame):
 	def __init__(self):
 		super(mainWindow, self).__init__(None, title='Cura - ' + version.getVersion())
 
-		wx.EVT_CLOSE(self, self.OnClose)
+		wx.EVT_CLOSE(self, self.onClose)
+		wx.EVT_MOVE(self, self.onMove)
 
 		# allow dropping any file, restrict later
 		self.SetDropTarget(dropTarget.FileDropTarget(self.OnDropFiles))
@@ -34,7 +35,8 @@ class mainWindow(wx.Frame):
 
 		#Main 3D panel
 		self._gl_panel = glPanel.GLPanel(self)
-		self._view_pos_panel = wx.Panel(self._gl_panel, style=wx.SIMPLE_BORDER)
+		self._view_pos_panel = wx.Frame(self._gl_panel, style=wx.FRAME_FLOAT_ON_PARENT)
+		self._view_pos_panel.Show()
 		self._view_pos_panel.SetSize((128, 32))
 
 		#Create a machine
@@ -88,7 +90,10 @@ class mainWindow(wx.Frame):
 		#TODO: Files droped on window, load them.
 		pass
 
-	def OnClose(self, e):
+	def onMove(self, e):
+		self.Layout()
+
+	def onClose(self, e):
 		profile.saveProfile(profile.getDefaultProfilePath(), True)
 
 		# Save the window position, size & state from the preferences file
