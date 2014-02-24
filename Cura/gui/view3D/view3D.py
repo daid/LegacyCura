@@ -1,6 +1,8 @@
 __author__ = 'Jaime van Kessel'
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from Cura.machine.machine import Machine
+from Cura.scene.scene import Scene
 import numpy
 
 class View3D(object):
@@ -17,13 +19,17 @@ class View3D(object):
 		self._renderer_list.append(renderer);
 
 	def setScene(self,scene):
-		self._scene(scene)
+		if isinstance(scene,Scene):
+			self._scene(scene)
 
 	def getScene(self):
 		return self._scene
 
 	def setMachine(self,machine):
-		self._machine = machine
+		if isinstance(machine,Machine):
+			self._machine = machine
+			for renderer in self._renderer_list:
+				renderer.setMachine(machine)
 
 	def getMachine(self):
 		return self._machine
