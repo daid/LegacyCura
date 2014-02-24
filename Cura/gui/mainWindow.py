@@ -35,7 +35,7 @@ class mainWindow(wx.Frame):
 
 		#Main 3D panel
 		self._gl_panel = glPanel.GLPanel(self)
-		self._view_pos_panel = wx.Frame(self._gl_panel, style=wx.FRAME_FLOAT_ON_PARENT)
+		self._view_pos_panel = wx.Dialog(self._gl_panel, style=wx.FRAME_FLOAT_ON_PARENT)
 		self._view_pos_panel.Show()
 		self._view_pos_panel.SetSize((128, 32))
 

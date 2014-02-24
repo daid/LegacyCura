@@ -59,7 +59,7 @@ class RelativeSizer(wx.PySizer):
 					y = size.GetHeight() - itemSize.GetHeight() - spacing[1]
 				else:
 					y = refControl.GetPosition()[1] - itemSize.GetHeight() - spacing[1]
-			if isinstance(item.GetWindow(), wx.Frame):
+			if isinstance(item.GetWindow(), wx.Dialog):
 				pos = self.GetContainingWindow().GetPosition()
 				x += pos[0]
 				y += pos[1]
