@@ -22,6 +22,7 @@ class View3D(object):
 		self._pitch = 60
 		self._zoom = 300
 		self._view_target = [0,0,0]
+		self._object_shader = None
 		machineRenderer = MachineRenderer()
 
 		self.addRenderer(machineRenderer)
