@@ -2,6 +2,7 @@ __author__ = 'Jaime van Kessel'
 
 from Cura.machine.setting import Setting
 import string
+import numpy
 
 def _(n):
 	return n
@@ -22,7 +23,7 @@ class Machine(object):
 		self.addSetting(Setting('icon', '', string, 'basic',    _('Basic')))
 		self.addSetting(Setting('display_model', '', string, 'basic',    _('Basic')))
 
-		#todo: add
+		self._machine_shape = numpy.zeros((0, 2), numpy.float32) #Polygon that forms the 'box' around the machine
 
 	def addSetting(self, setting):
 		settingRef = self.getSettingByName(setting.getName())
