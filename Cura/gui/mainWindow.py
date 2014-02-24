@@ -5,6 +5,7 @@ import sys
 
 from Cura.gui.util import dropTarget
 from Cura.gui.util import glPanel
+from Cura.gui.util.sizer import RelativeSizer
 from Cura.util import profile
 from Cura.util import version
 
@@ -33,6 +34,8 @@ class mainWindow(wx.Frame):
 
 		#Main 3D panel
 		self._gl_panel = glPanel.GLPanel(self)
+		self._view_pos_panel = wx.Panel(self._gl_panel, style=wx.SIMPLE_BORDER)
+		self._view_pos_panel.SetSize((128, 32))
 
 		#Create a machine
 		debugMachine = FDMPrinter()
@@ -44,11 +47,11 @@ class mainWindow(wx.Frame):
 		self._view.setMachine(debugMachine)
 
 		# Main window sizer
-		sizer = wx.BoxSizer(wx.VERTICAL)
+		sizer = RelativeSizer()
 		self.SetSizer(sizer)
-		sizer.Add(self._gl_panel, 1, flag=wx.EXPAND)
+		sizer.Add(self._gl_panel, None, wx.EXPAND)
+		sizer.Add(self._view_pos_panel, None, wx.BOTTOM | wx.LEFT, 24)
 		sizer.Layout()
-		self.sizer = sizer
 
 		# Set default window size & position
 		self.SetSize((wx.Display().GetClientArea().GetWidth()/2,wx.Display().GetClientArea().GetHeight()/2))
@@ -97,12 +100,6 @@ class mainWindow(wx.Frame):
 			(width, height) = self.GetSize()
 			profile.putPreference('window_width', width)
 			profile.putPreference('window_height', height)
-
-			# Save normal sash position.  If in normal mode (!simple mode), get last position of sash before saving it...
-			isSimple = profile.getPreference('startMode') == 'Simple'
-			if not isSimple:
-				self.normalSashPos = self.splitter.GetSashPosition()
-			profile.putPreference('window_normal_sash', self.normalSashPos)
 
 		print "Closing down"
 		self.Destroy()
