@@ -7,5 +7,5 @@ class ModelRenderer(Renderer):
 
 	def render(self):
 		#todo: add check if objects are renderable.
-		for model in self._scene.getModels():
+		for model in self._scene.getObjects():
 			self._renderObjects(model)

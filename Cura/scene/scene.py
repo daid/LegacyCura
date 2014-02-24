@@ -4,7 +4,7 @@ class Scene(object):
 	'''
 	Base scene class. Holds all objects (all objects on platform, etc) in the 3D world.
 	'''
-	def __int__(self):
+	def __init__(self):
 		self._machine = None #Scene has a reference to the machine
 		self._object_list = []
 
