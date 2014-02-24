@@ -19,8 +19,8 @@ class Renderer(object):
 		pass
 
 	def setScene(self,scene):
-		if isinstance(scene,Scene):
-			self._scene = scene
+		assert(issubclass(type(scene), Scene))
+		self._scene = scene
 
 	def _renderObject(self, obj):
 		glPushMatrix()

@@ -150,7 +150,7 @@ class SceneView(openglGui.glGuiPanel):
 		self.loadScene(filenames)
 
 	def loadFiles(self, filenames):
-		mainWindow = self.GetParent().GetParent().GetParent()
+		mainWindow = self.GetParent()
 		# only one GCODE file can be active
 		# so if single gcode file, process this
 		# otherwise ignore all gcode files
