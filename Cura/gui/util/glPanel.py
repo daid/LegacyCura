@@ -30,6 +30,7 @@ class GLPanel(glcanvas.GLCanvas):
 
 		wx.EVT_IDLE(self, self._onIdle)
 		wx.EVT_PAINT(self, self._onPaint)
+		wx.EVT_ERASE_BACKGROUND(self, self._onEraseBackground)
 
 	def setView(self, view):
 		assert(issubclass(type(view), view3D.View3D))
@@ -43,6 +44,10 @@ class GLPanel(glcanvas.GLCanvas):
 			The queueRefresh function only refreshes if there is no refresh scheduled yet.
 		"""
 		wx.CallAfter(self._queueRefresh)
+
+	def _onEraseBackground(self, event):
+		#Workaround for windows background redraw flicker.
+		pass
 
 	def _onPaint(self, e):
 		self._idleCalled = False
