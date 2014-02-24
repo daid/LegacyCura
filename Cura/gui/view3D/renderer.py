@@ -14,13 +14,40 @@ class Renderer(object):
 	def __init__(self):
 		self._machine = None #Reference to machine
 		self._scene = None #Reference to the scene
+		self._object_shader = None
 
 	def render(self):
+		if self._object_shader is None:
+			self.loadObjectShader()
 		pass
 
 	def setScene(self,scene):
 		assert(issubclass(type(scene), Scene))
 		self._scene = scene
+
+	def loadObjectShader(self): #todo; Move to seperate rendering classes
+		if openglHelpers.hasShaderSupport():
+			self._object_shader = openglHelpers.GLShader("""
+				varying float light_amount;
+
+				void main(void)
+				{
+					gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+					gl_FrontColor = gl_Color;
+
+					light_amount = abs(dot(normalize(gl_NormalMatrix * gl_Normal), normalize(gl_LightSource[0].position.xyz)));
+					light_amount += 0.2;
+				}
+								""","""
+				varying float light_amount;
+
+				void main(void)
+				{
+					gl_FragColor = vec4(gl_Color.xyz * light_amount, gl_Color[3]);
+				}
+			""")
+		if self._object_shader is None or not self._object_shader.isValid(): #Could not make shader.
+			self._object_shader = openglHelpers.GLFakeShader()
 
 	def _renderObject(self, obj):
 		glPushMatrix()

@@ -30,7 +30,9 @@ class MachineRenderer(Renderer):
 			if(self._platform_mesh is None):
 				self._platform_mesh = meshLoader.loadMeshes(self._mesh_path)
 			glColor4f(1,1,0,0.5)
+			self._object_shader.bind()
 			self._renderObject(self._platform_mesh[0])
+			self._object_shader.unbind()
 			#Draw sides
 			glDepthMask(False)
 			polys = self._machine.getShape()
