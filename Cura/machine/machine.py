@@ -47,6 +47,13 @@ class Machine(object):
 	def getSettingValueByName(self, name):
 		return self.getSettingByName(name).getValue()
 
+	def getSettingValueByNameFloat(self, name):
+		try:
+			setting = self.getSettingValueByName(name).replace(',', '.')
+			return float(eval(setting, {}, {}))
+		except:
+			return 0.0
+
 	def _findFirstMatch(self,iterable, default = None): #TODO; Might need to move this to util.
 		'''
 		Function that returns first object from an iteratable.

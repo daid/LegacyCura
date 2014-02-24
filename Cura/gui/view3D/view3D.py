@@ -4,16 +4,26 @@ from OpenGL.GLU import *
 from Cura.machine.machine import Machine
 from Cura.scene.scene import Scene
 from Cura.gui.view3D.renderer import Renderer
+from Cura.gui.view3D.machineRenderer import MachineRenderer
+
 import numpy
 
 class View3D(object):
+	'''
+	view3D is a view panel that has an associated scene which are drawn by the renderers of the view.
+	'''
 	def __init__(self):
 		self._scene = None #A view 3D has a scene responsible for data storage of what is in the 3D world.
 		self._renderer_list = [] #The view holds a set of renderers, such as machine renderer or object renderer.
 		self._machine = None # Reference to the machine
 		self._panel = None # Reference to the wxPython OpenGL panel
+		machineRenderer = MachineRenderer()
+
+		self.addRenderer(machineRenderer)
+
 
 	def render(self): #todo: Unsure about name.
+		self._init3DView()
 		for renderer in self._renderer_list:
 			renderer.render() #call all render functions
 
@@ -73,7 +83,10 @@ class View3D(object):
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
 		aspect = float(view_port_width) / float(view_port_height)
-		machine_size = [self._machine.getValueByName('machine_width'),self._machine.getValueByName('machine_height'),self._machine.getValueByName('machine_depth')]
+		machine_size = numpy.array([1000,0,0])
+		if self._machine is not None:
+			machine_size = numpy.array([self._machine.getSettingValueByNameFloat('machine_width'),self._machine.getSettingValueByNameFloat('machine_height'),self._machine.getSettingValueByNameFloat('machine_depth')])
+
 		gluPerspective(45.0, aspect, 1.0, numpy.max(machine_size) * 4)
 
 		glMatrixMode(GL_MODELVIEW)

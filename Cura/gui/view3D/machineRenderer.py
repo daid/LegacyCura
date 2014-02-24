@@ -5,6 +5,7 @@ from Cura.gui.view3D.renderer import Renderer
 from OpenGL.GL import *
 from Cura.util import meshLoader
 from Cura.gui.util import openglHelpers
+from Cura.util import resources
 
 class MachineRenderer(Renderer):
 	'''
@@ -15,7 +16,7 @@ class MachineRenderer(Renderer):
 		self._machine_width = 0;
 		self._machine_height = 0;
 		self._machine_depth = 0;
-		self._mesh_path = ''
+		self._mesh_path = resources.getPathForMesh('ultimaker_platform.stl') #Todo; hardcoded now.
 		self._platform_mesh = None
 		self._platform_texture = None
 
@@ -29,12 +30,13 @@ class MachineRenderer(Renderer):
 			if(self._platform_mesh is None):
 				self._platform_mesh = meshLoader.loadMeshes(self._mesh_path)
 			glColor4f(1,1,1,0.5)
-			self._renderObject(self._platformMesh)
+			self._renderObject(self._platform_mesh[0])
 
 			#Draw sides
 			glDepthMask(False)
 			polys = self._machine.getShape()
 			height = self._machine.getSettingValueByName('machine_height')
+			glBegin(GL_QUADS)
 			for n in xrange(0, len(polys)):
 
 				if n % 2 == 0:
@@ -65,7 +67,7 @@ class MachineRenderer(Renderer):
 			glBindTexture(GL_TEXTURE_2D, self._platform_texture)
 			glEnable(GL_TEXTURE_2D)
 			glBegin(GL_TRIANGLE_FAN)
-			for p in polys[0]:
+			for p in polys:
 				glTexCoord2f(p[0]/20, p[1]/20)
 				glVertex3f(p[0], p[1], 0)
 			glEnd()

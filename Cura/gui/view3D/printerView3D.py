@@ -7,8 +7,8 @@ class PrinterView3D(View3D):
 	def __init__(self):
 		super(PrinterView3D,self).__init__()
 
-		machine_renderer = MachineRenderer()
-		machine_renderer.setMachine(self._machine)
-		self.addRenderer(machine_renderer)
+		#machine_renderer = MachineRenderer()
+		#machine_renderer.setMachine(self._machine)
+		#self.addRenderer(machine_renderer)
 		model_renderer = ModelRenderer()
 		self.addRenderer(model_renderer)

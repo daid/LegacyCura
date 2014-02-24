@@ -10,6 +10,7 @@ from Cura.util import version
 
 from Cura.gui.view3D import printerView3D
 from Cura.scene import printer3DScene
+from Cura.machine.fdmprinter import FDMPrinter
 
 class mainWindow(wx.Frame):
 	def __init__(self):
@@ -33,11 +34,14 @@ class mainWindow(wx.Frame):
 		#Main 3D panel
 		self._gl_panel = glPanel.GLPanel(self)
 
+		#Create a machine
+		debugMachine = FDMPrinter()
 		#Setup a view and scene for testing.
 		self._scene = printer3DScene.Printer3DScene()
 		self._view = printerView3D.PrinterView3D()
 		self._view.setScene(self._scene)
 		self._gl_panel.setView(self._view)
+		self._view.setMachine(debugMachine)
 
 		# Main window sizer
 		sizer = wx.BoxSizer(wx.VERTICAL)

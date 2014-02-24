@@ -30,8 +30,8 @@ class Renderer(object):
 		#if self.tempMatrix is not None and obj == self._selectedObj:
 		#	glMultMatrixf(openglHelpers.convert3x3MatrixTo4x4(self.tempMatrix))
 
-		offset = obj.getDrawOffset()
-		glTranslate(-offset[0], -offset[1], -offset[2] - obj.getSize()[2] / 2)
+		#offset = obj.getDrawOffset()
+		#glTranslate(-offset[0], -offset[1], -offset[2] - obj.getSize()[2] / 2)
 
 		glMultMatrixf(openglHelpers.convert3x3MatrixTo4x4(obj.getMatrix()))
 
