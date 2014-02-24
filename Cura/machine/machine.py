@@ -27,7 +27,7 @@ class Machine(object):
 
 	def addSetting(self, setting):
 		settingRef = self.getSettingByName(setting.getName())
-		if settingRef == None: #Setting doesn't exist yet
+		if settingRef is None: #Setting doesn't exist yet
 			self._setting_list.append(setting)
 		else:
 			pass #TODO; add handling if setting already exists. (replace setting?)
