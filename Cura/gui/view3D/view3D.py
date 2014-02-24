@@ -10,6 +10,7 @@ class View3D(object):
 		self._scene = None #A view 3D has a scene responsible for data storage of what is in the 3D world.
 		self._renderer_list = [] #The view holds a set of renderers, such as machine renderer or object renderer.
 		self._machine = None # Reference to the machine
+		self._panel = None # Reference to the wxPython OpenGL panel
 
 	def render(self): #todo: Unsure about name.
 		for renderer in self._renderer_list:
@@ -19,8 +20,10 @@ class View3D(object):
 		self._renderer_list.append(renderer);
 
 	def setScene(self,scene):
-		if isinstance(scene,Scene):
-			self._scene(scene)
+		assert(issubclass(type(scene), Scene))
+		self._scene = scene
+		for render in self._renderer_list:
+			render.setScene(scene)
 
 	def getScene(self):
 		return self._scene
@@ -34,14 +37,20 @@ class View3D(object):
 	def getMachine(self):
 		return self._machine
 
+	def setPanel(self, panel):
+		"""
+			Set the reference to the wxPython GLPanel that is used to draw this view.
+		"""
+		self._panel = panel
+
 	def _init3DView(self):
 		'''
 		Setup the basics of the 3D view
 		'''
 		#TODO: hardcoded values for height & width
-		view_port_width = 10;
-		view_port_height = 10;
-		#size = self.GetSize() #get size of view. TODO
+		view_port_width = self._panel.GetSize().GetWidth()
+		view_port_height = self._panel.GetSize().GetHeight()
+
 		glViewport(0, 0, view_port_width, view_port_height)
 		glLoadIdentity()
 
