@@ -3,6 +3,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from Cura.machine.machine import Machine
 from Cura.scene.scene import Scene
+from Cura.gui.view3D.renderer import Renderer
 import numpy
 
 class View3D(object):
@@ -16,7 +17,8 @@ class View3D(object):
 			renderer.render() #call all render functions
 
 	def addRenderer(self, renderer):
-		self._renderer_list.append(renderer);
+		if isinstance(renderer,Renderer):
+			self._renderer_list.append(renderer);
 
 	def setScene(self,scene):
 		if isinstance(scene,Scene):
