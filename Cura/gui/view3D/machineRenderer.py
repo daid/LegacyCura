@@ -26,12 +26,11 @@ class MachineRenderer(Renderer):
 			#Draw machine
 			glEnable(GL_CULL_FACE)
 			glEnable(GL_BLEND)
-			size = [self._machine_width,self._machine_depth,self._machine_height]
+			#size = [self._machine_width,self._machine_depth,self._machine_height]
 			if(self._platform_mesh is None):
 				self._platform_mesh = meshLoader.loadMeshes(self._mesh_path)
-			glColor4f(1,1,1,0.5)
+			glColor4f(1,1,0,0.5)
 			self._renderObject(self._platform_mesh[0])
-
 			#Draw sides
 			glDepthMask(False)
 			polys = self._machine.getShape()

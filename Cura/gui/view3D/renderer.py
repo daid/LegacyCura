@@ -37,6 +37,7 @@ class Renderer(object):
 
 		n = 0
 		for m in obj._meshList:
+
 			if m.vbo is None:
 				m.vbo = openglHelpers.GLVBO(GL_TRIANGLES, m.vertexes, m.normal)
 			#if brightness != 0:

@@ -17,6 +17,11 @@ class View3D(object):
 		self._renderer_list = [] #The view holds a set of renderers, such as machine renderer or object renderer.
 		self._machine = None # Reference to the machine
 		self._panel = None # Reference to the wxPython OpenGL panel
+		#self._zoom = numpy.array([self._machine.getSettingValueByNameFloat('machine_width'),self._machine.getSettingValueByNameFloat('machine_height'),self._machine.getSettingValueByNameFloat('machine_depth')]) * 3
+		self._yaw = 30
+		self._pitch = 60
+		self._zoom = 300
+		self._view_target = [0,0,0]
 		machineRenderer = MachineRenderer()
 
 		self.addRenderer(machineRenderer)
@@ -92,3 +97,8 @@ class View3D(object):
 		glMatrixMode(GL_MODELVIEW)
 		glLoadIdentity()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT)
+
+		glTranslate(0,0,-self._zoom)
+		glRotate(-self._pitch, 1,0,0)
+		glRotate(self._yaw, 0,0,1)
+		glTranslate(-self._view_target[0],-self._view_target[1],-self._view_target[2])
