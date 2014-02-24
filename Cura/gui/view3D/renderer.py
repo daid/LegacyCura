@@ -4,15 +4,23 @@ from Cura.gui.util import previewTools
 from Cura.gui.util import openglHelpers
 from Cura.util import meshLoader
 
+from Cura.scene.scene import Scene
+from Cura.machine.machine import Machine
+
 class Renderer(object):
 	'''
 	Abstract renderer class
 	'''
 	def __init__(self):
 		self._machine = None #Reference to machine
+		self._scene = None #Reference to the scene
 
 	def render(self):
 		pass
+
+	def setScene(self,scene):
+		if isinstance(scene,Scene):
+			self._scene = scene
 
 	def _renderObject(self, obj):
 		glPushMatrix()
@@ -38,4 +46,5 @@ class Renderer(object):
 		glPopMatrix()
 
 	def setMachine(self,machine):
-		self._machine = machine
+		if isinstance(machine,Machine):
+			self._machine = machine

@@ -6,3 +6,7 @@ class Scene(object):
 	'''
 	def __int__(self):
 		self._machine = None #Scene has a reference to the machine
+		self._object_list = []
+
+	def getObjects(self):
+		return self._object_list
