@@ -62,6 +62,11 @@ class GLPanel(glcanvas.GLCanvas):
 			glFlush()
 			self.SwapBuffers()
 
+			if sys.platform.startswith('linux'):
+				#Refresh all the childern so they show on Linux
+				for child in self.GetChildren():
+					child.Refresh()
+
 			renderTime = time.time() - renderStartTime
 			if renderTime == 0:
 				renderTime = 0.001
