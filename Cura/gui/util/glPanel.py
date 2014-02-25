@@ -13,6 +13,7 @@ import OpenGL
 OpenGL.ERROR_CHECKING = False
 from OpenGL.GL import *
 from Cura.gui.tools.mouseTool import MouseTool
+from Cura.gui.tools.keyboardTool import KeyboardTool
 
 class GLPanel(glcanvas.GLCanvas):
 	"""
@@ -32,6 +33,9 @@ class GLPanel(glcanvas.GLCanvas):
 		self._tool_list = [] #List of tools that can make modifications (eg; selection tool, mouse tool)
 		mouse_tool = MouseTool()
 		mouse_tool.setView(self._view)
+		keyboard_tool = KeyboardTool()
+		keyboard_tool.setView(self._view)
+		self.addTool(keyboard_tool)
 		self.addTool(mouse_tool)
 		#Add a bunch of event listeners
 		wx.EVT_IDLE(self, self._onIdle)

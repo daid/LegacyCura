@@ -37,7 +37,7 @@ class MouseTool(Tool):
 			if not e.LeftIsDown() and e.RightIsDown():
 				self._mouse_state = 'drag'
 				yaw = self._view.getYaw() + e.GetX() - self._mouseX
-				pitch = self._view.getPitch() + e.GetY() - self._mouseY
+				pitch = self._view.getPitch() - (e.GetY() - self._mouseY)
 				if pitch > 170:
 					pitch = 170
 				if pitch < 10:

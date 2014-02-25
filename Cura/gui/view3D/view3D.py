@@ -20,7 +20,7 @@ class View3D(object):
 		self._panel = None # Reference to the wxPython OpenGL panel
 		#self._zoom = numpy.array([self._machine.getSettingValueByNameFloat('machine_width'),self._machine.getSettingValueByNameFloat('machine_height'),self._machine.getSettingValueByNameFloat('machine_depth')]) * 3
 		self._yaw = 10
-		self._pitch = 10
+		self._pitch = 60
 		self._zoom = 600
 		self._object_shader = None
 		machineRenderer = MachineRenderer()
