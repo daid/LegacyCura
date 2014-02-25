@@ -19,24 +19,37 @@ class View3D(object):
 		self._machine = None # Reference to the machine
 		self._panel = None # Reference to the wxPython OpenGL panel
 		#self._zoom = numpy.array([self._machine.getSettingValueByNameFloat('machine_width'),self._machine.getSettingValueByNameFloat('machine_height'),self._machine.getSettingValueByNameFloat('machine_depth')]) * 3
-		self._yaw = 30
-		self._pitch = 60
-		self._zoom = 300
-		self._view_target = [0,0,0]
+		self._yaw = 10
+		self._pitch = 10
+		self._zoom = 600
 		self._object_shader = None
 		machineRenderer = MachineRenderer()
 		self._viewport = None
-		self._modelMatrix = None
-		self._projMatrix = None
-		self._viewTarget = numpy.array([0,0,0], numpy.float32)
+		self._model_matrix = None
+		self._proj_matrix = None
+		self._view_target = numpy.array([0,0,0], numpy.float32)
 		self.addRenderer(machineRenderer)
 
+	def queueRefresh(self):
+		self._panel.queueRefresh()
+
+	def setYaw(self,yaw):
+		self._yaw = yaw
+
+	def getYaw(self):
+		return self._yaw
+
+	def getPitch(self):
+		return self._pitch
+
+	def setPitch(self, pitch):
+		self._pitch = pitch
 
 	def render(self): #todo: Unsure about name.
 		self._init3DView()
 		self._viewport = glGetIntegerv(GL_VIEWPORT)
-		self._modelMatrix = glGetDoublev(GL_MODELVIEW_MATRIX)
-		self._projMatrix = glGetDoublev(GL_PROJECTION_MATRIX)
+		self._model_matrix = glGetDoublev(GL_MODELVIEW_MATRIX)
+		self._proj_matrix = glGetDoublev(GL_PROJECTION_MATRIX)
 
 		for renderer in self._renderer_list:
 			renderer.render() #call all render functions
@@ -53,6 +66,9 @@ class View3D(object):
 
 	def getScene(self):
 		return self._scene
+
+	def getViewTarget(self):
+		return self._view_target
 
 	def setMachine(self,machine):
 		if isinstance(machine,Machine):
@@ -72,10 +88,10 @@ class View3D(object):
 	def getMouseRay(self, x, y):
 		if self._viewport is None:
 			return numpy.array([0,0,0],numpy.float32), numpy.array([0,0,1],numpy.float32)
-		p0 = unproject(x, self._viewport[1] + self._viewport[3] - y, 0, self._modelMatrix, self._projMatrix, self._viewport)
-		p1 = unproject(x, self._viewport[1] + self._viewport[3] - y, 1, self._modelMatrix, self._projMatrix, self._viewport)
-		p0 -= self._viewTarget
-		p1 -= self._viewTarget
+		p0 = unproject(x, self._viewport[1] + self._viewport[3] - y, 0, self._model_matrix, self._proj_matrix, self._viewport)
+		p1 = unproject(x, self._viewport[1] + self._viewport[3] - y, 1, self._model_matrix, self._proj_matrix, self._viewport)
+		p0 -= self._view_target
+		p1 -= self._view_target
 		return p0, p1
 
 	def _init3DView(self):

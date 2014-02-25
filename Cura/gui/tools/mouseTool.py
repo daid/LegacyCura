@@ -7,21 +7,53 @@ class MouseTool(Tool):
 		super(MouseTool,self).__init__()
 		self._mouseX = 0
 		self._mouseY = 0
-		self._mouseState = ''
+		self._mouse_state = ''
 
-	def onMouseUp(self, e):
+	def onMouseDown(self, e):
 		self._mouseX = e.GetX()
 		self._mouseY = e.GetY()
 
 		if e.ButtonDClick():
-			self._mouseState = 'doubleClick'
+			self._mouse_state = 'doubleClick'
 		else:
-			if self._mouseState == 'dragObject' and self._scene.getSelectedObject() is not None:
+			if self._mouse_state == 'dragObject' and self._scene.getSelectedObject() is not None:
 				pass
 		if self._view is not None:
 			p0, p1 = self._view.getMouseRay(self._mouseX,self._mouseY)
-			print p0
-			print p1
+			p0 -= self.getObjectCenterPos() - self._view.getViewTarget()
+			p1 -= self.getObjectCenterPos() - self._view.getViewTarget()
+
+
 		#p0, p1 = self.getMouseRay(self._mouseX, self._mouseY)
 		#p0 -= self.getObjectCenterPos() - self._viewTarget
 		#p1 -= self.getObjectCenterPos() - self._viewTarget
+	def onMouseUp(self, e):
+		if e.LeftIsDown() or e.MiddleIsDown() or e.RightIsDown(): #Ignore events if some other buttons are still pressed
+			return
+
+	def onMouseMotion(self, e):
+		p0, p1 = self._view.getMouseRay(self._mouseX,self._mouseY)
+		if e.Dragging() and self._mouse_state is not None:
+			if not e.LeftIsDown() and e.RightIsDown():
+				self._mouse_state = 'drag'
+				yaw = self._view.getYaw() + e.GetX() - self._mouseX
+				pitch = self._view.getPitch() + e.GetY() - self._mouseY
+				if pitch > 170:
+					pitch = 170
+				if pitch < 10:
+					pitch = 10
+				self._view.setYaw(yaw)
+				self._view.setPitch(pitch)
+				self._view.queueRefresh()
+
+		#update mouse positions again
+		self._mouseX = e.GetX()
+		self._mouseY = e.GetY()
+
+	def getObjectCenterPos(self): #TODO: Not quite sure what function of this is, copied from old sceneView.
+		selected_object = self._scene.getSelectedObject()
+		if selected_object is None:
+			return [0.0, 0.0, 0.0]
+		pos = selected_object.getPosition()
+		size = selected_object.getSize()
+		return [pos[0], pos[1], size[2]/2]
