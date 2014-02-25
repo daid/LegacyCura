@@ -44,7 +44,6 @@ class MouseTool(Tool):
 					pitch = 10
 				self._view.setYaw(yaw)
 				self._view.setPitch(pitch)
-				self._view.queueRefresh()
 
 		#update mouse positions again
 		self._mouseX = e.GetX()

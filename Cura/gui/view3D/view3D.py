@@ -35,6 +35,7 @@ class View3D(object):
 
 	def setYaw(self,yaw):
 		self._yaw = yaw
+		self.queueRefresh()
 
 	def getYaw(self):
 		return self._yaw
@@ -44,6 +45,14 @@ class View3D(object):
 
 	def setPitch(self, pitch):
 		self._pitch = pitch
+		self.queueRefresh()
+
+	def getZoom(self):
+		return self._zoom
+
+	def setZoom(self, zoom):
+		self._zoom = zoom
+		self.queueRefresh()
 
 	def render(self): #todo: Unsure about name.
 		self._init3DView()

@@ -35,6 +35,9 @@ class Machine(object):
 	def getShape(self):
 		return self._machine_shape
 
+	def getSize(self):
+		return numpy.array([self.getSettingValueByNameFloat('machine_width'),self.getSettingValueByNameFloat('machine_height'),self.getSettingValueByNameFloat('machine_depth')])
+
 	def getSettingByName(self, name):
 		'''
 		Get first setting in the list by name
