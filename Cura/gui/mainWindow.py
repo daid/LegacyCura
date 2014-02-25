@@ -5,7 +5,7 @@ import sys
 
 from Cura.gui.util import dropTarget
 from Cura.gui.util import glPanel
-from Cura.gui.util.sizer import RelativeSizer
+from Cura.gui.util.sizer import RelativePositionSizer
 from Cura.util import profile
 from Cura.util import version
 
@@ -35,7 +35,7 @@ class mainWindow(wx.Frame):
 
 		#Main 3D panel
 		self._gl_panel = glPanel.GLPanel(self)
-		self._view_pos_panel = wx.Dialog(self._gl_panel, style=wx.FRAME_FLOAT_ON_PARENT)
+		self._view_pos_panel = wx.Dialog(self._gl_panel, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE)
 		self._view_pos_panel.Show()
 		self._view_pos_panel.SetSize((128, 32))
 
@@ -49,14 +49,15 @@ class mainWindow(wx.Frame):
 		self._view.setMachine(debugMachine)
 
 		# Main window sizer
-		sizer = RelativeSizer()
+		sizer = RelativePositionSizer()
 		self.SetSizer(sizer)
-		sizer.Add(self._gl_panel, None, wx.EXPAND)
-		sizer.Add(self._view_pos_panel, None, wx.BOTTOM | wx.LEFT, 24)
+		sizer.Add(self._gl_panel, wx.EXPAND)
+		sizer.Add(self._view_pos_panel, wx.BOTTOM | wx.LEFT)
 		sizer.Layout()
 
 		# Set default window size & position
 		self.SetSize((wx.Display().GetClientArea().GetWidth()/2,wx.Display().GetClientArea().GetHeight()/2))
+		self.SetMinSize((800, 600))
 		self.Centre()
 
 		# Restore the window position, size & state from the preferences file

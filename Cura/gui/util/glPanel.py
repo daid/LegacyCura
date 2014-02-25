@@ -31,6 +31,7 @@ class GLPanel(glcanvas.GLCanvas):
 		wx.EVT_IDLE(self, self._onIdle)
 		wx.EVT_PAINT(self, self._onPaint)
 		wx.EVT_ERASE_BACKGROUND(self, self._onEraseBackground)
+		wx.EVT_SIZE(self, self._onSize)
 
 	def setView(self, view):
 		assert(issubclass(type(view), view3D.View3D))
@@ -90,7 +91,16 @@ class GLPanel(glcanvas.GLCanvas):
 			self.Refresh()
 
 	def _queueRefresh(self):
+		"""
+		Private _queueRefresh function, called from queueRefresh on the event thread to make sure we run in sync with refreshing the screen and onIdle calls.
+		"""
 		if self._idle_called:
 			wx.CallAfter(self.Refresh)
 		else:
 			self._refresh_queued = True
+
+	def _onSize(self, e):
+		"""
+		Refresh when our size changes. Normally the panel is only refreshed if the size grows and we also need updates when the panel shrinks.
+		"""
+		self.queueRefresh()
