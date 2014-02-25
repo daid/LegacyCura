@@ -61,6 +61,7 @@ class mainWindow(wx.Frame):
 		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Front', style=wx.BORDER_NONE)
 		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
 		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Top', style=wx.BORDER_NONE)
+		tmp.Bind(wx.EVT_BUTTON, self.onTest)
 		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
 		self._view_pos_panel.Layout()
 
@@ -134,3 +135,6 @@ class mainWindow(wx.Frame):
 
 		print "Closing down"
 		self.Destroy()
+
+	def onTest(self, e):
+		print "Test!"
