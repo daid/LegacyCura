@@ -17,7 +17,7 @@ from Cura.machine.fdmprinter import FDMPrinter
 # On windows we can place wxPanels on top of the GLPanel, but on Mac this does not work, as the GLPanel is drawn on top of it.
 # On Linux the panel is placed on top, but we need to refresh the panels on top so they show after drawing the GLPanel. The Cura.gui.util.glPanel handles this.
 # On Mac we place wx.Dialog on top of the GLPanel, which works. However these get separate focus which causes the title bar to grey out on windows.
-if sys.platform.startswith('darwin') or True:
+if sys.platform.startswith('darwin'):
 	class floatingPanel(wx.Dialog):
 		def __init__(self, parent):
 			super(floatingPanel, self).__init__(parent, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE)
