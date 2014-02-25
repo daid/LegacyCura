@@ -12,6 +12,7 @@ from wx import glcanvas
 import OpenGL
 OpenGL.ERROR_CHECKING = False
 from OpenGL.GL import *
+from Cura.gui.tools.mouseTool import MouseTool
 
 class GLPanel(glcanvas.GLCanvas):
 	"""
@@ -27,17 +28,59 @@ class GLPanel(glcanvas.GLCanvas):
 		self._refresh_queued = False
 		self._display_error = True #Display the first error we get during drawing, after that suppress them.
 		self._view = None
-		self._toolList = [] #List of tools that can make modifications (eg; selection tool, mouse tool)
-
+		self._scene = None
+		self._tool_list = [] #List of tools that can make modifications (eg; selection tool, mouse tool)
+		mouse_tool = MouseTool()
+		mouse_tool.setView(self._view)
+		self.addTool(mouse_tool)
+		#Add a bunch of event listeners
 		wx.EVT_IDLE(self, self._onIdle)
 		wx.EVT_PAINT(self, self._onPaint)
 		wx.EVT_ERASE_BACKGROUND(self, self._onEraseBackground)
 		wx.EVT_SIZE(self, self._onSize)
+		wx.EVT_LEFT_DOWN(self, self._onMouseDown)
+		wx.EVT_LEFT_DCLICK(self, self._onMouseDown)
+		wx.EVT_LEFT_UP(self, self._onMouseUp)
+		wx.EVT_RIGHT_DOWN(self, self._onMouseDown)
+		wx.EVT_RIGHT_DCLICK(self, self._onMouseDown)
+		wx.EVT_RIGHT_UP(self, self._onMouseUp)
+		wx.EVT_MIDDLE_DOWN(self, self._onMouseDown)
+		wx.EVT_MIDDLE_DCLICK(self, self._onMouseDown)
+		wx.EVT_MIDDLE_UP(self, self._onMouseUp)
+		wx.EVT_MOTION(self, self._onMouseMotion)
+		wx.EVT_CHAR(self, self._onKeyChar)
+
+	def _onMouseDown(self,e):
+		for tool in self._tool_list:
+			tool.onMouseDown(e)
+
+	def _onMouseUp(self,e):
+		for tool in self._tool_list:
+			tool.onMouseUp(e)
+
+	def _onMouseMotion(self,e):
+		for tool in self._tool_list:
+			tool.onMouseMotion(e)
+
+	def _onKeyChar(self,e):
+		for tool in self._tool_list:
+			tool.onKeyChar(e)
 
 	def setView(self, view):
 		assert(issubclass(type(view), view3D.View3D))
 		self._view = view
 		self._view.setPanel(self)
+		for tool in self._tool_list:
+			tool.setView(view)
+
+	def addTool(self,tool):
+		self._tool_list.append(tool)
+		tool.setScene(self._scene)
+
+	def setScene(self, scene):
+		self._scene = scene
+		for tool in self._tool_list:
+			tool.setScene(scene)
 
 	def queueRefresh(self):
 		"""
@@ -65,9 +108,9 @@ class GLPanel(glcanvas.GLCanvas):
 
 			if sys.platform.startswith('linux'):
 				#Refresh all the childern so they show on Linux
+
 				for child in self.GetChildren():
 					child.Refresh()
-
 			renderTime = time.time() - renderStartTime
 			if renderTime == 0:
 				renderTime = 0.001

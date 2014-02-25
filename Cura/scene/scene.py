@@ -10,3 +10,6 @@ class Scene(object):
 
 	def getObjects(self):
 		return self._object_list
+
+	def getSelectedObject(self): #Todo: Implement
+		return None

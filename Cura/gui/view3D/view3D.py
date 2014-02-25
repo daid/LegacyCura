@@ -5,6 +5,7 @@ from Cura.machine.machine import Machine
 from Cura.scene.scene import Scene
 from Cura.gui.view3D.renderer import Renderer
 from Cura.gui.view3D.machineRenderer import MachineRenderer
+from Cura.gui.util.openglHelpers import *
 
 import numpy
 
@@ -24,12 +25,19 @@ class View3D(object):
 		self._view_target = [0,0,0]
 		self._object_shader = None
 		machineRenderer = MachineRenderer()
-
+		self._viewport = None
+		self._modelMatrix = None
+		self._projMatrix = None
+		self._viewTarget = numpy.array([0,0,0], numpy.float32)
 		self.addRenderer(machineRenderer)
 
 
 	def render(self): #todo: Unsure about name.
 		self._init3DView()
+		self._viewport = glGetIntegerv(GL_VIEWPORT)
+		self._modelMatrix = glGetDoublev(GL_MODELVIEW_MATRIX)
+		self._projMatrix = glGetDoublev(GL_PROJECTION_MATRIX)
+
 		for renderer in self._renderer_list:
 			renderer.render() #call all render functions
 
@@ -60,6 +68,15 @@ class View3D(object):
 			Set the reference to the wxPython GLPanel that is used to draw this view.
 		"""
 		self._panel = panel
+
+	def getMouseRay(self, x, y):
+		if self._viewport is None:
+			return numpy.array([0,0,0],numpy.float32), numpy.array([0,0,1],numpy.float32)
+		p0 = unproject(x, self._viewport[1] + self._viewport[3] - y, 0, self._modelMatrix, self._projMatrix, self._viewport)
+		p1 = unproject(x, self._viewport[1] + self._viewport[3] - y, 1, self._modelMatrix, self._projMatrix, self._viewport)
+		p0 -= self._viewTarget
+		p1 -= self._viewTarget
+		return p0, p1
 
 	def _init3DView(self):
 		'''

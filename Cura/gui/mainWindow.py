@@ -73,6 +73,7 @@ class mainWindow(wx.Frame):
 		self._view = printerView3D.PrinterView3D()
 		self._view.setScene(self._scene)
 		self._gl_panel.setView(self._view)
+		self._gl_panel.setScene(self._scene)
 		self._view.setMachine(debugMachine)
 
 		# Main window sizer
