@@ -53,6 +53,7 @@ class GLPanel(glcanvas.GLCanvas):
 		self.Bind(wx.EVT_MIDDLE_UP, self._onMouseUp)
 		self.Bind(wx.EVT_MOTION, self._onMouseMotion)
 		self.Bind(wx.EVT_CHAR, self._onKeyChar)
+		self.Bind(wx.EVT_MOUSEWHEEL, self._onMouseWheel)
 
 		self.SetFocus()
 
@@ -72,6 +73,10 @@ class GLPanel(glcanvas.GLCanvas):
 	def _onKeyChar(self,e): #Only called when panel has focus.
 		for tool in self._tool_list:
 			tool.onKeyChar(e)
+
+	def _onMouseWheel(self,e):
+		for tool in self._tool_list:
+			tool.onMouseWheel(e)
 
 	def setView(self, view):
 		assert(issubclass(type(view), view3D.View3D))

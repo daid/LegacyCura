@@ -1,7 +1,7 @@
 __author__ = 'Jaime van Kessel'
 
 from Cura.gui.tools.tool import Tool
-
+import numpy
 class MouseTool(Tool):
 	def __init__(self):
 		super(MouseTool,self).__init__()
@@ -48,6 +48,17 @@ class MouseTool(Tool):
 		#update mouse positions again
 		self._mouseX = e.GetX()
 		self._mouseY = e.GetY()
+
+	def onMouseWheel(self,e):
+		delta = float(e.GetWheelRotation()) / float(e.GetWheelDelta())
+		delta = max(min(delta,4),-4)
+		zoom = self._view.getZoom()
+		zoom *= 1.0 - delta / 10.0
+		if zoom < 1.0:
+			zoom = 1.0
+		if zoom > numpy.max(self._view.getMachine().getSize()) * 3:
+			zoom = numpy.max(self._view.getMachine().getSize()) * 3
+		self._view.setZoom(zoom)
 
 	def getObjectCenterPos(self): #TODO: Not quite sure what function of this is, copied from old sceneView.
 		selected_object = self._scene.getSelectedObject()
