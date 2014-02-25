@@ -65,9 +65,10 @@ class RelativePositionSizer(wx.PySizer):
 				elif position & wx.BOTTOM:
 					y += -itemSize.GetHeight() - spacing[1]
 
-			if isinstance(item.GetWindow(), wx.Dialog) or isinstance(item.GetWindow(), wx.Frame):
-				x += windowScreenPosition[0]
-				y += windowScreenPosition[1]
+			if isinstance(item.GetWindow(), wx.Dialog) or isinstance(item.GetWindow(), wx.Frame) or isinstance(item.GetWindow(), wx.PopupWindow):
+				if not isinstance(item.GetWindow(), wx.MDIChildFrame):
+					x += windowScreenPosition[0]
+					y += windowScreenPosition[1]
 			item.SetDimension((x, y), itemSize)
 
 	def Add(self, control, position = 0, refControl = None, refPosition = 0, spacing = (0, 0)):
