@@ -38,10 +38,6 @@ class MouseTool(Tool):
 				self._mouse_state = 'drag'
 				yaw = self._view.getYaw() + e.GetX() - self._mouseX
 				pitch = self._view.getPitch() - (e.GetY() - self._mouseY)
-				if pitch > 170:
-					pitch = 170
-				if pitch < 10:
-					pitch = 10
 				self._view.setYaw(yaw)
 				self._view.setPitch(pitch)
 
@@ -54,10 +50,6 @@ class MouseTool(Tool):
 		delta = max(min(delta,4),-4)
 		zoom = self._view.getZoom()
 		zoom *= 1.0 - delta / 10.0
-		if zoom < 1.0:
-			zoom = 1.0
-		if zoom > numpy.max(self._view.getMachine().getSize()) * 3:
-			zoom = numpy.max(self._view.getMachine().getSize()) * 3
 		self._view.setZoom(zoom)
 
 	def getObjectCenterPos(self): #TODO: Not quite sure what function of this is, copied from old sceneView.

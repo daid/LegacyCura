@@ -14,8 +14,6 @@ class KeyboardTool(Tool):
 			if wx.GetKeyState(wx.WXK_SHIFT):
 				zoom = self._view.getZoom()
 				zoom /= 1.2
-				if zoom < 1:
-					zoom = 1
 				self._view.setZoom(zoom)
 			else:
 				self._view.setPitch(self._view.getPitch() - 15)
@@ -24,8 +22,6 @@ class KeyboardTool(Tool):
 			if wx.GetKeyState(wx.WXK_SHIFT):
 				zoom = self._view.getZoom()
 				zoom *= 1.2
-				if zoom > numpy.max(self._view.getMachine().getSize()) * 3:
-					zoom = numpy.max(self._view.getMachine().getSize()) * 3
 				self._view.setZoom(zoom)
 			else:
 				self._view.setPitch(self._view.getPitch() + 15)
@@ -36,14 +32,10 @@ class KeyboardTool(Tool):
 		elif key_code == wx.WXK_NUMPAD_ADD or key_code == wx.WXK_ADD or key_code == ord('+') or key_code == ord('='):
 			zoom = self._view.getZoom()
 			zoom /= 1.2
-			if zoom < 1:
-				zoom = 1
 			self._view.setZoom(zoom)
 		elif key_code == wx.WXK_NUMPAD_SUBTRACT or key_code == wx.WXK_SUBTRACT or key_code == ord('-'):
 			zoom = self._view.getZoom()
 			zoom *= 1.2
-			if zoom > numpy.max(self._view.getMachine().getSize()) * 3:
-				zoom = numpy.max(self._view.getMachine().getSize()) * 3
 			self._view.setZoom(zoom)
 		elif key_code == wx.WXK_HOME:
 			self._view.setYaw(30)

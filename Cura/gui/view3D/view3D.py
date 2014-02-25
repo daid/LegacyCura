@@ -22,6 +22,13 @@ class View3D(object):
 		self._yaw = 10
 		self._pitch = 60
 		self._zoom = 600
+
+		self._min_yaw = None
+		self._max_yaw = None
+		self._min_pitch = 10
+		self._max_pitch = 170
+		self._min_zoom = 1.0
+		self._max_zoom = None
 		self._object_shader = None
 		machineRenderer = MachineRenderer()
 		self._viewport = None
@@ -34,7 +41,13 @@ class View3D(object):
 		self._panel.queueRefresh()
 
 	def setYaw(self,yaw):
-		self._yaw = yaw
+		if self._min_yaw is None or self._min_yaw < yaw:
+			if self._max_yaw is None or self._max_yaw > yaw:
+				self._yaw = yaw
+			else:
+				self._yaw = self._max_yaw
+		else:
+			self._yaw = self._min_yaw
 		self.queueRefresh()
 
 	def getYaw(self):
@@ -44,14 +57,26 @@ class View3D(object):
 		return self._pitch
 
 	def setPitch(self, pitch):
-		self._pitch = pitch
+		if self._min_pitch is None or self._min_pitch < pitch:
+			if self._max_pitch is None or self._max_pitch > pitch:
+				self._pitch = pitch
+			else:
+				self._pitch = self._max_pitch
+		else:
+			self._pitch = self._min_pitch
 		self.queueRefresh()
 
 	def getZoom(self):
 		return self._zoom
 
 	def setZoom(self, zoom):
-		self._zoom = zoom
+		if self._min_zoom is None or self._min_zoom < zoom:
+			if self._max_zoom is None or self._max_zoom > zoom:
+				self._zoom = zoom
+			else:
+				self._zoom = self._max_zoom
+		else:
+			self._zoom = self._min_zoom
 		self.queueRefresh()
 
 	def render(self): #todo: Unsure about name.
@@ -82,6 +107,7 @@ class View3D(object):
 	def setMachine(self,machine):
 		if isinstance(machine,Machine):
 			self._machine = machine
+			self._max_zoom = numpy.max(machine.getSize()) * 3
 			for renderer in self._renderer_list:
 				renderer.setMachine(machine)
 

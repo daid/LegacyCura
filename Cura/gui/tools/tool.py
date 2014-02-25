@@ -2,7 +2,8 @@ __author__ = 'Jaime van Kessel'
 
 class Tool(object):
 	'''
-	Interface class for all tools. Holds entry points for events
+	Interface class for all tools. Holds entry points for events.
+	Tools are handlers for interaction with a view.
 	'''
 	def __int__(self):
 		self._scene = None #Reference to Scene object
