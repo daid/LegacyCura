@@ -1,6 +1,7 @@
 __copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import wx
+import wx.lib.buttons
 import sys
 
 from Cura.gui.util import dropTarget
@@ -12,6 +13,18 @@ from Cura.util import version
 from Cura.gui.view3D import printerView3D
 from Cura.scene import printer3DScene
 from Cura.machine.fdmprinter import FDMPrinter
+
+# On windows we can place wxPanels on top of the GLPanel, but on Mac and Linux this does not work, as the GLPanel is drawn on top of it.
+# On Mac and Linux we place wx.Dialog on top of the GLPanel, which works. However these get separate focus which causes the title bar to grey out on windows.
+if sys.platform.startswith('win') or True:
+	class floatingPanel(wx.Panel):
+		def __init__(self, parent):
+			super(floatingPanel, self).__init__(parent)
+else:
+	class floatingPanel(wx.Dialog):
+		def __init__(self, parent):
+			super(floatingPanel, self).__init__(parent, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE)
+
 
 class mainWindow(wx.Frame):
 	def __init__(self):
@@ -35,9 +48,21 @@ class mainWindow(wx.Frame):
 
 		#Main 3D panel
 		self._gl_panel = glPanel.GLPanel(self)
-		self._view_pos_panel = wx.Dialog(self._gl_panel, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE)
+		self._view_pos_panel = floatingPanel(self._gl_panel)
 		self._view_pos_panel.Show()
-		self._view_pos_panel.SetSize((128, 32))
+		self._view_pos_panel.SetSize((165, 40))
+
+		self._view_pos_panel.SetSizer(wx.BoxSizer(wx.HORIZONTAL))
+		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, '3D', style=wx.BORDER_NONE)
+		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
+		self._view_pos_panel.GetSizer().AddSpacer(5)
+		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Right', style=wx.BORDER_NONE)
+		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
+		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Front', style=wx.BORDER_NONE)
+		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
+		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Top', style=wx.BORDER_NONE)
+		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
+		self._view_pos_panel.Layout()
 
 		#Create a machine
 		debugMachine = FDMPrinter()
@@ -52,7 +77,7 @@ class mainWindow(wx.Frame):
 		sizer = RelativePositionSizer()
 		self.SetSizer(sizer)
 		sizer.Add(self._gl_panel, wx.EXPAND)
-		sizer.Add(self._view_pos_panel, wx.BOTTOM | wx.LEFT)
+		sizer.Add(self._view_pos_panel, wx.BOTTOM | wx.LEFT, spacing=(20, 12))
 		sizer.Layout()
 
 		# Set default window size & position
