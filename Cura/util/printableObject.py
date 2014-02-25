@@ -8,6 +8,7 @@ __copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AG
 import time
 import math
 import os
+from Cura.util.mesh import Mesh
 
 import numpy
 numpy.seterr(all='ignore')
@@ -68,7 +69,7 @@ class printableObject(object):
 		return ret
 
 	def _addMesh(self):
-		m = mesh(self)
+		m = Mesh(self)
 		self._meshList.append(m)
 		return m
 
@@ -295,127 +296,3 @@ class printableObject(object):
 				meshIdxList.append(vIdx)
 			meshList.append(numpy.array(meshIdxList, numpy.int32))
 		return numpy.array(vertexList, numpy.float32), meshList
-
-class mesh(object):
-	"""
-	A mesh is a list of 3D triangles build from vertexes. Each triangle has 3 vertexes.
-
-	A "VBO" can be associated with this object, which is used for rendering this object.
-	"""
-	def __init__(self, obj):
-		self.vertexes = None
-		self.vertexCount = 0
-		self.vbo = None
-		self._obj = obj
-
-	def _addFace(self, x0, y0, z0, x1, y1, z1, x2, y2, z2):
-		n = self.vertexCount
-		self.vertexes[n][0] = x0
-		self.vertexes[n][1] = y0
-		self.vertexes[n][2] = z0
-		n += 1
-		self.vertexes[n][0] = x1
-		self.vertexes[n][1] = y1
-		self.vertexes[n][2] = z1
-		n += 1
-		self.vertexes[n][0] = x2
-		self.vertexes[n][1] = y2
-		self.vertexes[n][2] = z2
-		self.vertexCount += 3
-	
-	def _prepareFaceCount(self, faceNumber):
-		#Set the amount of faces before loading data in them. This way we can create the numpy arrays before we fill them.
-		self.vertexes = numpy.zeros((faceNumber*3, 3), numpy.float32)
-		self.normal = numpy.zeros((faceNumber*3, 3), numpy.float32)
-		self.vertexCount = 0
-
-	def _calculateNormals(self):
-		#Calculate the normals
-		tris = self.vertexes.reshape(self.vertexCount / 3, 3, 3)
-		normals = numpy.cross( tris[::,1 ] - tris[::,0]  , tris[::,2 ] - tris[::,0] )
-		lens = numpy.sqrt( normals[:,0]**2 + normals[:,1]**2 + normals[:,2]**2 )
-		normals[:,0] /= lens
-		normals[:,1] /= lens
-		normals[:,2] /= lens
-		
-		n = numpy.zeros((self.vertexCount / 3, 9), numpy.float32)
-		n[:,0:3] = normals
-		n[:,3:6] = normals
-		n[:,6:9] = normals
-		self.normal = n.reshape(self.vertexCount, 3)
-		self.invNormal = -self.normal
-
-	def _vertexHash(self, idx):
-		v = self.vertexes[idx]
-		return int(v[0] * 100) | int(v[1] * 100) << 10 | int(v[2] * 100) << 20
-
-	def _idxFromHash(self, map, idx):
-		vHash = self._vertexHash(idx)
-		for i in map[vHash]:
-			if numpy.linalg.norm(self.vertexes[i] - self.vertexes[idx]) < 0.001:
-				return i
-
-	def getTransformedVertexes(self, applyOffsets = False):
-		if applyOffsets:
-			pos = self._obj._position.copy()
-			pos.resize((3))
-			pos[2] = self._obj.getSize()[2] / 2
-			offset = self._obj._drawOffset.copy()
-			offset[2] += self._obj.getSize()[2] / 2
-			return (numpy.matrix(self.vertexes, copy = False) * numpy.matrix(self._obj._matrix, numpy.float32)).getA() - offset + pos
-		return (numpy.matrix(self.vertexes, copy = False) * numpy.matrix(self._obj._matrix, numpy.float32)).getA()
-
-	def split(self, callback):
-		vertexMap = {}
-
-		vertexToFace = []
-		for idx in xrange(0, self.vertexCount):
-			if (idx % 100) == 0:
-				callback(idx * 100 / self.vertexCount)
-			vHash = self._vertexHash(idx)
-			if vHash not in vertexMap:
-				vertexMap[vHash] = []
-			vertexMap[vHash].append(idx)
-			vertexToFace.append([])
-
-		faceList = []
-		for idx in xrange(0, self.vertexCount, 3):
-			if (idx % 100) == 0:
-				callback(idx * 100 / self.vertexCount)
-			f = [self._idxFromHash(vertexMap, idx), self._idxFromHash(vertexMap, idx+1), self._idxFromHash(vertexMap, idx+2)]
-			vertexToFace[f[0]].append(idx / 3)
-			vertexToFace[f[1]].append(idx / 3)
-			vertexToFace[f[2]].append(idx / 3)
-			faceList.append(f)
-
-		ret = []
-		doneSet = set()
-		for idx in xrange(0, len(faceList)):
-			if idx in doneSet:
-				continue
-			doneSet.add(idx)
-			todoList = [idx]
-			meshFaceList = []
-			while len(todoList) > 0:
-				idx = todoList.pop()
-				meshFaceList.append(idx)
-				for n in xrange(0, 3):
-					for i in vertexToFace[faceList[idx][n]]:
-						if not i in doneSet:
-							doneSet.add(i)
-							todoList.append(i)
-
-			obj = printableObject(self._obj.getOriginFilename())
-			obj._matrix = self._obj._matrix.copy()
-			m = obj._addMesh()
-			m._prepareFaceCount(len(meshFaceList))
-			for idx in meshFaceList:
-				m.vertexes[m.vertexCount] = self.vertexes[faceList[idx][0]]
-				m.vertexCount += 1
-				m.vertexes[m.vertexCount] = self.vertexes[faceList[idx][1]]
-				m.vertexCount += 1
-				m.vertexes[m.vertexCount] = self.vertexes[faceList[idx][2]]
-				m.vertexCount += 1
-			obj._postProcessAfterLoad()
-			ret.append(obj)
-		return ret
