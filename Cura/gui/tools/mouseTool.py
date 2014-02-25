@@ -36,10 +36,8 @@ class MouseTool(Tool):
 		if e.Dragging() and self._mouse_state is not None:
 			if not e.LeftIsDown() and e.RightIsDown():
 				self._mouse_state = 'drag'
-				yaw = self._view.getYaw() + e.GetX() - self._mouseX
-				pitch = self._view.getPitch() - (e.GetY() - self._mouseY)
-				self._view.setYaw(yaw)
-				self._view.setPitch(pitch)
+				self._view.setYaw(self._view.getYaw() + e.GetX() - self._mouseX)
+				self._view.setPitch(self._view.getPitch() - (e.GetY() - self._mouseY))
 
 		#update mouse positions again
 		self._mouseX = e.GetX()

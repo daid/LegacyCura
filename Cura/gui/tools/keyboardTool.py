@@ -12,17 +12,13 @@ class KeyboardTool(Tool):
 		key_code = e.GetKeyCode()
 		if key_code == wx.WXK_UP:
 			if wx.GetKeyState(wx.WXK_SHIFT):
-				zoom = self._view.getZoom()
-				zoom /= 1.2
-				self._view.setZoom(zoom)
+				self._view.setZoom(self._view.getZoom() / 1.2)
 			else:
 				self._view.setPitch(self._view.getPitch() - 15)
 			self._view.queueRefresh()
 		elif key_code == wx.WXK_DOWN:
 			if wx.GetKeyState(wx.WXK_SHIFT):
-				zoom = self._view.getZoom()
-				zoom *= 1.2
-				self._view.setZoom(zoom)
+				self._view.setZoom(self._view.getZoom() * 1.2)
 			else:
 				self._view.setPitch(self._view.getPitch() + 15)
 		elif key_code == wx.WXK_LEFT:
@@ -30,13 +26,9 @@ class KeyboardTool(Tool):
 		elif key_code == wx.WXK_RIGHT:
 			self._view.setYaw(self._view.getYaw() + 15)
 		elif key_code == wx.WXK_NUMPAD_ADD or key_code == wx.WXK_ADD or key_code == ord('+') or key_code == ord('='):
-			zoom = self._view.getZoom()
-			zoom /= 1.2
-			self._view.setZoom(zoom)
+			self._view.setZoom(self._view.getZoom() / 1.2)
 		elif key_code == wx.WXK_NUMPAD_SUBTRACT or key_code == wx.WXK_SUBTRACT or key_code == ord('-'):
-			zoom = self._view.getZoom()
-			zoom *= 1.2
-			self._view.setZoom(zoom)
+			self._view.setZoom(self._view.getZoom() * 1.2)
 		elif key_code == wx.WXK_HOME:
 			self._view.setYaw(30)
 			self._view.setPitch(60)
