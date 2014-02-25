@@ -51,10 +51,10 @@ class mainWindow(wx.MDIParentFrame):
 				pass
 
 		#Main 3D panel
-		self._gl_panel = glPanel.GLPanel(self.GetClientWindow())
+		self._test_gl_frame = floatingPanel(self)
+		self._gl_panel = glPanel.GLPanel(self._test_gl_frame)
 
 		self._view_pos_panel = floatingPanel(self)
-		self._view_pos_panel.Show()
 		self._view_pos_panel.SetSize((165, 40))
 
 		self._view_pos_panel.SetSizer(wx.BoxSizer(wx.HORIZONTAL))
@@ -85,7 +85,7 @@ class mainWindow(wx.MDIParentFrame):
 		# Main window sizer
 		sizer = RelativePositionSizer()
 		self.SetSizer(sizer)
-		sizer.Add(self._gl_panel, wx.EXPAND)
+		sizer.Add(self._test_gl_frame, wx.EXPAND)
 		sizer.Add(self._view_pos_panel, wx.BOTTOM | wx.LEFT, spacing=(20, 12))
 		sizer.Layout()
 
