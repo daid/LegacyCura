@@ -2,6 +2,7 @@ __author__ = 'Jaime van Kessel'
 
 from Cura.machine import printer3D
 from Cura.machine.nozzle import Nozzle
+import numpy
 
 class FDMPrinter(printer3D.Printer3D):
 	'''
@@ -12,8 +13,14 @@ class FDMPrinter(printer3D.Printer3D):
 		self._nozzles = []
 
 		self.addNozzle(Nozzle(0.4,260,2.85))
-		pass
 
+
+		#def getMachineSizePolygons():
+		size = self.getSize()
+		ret = []
+		ret.append(numpy.array([[-size[0]/2,-size[1]/2],[size[0]/2,-size[1]/2],[size[0]/2, size[1]/2], [-size[0]/2, size[1]/2]], numpy.float32))
+		self._machine_shape = ret
+		print ret
 	def addNozzle(self, nozzle):
 		self._nozzles.append(nozzle)
 

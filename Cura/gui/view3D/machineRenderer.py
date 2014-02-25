@@ -37,25 +37,26 @@ class MachineRenderer(Renderer):
 			#Draw sides
 			glDepthMask(False)
 			polys = self._machine.getShape()
-			height = self._machine.getSettingValueByName('machine_height')
+			height = self._machine.getSettingValueByNameFloat('machine_height')
 			glBegin(GL_QUADS)
-			for n in xrange(0, len(polys)):
-
+			# Draw the sides of the build volume.
+			for n in xrange(0, len(polys[0])):
+				#if not circular:
 				if n % 2 == 0:
 					glColor4ub(5, 171, 231, 96)
 				else:
 					glColor4ub(5, 171, 231, 64)
 
-				glVertex3f(polys[n][0], polys[n][1], height)
-				glVertex3f(polys[n][0], polys[n][1], 0)
-				glVertex3f(polys[n-1][0], polys[n-1][1], 0)
-				glVertex3f(polys[n-1][0], polys[n-1][1], height)
+				glVertex3f(polys[0][n][0], polys[0][n][1], height)
+				glVertex3f(polys[0][n][0], polys[0][n][1], 0)
+				glVertex3f(polys[0][n-1][0], polys[0][n-1][1], 0)
+				glVertex3f(polys[0][n-1][0], polys[0][n-1][1], height)
 			glEnd()
 
 			#Draw top of build volume.
 			glColor4ub(5, 171, 231, 128)
 			glBegin(GL_TRIANGLE_FAN)
-			for p in polys[::-1]:
+			for p in polys[0][::-1]:
 				glVertex3f(p[0], p[1], height)
 			glEnd()
 			#Draw checkerboard
@@ -69,9 +70,9 @@ class MachineRenderer(Renderer):
 			glBindTexture(GL_TEXTURE_2D, self._platform_texture)
 			glEnable(GL_TEXTURE_2D)
 			glBegin(GL_TRIANGLE_FAN)
-			for p in polys:
+			for p in polys[0]:
 				glTexCoord2f(p[0]/20, p[1]/20)
-				glVertex3f(p[0], p[1], 0)
+				glVertex3f(p[0], p[1], 0.05) #drawn a bit above the model to prevent z-fight
 			glEnd()
 
 			#Draw no-go zones (if any)
