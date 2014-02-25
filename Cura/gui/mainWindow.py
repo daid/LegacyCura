@@ -15,12 +15,12 @@ from Cura.scene import printer3DScene
 from Cura.machine.fdmprinter import FDMPrinter
 
 # On windows we can place wxPanels on top of the GLPanel, but on Mac this does not work, as the GLPanel is drawn on top of it.
-# On Linux the panel is placed on top, but we need to refresh the panels on top so they show after drawing the GLPanel. The Cura.gui.util.glPanel handles this.
+# On Linux the panel is placed on top, but we need to refresh the panels on top so they show after drawing the GLPanel, which does cause flicker.
 # On Mac we place wx.Dialog on top of the GLPanel, which works. However these get separate focus which causes the title bar to grey out on windows.
-if sys.platform.startswith('darwin'):
+if sys.platform.startswith('darwin') or sys.platform.startswith('linux'):
 	class floatingPanel(wx.Dialog):
 		def __init__(self, parent):
-			super(floatingPanel, self).__init__(parent, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE)
+			super(floatingPanel, self).__init__(parent, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE|wx.FRAME_SHAPED)
 else:
 	class floatingPanel(wx.Panel):
 		def __init__(self, parent):
@@ -59,8 +59,10 @@ class mainWindow(wx.Frame):
 		self._view_pos_panel.GetSizer().AddSpacer(5)
 		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Right', style=wx.BORDER_NONE)
 		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
+		self._view_pos_panel.GetSizer().AddSpacer(5)
 		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Front', style=wx.BORDER_NONE)
 		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
+		self._view_pos_panel.GetSizer().AddSpacer(5)
 		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Top', style=wx.BORDER_NONE)
 		tmp.Bind(wx.EVT_BUTTON, self.onTest)
 		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
