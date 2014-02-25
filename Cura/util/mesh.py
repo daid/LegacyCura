@@ -8,11 +8,10 @@ class Mesh(object):
 
 	A "VBO" can be associated with this object, which is used for rendering this object.
 	"""
-	def __init__(self, obj):
+	def __init__(self):
 		self.vertexes = None
 		self.vertexCount = 0
 		self.vbo = None
-		self._obj = obj
 
 	def _addFace(self, x0, y0, z0, x1, y1, z1, x2, y2, z2):
 		n = self.vertexCount

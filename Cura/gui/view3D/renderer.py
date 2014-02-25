@@ -49,6 +49,11 @@ class Renderer(object):
 		if self._object_shader is None or not self._object_shader.isValid(): #Could not make shader.
 			self._object_shader = openglHelpers.GLFakeShader()
 
+	def _renderMesh(self, mesh):
+		if mesh.vbo is None:
+			mesh.vbo = openglHelpers.GLVBO(GL_TRIANGLES,mesh.vertexes,mesh.normal)
+		mesh.vbo.render()
+
 	def _renderObject(self, obj): #todo: This code needs to be changed as it expects a printable object.
 		glPushMatrix()
 

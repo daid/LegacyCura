@@ -69,7 +69,7 @@ class printableObject(object):
 		return ret
 
 	def _addMesh(self):
-		m = Mesh(self)
+		m = Mesh()
 		self._meshList.append(m)
 		return m
 
@@ -77,6 +77,7 @@ class printableObject(object):
 		for m in self._meshList:
 			m._calculateNormals()
 		self.processMatrix()
+		#check if size is in a sensible range
 		if numpy.max(self.getSize()) > 10000.0:
 			for m in self._meshList:
 				m.vertexes /= 1000.0

@@ -28,10 +28,11 @@ class MachineRenderer(Renderer):
 			glEnable(GL_BLEND)
 			#size = [self._machine_width,self._machine_depth,self._machine_height]
 			if(self._platform_mesh is None):
-				self._platform_mesh = meshLoader.loadMeshes(self._mesh_path)
+				self._platform_mesh = meshLoader.loadMesh(self._mesh_path)
 			glColor4f(1,1,0,0.5)
 			self._object_shader.bind()
-			self._renderObject(self._platform_mesh[0])
+			self._renderMesh(self._platform_mesh)
+			#self._renderObject(self._platform_mesh[0])
 			self._object_shader.unbind()
 			#Draw sides
 			glDepthMask(False)

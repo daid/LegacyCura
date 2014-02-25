@@ -18,6 +18,8 @@ import struct
 import time
 
 from Cura.util import printableObject
+from Cura.util.mesh import Mesh
+
 
 def _loadAscii(m, f):
 	cnt = 0
@@ -62,6 +64,20 @@ def loadScene(filename):
 	f.close()
 	obj._postProcessAfterLoad()
 	return [obj]
+
+def loadMesh(filename):
+	m = Mesh()
+	f = open(filename, "rb")
+	if f.read(5).lower() == "solid":
+		_loadAscii(m, f)
+		if m.vertexCount < 3:
+			f.seek(5, os.SEEK_SET)
+			_loadBinary(m, f)
+	else:
+		_loadBinary(m, f)
+	f.close()
+	m._calculateNormals()
+	return m
 
 def saveScene(filename, objects):
 	f = open(filename, 'wb')
