@@ -21,7 +21,7 @@ class Tool(object):
 	def onMouseWheel(self,e):
 		pass
 
-	def onKeyChar(self,keycode):
+	def onKeyChar(self,e):
 		pass
 
 	def setView(self,view):

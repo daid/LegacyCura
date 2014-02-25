@@ -38,23 +38,26 @@ class GLPanel(glcanvas.GLCanvas):
 		self.addTool(keyboard_tool)
 		self.addTool(mouse_tool)
 		#Add a bunch of event listeners
-		wx.EVT_IDLE(self, self._onIdle)
-		wx.EVT_PAINT(self, self._onPaint)
-		wx.EVT_ERASE_BACKGROUND(self, self._onEraseBackground)
-		wx.EVT_SIZE(self, self._onSize)
-		wx.EVT_LEFT_DOWN(self, self._onMouseDown)
-		wx.EVT_LEFT_DCLICK(self, self._onMouseDown)
-		wx.EVT_LEFT_UP(self, self._onMouseUp)
-		wx.EVT_RIGHT_DOWN(self, self._onMouseDown)
-		wx.EVT_RIGHT_DCLICK(self, self._onMouseDown)
-		wx.EVT_RIGHT_UP(self, self._onMouseUp)
-		wx.EVT_MIDDLE_DOWN(self, self._onMouseDown)
-		wx.EVT_MIDDLE_DCLICK(self, self._onMouseDown)
-		wx.EVT_MIDDLE_UP(self, self._onMouseUp)
-		wx.EVT_MOTION(self, self._onMouseMotion)
-		wx.EVT_CHAR(self, self._onKeyChar)
+		self.Bind(wx.EVT_IDLE, self._onIdle)
+		self.Bind(wx.EVT_PAINT, self._onPaint)
+		self.Bind(wx.EVT_ERASE_BACKGROUND, self._onEraseBackground)
+		self.Bind(wx.EVT_SIZE, self._onSize)
+		self.Bind(wx.EVT_LEFT_DOWN, self._onMouseDown)
+		self.Bind(wx.EVT_LEFT_DCLICK, self._onMouseDown)
+		self.Bind(wx.EVT_LEFT_UP, self._onMouseUp)
+		self.Bind(wx.EVT_RIGHT_DOWN, self._onMouseDown)
+		self.Bind(wx.EVT_RIGHT_DCLICK, self._onMouseDown)
+		self.Bind(wx.EVT_RIGHT_UP, self._onMouseUp)
+		self.Bind(wx.EVT_MIDDLE_DOWN, self._onMouseDown)
+		self.Bind(wx.EVT_MIDDLE_DCLICK, self._onMouseDown)
+		self.Bind(wx.EVT_MIDDLE_UP, self._onMouseUp)
+		self.Bind(wx.EVT_MOTION, self._onMouseMotion)
+		self.Bind(wx.EVT_CHAR, self._onKeyChar)
+
+		self.SetFocus()
 
 	def _onMouseDown(self,e):
+		self.SetFocus() #Force focus.
 		for tool in self._tool_list:
 			tool.onMouseDown(e)
 
@@ -66,7 +69,7 @@ class GLPanel(glcanvas.GLCanvas):
 		for tool in self._tool_list:
 			tool.onMouseMotion(e)
 
-	def _onKeyChar(self,e):
+	def _onKeyChar(self,e): #Only called when panel has focus.
 		for tool in self._tool_list:
 			tool.onKeyChar(e)
 
