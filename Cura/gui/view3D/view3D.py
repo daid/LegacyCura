@@ -65,7 +65,6 @@ class View3D(object):
 		'''
 		Setup the basics of the 3D view
 		'''
-		#TODO: hardcoded values for height & width
 		view_port_width = self._panel.GetSize().GetWidth()
 		view_port_height = self._panel.GetSize().GetHeight()
 

@@ -27,6 +27,7 @@ class GLPanel(glcanvas.GLCanvas):
 		self._refresh_queued = False
 		self._display_error = True #Display the first error we get during drawing, after that suppress them.
 		self._view = None
+		self._toolList = [] #List of tools that can make modifications (eg; selection tool, mouse tool)
 
 		wx.EVT_IDLE(self, self._onIdle)
 		wx.EVT_PAINT(self, self._onPaint)

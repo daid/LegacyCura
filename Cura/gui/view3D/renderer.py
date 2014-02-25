@@ -49,7 +49,7 @@ class Renderer(object):
 		if self._object_shader is None or not self._object_shader.isValid(): #Could not make shader.
 			self._object_shader = openglHelpers.GLFakeShader()
 
-	def _renderObject(self, obj):
+	def _renderObject(self, obj): #todo: This code needs to be changed as it expects a printable object.
 		glPushMatrix()
 
 		glTranslate(obj.getPosition()[0], obj.getPosition()[1], obj.getSize()[2] / 2)
