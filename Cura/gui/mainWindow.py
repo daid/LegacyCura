@@ -17,19 +17,22 @@ from Cura.machine.fdmprinter import FDMPrinter
 # On windows we can place wxPanels on top of the GLPanel, but on Mac this does not work, as the GLPanel is drawn on top of it.
 # On Linux the panel is placed on top, but we need to refresh the panels on top so they show after drawing the GLPanel, which does cause flicker.
 # On Mac we place wx.Dialog on top of the GLPanel, which works. However these get separate focus which causes the title bar to grey out on windows.
-if sys.platform.startswith('darwin') or sys.platform.startswith('linux'):
-	class floatingPanel(wx.Dialog):
+if sys.platform.startswith('darwin') or sys.platform.startswith('linux') or True:
+	class floatingPanel(wx.MDIChildFrame):
 		def __init__(self, parent):
 			super(floatingPanel, self).__init__(parent, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE|wx.FRAME_SHAPED)
+	# class floatingPanel(wx.Dialog):
+	# 	def __init__(self, parent):
+	# 		super(floatingPanel, self).__init__(parent, style=wx.FRAME_FLOAT_ON_PARENT|wx.BORDER_NONE|wx.FRAME_SHAPED)
 else:
 	class floatingPanel(wx.Panel):
 		def __init__(self, parent):
 			super(floatingPanel, self).__init__(parent)
 
 
-class mainWindow(wx.Frame):
+class mainWindow(wx.MDIParentFrame):
 	def __init__(self):
-		super(mainWindow, self).__init__(None, title='Cura - ' + version.getVersion())
+		super(mainWindow, self).__init__(None, title='Cura - ' + version.getVersion(), style=wx.DEFAULT_FRAME_STYLE)
 
 		wx.EVT_CLOSE(self, self.onClose)
 		wx.EVT_MOVE(self, self.onMove)
@@ -48,9 +51,10 @@ class mainWindow(wx.Frame):
 				pass
 
 		#Main 3D panel
-		self._gl_panel = glPanel.GLPanel(self)
-		self._view_pos_panel = floatingPanel(self._gl_panel)
-		self._view_pos_panel.Show()
+		self._test_gl_frame = floatingPanel(self)
+		self._gl_panel = glPanel.GLPanel(self._test_gl_frame)
+
+		self._view_pos_panel = floatingPanel(self)
 		self._view_pos_panel.SetSize((165, 40))
 
 		self._view_pos_panel.SetSizer(wx.BoxSizer(wx.HORIZONTAL))
@@ -63,7 +67,7 @@ class mainWindow(wx.Frame):
 		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Front', style=wx.BORDER_NONE)
 		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
 		self._view_pos_panel.GetSizer().AddSpacer(5)
-		tmp = wx.lib.buttons.GenToggleButton(self._view_pos_panel, -1, 'Top', style=wx.BORDER_NONE)
+		tmp = wx.TextCtrl(self._view_pos_panel, -1, 'Top')
 		tmp.Bind(wx.EVT_BUTTON, self.onTest)
 		self._view_pos_panel.GetSizer().Add(tmp, 1, wx.EXPAND)
 		self._view_pos_panel.Layout()
@@ -81,7 +85,7 @@ class mainWindow(wx.Frame):
 		# Main window sizer
 		sizer = RelativePositionSizer()
 		self.SetSizer(sizer)
-		sizer.Add(self._gl_panel, wx.EXPAND)
+		sizer.Add(self._test_gl_frame, wx.EXPAND)
 		sizer.Add(self._view_pos_panel, wx.BOTTOM | wx.LEFT, spacing=(20, 12))
 		sizer.Layout()
 
@@ -116,6 +120,11 @@ class mainWindow(wx.Frame):
 		if wx.Display.GetFromPoint(self.GetPosition()) < 0:
 			self.SetSize((800,600))
 			self.Centre()
+
+		self.Bind(wx.EVT_IDLE, self._gl_panel._onIdle)
+
+	def OnCreateClient(self):
+		print "OnCreateClient"
 
 	def OnDropFiles(self, files):
 		#TODO: Files droped on window, load them.
