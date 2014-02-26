@@ -20,7 +20,6 @@ class FDMPrinter(printer3D.Printer3D):
 		ret = []
 		ret.append(numpy.array([[-size[0]/2,-size[1]/2],[size[0]/2,-size[1]/2],[size[0]/2, size[1]/2], [-size[0]/2, size[1]/2]], numpy.float32))
 		self._machine_shape = ret
-		print ret
 	def addNozzle(self, nozzle):
 		self._nozzles.append(nozzle)
 
