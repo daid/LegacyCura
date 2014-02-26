@@ -28,17 +28,17 @@ class PrintableObject(DisplayableObject):
 			self._name = os.path.basename(originFilename)
 		if '.' in self._name:
 			self._name = os.path.splitext(self._name)[0]
-		self._meshList = []
+		self._mesh_list = []
 
 		self._boundaryCircleSize = None
 		self._drawOffset = None
 		self._boundaryHull = None
-		self._printAreaExtend = numpy.array([[-1,-1],[ 1,-1],[ 1, 1],[-1, 1]], numpy.float32)
-		self._headAreaExtend = numpy.array([[-1,-1],[ 1,-1],[ 1, 1],[-1, 1]], numpy.float32)
-		self._headMinSize = numpy.array([1, 1], numpy.float32)
-		self._printAreaHull = None
-		self._headAreaHull = None
-		self._headAreaMinHull = None
+		self._print_area_extend = numpy.array([[-1,-1],[ 1,-1],[ 1, 1],[-1, 1]], numpy.float32)
+		self._head_area_extend = numpy.array([[-1,-1],[ 1,-1],[ 1, 1],[-1, 1]], numpy.float32)
+		self._head_min_size = numpy.array([1, 1], numpy.float32)
+		self._print_area_hull = None
+		self._head_area_hull = None
+		self._head_area_min_hull = None
 
 		self._loadAnim = None
 
@@ -63,20 +63,21 @@ class PrintableObject(DisplayableObject):
 
 	def _addMesh(self):
 		m = Mesh()
-		self._meshList.append(m)
+		m.setObj(self)
+		self._mesh_list.append(m)
 		return m
 
 	def _postProcessAfterLoad(self):
-		for m in self._meshList:
+		for m in self._mesh_list:
 			m._calculateNormals()
 		self.processMatrix()
 		#check if size is in a sensible range
 		if numpy.max(self.getSize()) > 10000.0:
-			for m in self._meshList:
+			for m in self._mesh_list:
 				m.vertexes /= 1000.0
 			self.processMatrix()
 		if numpy.max(self.getSize()) < 1.0:
-			for m in self._meshList:
+			for m in self._mesh_list:
 				m.vertexes *= 1000.0
 			self.processMatrix()
 
@@ -85,11 +86,11 @@ class PrintableObject(DisplayableObject):
 		self.processMatrix()
 
 	def layFlat(self):
-		transformedVertexes = self._meshList[0].getTransformedVertexes()
-		minZvertex = transformedVertexes[transformedVertexes.argmin(0)[2]]
+		transformed_vertexes = self._mesh_list[0].getTransformedVertexes()
+		minZvertex = transformed_vertexes[transformed_vertexes.argmin(0)[2]]
 		dotMin = 1.0
 		dotV = None
-		for v in transformedVertexes:
+		for v in transformed_vertexes:
 			diff = v - minZvertex
 			len = math.sqrt(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2])
 			if len < 5:
@@ -106,12 +107,12 @@ class PrintableObject(DisplayableObject):
 		self._matrix *= numpy.matrix([[math.cos(rad), 0, math.sin(rad)], [0,1,0], [-math.sin(rad), 0, math.cos(rad)]], numpy.float64)
 
 
-		transformedVertexes = self._meshList[0].getTransformedVertexes()
-		minZvertex = transformedVertexes[transformedVertexes.argmin(0)[2]]
+		transformed_vertexes = self._meshList[0].getTransformedVertexes()
+		min_z_vertex = transformed_vertexes[transformed_vertexes.argmin(0)[2]]
 		dotMin = 1.0
 		dotV = None
-		for v in transformedVertexes:
-			diff = v - minZvertex
+		for v in transformed_vertexes:
+			diff = v - min_z_vertex
 			len = math.sqrt(diff[1] * diff[1] + diff[2] * diff[2])
 			if len < 5:
 				continue
@@ -128,49 +129,49 @@ class PrintableObject(DisplayableObject):
 		self.applyMatrix(numpy.matrix([[1,0,0], [0, math.cos(rad), math.sin(rad)], [0, -math.sin(rad), math.cos(rad)]], numpy.float64))
 
 	def processMatrix(self):
-		self._transformedMin = numpy.array([999999999999,999999999999,999999999999], numpy.float64)
-		self._transformedMax = numpy.array([-999999999999,-999999999999,-999999999999], numpy.float64)
-		self._boundaryCircleSize = 0
+		self._transformed_min = numpy.array([999999999999,999999999999,999999999999], numpy.float64)
+		self._transformed_max = numpy.array([-999999999999,-999999999999,-999999999999], numpy.float64)
+		self._boundary_circle_size = 0
 
 		hull = numpy.zeros((0, 2), numpy.int)
-		for m in self._meshList:
-			transformedVertexes = m.getTransformedVertexes()
-			hull = polygon.convexHull(numpy.concatenate((numpy.rint(transformedVertexes[:,0:2]).astype(int), hull), 0))
-			transformedMin = transformedVertexes.min(0)
-			transformedMax = transformedVertexes.max(0)
+		for m in self._mesh_list:
+			transformed_vertexes = m.getTransformedVertexes()
+			hull = polygon.convexHull(numpy.concatenate((numpy.rint(transformed_vertexes[:,0:2]).astype(int), hull), 0))
+			transformed_min = transformed_vertexes.min(0)
+			transformed_max = transformed_vertexes.max(0)
 			for n in xrange(0, 3):
-				self._transformedMin[n] = min(transformedMin[n], self._transformedMin[n])
-				self._transformedMax[n] = max(transformedMax[n], self._transformedMax[n])
+				self._transformed_min[n] = min(transformed_min[n], self._transformed_min[n])
+				self._transformed_max[n] = max(transformed_max[n], self._transformed_max[n])
 
 			#Calculate the boundary circle
-			transformedSize = transformedMax - transformedMin
-			center = transformedMin + transformedSize / 2.0
-			boundaryCircleSize = round(math.sqrt(numpy.max(((transformedVertexes[::,0] - center[0]) * (transformedVertexes[::,0] - center[0])) + ((transformedVertexes[::,1] - center[1]) * (transformedVertexes[::,1] - center[1])) + ((transformedVertexes[::,2] - center[2]) * (transformedVertexes[::,2] - center[2])))), 3)
-			self._boundaryCircleSize = max(self._boundaryCircleSize, boundaryCircleSize)
-		self._transformedSize = self._transformedMax - self._transformedMin
-		self._drawOffset = (self._transformedMax + self._transformedMin) / 2
-		self._drawOffset[2] = self._transformedMin[2]
-		self._transformedMax -= self._drawOffset
-		self._transformedMin -= self._drawOffset
+			transformed_size = transformed_max - transformed_min
+			center = transformed_min + transformed_size / 2.0
+			boundary_circle_size = round(math.sqrt(numpy.max(((transformed_vertexes[::,0] - center[0]) * (transformed_vertexes[::,0] - center[0])) + ((transformed_vertexes[::,1] - center[1]) * (transformed_vertexes[::,1] - center[1])) + ((transformed_vertexes[::,2] - center[2]) * (transformed_vertexes[::,2] - center[2])))), 3)
+			self._boundary_circle_size = max(self._boundaryCircleSize, boundary_circle_size)
+		self._transformed_size = self._transformed_max - self._transformed_min
+		self._draw_offset = (self._transformed_max + self._transformed_min) / 2
+		self._draw_offset[2] = self._transformed_min[2]
+		self._transformed_max -= self._draw_offset
+		self._transformed_min -= self._draw_offset
 
-		self._boundaryHull = polygon.minkowskiHull((hull.astype(numpy.float32) - self._drawOffset[0:2]), numpy.array([[-1,-1],[-1,1],[1,1],[1,-1]],numpy.float32))
-		self._printAreaHull = polygon.minkowskiHull(self._boundaryHull, self._printAreaExtend)
-		self.setHeadArea(self._headAreaExtend, self._headMinSize)
+		self._boundary_hull = polygon.minkowskiHull((hull.astype(numpy.float32) - self._draw_offset[0:2]), numpy.array([[-1,-1],[-1,1],[1,1],[1,-1]],numpy.float32))
+		self._print_area_hull = polygon.minkowskiHull(self._boundary_hull, self._print_area_extend)
+		self.setHeadArea(self._head_area_extend, self._head_min_size)
 
 	def setPrintAreaExtends(self, poly):
-		self._printAreaExtend = poly
-		self._printAreaHull = polygon.minkowskiHull(self._boundaryHull, self._printAreaExtend)
+		self._print_area_extend = poly
+		self._print_area_hull = polygon.minkowskiHull(self._boundary_hull, self._print_area_extend)
 
-		self.setHeadArea(self._headAreaExtend, self._headMinSize)
+		self.setHeadArea(self._head_area_extend, self._head_min_size)
 
-	def setHeadArea(self, poly, minSize):
-		self._headAreaExtend = poly
-		self._headMinSize = minSize
-		self._headAreaHull = polygon.minkowskiHull(self._printAreaHull, self._headAreaExtend)
-		pMin = numpy.min(self._printAreaHull, 0) - self._headMinSize
-		pMax = numpy.max(self._printAreaHull, 0) + self._headMinSize
+	def setHeadArea(self, poly, min_size):
+		self._head_area_extend = poly
+		self._head_min_size = min_size
+		self._head_area_hull = polygon.minkowskiHull(self._print_area_hull, self._head_area_extend)
+		pMin = numpy.min(self._print_area_hull, 0) - self._head_min_size
+		pMax = numpy.max(self._print_area_hull, 0) + self._head_min_size
 		square = numpy.array([pMin, [pMin[0], pMax[1]], pMax, [pMax[0], pMin[1]]], numpy.float32)
-		self._headAreaMinHull = polygon.clipConvex(self._headAreaHull, square)
+		self._head_area_min_hull = polygon.clipConvex(self._head_area_hull, square)
 
 	def mirror(self, axis):
 		matrix = [[1,0,0], [0, 1, 0], [0, 0, 1]]
@@ -181,12 +182,12 @@ class PrintableObject(DisplayableObject):
 	# connected faces. This is useful to split up plate STL files.
 	def split(self, callback):
 		ret = []
-		for oriMesh in self._meshList:
+		for oriMesh in self._mesh_list:
 			ret += oriMesh.split(callback)
 		return ret
 
 	def canStoreAsSTL(self):
-		return len(self._meshList) < 2
+		return len(self._mesh_list) < 2
 
 	#getVertexIndexList returns an array of vertexes, and an integer array for each mesh in this object.
 	# the integer arrays are indexes into the vertex array for each triangle in the model.
@@ -194,7 +195,7 @@ class PrintableObject(DisplayableObject):
 		vertexMap = {}
 		vertexList = []
 		meshList = []
-		for m in self._meshList:
+		for m in self._mesh_list:
 			verts = m.getTransformedVertexes(True)
 			meshIdxList = []
 			for idx in xrange(0, len(verts)):

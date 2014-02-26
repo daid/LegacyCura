@@ -12,6 +12,11 @@ class Mesh(object):
 		self.vertexes = None
 		self.vertexCount = 0
 		self.vbo = None
+		self._obj = None
+
+	def setObj(self, obj):
+		self._obj = obj
+
 
 	def _addFace(self, x0, y0, z0, x1, y1, z1, x2, y2, z2):
 		n = self.vertexCount
@@ -61,11 +66,12 @@ class Mesh(object):
 				return i
 
 	def getTransformedVertexes(self, applyOffsets = False):
-		if applyOffsets:
-			pos = self._obj._position.copy()
-			pos.resize((3))
-			pos[2] = self._obj.getSize()[2] / 2
-			offset = self._obj._drawOffset.copy()
-			offset[2] += self._obj.getSize()[2] / 2
-			return (numpy.matrix(self.vertexes, copy = False) * numpy.matrix(self._obj._matrix, numpy.float32)).getA() - offset + pos
-		return (numpy.matrix(self.vertexes, copy = False) * numpy.matrix(self._obj._matrix, numpy.float32)).getA()
+		if(self._obj is not None):
+			if applyOffsets:
+				pos = self._obj._position.copy()
+				pos.resize((3))
+				pos[2] = self._obj.getSize()[2] / 2
+				offset = self._obj._drawOffset.copy()
+				offset[2] += self._obj.getSize()[2] / 2
+				return (numpy.matrix(self.vertexes, copy = False) * numpy.matrix(self._obj._matrix, numpy.float32)).getA() - offset + pos
+			return (numpy.matrix(self.vertexes, copy = False) * numpy.matrix(self._obj._matrix, numpy.float32)).getA()

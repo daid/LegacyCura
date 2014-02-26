@@ -20,6 +20,8 @@ class MachineRenderer(Renderer):
 		self._platform_mesh = None
 		self._platform_texture = None
 
+		self._test_mesh_path = resources.getPathForMesh('UltimakerRobot_support.stl')
+		self._test_mesh = None
 	def render(self):
 		super(MachineRenderer,self).render()
 		if self._machine is not None:
@@ -29,9 +31,13 @@ class MachineRenderer(Renderer):
 			#size = [self._machine_width,self._machine_depth,self._machine_height]
 			if(self._platform_mesh is None):
 				self._platform_mesh = meshLoader.loadMesh(self._mesh_path)
+			if(self._test_mesh is None):
+				self._test_mesh = meshLoader.loadPrintableObject(self._test_mesh_path)
 			glColor4f(1,0.7,0.8,0.5)
 			self._object_shader.bind()
 			self._renderMesh(self._platform_mesh)
+			glColor4f(1,0.7,0.8,1)
+			self._renderObject(self._test_mesh[0])
 			#self._renderObject(self._platform_mesh[0])
 			self._object_shader.unbind()
 			#Draw sides

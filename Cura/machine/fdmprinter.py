@@ -4,6 +4,8 @@ from Cura.machine import printer3D
 from Cura.machine.nozzle import Nozzle
 import numpy
 
+import Cura.util.meshLoader
+
 class FDMPrinter(printer3D.Printer3D):
 	'''
 	Class that holds settings for any kind of FDMPrinter

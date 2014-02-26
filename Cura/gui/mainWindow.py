@@ -29,7 +29,6 @@ else:
 		def __init__(self, parent):
 			super(floatingPanel, self).__init__(parent)
 
-
 class mainWindow(wx.Frame):
 	def __init__(self):
 		super(mainWindow, self).__init__(None, title='Cura - ' + version.getVersion(), style=wx.DEFAULT_FRAME_STYLE)

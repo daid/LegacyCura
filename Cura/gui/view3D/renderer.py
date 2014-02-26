@@ -56,8 +56,10 @@ class Renderer(object):
 
 	def _renderObject(self, obj): #todo: This code needs to be changed as it expects a printable object.
 		glPushMatrix()
-
-		glTranslate(obj.getPosition()[0], obj.getPosition()[1], obj.getSize()[2] / 2)
+		#print obj.getPosition()[0]
+		#print "af"
+		#print obj.getSize()[2]
+		#glTranslate(obj.getPosition()[0], obj.getPosition()[1], obj.getSize()[2] / 2)
 
 		#if self.tempMatrix is not None and obj == self._selectedObj:
 		#	glMultMatrixf(openglHelpers.convert3x3MatrixTo4x4(self.tempMatrix))
@@ -68,7 +70,7 @@ class Renderer(object):
 		glMultMatrixf(openglHelpers.convert3x3MatrixTo4x4(obj.getMatrix()))
 
 		n = 0
-		for m in obj._meshList:
+		for m in obj._mesh_list:
 
 			if m.vbo is None:
 				m.vbo = openglHelpers.GLVBO(GL_TRIANGLES, m.vertexes, m.normal)
