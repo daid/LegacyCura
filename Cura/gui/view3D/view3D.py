@@ -84,25 +84,34 @@ class View3D(object):
 		self._viewport = glGetIntegerv(GL_VIEWPORT)
 		self._model_matrix = glGetDoublev(GL_MODELVIEW_MATRIX)
 		self._proj_matrix = glGetDoublev(GL_PROJECTION_MATRIX)
+		glClearColor(1,1,1,1)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT)
 
-		for renderer in self._renderer_list:
-			renderer.render() #call all render functions
+		#Hack for the selection of objects
 		mouse_x, mouse_y = self._panel.getToolList()[0].getMousePos()
 		if mouse_x > -1: # mouse has not passed over the opengl window.
 			glFlush()
-			n = glReadPixels(mouse_x, self.GetSize().GetHeight() - 1 - mouse_y, 1, 1, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8)[0][0] >> 8
-			if n < len(self._scene.objects()):
-				self._focusObj = self._scene.objects()[n]
+			n = glReadPixels(mouse_x, self._panel.GetSize().GetHeight() - 1 - mouse_y, 1, 1, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8)[0][0] >> 8
+			print n
+			if n < len(self._scene.getObjects()):
+				self._focusObj = self._scene.getObjects()[n]
 			else:
 				self._focusObj = None
-			f = glReadPixels(mouse_x, self.GetSize().GetHeight() - 1 - mouse_y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT)[0][0]
+			f = glReadPixels(mouse_x, self._panel.GetSize().GetHeight() - 1 - mouse_y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT)[0][0]
+
 			#self.GetTopLevelParent().SetTitle(hex(n) + " " + str(f))
 			self._mouse3Dpos = unproject(mouse_x, self._viewport[1] + self._viewport[3] - mouse_y, f, self._model_matrix, self._proj_matrix, self._viewport)
 			self._mouse3Dpos -= self._view_target
+			print self._mouse3Dpos
+		self._init3DView()
+		for renderer in self._renderer_list:
+			renderer.render() #call all render functions
+
+
 
 	def addRenderer(self, renderer):
 		if isinstance(renderer,Renderer):
-			self._renderer_list.append(renderer);
+			self._renderer_list.append(renderer)
 
 	def setScene(self,scene):
 		assert(issubclass(type(scene), Scene))
