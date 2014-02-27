@@ -5,7 +5,7 @@ class Tool(object):
 	Interface class for all tools. Holds entry points for events.
 	Tools are handlers for interaction with a view.
 	'''
-	def __int__(self):
+	def __init__(self):
 		self._scene = None #Reference to Scene object
 		self._view = None
 		self._mouse_x = -1

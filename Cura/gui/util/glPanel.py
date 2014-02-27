@@ -35,8 +35,9 @@ class GLPanel(glcanvas.GLCanvas):
 		mouse_tool.setView(self._view)
 		keyboard_tool = KeyboardTool()
 		keyboard_tool.setView(self._view)
-		self.addTool(keyboard_tool)
 		self.addTool(mouse_tool)
+		self.addTool(keyboard_tool)
+
 		#Add a bunch of event listeners
 		self.Bind(wx.EVT_IDLE, self._onIdle)
 		self.Bind(wx.EVT_PAINT, self._onPaint)
@@ -93,6 +94,9 @@ class GLPanel(glcanvas.GLCanvas):
 		self._scene = scene
 		for tool in self._tool_list:
 			tool.setScene(scene)
+
+	def getToolList(self):
+		return self._tool_list
 
 	def queueRefresh(self):
 		"""

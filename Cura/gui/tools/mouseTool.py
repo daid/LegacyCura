@@ -4,7 +4,7 @@ from Cura.gui.tools.tool import Tool
 import numpy
 class MouseTool(Tool):
 	def __init__(self):
-		super(MouseTool,self).__init__()
+		super(MouseTool, self).__init__()
 		self._mouse_state = ''
 
 	def onMouseDown(self, e):
