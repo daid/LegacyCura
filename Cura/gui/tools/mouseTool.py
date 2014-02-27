@@ -5,13 +5,11 @@ import numpy
 class MouseTool(Tool):
 	def __init__(self):
 		super(MouseTool,self).__init__()
-		self._mouseX = 0
-		self._mouseY = 0
 		self._mouse_state = ''
 
 	def onMouseDown(self, e):
-		self._mouseX = e.GetX()
-		self._mouseY = e.GetY()
+		self._mouse_x = e.GetX()
+		self._mouse_y = e.GetY()
 
 		if e.ButtonDClick():
 			self._mouse_state = 'doubleClick'
@@ -19,7 +17,7 @@ class MouseTool(Tool):
 			if self._mouse_state == 'dragObject' and self._scene.getSelectedObject() is not None:
 				pass
 		if self._view is not None:
-			p0, p1 = self._view.getMouseRay(self._mouseX,self._mouseY)
+			p0, p1 = self._view.getMouseRay(self._mouse_x,self._mouse_y)
 			p0 -= self.getObjectCenterPos() - self._view.getViewTarget()
 			p1 -= self.getObjectCenterPos() - self._view.getViewTarget()
 
@@ -32,16 +30,16 @@ class MouseTool(Tool):
 			return
 
 	def onMouseMotion(self, e):
-		p0, p1 = self._view.getMouseRay(self._mouseX,self._mouseY)
+		p0, p1 = self._view.getMouseRay(self._mouse_x,self._mouse_y)
 		if e.Dragging() and self._mouse_state is not None:
 			if not e.LeftIsDown() and e.RightIsDown():
 				self._mouse_state = 'drag'
-				self._view.setYaw(self._view.getYaw() + e.GetX() - self._mouseX)
-				self._view.setPitch(self._view.getPitch() - (e.GetY() - self._mouseY))
+				self._view.setYaw(self._view.getYaw() + e.GetX() - self._mouse_x)
+				self._view.setPitch(self._view.getPitch() - (e.GetY() - self._mouse_y))
 
 		#update mouse positions again
-		self._mouseX = e.GetX()
-		self._mouseY = e.GetY()
+		self._mouse_x = e.GetX()
+		self._mouse_y = e.GetY()
 
 	def onMouseWheel(self,e):
 		delta = float(e.GetWheelRotation()) / float(e.GetWheelDelta())

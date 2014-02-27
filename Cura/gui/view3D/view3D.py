@@ -88,6 +88,18 @@ class View3D(object):
 		for renderer in self._renderer_list:
 			renderer.render() #call all render functions
 
+		if self._mouseX > -1: # mouse has not passed over the opengl window.
+			glFlush()
+			n = glReadPixels(self._mouseX, self.GetSize().GetHeight() - 1 - self._mouseY, 1, 1, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8)[0][0] >> 8
+			if n < len(self._scene.objects()):
+				self._focusObj = self._scene.objects()[n]
+			else:
+				self._focusObj = None
+			f = glReadPixels(self._mouseX, self.GetSize().GetHeight() - 1 - self._mouseY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT)[0][0]
+			#self.GetTopLevelParent().SetTitle(hex(n) + " " + str(f))
+			self._mouse3Dpos = unproject(self._mouseX, self._viewport[1] + self._viewport[3] - self._mouseY, f, self._model_matrix, self._proj_matrix, self._viewport)
+			self._mouse3Dpos -= self._view_target
+
 	def addRenderer(self, renderer):
 		if isinstance(renderer,Renderer):
 			self._renderer_list.append(renderer);

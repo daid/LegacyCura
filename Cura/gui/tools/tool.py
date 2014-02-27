@@ -8,7 +8,8 @@ class Tool(object):
 	def __int__(self):
 		self._scene = None #Reference to Scene object
 		self._view = None
-
+		self._mouse_x = -1
+		self._mouse_y = -1
 
 	def onMouseUp(self, e):
 		pass
@@ -27,6 +28,9 @@ class Tool(object):
 
 	def onMouseWheel(self,e):
 		pass
+
+	def getMousePos(self):
+		return self._mouse_x, self._mouse_y
 
 	def setView(self,view):
 		self._view = view
