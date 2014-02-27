@@ -13,6 +13,8 @@ from Cura.util import version
 from Cura.gui.view3D import printerView3D
 from Cura.scene import printer3DScene
 from Cura.machine.fdmprinter import FDMPrinter
+from Cura.util import resources
+from Cura.util import meshLoader
 
 # On windows we can place wxPanels on top of the GLPanel, but on Mac this does not work, as the GLPanel is drawn on top of it.
 # On Linux the panel is placed on top, but we need to refresh the panels on top so they show after drawing the GLPanel, which does cause flicker.
@@ -85,6 +87,7 @@ class mainWindow(wx.Frame):
 		self._gl_panel.setView(self._view)
 		self._gl_panel.setScene(self._scene)
 		self._view.setMachine(debugMachine)
+		self._scene.addObject(meshLoader.loadPrintableObject(resources.getPathForMesh('UltimakerRobot_support.stl')))
 
 		# Main window sizer
 		sizer = RelativePositionSizer()

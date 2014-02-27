@@ -19,10 +19,10 @@ class Renderer(object):
 	def render(self):
 		if self._object_shader is None:
 			self.loadObjectShader()
-		pass
 
 	def setScene(self,scene):
-		assert(issubclass(type(scene), Scene))
+		if(scene != None):
+			assert(issubclass(type(scene), Scene))
 		self._scene = scene
 
 	def loadObjectShader(self): #todo; Move to seperate rendering classes

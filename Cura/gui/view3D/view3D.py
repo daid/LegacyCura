@@ -109,9 +109,12 @@ class View3D(object):
 
 
 
-	def addRenderer(self, renderer):
+	def addRenderer(self, renderer, prepend = False):
 		if isinstance(renderer,Renderer):
-			self._renderer_list.append(renderer)
+			if(prepend):
+				self._renderer_list.insert(0,renderer)
+			else:
+				self._renderer_list.append(renderer)
 
 	def setScene(self,scene):
 		assert(issubclass(type(scene), Scene))

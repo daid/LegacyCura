@@ -13,9 +13,11 @@ class Scene(object):
 	def getObjects(self):
 		return self._object_list
 
+	def setMachine(self, machine):
+		self._machine = machine
+
 	def addObject(self, object):
-		if isinstance(object, DisplayableObject):
-			self._object_list.append(object)
+		self._object_list.append(object)
 
 	def getSelectedObject(self): #Todo: Implement
 		return None
