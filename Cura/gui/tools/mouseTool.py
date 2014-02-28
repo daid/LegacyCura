@@ -16,12 +16,20 @@ class MouseTool(Tool):
 		else:
 			if self._mouse_state == 'dragObject' and self._scene.getSelectedObject() is not None:
 				pass
+			self._mouse_state = 'dragOrClick'
 		if self._view is not None:
 			p0, p1 = self._view.getMouseRay(self._mouse_x,self._mouse_y)
 			p0 -= self.getObjectCenterPos() - self._view.getViewTarget()
 			p1 -= self.getObjectCenterPos() - self._view.getViewTarget()
 
-
+			if self._mouse_state == 'dragOrClick':
+				if e.GetButton() == 1:
+					if self._view.getFocusObj() is not None:
+						self._view.getFocusObj()[0].setSelected(True)
+					else:
+						for object in self._scene.getObjects():
+							object[0].setSelected(False)
+		self._view.queueRefresh()
 		#p0, p1 = self.getMouseRay(self._mouseX, self._mouseY)
 		#p0 -= self.getObjectCenterPos() - self._viewTarget
 		#p1 -= self.getObjectCenterPos() - self._viewTarget

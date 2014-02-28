@@ -10,6 +10,9 @@ class PrintableObjectRenderer(Renderer):
 		#todo: add check if objects are renderable.
 		self._object_shader.bind()
 		for model in self._scene.getObjects():
-			glColor4f(1,0.7,0.8,0.5)
+			if model[0].isSelected():
+				glColor4f(1,0.7,0,1)
+			else:
+				glColor4f(1,0.7,0.8,0.5)
 			self._renderObject(model[0])
 		self._object_shader.unbind()

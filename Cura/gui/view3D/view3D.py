@@ -5,6 +5,7 @@ from Cura.machine.machine import Machine
 from Cura.scene.scene import Scene
 from Cura.gui.view3D.renderer import Renderer
 from Cura.gui.view3D.machineRenderer import MachineRenderer
+from Cura.gui.view3D.selectionRenderer import SelectionRenderer
 from Cura.gui.util.openglHelpers import *
 
 import numpy
@@ -36,6 +37,7 @@ class View3D(object):
 		self._proj_matrix = None
 		self._view_target = numpy.array([0,0,0], numpy.float32)
 		self.addRenderer(machineRenderer)
+		self._focus_obj = None
 
 	def queueRefresh(self):
 		self._panel.queueRefresh()
@@ -49,6 +51,9 @@ class View3D(object):
 		else:
 			self._yaw = self._min_yaw
 		self.queueRefresh()
+
+	def getFocusObj(self):
+		return self._focus_obj
 
 	def getYaw(self):
 		return self._yaw
@@ -87,22 +92,28 @@ class View3D(object):
 		glClearColor(1,1,1,1)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT)
 
-		#Hack for the selection of objects
+		#Hack for the selection of objects. Draw all objects as white objects.
+		n = 0
+		for renderer in self._renderer_list:
+			if isinstance(renderer,SelectionRenderer):
+				renderer.enable()
+				renderer.render()
+				renderer.disable()
+
 		mouse_x, mouse_y = self._panel.getToolList()[0].getMousePos()
 		if mouse_x > -1: # mouse has not passed over the opengl window.
 			glFlush()
 			n = glReadPixels(mouse_x, self._panel.GetSize().GetHeight() - 1 - mouse_y, 1, 1, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8)[0][0] >> 8
-			print n
 			if n < len(self._scene.getObjects()):
-				self._focusObj = self._scene.getObjects()[n]
+				self._focus_obj = self._scene.getObjects()[n]
 			else:
-				self._focusObj = None
+				self._focus_obj = None
 			f = glReadPixels(mouse_x, self._panel.GetSize().GetHeight() - 1 - mouse_y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT)[0][0]
 
 			#self.GetTopLevelParent().SetTitle(hex(n) + " " + str(f))
 			self._mouse3Dpos = unproject(mouse_x, self._viewport[1] + self._viewport[3] - mouse_y, f, self._model_matrix, self._proj_matrix, self._viewport)
 			self._mouse3Dpos -= self._view_target
-			print self._mouse3Dpos
+
 		self._init3DView()
 		for renderer in self._renderer_list:
 			renderer.render() #call all render functions

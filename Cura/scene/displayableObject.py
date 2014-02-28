@@ -15,8 +15,12 @@ class DisplayableObject(object):
 		self._boundary_circle_size = None
 		self._name = None
 		self._draw_offset = None
+		self._selected = False
 
-
+	def setSelected(self,selected):
+		self._selected = selected
+	def isSelected(self):
+		return self._selected
 	def getName(self):
 		return self._name
 	def getOriginFilename(self):

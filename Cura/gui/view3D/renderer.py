@@ -15,10 +15,19 @@ class Renderer(object):
 		self._machine = None #Reference to machine
 		self._scene = None #Reference to the scene
 		self._object_shader = None
+		self._active = True
 
 	def render(self):
+		if not self._active:
+			return 0
 		if self._object_shader is None:
 			self.loadObjectShader()
+
+	def enable(self):
+		self._active = True
+
+	def disable(self):
+		self._active = False
 
 	def setScene(self,scene):
 		if(scene != None):

@@ -68,6 +68,7 @@ class GLPanel(glcanvas.GLCanvas):
 			tool.onMouseUp(e)
 
 	def _onMouseMotion(self,e):
+		self._view.queueRefresh()
 		for tool in self._tool_list:
 			tool.onMouseMotion(e)
 
