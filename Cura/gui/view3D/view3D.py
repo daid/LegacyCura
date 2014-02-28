@@ -38,6 +38,7 @@ class View3D(object):
 		self._view_target = numpy.array([0,0,0], numpy.float32)
 		self.addRenderer(machineRenderer)
 		self._focus_obj = None
+		self._mouse_3D_pos = None
 
 	def queueRefresh(self):
 		self._panel.queueRefresh()
@@ -111,14 +112,15 @@ class View3D(object):
 			f = glReadPixels(mouse_x, self._panel.GetSize().GetHeight() - 1 - mouse_y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT)[0][0]
 
 			#self.GetTopLevelParent().SetTitle(hex(n) + " " + str(f))
-			self._mouse3Dpos = unproject(mouse_x, self._viewport[1] + self._viewport[3] - mouse_y, f, self._model_matrix, self._proj_matrix, self._viewport)
-			self._mouse3Dpos -= self._view_target
+			self._mouse_3D_pos = unproject(mouse_x, self._viewport[1] + self._viewport[3] - mouse_y, f, self._model_matrix, self._proj_matrix, self._viewport)
+			self._mouse_3D_pos -= self._view_target
 
 		self._init3DView()
 		for renderer in self._renderer_list:
 			renderer.render() #call all render functions
 
-
+	def getMouse3DPos(self):
+		return self._mouse_3D_pos
 
 	def addRenderer(self, renderer, prepend = False):
 		if isinstance(renderer,Renderer):

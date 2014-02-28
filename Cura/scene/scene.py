@@ -20,4 +20,13 @@ class Scene(object):
 		self._object_list.append(object)
 
 	def getSelectedObject(self): #Todo: Implement
-		return None
+		return self._findFirstMatch(obj for obj in self._object_list if obj[0].isSelected()) #todo; Only single object can be selected
+		#return None
+
+	def _findFirstMatch(self,iterable, default = None): #TODO; Might need to move this to util.
+		'''
+		Function that returns first object from an iteratable.
+		'''
+		for item in iterable:
+			return item
+		return default
