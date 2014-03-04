@@ -68,8 +68,8 @@ class Renderer(object):
 		#print obj.getPosition()[0]
 		#print "af"
 		#print obj.getSize()[2]
-		glTranslate(obj.getPosition()[0], obj.getPosition()[1], obj.getSize()[2] / 2)
-
+		#glTranslate(obj.getPosition()[0], obj.getPosition()[1], obj.getSize()[2] / 2)
+		glTranslate(obj.getPosition()[0], obj.getPosition()[1], 0)
 		#if self.tempMatrix is not None and obj == self._selectedObj:
 		#	glMultMatrixf(openglHelpers.convert3x3MatrixTo4x4(self.tempMatrix))
 

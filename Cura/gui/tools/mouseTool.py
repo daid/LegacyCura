@@ -60,6 +60,7 @@ class MouseTool(Tool):
 				cursorZ0 = p0 - (p1 - p0) * (p0[2] / (p1[2] - p0[2]))
 				cursorZ1 = p2 - (p3 - p2) * (p2[2] / (p3[2] - p2[2]))
 				diff = cursorZ1 - cursorZ0
+				#print self._scene.getSelectedObject()[0].getPosition()
 				self._scene.getSelectedObject()[0].setPosition(self._scene.getSelectedObject()[0].getPosition() + diff[0:2])
 		#update mouse positions again
 		self._mouse_x = e.GetX()
