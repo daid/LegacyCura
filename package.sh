@@ -33,7 +33,7 @@ fi
 #############################
 function checkTool
 {
-	if [ -z `which $1` ]; then
+	if [ -z "`which $1`" ]; then
 		echo "The $1 command must be somewhere in your \$PATH."
 		echo "Fix your \$PATH or install $2"
 		exit 1
@@ -90,7 +90,7 @@ if [ $BUILD_TARGET = "win32" ]; then
 	checkTool mingw32-make "mingw: http://www.mingw.org/"
 fi
 #For building under MacOS we need gnutar instead of tar
-if [ -z `which gnutar` ]; then
+if [ -z "`which gnutar`" ]; then
 	TAR=tar
 else
 	TAR=gnutar
@@ -329,7 +329,7 @@ if (( ${ARCHIVE_FOR_DISTRIBUTION} )); then
 		#7z a ../${TARGET_DIR}.zip *
 		#cd ..
 
-		if [ ! -z `which wine` ]; then
+		if [ ! -z "`which wine`" ]; then
 			#if we have wine, try to run our nsis script.
 			rm -rf scripts/win32/dist
 			ln -sf `pwd`/${TARGET_DIR} scripts/win32/dist
