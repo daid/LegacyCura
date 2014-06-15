@@ -132,7 +132,12 @@ def runPostProcessingPlugins(engineResult):
 			f.write(engineResult.getGCode())
 			f.close()
 
-		locals = {'filename': tempfilename}
+		locals = {'filename': tempfilename, 
+                          'printtime': engineResult.getPrintTime(), 
+                          'filamentamount': engineResult.getFilamentAmount(),
+                          'filamentcost': engineResult.getFilamentCost(),
+                          'filamentweight': engineResult.getFilamentWeight(),
+                }
 		for param in plugin.getParams():
 			value = param['default']
 			if param['name'] in pluginConfig['params']:
