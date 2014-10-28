@@ -19,8 +19,8 @@ import hashlib
 import socket
 import struct
 import errno
-import cStringIO as StringIO
 
+from Cura.util.bigDataStorage import BigDataStorage
 from Cura.util import profile
 from Cura.util import pluginInfo
 from Cura.util import version
@@ -34,6 +34,8 @@ def getEngineFilename():
 	if platform.system() == 'Windows':
 		if version.isDevVersion() and os.path.exists('C:/Software/Cura_SteamEngine/_bin/Release/Cura_SteamEngine.exe'):
 			return 'C:/Software/Cura_SteamEngine/_bin/Release/Cura_SteamEngine.exe'
+		if version.isDevVersion() and os.path.exists('C:/Program Files (x86)/Cura_14.09/CuraEngine.exe'):
+			return 'C:/Program Files (x86)/Cura_14.09/CuraEngine.exe'
 		return os.path.abspath(os.path.join(os.path.dirname(__file__), '../..', 'CuraEngine.exe'))
 	if hasattr(sys, 'frozen'):
 		return os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../..', 'CuraEngine'))
@@ -53,7 +55,7 @@ class EngineResult(object):
 	"""
 	def __init__(self):
 		self._engineLog = []
-		self._gcodeData = StringIO.StringIO()
+		self._gcodeData = BigDataStorage()
 		self._polygons = []
 		self._replaceInfo = {}
 		self._success = False
@@ -87,31 +89,26 @@ class EngineResult(object):
 		if self._printTimeSeconds is None:
 			return ''
 		if int(self._printTimeSeconds / 60 / 60) < 1:
-			return '%d minutes' % (int(self._printTimeSeconds / 60) % 60)
+			return _('%d minutes') % (int(self._printTimeSeconds / 60) % 60)
 		if int(self._printTimeSeconds / 60 / 60) == 1:
-			return '%d hour %d minutes' % (int(self._printTimeSeconds / 60 / 60), int(self._printTimeSeconds / 60) % 60)
-		return '%d hours %d minutes' % (int(self._printTimeSeconds / 60 / 60), int(self._printTimeSeconds / 60) % 60)
+			return _('%d hour %d minutes') % (int(self._printTimeSeconds / 60 / 60), int(self._printTimeSeconds / 60) % 60)
+		return _('%d hours %d minutes') % (int(self._printTimeSeconds / 60 / 60), int(self._printTimeSeconds / 60) % 60)
 
 	def getFilamentAmount(self, e=0):
 		if self._filamentMM[e] == 0.0:
 			return None
-		return '%0.2f meter %0.0f gram' % (float(self._filamentMM[e]) / 1000.0, self.getFilamentWeight(e) * 1000.0)
+		return _('%0.2f meter %0.0f gram') % (float(self._filamentMM[e]) / 1000.0, self.getFilamentWeight(e) * 1000.0)
 
 	def getLog(self):
 		return self._engineLog
 
 	def getGCode(self):
-		data = self._gcodeData.getvalue()
-		if len(self._replaceInfo) > 0:
-			block0 = data[0:2048]
-			for k, v in self._replaceInfo.items():
-				v = (v + ' ' * len(k))[:len(k)]
-				block0 = block0.replace(k, v)
-			return block0 + data[2048:]
-		return data
+		self._gcodeData.seekStart()
+		return self._gcodeData
 
 	def setGCode(self, gcode):
-		self._gcodeData = StringIO.StringIO(gcode)
+		self._gcodeData = BigDataStorage()
+		self._gcodeData.write(gcode)
 		self._replaceInfo = {}
 
 	def addLog(self, line):
@@ -121,6 +118,9 @@ class EngineResult(object):
 		self._modelHash = hash
 
 	def setFinished(self, result):
+		if result:
+			for k, v in self._replaceInfo.items():
+				self._gcodeData.replaceAtStart(k, v)
 		self._finished = result
 
 	def isFinished(self):
@@ -131,7 +131,7 @@ class EngineResult(object):
 			return None
 		if self._gcodeInterpreter.layerList is None and self._gcodeLoadThread is None:
 			self._gcodeInterpreter.progressCallback = self._gcodeInterpreterCallback
-			self._gcodeLoadThread = threading.Thread(target=lambda : self._gcodeInterpreter.load(self._gcodeData))
+			self._gcodeLoadThread = threading.Thread(target=lambda : self._gcodeInterpreter.load(self._gcodeData.clone()))
 			self._gcodeLoadCallback = loadCallback
 			self._gcodeLoadThread.daemon = True
 			self._gcodeLoadThread.start()
@@ -184,17 +184,16 @@ class Engine(object):
 
 		self._serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self._serverPortNr = 0xC20A
-		while True:
+		for potential_port in xrange(0xC20A, 0xFFFF):
+			self._serverPortNr = potential_port
 			try:
 				self._serversocket.bind(('127.0.0.1', self._serverPortNr))
-			except:
-				print "Failed to listen on port: %d" % (self._serverPortNr)
-				self._serverPortNr += 1
-				if self._serverPortNr > 0xFFFF:
-					print "Failed to listen on any port..."
-					break
-			else:
 				break
+			except:
+				print("Failed to listen on port: %d" % (self._serverPortNr))
+		else:
+			print("Failed to listen on any port, this is a fatal error")
+			exit(10)
 		thread = threading.Thread(target=self._socketListenThread)
 		thread.daemon = True
 		thread.start()
@@ -449,7 +448,7 @@ class Engine(object):
 			'filamentDiameter': int(profile.getProfileSettingFloat('filament_diameter') * 1000),
 			'filamentFlow': int(profile.getProfileSettingFloat('filament_flow')),
 			'extrusionWidth': int(profile.calculateEdgeWidth() * 1000),
-			'layer0extrusionWidth': int(profile.calculateEdgeWidth() * 1000),
+			'layer0extrusionWidth': int(profile.calculateEdgeWidth() * profile.getProfileSettingFloat('layer0_width_factor') / 100 * 1000),
 			'insetCount': int(profile.calculateLineCount()),
 			'downSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_bottom') == 'True' else 0,
 			'upSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_top') == 'True' else 0,

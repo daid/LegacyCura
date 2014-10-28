@@ -25,6 +25,8 @@ from Cura.util import version
 import platform
 from Cura.util import meshLoader
 
+from wx.lib.pubsub import Publisher
+
 class mainWindow(wx.Frame):
 	def __init__(self):
 		super(mainWindow, self).__init__(None, title='Cura - ' + version.getVersion())
@@ -133,6 +135,8 @@ class mainWindow(wx.Frame):
 		if version.isDevVersion():
 			i = toolsMenu.Append(-1, _("PID Debugger..."))
 			self.Bind(wx.EVT_MENU, self.OnPIDDebugger, i)
+			i = toolsMenu.Append(-1, _("Auto Firmware Update..."))
+			self.Bind(wx.EVT_MENU, self.OnAutoFirmwareUpdate, i)
 
 		i = toolsMenu.Append(-1, _("Copy profile to clipboard"))
 		self.Bind(wx.EVT_MENU, self.onCopyProfileClipboard,i)
@@ -271,6 +275,35 @@ class mainWindow(wx.Frame):
 
 		self.updateSliceMode()
 		self.scene.SetFocus()
+		self.dialogframe = None
+		Publisher().subscribe(self.onPluginUpdate, "pluginupdate")
+
+	def onPluginUpdate(self,msg): #receives commands from the plugin thread
+		cmd = str(msg.data).split(";")
+		if cmd[0] == "OpenPluginProgressWindow":
+			if len(cmd)==1: #no titel received
+				cmd.append("Plugin")
+			if len(cmd)<3: #no message text received
+				cmd.append("Plugin is executed...")
+			dialogwidth = 300
+			dialogheight = 80
+			self.dialogframe = wx.Frame(self, -1, cmd[1],pos = ((wx.SystemSettings.GetMetric(wx.SYS_SCREEN_X)-dialogwidth)/2,(wx.SystemSettings.GetMetric(wx.SYS_SCREEN_Y)-dialogheight)/2), size=(dialogwidth,dialogheight), style = wx.STAY_ON_TOP)
+			self.dialogpanel = wx.Panel(self.dialogframe, -1, pos = (0,0), size = (dialogwidth,dialogheight))
+			self.dlgtext = wx.StaticText(self.dialogpanel, label = cmd[2], pos = (10,10), size = (280,40))
+			self.dlgbar = wx.Gauge(self.dialogpanel,-1, 100, pos = (10,50), size = (280,20), style = wx.GA_HORIZONTAL)
+			self.dialogframe.Show()
+
+		elif cmd[0] == "Progress":
+			number = int(cmd[1])
+			if number <= 100 and self.dialogframe is not None:
+				self.dlgbar.SetValue(number)
+			else:
+				self.dlgbar.SetValue(100)
+		elif cmd[0] == "ClosePluginProgressWindow":
+			self.dialogframe.Destroy()
+			self.dialogframe=None
+		else:
+			print "Unknown Plugin update received: " + cmd[0]
 
 	def onTimer(self, e):
 		#Check if there is something in the clipboard
@@ -465,8 +498,8 @@ class mainWindow(wx.Frame):
 			for line in f:
 				if line.startswith(';CURA_PROFILE_STRING:'):
 					profile.setProfileFromString(line[line.find(':')+1:].strip())
-					if ';{profile_string}' not in profile.getProfileSetting('end.gcode'):
-						profile.putProfileSetting('end.gcode', profile.getProfileSetting('end.gcode') + '\n;{profile_string}')
+					if ';{profile_string}' not in profile.getAlterationFile('end.gcode'):
+						profile.setAlterationFile('end.gcode', profile.getAlterationFile('end.gcode') + '\n;{profile_string}')
 					hasProfile = True
 			if hasProfile:
 				self.updateProfileToAllControls()
@@ -479,7 +512,7 @@ class mainWindow(wx.Frame):
 		dlg.SetWildcard("ini files (*.ini)|*.ini")
 		if dlg.ShowModal() == wx.ID_OK:
 			profileFile = dlg.GetPath()
-			if platform.system() == 'Linux': #hack for linux, as for some reason the .ini is not appended.
+			if not profileFile.lower().endswith('.ini'): #hack for linux, as for some reason the .ini is not appended.
 				profileFile += '.ini'
 			profile.saveProfile(profileFile)
 		dlg.Destroy()
@@ -501,7 +534,7 @@ class mainWindow(wx.Frame):
 		self.updateSliceMode()
 
 	def OnDefaultMarlinFirmware(self, e):
-		firmwareInstall.InstallFirmware()
+		firmwareInstall.InstallFirmware(self)
 
 	def OnCustomFirmware(self, e):
 		if profile.getMachineSetting('machine_type').startswith('ultimaker'):
@@ -510,10 +543,11 @@ class mainWindow(wx.Frame):
 		dlg.SetWildcard("HEX file (*.hex)|*.hex;*.HEX")
 		if dlg.ShowModal() == wx.ID_OK:
 			filename = dlg.GetPath()
+			dlg.Destroy()
 			if not(os.path.exists(filename)):
 				return
 			#For some reason my Ubuntu 10.10 crashes here.
-			firmwareInstall.InstallFirmware(filename)
+			firmwareInstall.InstallFirmware(self, filename)
 
 	def OnFirstRunWizard(self, e):
 		self.Hide()
@@ -545,6 +579,17 @@ class mainWindow(wx.Frame):
 		debugger = pidDebugger.debuggerWindow(self)
 		debugger.Centre()
 		debugger.Show(True)
+
+	def OnAutoFirmwareUpdate(self, e):
+		dlg=wx.FileDialog(self, _("Open firmware to upload"), os.path.split(profile.getPreference('lastFile'))[0], style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST)
+		dlg.SetWildcard("HEX file (*.hex)|*.hex;*.HEX")
+		if dlg.ShowModal() == wx.ID_OK:
+			filename = dlg.GetPath()
+			dlg.Destroy()
+			if not(os.path.exists(filename)):
+				return
+			#For some reason my Ubuntu 10.10 crashes here.
+			installer = firmwareInstall.AutoUpdateFirmware(self, filename)
 
 	def onCopyProfileClipboard(self, e):
 		try:
@@ -610,11 +655,11 @@ class normalSettingsPanel(configBase.configPanelBase):
 		self.SetSizer(wx.BoxSizer(wx.HORIZONTAL))
 		self.GetSizer().Add(self.nb, 1, wx.EXPAND)
 
-		(left, right, self.printPanel) = self.CreateDynamicConfigTab(self.nb, 'Basic')
+		(left, right, self.printPanel) = self.CreateDynamicConfigTab(self.nb, _('Basic'))
 		self._addSettingsToPanels('basic', left, right)
 		self.SizeLabelWidths(left, right)
 
-		(left, right, self.advancedPanel) = self.CreateDynamicConfigTab(self.nb, 'Advanced')
+		(left, right, self.advancedPanel) = self.CreateDynamicConfigTab(self.nb, _('Advanced'))
 		self._addSettingsToPanels('advanced', left, right)
 		self.SizeLabelWidths(left, right)
 

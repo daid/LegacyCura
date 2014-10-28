@@ -1,3 +1,4 @@
+#coding:utf8
 """
 Helper module to get easy access to the path where resources are stored.
 This is because the resource location is depended on the packaging method and OS
@@ -8,8 +9,6 @@ import os
 import sys
 import glob
 
-#Cura/util classes should not depend on wx...
-import wx
 import gettext
 
 if sys.platform.startswith('darwin'):
@@ -60,14 +59,16 @@ def setupLocalization(selectedLanguage = None):
 
 	locale_path = os.path.normpath(os.path.join(resourceBasePath, 'locale'))
 	translation = gettext.translation('Cura', locale_path, languages, fallback=True)
+	#translation.ugettext = lambda message: u'#' + message
 	translation.install(unicode=True)
 
 def getLanguageOptions():
 	return [
 		['en', 'English'],
-		# ['de', 'Deutsch'],
-		# ['fr', 'French'],
+		['de', 'Deutsch'],
+		['fr', 'French'],
+		# ['zh', 'Chinese'],
 		# ['nl', 'Nederlands'],
-		# ['sp', 'Spanish'],
+		# ['es', 'Spanish'],
 		# ['po', 'Polish']
 	]

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This script is to package the Cura package for Windows/Linux and Mac OS X
 # This script should run under Linux and Mac OS X, as well as Windows with Cygwin.
@@ -13,11 +13,13 @@ BUILD_TARGET=${1:-none}
 #BUILD_TARGET=darwin
 #BUILD_TARGET=debian_i386
 #BUILD_TARGET=debian_amd64
+#BUILD_TARGET=debian_armhf
+#BUILD_TARGET=freebsd
 
 ##Do we need to create the final archive
 ARCHIVE_FOR_DISTRIBUTION=1
 ##Which version name are we appending to the final archive
-export BUILD_NAME=14.05-RC4
+export BUILD_NAME=14.10-RC4
 TARGET_DIR=Cura-${BUILD_NAME}-${BUILD_TARGET}
 
 ##Which versions of external programs to use
@@ -71,16 +73,18 @@ function extract
 if [ "$BUILD_TARGET" = "none" ]; then
 	echo "You need to specify a build target with:"
 	echo "$0 win32"
-	echo "$0 debian_i368"
+	echo "$0 debian_i386"
 	echo "$0 debian_amd64"
+	echo "$0 debian_armhf"
 	echo "$0 darwin"
+	echo "$0 freebsd"
 	exit 0
 fi
 
 # Change working directory to the directory the script is in
 # http://stackoverflow.com/a/246128
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $SCRIPT_DIR
+cd "$SCRIPT_DIR"
 
 checkTool git "git: http://git-scm.com/"
 checkTool curl "curl: http://curl.haxx.se/"
@@ -143,6 +147,60 @@ if [ "$BUILD_TARGET" = "darwin" ]; then
 	cp -a dist/Cura.app /Volumes/Cura\ -\ Ultimaker/Cura/
 	hdiutil detach /Volumes/Cura\ -\ Ultimaker
 	hdiutil convert Cura.dmg.sparseimage -format UDZO -imagekey zlib-level=9 -ov -o ../../${TARGET_DIR}.dmg
+	exit
+fi
+
+#############################
+# FreeBSD part by CeDeROM
+#############################
+
+if [ "$BUILD_TARGET" = "freebsd" ]; then
+	export CXX="c++"
+	rm -rf Power
+	if [ ! -d "Power" ]; then
+		git clone https://github.com/GreatFruitOmsk/Power
+	else
+		cd Power
+		git pull
+		cd ..
+	fi
+	rm -rf CuraEngine
+	git clone ${CURA_ENGINE_REPO}
+    if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
+	gmake -j4 -C CuraEngine VERSION=${BUILD_NAME}
+    if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
+	rm -rf scripts/freebsd/dist
+	mkdir -p scripts/freebsd/dist/share/cura
+	mkdir -p scripts/freebsd/dist/share/applications
+	mkdir -p scripts/freebsd/dist/bin
+	cp -a Cura scripts/freebsd/dist/share/cura/
+	cp -a resources scripts/freebsd/dist/share/cura/
+	cp -a plugins scripts/freebsd/dist/share/cura/
+	cp -a CuraEngine/build/CuraEngine scripts/freebsd/dist/share/cura/
+	cp scripts/freebsd/cura.py scripts/freebsd/dist/share/cura/
+	cp scripts/freebsd/cura.desktop scripts/freebsd/dist/share/applications/
+	cp scripts/freebsd/cura scripts/freebsd/dist/bin/
+	cp -a Power/power scripts/freebsd/dist/share/cura/
+	echo $BUILD_NAME > scripts/freebsd/dist/share/cura/Cura/version
+	#Create file list (pkg-plist)
+	cd scripts/freebsd/dist
+	find * -type f > ../pkg-plist
+	DIRLVL=20; while [ $DIRLVL -ge 0 ]; do
+		DIRS=`find share/cura -type d -depth $DIRLVL`
+		for DIR in $DIRS; do
+			echo "@dirrm $DIR" >> ../pkg-plist
+		done
+		DIRLVL=`expr $DIRLVL - 1`
+	done
+	cd ..
+	# Create archive or package if root
+	if [ `whoami` == "root" ]; then
+	    echo "Are you root? Use the Port Luke! :-)"
+	else
+	    echo "You are not root, building simple package archive..."
+	    pwd
+	    $TAR czf ../../${TARGET_DIR}.tar.gz dist/**
+	fi
 	exit
 fi
 
@@ -218,6 +276,41 @@ if [ "$BUILD_TARGET" = "debian_amd64" ]; then
 	exit
 fi
 
+#############################
+# Debian armhf .deb
+#############################
+
+if [ "$BUILD_TARGET" = "debian_armhf" ]; then
+    export CXX="g++"
+	if [ ! -d "Power" ]; then
+		git clone https://github.com/GreatFruitOmsk/Power
+	else
+		cd Power
+		git pull
+		cd ..
+	fi
+	rm -rf CuraEngine
+	git clone ${CURA_ENGINE_REPO}
+    if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
+	make -C CuraEngine VERSION=${BUILD_NAME}
+    if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
+	rm -rf scripts/linux/${BUILD_TARGET}/usr/share/cura
+	mkdir -p scripts/linux/${BUILD_TARGET}/usr/share/cura
+	cp -a Cura scripts/linux/${BUILD_TARGET}/usr/share/cura/
+	cp -a resources scripts/linux/${BUILD_TARGET}/usr/share/cura/
+	cp -a plugins scripts/linux/${BUILD_TARGET}/usr/share/cura/
+	cp -a CuraEngine/build/CuraEngine scripts/linux/${BUILD_TARGET}/usr/share/cura/
+	cp scripts/linux/cura.py scripts/linux/${BUILD_TARGET}/usr/share/cura/
+	cp -a Power/power scripts/linux/${BUILD_TARGET}/usr/share/cura/
+	echo $BUILD_NAME > scripts/linux/${BUILD_TARGET}/usr/share/cura/Cura/version
+	sudo chown root:root scripts/linux/${BUILD_TARGET} -R
+	sudo chmod 755 scripts/linux/${BUILD_TARGET}/usr -R
+	sudo chmod 755 scripts/linux/${BUILD_TARGET}/DEBIAN -R
+	cd scripts/linux
+	dpkg-deb --build ${BUILD_TARGET} $(dirname ${TARGET_DIR})/cura_${BUILD_NAME}-${BUILD_TARGET}.deb
+	sudo chown `id -un`:`id -gn` ${BUILD_TARGET} -R
+	exit
+fi
 
 #############################
 # Rest

@@ -180,6 +180,7 @@ class SettingRow(object):
 			choices = self.setting.getType()
 			if valueOverride is not None:
 				choices = valueOverride
+			choices = choices[:]
 			self._englishChoices = choices[:]
 			if value not in choices and len(choices) > 0:
 				value = choices[0]
@@ -242,7 +243,7 @@ class SettingRow(object):
 		if isinstance(self.ctrl, wx.ColourPickerCtrl):
 			return str(self.ctrl.GetColour().GetAsString(wx.C2S_HTML_SYNTAX))
 		elif isinstance(self.ctrl, wx.ComboBox):
-			value = str(self.ctrl.GetValue())
+			value = unicode(self.ctrl.GetValue())
 			for ret in self._englishChoices:
 				if _(ret) == value:
 					return ret
