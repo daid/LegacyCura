@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Cura\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-06 03:11-0300\n"
-"PO-Revision-Date: 2015-01-06 16:05-0300\n"
+"PO-Revision-Date: 2015-01-07 01:21-0300\n"
 "Last-Translator: Ernesto Bazzano <bazza@riseup.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
@@ -138,7 +138,7 @@ msgstr ""
 
 #: Cura/util/profile.py:183 Cura/gui/mainWindow.py:168
 msgid "Machine"
-msgstr "Maquina"
+msgstr "Máquina"
 
 #: Cura/util/profile.py:183 Cura/gui/configWizard.py:396
 msgid "Nozzle size (mm)"
@@ -210,7 +210,7 @@ msgstr "Temperatura de la cama (C)"
 msgid ""
 "Temperature used for the heated printer bed. Set at 0 to pre-heat yourself."
 msgstr ""
-"Temperatura usada para calentar la cama. Pon 0 para calentar tu mismo. "
+"Temperatura usada para calentar la cama. Pon 0 para calentar al imprimir. "
 
 #: Cura/util/profile.py:190 Cura/util/profile.py:191
 msgid "None"
@@ -261,7 +261,7 @@ msgstr "Borde (Brim)"
 #: Cura/util/profile.py:247 Cura/util/profile.py:248 Cura/util/profile.py:249
 #: Cura/util/profile.py:250 Cura/util/profile.py:251 Cura/util/profile.py:252
 msgid "Raft"
-msgstr "Borrador (Raft)"
+msgstr "Cimiento (Raft)"
 
 #: Cura/util/profile.py:191 Cura/util/profile.py:222 Cura/util/profile.py:223
 #: Cura/util/profile.py:224
@@ -286,7 +286,7 @@ msgstr ""
 "debido a la deformación. \n"
 "Falda (Brim) añade una capa de grosor plana alrededor de su objeto, que es "
 "fácil de cortar después, y la opción recomendada. \n"
-"Borrador (Raft) agrega una trama gruesa por debajo del objeto y una interfaz "
+"Cimiento (Raft) agrega una trama gruesa por debajo del objeto y una interfaz "
 "fina entre esto y su objeto. \n"
 "(Tenga en cuenta que la activación de Raft o Brim desactiva el borde-skirt)"
 
@@ -433,7 +433,7 @@ msgstr ""
 
 #: Cura/util/profile.py:200
 msgid "Flow (%)"
-msgstr "Flujo (%)"
+msgstr "Variación (%)"
 
 #: Cura/util/profile.py:200
 msgid ""
@@ -548,7 +548,7 @@ msgid ""
 "the other layers."
 msgstr ""
 "Espesor de capa inferior. Un capa inferior mas gruesa ayuda a adherir la "
-"impresión mejor. Un valor de 0.0 hara que la capa tenga el mismo espesor que "
+"impresión mejor. Un valor de 0.0 hará que la capa tenga el mismo espesor que "
 "las demás."
 
 #: Cura/util/profile.py:209
@@ -597,7 +597,7 @@ msgstr "Velocidad"
 
 #: Cura/util/profile.py:213
 msgid "Travel speed (mm/s)"
-msgstr "Velocidad desplazamientos (mm/s)"
+msgstr "Desplazamientos (mm/s)"
 
 #: Cura/util/profile.py:213
 msgid ""
@@ -610,7 +610,7 @@ msgstr ""
 
 #: Cura/util/profile.py:214
 msgid "Bottom layer speed (mm/s)"
-msgstr "Velociad capa inferior (mm/s)"
+msgstr "Capa inferior (mm/s)"
 
 #: Cura/util/profile.py:214
 msgid ""
@@ -622,7 +622,7 @@ msgstr ""
 
 #: Cura/util/profile.py:215
 msgid "Infill speed (mm/s)"
-msgstr "Velocidad relleno (mm/s)"
+msgstr "Relleno (mm/s)"
 
 #: Cura/util/profile.py:215
 msgid ""
@@ -637,7 +637,7 @@ msgstr ""
 
 #: Cura/util/profile.py:216
 msgid "Top/bottom speed (mm/s)"
-msgstr "Velocidad capa superior e inferior (mm/s)"
+msgstr "Capa superior e inferior (mm/s)"
 
 #: Cura/util/profile.py:216
 msgid ""
@@ -653,7 +653,7 @@ msgstr ""
 
 #: Cura/util/profile.py:217
 msgid "Outer shell speed (mm/s)"
-msgstr "Velocidad del borde externa (mm/s)"
+msgstr "Borde externo (mm/s)"
 
 #: Cura/util/profile.py:217
 msgid ""
@@ -670,7 +670,7 @@ msgstr ""
 
 #: Cura/util/profile.py:218
 msgid "Inner shell speed (mm/s)"
-msgstr "Velocidad relleno interno (mm/s)"
+msgstr "Relleno interno (mm/s)"
 
 #: Cura/util/profile.py:218
 msgid ""
@@ -691,7 +691,7 @@ msgstr "Ventilación"
 
 #: Cura/util/profile.py:219
 msgid "Minimal layer time (sec)"
-msgstr "Minimo tiempo por capa (seg)"
+msgstr "Mínimo tiempo por capa (seg)"
 
 #: Cura/util/profile.py:219
 msgid ""
@@ -720,7 +720,7 @@ msgstr ""
 
 #: Cura/util/profile.py:222
 msgid "Line count"
-msgstr "Numero lineas"
+msgstr "Número de lineas"
 
 #: Cura/util/profile.py:222
 msgid ""
@@ -749,7 +749,7 @@ msgstr ""
 
 #: Cura/util/profile.py:224
 msgid "Minimal length (mm)"
-msgstr "Minima longitud (mm)"
+msgstr "Mínima longitud (mm)"
 
 #: Cura/util/profile.py:224
 msgid ""
@@ -764,7 +764,7 @@ msgstr ""
 
 #: Cura/util/profile.py:225
 msgid "Fan full on at height (mm)"
-msgstr "Ventidador desde la altura (mm)"
+msgstr "Ventilador desde la altura (mm)"
 
 #: Cura/util/profile.py:225
 msgid ""
@@ -808,7 +808,7 @@ msgstr ""
 
 #: Cura/util/profile.py:228
 msgid "Minimum speed (mm/s)"
-msgstr "Minima velocidad (mm/s)"
+msgstr "Mínima velocidad (mm/s)"
 
 #: Cura/util/profile.py:228
 msgid ""
@@ -822,7 +822,7 @@ msgstr ""
 
 #: Cura/util/profile.py:229
 msgid "Cool head lift"
-msgstr "Cool head lift"
+msgstr "Ascensor al enfriar el cabezal"
 
 #: Cura/util/profile.py:229
 msgid ""
@@ -996,8 +996,8 @@ msgid ""
 "is also rafted. Increasing this margin will create a stronger raft while "
 "using more material and leaving less area for your print."
 msgstr ""
-"Si la borrador (raft) está activada, esta es la zona de borrador adicional "
-"alrededor del objeto que también esta bocetado. El aumento de este margen "
+"Si el cimiento (raft) está activada, esta es la zona de cimiento adicional "
+"alrededor del objeto que también este cimiento. El aumento de este margen "
 "creará un sostén más fuerte durante el uso de más material y dejando menos "
 "espacio para su impresión."
 
@@ -1010,8 +1010,8 @@ msgid ""
 "When you are using the raft this is the distance between the centerlines of "
 "the raft line."
 msgstr ""
-"Cuando se utiliza la balsa es la distancia entre las líneas centrales del "
-"relleno de balsa."
+"Cuando se utiliza el cimiento es la distancia entre las líneas centrales del "
+"relleno de cimiento."
 
 #: Cura/util/profile.py:244
 msgid "Base thickness (mm)"
@@ -1022,8 +1022,8 @@ msgid ""
 "When you are using the raft this is the thickness of the base layer which is "
 "put down."
 msgstr ""
-"Cuando se utiliza la balsa es el espesor de la capa de balsa que es puesta "
-"abajo."
+"Cuando se utiliza el cimiento es el espesor de la capa de cimiento que es "
+"puesta abajo."
 
 #: Cura/util/profile.py:245
 msgid "Base line width (mm)"
@@ -1034,8 +1034,8 @@ msgid ""
 "When you are using the raft this is the width of the base layer lines which "
 "are put down."
 msgstr ""
-"Cuando se utiliza la balsa es el ancho de la capa de balsa que es puesta "
-"abajo."
+"Cuando usted está utilizando el cimiento este es el ancho de las líneas de "
+"capa base que están reprimidas ."
 
 #: Cura/util/profile.py:246
 msgid "Interface thickness (mm)"
@@ -1046,8 +1046,8 @@ msgid ""
 "When you are using the raft this is the thickness of the interface layer "
 "which is put down."
 msgstr ""
-"Cuando estás usando raft-balsa est es el espesor de la linea de interfaz que "
-"será depositada"
+"Cuando estás usando cimiento (raft) este es el espesor de la linea de "
+"interfaz que será depositada"
 
 #: Cura/util/profile.py:247
 msgid "Interface line width (mm)"
@@ -1058,8 +1058,8 @@ msgid ""
 "When you are using the raft this is the width of the interface layer lines "
 "which are put down."
 msgstr ""
-"Cuando estás usando raft-balsa est es el ancho de la linea de interfaz que "
-"será depositada"
+"Cuando usted está utilizando el cimiento (raft) este es el ancho de las "
+"líneas de capa de interfaz que se ponen abajo ."
 
 #: Cura/util/profile.py:248
 msgid "Airgap"
@@ -1194,12 +1194,12 @@ msgstr ""
 
 #: Cura/util/profile.py:485
 msgid "Cost (price/kg)"
-msgstr "Coste (precio/kg)"
+msgstr "Costo (precio/kg)"
 
 #: Cura/util/profile.py:485
 msgid "Cost of your filament per kg, to estimate the cost of the final print."
 msgstr ""
-"Coste de tu filamento por kg, para estimar el coste de la impresión final."
+"Costo de tu filamento por kg, para estimar el coste de la impresión final."
 
 #: Cura/util/profile.py:486
 msgid "Cost (price/m)"
@@ -1309,7 +1309,7 @@ msgstr "Máxima anchura (mm)"
 
 #: Cura/util/profile.py:511 Cura/util/profile.py:512 Cura/util/profile.py:513
 msgid "Size of the machine in mm"
-msgstr "Tamaño de la maquina en mm"
+msgstr "Tamaño de la máquina en mm"
 
 #: Cura/util/profile.py:512
 msgid "Maximum depth (mm)"
@@ -1321,7 +1321,7 @@ msgstr "Máxima altura (mm)"
 
 #: Cura/util/profile.py:514
 msgid "Machine center 0,0"
-msgstr "Centro de la maquina 0,0"
+msgstr "Centro de la máquina 0,0"
 
 #: Cura/util/profile.py:514
 msgid ""
@@ -1353,7 +1353,7 @@ msgstr ""
 
 #: Cura/util/profile.py:518
 msgid "GCode Flavor"
-msgstr "GCode Flavor"
+msgstr "GCode"
 
 #: Cura/util/profile.py:518
 msgid ""
@@ -1922,7 +1922,7 @@ msgstr "Centro de la base en 0,0,0 (Rostock)"
 
 #: Cura/gui/configWizard.py:418
 msgid "Select your machine"
-msgstr "Selecciona tu maquina"
+msgstr "Selecciona tu máquina"
 
 #: Cura/gui/configWizard.py:419
 msgid "What kind of machine do you have:"
@@ -2087,7 +2087,7 @@ msgstr "Mostrar log de errores"
 #: Cura/gui/configWizard.py:682 Cura/gui/configWizard.py:1119
 #: Cura/gui/configWizard.py:1338
 msgid "Connecting to machine."
-msgstr "Conectando a la maquina"
+msgstr "Conectando a la máquina"
 
 #: Cura/gui/configWizard.py:703
 msgid "Cooldown before temperature check."
@@ -2158,7 +2158,7 @@ msgstr "Calibrar los pasos del Extrusor requiere algunas acciones manuales."
 
 #: Cura/gui/configWizard.py:894
 msgid "First remove any filament from your machine."
-msgstr "Primero remover cualquier filamento de tu maquina"
+msgstr "Primero remover cualquier filamento de tu máquina"
 
 #: Cura/gui/configWizard.py:895
 msgid ""
@@ -2214,7 +2214,7 @@ msgid ""
 "Error: Failed to open serial port to machine\n"
 "If this keeps happening, try disconnecting and reconnecting the USB cable"
 msgstr ""
-"Error: Fallo al abrir el Puerto Serie de la maquina\n"
+"Error: Fallo al abrir el Puerto Serie de la máquina\n"
 "Si sigue ocurriendo, prueba a desconectar y reconectar el cable USB"
 
 #: Cura/gui/configWizard.py:1005
@@ -2267,7 +2267,7 @@ msgstr "* Imprimir una línea alrededor de la cama para chequear el nivel"
 
 #: Cura/gui/configWizard.py:1089 Cura/gui/configWizard.py:1314
 msgid "Connect to printer"
-msgstr "Conectando a la maquina"
+msgstr "Conectando a la máquina"
 
 #: Cura/gui/configWizard.py:1093 Cura/gui/configWizard.py:1320
 msgid "Resume"
@@ -2478,7 +2478,7 @@ msgstr "Escala"
 
 #: Cura/gui/sceneView.py:71
 msgid "Mirror"
-msgstr "Simetria"
+msgstr "Espejado"
 
 #: Cura/gui/sceneView.py:73 Cura/gui/sceneView.py:76
 msgid "Reset"
@@ -2558,7 +2558,7 @@ msgstr "Capas"
 
 #: Cura/gui/sceneView.py:106
 msgid "Share on YouMagine"
-msgstr "Comparte en YoMagine"
+msgstr "Compartelo en YoMagine"
 
 #: Cura/gui/sceneView.py:204
 msgid "Open 3D model"
@@ -2647,7 +2647,7 @@ msgid ""
 "configuration."
 msgstr ""
 "Lo siento, pero cura no viene con un firmware por defecto para la "
-"configuración de tu maquina."
+"configuración de tu máquina."
 
 #: Cura/gui/firmwareInstall.py:64 Cura/gui/firmwareInstall.py:69
 #: Cura/gui/firmwareInstall.py:124 Cura/gui/mainWindow.py:565
@@ -2799,7 +2799,7 @@ msgstr "Añadir nueva máquina"
 
 #: Cura/gui/preferencesDialog.py:127
 msgid "Remove machine"
-msgstr "Selecciona tu maquina"
+msgstr "Selecciona tu máquina"
 
 #: Cura/gui/preferencesDialog.py:131 Cura/gui/preferencesDialog.py:167
 msgid "Change machine name"
@@ -2947,7 +2947,7 @@ msgstr "Comprobando actualizaciones..."
 
 #: Cura/gui/mainWindow.py:198
 msgid "Open YouMagine website..."
-msgstr "Abre tu página YouMagine"
+msgstr "Abre tu página YouMagine..."
 
 #: Cura/gui/mainWindow.py:200
 msgid "About Cura..."
@@ -3031,7 +3031,7 @@ msgstr ""
 
 #: Cura/gui/mainWindow.py:550
 msgid "Profile copy"
-msgstr "Copar perfil"
+msgstr "Copiar perfil"
 
 #: Cura/gui/mainWindow.py:565
 msgid ""
@@ -3047,7 +3047,7 @@ msgstr "Abrir firmware para cargar"
 
 #: Cura/gui/mainWindow.py:638
 msgid "You are running the latest version of Cura!"
-msgstr "Estas usando la última versión de Cura!"
+msgstr "¡Estas usando la última versión de Cura!"
 
 #: Cura/gui/mainWindow.py:638
 msgid "Awesome!"
@@ -3055,7 +3055,7 @@ msgstr "¡Impresionante!"
 
 #: Cura/gui/mainWindow.py:683
 msgid "Basic"
-msgstr "Basico"
+msgstr "Básico"
 
 #: Cura/gui/mainWindow.py:687
 msgid "Advanced"
