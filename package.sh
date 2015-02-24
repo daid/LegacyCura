@@ -30,7 +30,7 @@ WIN_PORTABLE_PY_VERSION=2.7.2.1
 
 ##Which CuraEngine to use
 if [ -z ${CURA_ENGINE_REPO:-} ] ; then
-	CURA_ENGINE_REPO="git@github.com:Ultimaker/CuraEngine.git"
+	CURA_ENGINE_REPO="https://github.com/Ultimaker/CuraEngine.git"
 fi
 
 #############################
@@ -148,7 +148,7 @@ fi
 
 
 #Build the Ultimaker Original firmwares.
-gitClone git@github.com:Ultimaker/Marlin.git _UltimakerMarlin
+gitClone https://github.com/Ultimaker/Marlin.git _UltimakerMarlin
 cd _UltimakerMarlin/Marlin
 git checkout Marlin_v1
 git pull
@@ -170,7 +170,7 @@ $MAKE -j 3 HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_V
 $MAKE -j 3 HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_UltimakerMarlin_Plus_Dual_115200 DEFINES="'VERSION_BASE=\"Ultimaker+:${BUILD_NAME}\"' 'VERSION_PROFILE=\"115200_dual\"' BAUDRATE=115200 TEMP_SENSOR_1=20 EXTRUDERS=2"
 cd -
 
-gitClone git@github.com:Ultimaker/Ultimaker2Marlin.git _Ultimaker2Marlin
+gitClone https://github.com/Ultimaker/Ultimaker2Marlin.git _Ultimaker2Marlin
 cd _Ultimaker2Marlin/Marlin
 git checkout master
 git pull
