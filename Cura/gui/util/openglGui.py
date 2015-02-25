@@ -504,7 +504,7 @@ class glButton(glGuiControl):
 			openglHelpers.glDrawQuad(pos[0]-bs/2, pos[1]+bs/2, bs, bs / 4)
 			glColor4ub(255,255,255,255)
 			openglHelpers.glDrawQuad(pos[0]-bs/2+2, pos[1]+bs/2+2, (bs - 5) * progress + 1, bs / 4 - 4)
-		elif len(self._altTooltip) > 0:
+		if len(self._altTooltip) > 0:
 			glPushMatrix()
 			glTranslatef(pos[0], pos[1], 0)
 			glTranslatef(0, 0.6*bs, 0)
