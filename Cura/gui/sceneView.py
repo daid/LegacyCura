@@ -634,6 +634,7 @@ class SceneView(openglGui.glGuiPanel):
 			self.printButton.setProgressBar(progressValue)
 		else:
 			self.printButton.setProgressBar(None)
+		self.QueueRefresh()
 		self._engineResultView.setResult(result)
 		if finished:
 			self.printButton.setProgressBar(None)
@@ -648,7 +649,7 @@ class SceneView(openglGui.glGuiPanel):
 					text += '\n%s' % (cost)
 			self.printButton.setBottomText(text)
 		else:
-			self.printButton.setBottomText('')
+			self.printButton.setBottomText('CuraEngine')
 		self.QueueRefresh()
 
 	def loadScene(self, fileList, pms_transforms=None):

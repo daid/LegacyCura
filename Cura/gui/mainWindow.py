@@ -316,8 +316,15 @@ class mainWindow(wx.Frame):
 		elif cmd[0] == "ClosePluginProgressWindow":
 			self.dialogframe.Destroy()
 			self.dialogframe=None
-		else:
-			print "Unknown Plugin update received: " + cmd[0]
+		else: #assume first token to be the name and second token the percentage
+			if len(cmd)>=2:
+				number = int(cmd[1])
+			else:
+				number = 100
+			# direct output to Cura progress bar
+			self.scene.printButton.setProgressBar(float(number)/100.)
+			self.scene.printButton.setBottomText('%s' % (cmd[0]))
+			self.scene.QueueRefresh()
 
 	def onTimer(self, e):
 		#Check if there is something in the clipboard

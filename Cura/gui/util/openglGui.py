@@ -510,7 +510,8 @@ class glButton(glGuiControl):
 			glTranslatef(0, 0.6*bs, 0)
 			glTranslatef(0, 6, 0)
 			#glTranslatef(0.6*bs*scale, 0, 0)
-
+			if progress is not None:
+				glTranslatef(0, bs/4+4, 0) #shifts text to the bottom if progress bar is active
 			for line in self._altTooltip.split('\n'):
 				glPushMatrix()
 				glColor4ub(60,60,60,255)
