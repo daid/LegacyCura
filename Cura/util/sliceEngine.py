@@ -484,6 +484,7 @@ class Engine(object):
 			'downSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_bottom') == 'True' else 0,
 			'upSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_top') == 'True' else 0,
 			'infillOverlap': int(profile.getProfileSettingFloat('fill_overlap')),
+			'perimeterBeforeInfill': 1 if profile.getProfileSetting('perimeter_before_infill') == 'True' else 0,
 			'initialSpeedupLayers': int(4),
 			'initialLayerSpeed': int(profile.getProfileSettingFloat('bottom_layer_speed')),
 			'printSpeed': int(profile.getProfileSettingFloat('print_speed')),
