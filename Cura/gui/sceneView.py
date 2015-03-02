@@ -142,7 +142,7 @@ class SceneView(openglGui.glGuiPanel):
 		#if self.viewSelection.getValue() == 4:
 		#	self.viewSelection.setValue(0)
 		#	self.OnViewChange()
-		self.loadScene(filenames)
+		return self.loadScene(filenames)
 
 	def loadFiles(self, filenames):
 		mainWindow = self.GetParent().GetParent().GetParent()
@@ -187,8 +187,11 @@ class SceneView(openglGui.glGuiPanel):
 			mainWindow.updateProfileToAllControls()
 			# now process all the scene files
 			if scene_filenames:
-				self.loadSceneFiles(scene_filenames)
-				self._selectObject(None)
+				objs = self.loadSceneFiles(scene_filenames)
+				if len(objs) > 0:
+					self._selectObject(objs[-1])
+				else:
+					self._selectObject(None)
 				self.sceneUpdated()
 				newZoom = numpy.max(self._machineSize)
 				self._animView = openglGui.animation(self, self._viewTarget.copy(), numpy.array([0,0,0], numpy.float32), 0.5)
@@ -652,6 +655,7 @@ class SceneView(openglGui.glGuiPanel):
 		self.QueueRefresh()
 
 	def loadScene(self, fileList, pms_transforms=None):
+		ret = []
 		objIndex = -1
 		for filename in fileList:
 			objIndex += 1
@@ -670,6 +674,7 @@ class SceneView(openglGui.glGuiPanel):
 						obj._loadAnim = openglGui.animation(self, 1, 0, 1.5)
 					else:
 						obj._loadAnim = None
+					ret.append(obj)
 					self._scene.add(obj)
 					if pms_transforms is not None and len(pms_transforms) == len(fileList):
 						obj.setPosition(pms_transforms[objIndex][0])
@@ -684,6 +689,7 @@ class SceneView(openglGui.glGuiPanel):
 						if obj.getScale()[0] < 1.0:
 							self.notification.message("Warning: Object scaled down.")
 		self.sceneUpdated()
+		return ret
 
 	def _deleteObject(self, obj):
 		if obj == self._selectedObj:
@@ -734,12 +740,12 @@ class SceneView(openglGui.glGuiPanel):
 		if self._selectedObj is not None:
 			scale = self._selectedObj.getScale()
 			size = self._selectedObj.getSize()
-			self.scaleXctrl.setValue(round(scale[0], 2))
-			self.scaleYctrl.setValue(round(scale[1], 2))
-			self.scaleZctrl.setValue(round(scale[2], 2))
-			self.scaleXmmctrl.setValue(round(size[0], 2))
-			self.scaleYmmctrl.setValue(round(size[1], 2))
-			self.scaleZmmctrl.setValue(round(size[2], 2))
+			self.scaleXctrl.setValue(round(scale[0], 3))
+			self.scaleYctrl.setValue(round(scale[1], 3))
+			self.scaleZctrl.setValue(round(scale[2], 3))
+			self.scaleXmmctrl.setValue(round(size[0], 3))
+			self.scaleYmmctrl.setValue(round(size[1], 3))
+			self.scaleZmmctrl.setValue(round(size[2], 3))
 
 	def OnKeyChar(self, keyCode):
 		if self._engineResultView.OnKeyChar(keyCode):

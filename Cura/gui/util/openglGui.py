@@ -806,7 +806,7 @@ class glNumberCtrl(glGuiControl):
 		self._callback = callback
 		self._value = str(value)
 		self._selectPos = 0
-		self._maxLen = 6
+		self._maxLen = 7
 		self._inCallback = False
 		super(glNumberCtrl, self).__init__(parent, pos)
 
