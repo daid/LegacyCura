@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cura Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 11:05+0100\n"
+"POT-Creation-Date: 2015-03-03 10:33+0100\n"
 "PO-Revision-Date: 2015-01-07 17:30+0900\n"
 "Last-Translator: Jinbuhm Kim <Jinbuhm.Kim@gmail.com>\n"
 "Language-Team: Korean <Jinbuhm.Kim@gmail.com>\n"
@@ -776,7 +776,7 @@ msgstr "플랫폼 지우기"
 msgid "Print...\tCTRL+P"
 msgstr "프린트...\tCTRL+P"
 
-#: Cura/gui/mainWindow.py:84 Cura/gui/sceneView.py:316
+#: Cura/gui/mainWindow.py:84 Cura/gui/sceneView.py:319
 msgid "Save GCode..."
 msgstr "GCode 저장하기..."
 
@@ -1243,99 +1243,99 @@ msgstr "레이어"
 msgid "Share on YouMagine"
 msgstr "YouMagine에 공유"
 
-#: Cura/gui/sceneView.py:224
+#: Cura/gui/sceneView.py:227
 msgid "Open 3D model"
 msgstr "3D 모델 열기 "
 
-#: Cura/gui/sceneView.py:249
+#: Cura/gui/sceneView.py:252
 msgid "Save 3D model"
 msgstr "3D 모델 저장"
 
-#: Cura/gui/sceneView.py:313 Cura/gui/sceneView.py:998
+#: Cura/gui/sceneView.py:316 Cura/gui/sceneView.py:1004
 #, python-format
 msgid "Print with %s"
 msgstr "%s 프린트"
 
-#: Cura/gui/sceneView.py:317
+#: Cura/gui/sceneView.py:320
 msgid "Slice engine log..."
 msgstr "슬라이스 엔진 로그..."
 
-#: Cura/gui/sceneView.py:344 Cura/gui/sceneView.py:1001
+#: Cura/gui/sceneView.py:347 Cura/gui/sceneView.py:1007
 msgid "Save toolpath"
 msgstr "툴패스 저장"
 
-#: Cura/gui/sceneView.py:391
+#: Cura/gui/sceneView.py:394
 msgid "The slicing engine reported the following"
 msgstr "슬라이스 엔진의 리포트는 다음과 같습니다"
 
-#: Cura/gui/sceneView.py:391
+#: Cura/gui/sceneView.py:394
 msgid "Engine log..."
 msgstr "엔진 로그..."
 
-#: Cura/gui/sceneView.py:530
+#: Cura/gui/sceneView.py:533
 msgid "How many copies do you want?"
 msgstr "몇 개를 출력하실 건가요?"
 
-#: Cura/gui/sceneView.py:530
+#: Cura/gui/sceneView.py:533
 msgid "Number of copies"
 msgstr "프린트할 갯수"
 
-#: Cura/gui/sceneView.py:530
+#: Cura/gui/sceneView.py:533
 msgid "Multiply"
 msgstr "곱하기"
 
-#: Cura/gui/sceneView.py:553
+#: Cura/gui/sceneView.py:556
 msgid ""
 "Cannot fit all the requested duplicates. Do you want to try and reset object "
 "positions?"
 msgstr ""
 
-#: Cura/gui/sceneView.py:553
+#: Cura/gui/sceneView.py:556
 msgid "Reset Positions"
 msgstr ""
 
-#: Cura/gui/sceneView.py:860
+#: Cura/gui/sceneView.py:866
 msgid "Center on platform"
 msgstr "플팻폼 중앙에 위치"
 
-#: Cura/gui/sceneView.py:861
+#: Cura/gui/sceneView.py:867
 msgid "Delete object"
 msgstr "오브젝트 제거"
 
-#: Cura/gui/sceneView.py:862
+#: Cura/gui/sceneView.py:868
 msgid "Multiply object"
 msgstr "오브젝트 복사"
 
-#: Cura/gui/sceneView.py:863
+#: Cura/gui/sceneView.py:869
 msgid "Split object into parts"
 msgstr "오브젝트 나누기"
 
-#: Cura/gui/sceneView.py:866
+#: Cura/gui/sceneView.py:872
 msgid "Dual extrusion merge"
 msgstr "이중 압출 합치기"
 
-#: Cura/gui/sceneView.py:868
+#: Cura/gui/sceneView.py:874
 msgid "Delete all objects"
 msgstr "모든 오브젝트 제거"
 
-#: Cura/gui/sceneView.py:869
+#: Cura/gui/sceneView.py:875
 msgid "Reload all objects"
 msgstr "모든 오브젝트 다시 불러오기"
 
-#: Cura/gui/sceneView.py:870
+#: Cura/gui/sceneView.py:876
 #, fuzzy
 msgid "Reset all objects positions"
 msgstr "모든 오브젝트 제거"
 
-#: Cura/gui/sceneView.py:871
+#: Cura/gui/sceneView.py:877
 msgid "Reset all objects transformations"
 msgstr ""
 
-#: Cura/gui/sceneView.py:995
+#: Cura/gui/sceneView.py:1001
 msgid "Toolpath to SD"
 msgstr "툴패스를 SD에 저장"
 
-#: Cura/gui/sceneView.py:1289
+#: Cura/gui/sceneView.py:1295
 msgid "Overhang view not working due to lack of OpenGL shaders support."
 msgstr "OpenGL 셰이더가 지원이되지 않아서 돌출 보기가 동작하지 않습니다."
 

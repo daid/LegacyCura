@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cura\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 11:05+0100\n"
+"POT-Creation-Date: 2015-03-03 10:33+0100\n"
 "PO-Revision-Date: 2015-01-06 16:05-0300\n"
 "Last-Translator: Ernesto Bazzano <bazza@riseup.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -792,7 +792,7 @@ msgstr "Limpiar plataforma"
 msgid "Print...\tCTRL+P"
 msgstr "Imprimir...\tCTRL+P"
 
-#: Cura/gui/mainWindow.py:84 Cura/gui/sceneView.py:316
+#: Cura/gui/mainWindow.py:84 Cura/gui/sceneView.py:319
 msgid "Save GCode..."
 msgstr "Guardar GCode..."
 
@@ -1262,99 +1262,99 @@ msgstr "Capas"
 msgid "Share on YouMagine"
 msgstr "Comparte en YoMagine"
 
-#: Cura/gui/sceneView.py:224
+#: Cura/gui/sceneView.py:227
 msgid "Open 3D model"
 msgstr "Abrir modelo 3D"
 
-#: Cura/gui/sceneView.py:249
+#: Cura/gui/sceneView.py:252
 msgid "Save 3D model"
 msgstr "Guardar modelo 3d"
 
-#: Cura/gui/sceneView.py:313 Cura/gui/sceneView.py:998
+#: Cura/gui/sceneView.py:316 Cura/gui/sceneView.py:1004
 #, python-format
 msgid "Print with %s"
 msgstr "Imprimir con %s"
 
-#: Cura/gui/sceneView.py:317
+#: Cura/gui/sceneView.py:320
 msgid "Slice engine log..."
 msgstr "Log del motor de fileteado..."
 
-#: Cura/gui/sceneView.py:344 Cura/gui/sceneView.py:1001
+#: Cura/gui/sceneView.py:347 Cura/gui/sceneView.py:1007
 msgid "Save toolpath"
 msgstr "Guardar trayectorias (GCode)"
 
-#: Cura/gui/sceneView.py:391
+#: Cura/gui/sceneView.py:394
 msgid "The slicing engine reported the following"
 msgstr "El fileteado informó lo siguiente"
 
-#: Cura/gui/sceneView.py:391
+#: Cura/gui/sceneView.py:394
 msgid "Engine log..."
 msgstr "Engine log..."
 
-#: Cura/gui/sceneView.py:530
+#: Cura/gui/sceneView.py:533
 msgid "How many copies do you want?"
 msgstr "¿Cuántas copias lo que quieres?"
 
-#: Cura/gui/sceneView.py:530
+#: Cura/gui/sceneView.py:533
 msgid "Number of copies"
 msgstr "Número de copias"
 
-#: Cura/gui/sceneView.py:530
+#: Cura/gui/sceneView.py:533
 msgid "Multiply"
 msgstr "Multiplicar objeto"
 
-#: Cura/gui/sceneView.py:553
+#: Cura/gui/sceneView.py:556
 msgid ""
 "Cannot fit all the requested duplicates. Do you want to try and reset object "
 "positions?"
 msgstr ""
 
-#: Cura/gui/sceneView.py:553
+#: Cura/gui/sceneView.py:556
 msgid "Reset Positions"
 msgstr ""
 
-#: Cura/gui/sceneView.py:860
+#: Cura/gui/sceneView.py:866
 msgid "Center on platform"
 msgstr "Centrar en la plataforma"
 
-#: Cura/gui/sceneView.py:861
+#: Cura/gui/sceneView.py:867
 msgid "Delete object"
 msgstr "Borrar objeto"
 
-#: Cura/gui/sceneView.py:862
+#: Cura/gui/sceneView.py:868
 msgid "Multiply object"
 msgstr "Multiplicar objeto"
 
-#: Cura/gui/sceneView.py:863
+#: Cura/gui/sceneView.py:869
 msgid "Split object into parts"
 msgstr "Cortar objetos en partes"
 
-#: Cura/gui/sceneView.py:866
+#: Cura/gui/sceneView.py:872
 msgid "Dual extrusion merge"
 msgstr "Fusionar extrusión dual"
 
-#: Cura/gui/sceneView.py:868
+#: Cura/gui/sceneView.py:874
 msgid "Delete all objects"
 msgstr "Borrar todos los objetos"
 
-#: Cura/gui/sceneView.py:869
+#: Cura/gui/sceneView.py:875
 msgid "Reload all objects"
 msgstr "Releer todos los objetos"
 
-#: Cura/gui/sceneView.py:870
+#: Cura/gui/sceneView.py:876
 #, fuzzy
 msgid "Reset all objects positions"
 msgstr "Borrar todos los objetos"
 
-#: Cura/gui/sceneView.py:871
+#: Cura/gui/sceneView.py:877
 msgid "Reset all objects transformations"
 msgstr ""
 
-#: Cura/gui/sceneView.py:995
+#: Cura/gui/sceneView.py:1001
 msgid "Toolpath to SD"
 msgstr "Trazadpo a SD"
 
-#: Cura/gui/sceneView.py:1289
+#: Cura/gui/sceneView.py:1295
 msgid "Overhang view not working due to lack of OpenGL shaders support."
 msgstr "Vista \"Salientes\" no funciona por falta de \"OpenGL shaders\"."
 

@@ -39,7 +39,6 @@ class Stk500v2(ispBase.IspBase):
 
 		self.serial.flushInput()
 		self.serial.flushOutput()
-		self.sendMessage([1])
 		if self.sendMessage([0x10, 0xc8, 0x64, 0x19, 0x20, 0x00, 0x53, 0x03, 0xac, 0x53, 0x00, 0x00]) != [0x10, 0x00]:
 			self.close()
 			raise ispBase.IspError("Failed to enter programming mode")
