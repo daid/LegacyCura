@@ -648,8 +648,6 @@ class SceneView(openglGui.glGuiPanel):
 				if cost is not None:
 					text += '\n%s' % (cost)
 			self.printButton.setBottomText(text)
-		else:
-			self.printButton.setBottomText('CuraEngine')
 		self.QueueRefresh()
 
 	def loadScene(self, fileList, pms_transforms=None):
