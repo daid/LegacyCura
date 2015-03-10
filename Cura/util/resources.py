@@ -90,6 +90,6 @@ def getLanguageOptions():
 		# ['ko', 'Korean'],
 		# ['zh', 'Chinese'],
 		# ['nl', 'Nederlands'],
-		['es', 'Español'],
+		['es', 'Spanish'],
 		# ['po', 'Polish']
 	]
