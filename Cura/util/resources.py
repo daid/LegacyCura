@@ -92,6 +92,11 @@ def getLanguageOptions():
 		# ['ko', 'Korean'],
 		# ['zh', 'Chinese'],
 		# ['nl', 'Nederlands'],
+<<<<<<< HEAD
+		['es', 'Spanish'],
+		# ['po', 'Polish']
+=======
 		# ['es', 'Spanish'],
 		# ['po', 'Polish'],
+>>>>>>> 7cb6a04a57db1130bbc63f2e59aa962f881c8db1
 	]
