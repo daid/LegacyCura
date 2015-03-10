@@ -39,7 +39,7 @@ class SceneView(openglGui.glGuiPanel):
 		self._yaw = 30
 		self._pitch = 60
 		self._zoom = 300
-		self._scene = objectScene.Scene()
+		self._scene = objectScene.Scene(self)
 		self._objectShader = None
 		self._objectLoadShader = None
 		self._focusObj = None
@@ -51,6 +51,7 @@ class SceneView(openglGui.glGuiPanel):
 		self._viewTarget = numpy.array([0,0,0], numpy.float32)
 		self._animView = None
 		self._animZoom = None
+		self._lastObjectSink = None
 		self._platformMesh = {}
 		self._platformTexture = None
 		self._isSimpleMode = True
@@ -120,6 +121,8 @@ class SceneView(openglGui.glGuiPanel):
 		self.updateToolButtons()
 		self.updateProfileToControls()
 
+
+
 	def loadGCodeFile(self, filename):
 		self.OnDeleteAll(None)
 		#Cheat the engine results to load a GCode file into it.
@@ -139,7 +142,7 @@ class SceneView(openglGui.glGuiPanel):
 		#if self.viewSelection.getValue() == 4:
 		#	self.viewSelection.setValue(0)
 		#	self.OnViewChange()
-		self.loadScene(filenames)
+		return self.loadScene(filenames)
 
 	def loadFiles(self, filenames):
 		mainWindow = self.GetParent().GetParent().GetParent()
@@ -184,8 +187,11 @@ class SceneView(openglGui.glGuiPanel):
 			mainWindow.updateProfileToAllControls()
 			# now process all the scene files
 			if scene_filenames:
-				self.loadSceneFiles(scene_filenames)
-				self._selectObject(None)
+				objs = self.loadSceneFiles(scene_filenames)
+				if len(objs) > 0:
+					self._selectObject(objs[-1])
+				else:
+					self._selectObject(None)
 				self.sceneUpdated()
 				newZoom = numpy.max(self._machineSize)
 				self._animView = openglGui.animation(self, self._viewTarget.copy(), numpy.array([0,0,0], numpy.float32), 0.5)
@@ -194,10 +200,27 @@ class SceneView(openglGui.glGuiPanel):
 	def reloadScene(self, e):
 		# Copy the list before DeleteAll clears it
 		fileList = []
+		pms_transforms = [] #position, rotation matrix, scale
 		for obj in self._scene.objects():
 			fileList.append(obj.getOriginFilename())
+			pms_transforms.append((obj.getPosition(), obj.getMatrix(), obj.getScale()))
+
 		self.OnDeleteAll(None)
-		self.loadScene(fileList)
+		self.loadScene(fileList, pms_transforms)
+
+	def OnResetPositions(self, e):
+
+		self._scene.arrangeAll(True)
+		self._scene.centerAll()
+
+
+	def OnResetTransformations(self, e):
+		for obj in self._scene.objects():
+			obj.resetScale()
+			obj.resetRotation()
+
+		self._scene.arrangeAll()
+		self._scene.centerAll()
 
 	def showLoadModel(self, button = 1):
 		if button == 1:
@@ -253,6 +276,23 @@ class SceneView(openglGui.glGuiPanel):
 				else:
 					drive = drives[0]
 				filename = self._scene._objectList[0].getName() + profile.getGCodeExtension()
+				
+				#check if the file is part of the root folder. If so, create folders on sd card to get the same folder hierarchy.
+				repDir = profile.getPreference("sdcard_rootfolder")
+				try:
+					if os.path.exists(repDir) and os.path.isdir(repDir):
+						repDir = os.path.abspath(repDir)
+						originFilename = os.path.abspath( self._scene._objectList[0].getOriginFilename() )
+						if os.path.dirname(originFilename).startswith(repDir):
+							new_filename = os.path.splitext(originFilename[len(repDir):])[0] + profile.getGCodeExtension()
+							sdPath = os.path.dirname(os.path.join(drive[1], new_filename))
+							if not os.path.exists(sdPath):
+								print "Creating replication directory:", sdPath
+								os.makedirs(sdPath)
+							filename = new_filename
+				except:
+					pass
+
 				threading.Thread(target=self._saveGCode,args=(drive[1] + filename, drive[1])).start()
 			elif connectionGroup is not None:
 				connections = connectionGroup.getAvailableConnections()
@@ -301,6 +341,8 @@ class SceneView(openglGui.glGuiPanel):
 
 	def showSaveGCode(self):
 		if len(self._scene._objectList) < 1:
+			return
+		if not self._engine.getResult().isFinished():
 			return
 		dlg=wx.FileDialog(self, _("Save toolpath"), os.path.dirname(profile.getPreference('lastFile')), style=wx.FD_SAVE|wx.FD_OVERWRITE_PROMPT)
 		filename = self._scene._objectList[0].getName() + profile.getGCodeExtension()
@@ -494,20 +536,44 @@ class SceneView(openglGui.glGuiPanel):
 			return
 		cnt = dlg.GetValue()
 		dlg.Destroy()
+
+		# 0:unrequested arrange all. Objects should not move.
+		# 1:requested arrange all but refused.
+		# 2:arrange all and center from now on.
+		requestedArrangeAll = 0
+
 		n = 0
 		while True:
 			n += 1
 			newObj = obj.copy()
 			self._scene.add(newObj)
-			self._scene.centerAll()
+			if requestedArrangeAll == 2:
+				self._scene.centerAll()
+
 			if not self._scene.checkPlatform(newObj):
+				if requestedArrangeAll == 0:
+					requestedArrangeAll = 1
+					dlg = wx.MessageDialog(self, _("Cannot fit all the requested duplicates. Do you want to try and reset object positions?"), _("Reset Positions"), wx.YES_NO)
+
+					if dlg.ShowModal() == wx.ID_YES:
+						dlg.Destroy()
+						requestedArrangeAll = 2
+						self._scene.remove(newObj)
+						self.OnResetPositions(None)
+						n -= 1
+						continue
+
+					dlg.Destroy()
+
 				break
 			if n > cnt:
 				break
 		if n <= cnt:
 			self.notification.message("Could not create more than %d items" % (n - 1))
 		self._scene.remove(newObj)
-		self._scene.centerAll()
+		if requestedArrangeAll == 2:
+			self._scene.centerAll()
+
 		self.sceneUpdated()
 
 	def OnSplitObject(self, e):
@@ -543,6 +609,12 @@ class SceneView(openglGui.glGuiPanel):
 		self.sceneUpdated()
 
 	def sceneUpdated(self):
+
+		objectSink = profile.getProfileSettingFloat("object_sink")
+		if self._lastObjectSink != objectSink:
+			self._lastObjectSink = objectSink
+			self._scene.updateHeadSize()
+
 		wx.CallAfter(self._sceneUpdateTimer.Start, 500, True)
 		self._engine.abortEngine()
 		self._scene.updateSizeOffsets()
@@ -565,6 +637,7 @@ class SceneView(openglGui.glGuiPanel):
 			self.printButton.setProgressBar(progressValue)
 		else:
 			self.printButton.setProgressBar(None)
+		self.QueueRefresh()
 		self._engineResultView.setResult(result)
 		if finished:
 			self.printButton.setProgressBar(None)
@@ -578,12 +651,13 @@ class SceneView(openglGui.glGuiPanel):
 				if cost is not None:
 					text += '\n%s' % (cost)
 			self.printButton.setBottomText(text)
-		else:
-			self.printButton.setBottomText('')
 		self.QueueRefresh()
 
-	def loadScene(self, fileList):
+	def loadScene(self, fileList, pms_transforms=None):
+		ret = []
+		objIndex = -1
 		for filename in fileList:
+			objIndex += 1
 			try:
 				ext = os.path.splitext(filename)[1].lower()
 				if ext in imageToMesh.supportedExtensions():
@@ -599,13 +673,22 @@ class SceneView(openglGui.glGuiPanel):
 						obj._loadAnim = openglGui.animation(self, 1, 0, 1.5)
 					else:
 						obj._loadAnim = None
+					ret.append(obj)
 					self._scene.add(obj)
-					if not self._scene.checkPlatform(obj):
-						self._scene.centerAll()
-					self._selectObject(obj)
-					if obj.getScale()[0] < 1.0:
-						self.notification.message("Warning: Object scaled down.")
+					if pms_transforms is not None and len(pms_transforms) == len(fileList):
+						obj.setPosition(pms_transforms[objIndex][0])
+						obj.applyMatrix(pms_transforms[objIndex][1])
+						obj.setScale(pms_transforms[objIndex][2][0], 0, False)
+						obj.setScale(pms_transforms[objIndex][2][1], 1, False)
+						obj.setScale(pms_transforms[objIndex][2][2], 2, False)
+					else:
+						if not self._scene.checkPlatform(obj):
+							self._scene.centerAll()
+						self._selectObject(obj)
+						if obj.getScale()[0] < 1.0:
+							self.notification.message("Warning: Object scaled down.")
 		self.sceneUpdated()
+		return ret
 
 	def _deleteObject(self, obj):
 		if obj == self._selectedObj:
@@ -648,18 +731,20 @@ class SceneView(openglGui.glGuiPanel):
 		self._objColors[2] = profile.getPreferenceColour('model_colour3')
 		self._objColors[3] = profile.getPreferenceColour('model_colour4')
 		self._scene.updateMachineDimensions()
+		if self._zoom > numpy.max(self._machineSize) * 3:
+			self._animZoom = openglGui.animation(self, self._zoom, numpy.max(self._machineSize) * 3, 0.5)
 		self.updateModelSettingsToControls()
 
 	def updateModelSettingsToControls(self):
 		if self._selectedObj is not None:
 			scale = self._selectedObj.getScale()
 			size = self._selectedObj.getSize()
-			self.scaleXctrl.setValue(round(scale[0], 2))
-			self.scaleYctrl.setValue(round(scale[1], 2))
-			self.scaleZctrl.setValue(round(scale[2], 2))
-			self.scaleXmmctrl.setValue(round(size[0], 2))
-			self.scaleYmmctrl.setValue(round(size[1], 2))
-			self.scaleZmmctrl.setValue(round(size[2], 2))
+			self.scaleXctrl.setValue(round(scale[0], 3))
+			self.scaleYctrl.setValue(round(scale[1], 3))
+			self.scaleZctrl.setValue(round(scale[2], 3))
+			self.scaleXmmctrl.setValue(round(size[0], 3))
+			self.scaleYmmctrl.setValue(round(size[1], 3))
+			self.scaleZmmctrl.setValue(round(size[2], 3))
 
 	def OnKeyChar(self, keyCode):
 		if self._engineResultView.OnKeyChar(keyCode):
@@ -781,11 +866,15 @@ class SceneView(openglGui.glGuiPanel):
 						self.Bind(wx.EVT_MENU, lambda e: self._deleteObject(self._focusObj), menu.Append(-1, _("Delete object")))
 						self.Bind(wx.EVT_MENU, self.OnMultiply, menu.Append(-1, _("Multiply object")))
 						self.Bind(wx.EVT_MENU, self.OnSplitObject, menu.Append(-1, _("Split object into parts")))
+
 					if ((self._selectedObj != self._focusObj and self._focusObj is not None and self._selectedObj is not None) or len(self._scene.objects()) == 2) and int(profile.getMachineSetting('extruder_amount')) > 1:
 						self.Bind(wx.EVT_MENU, self.OnMergeObjects, menu.Append(-1, _("Dual extrusion merge")))
 					if len(self._scene.objects()) > 0:
 						self.Bind(wx.EVT_MENU, self.OnDeleteAll, menu.Append(-1, _("Delete all objects")))
 						self.Bind(wx.EVT_MENU, self.reloadScene, menu.Append(-1, _("Reload all objects")))
+						self.Bind(wx.EVT_MENU, self.OnResetPositions, menu.Append(-1, _("Reset all objects positions")))
+						self.Bind(wx.EVT_MENU, self.OnResetTransformations, menu.Append(-1, _("Reset all objects transformations")))
+
 					if menu.MenuItemCount > 0:
 						self.PopupMenu(menu)
 					menu.Destroy()
@@ -1236,41 +1325,71 @@ class SceneView(openglGui.glGuiPanel):
 
 		size = [profile.getMachineSettingFloat('machine_width'), profile.getMachineSettingFloat('machine_depth'), profile.getMachineSettingFloat('machine_height')]
 
-		machine = profile.getMachineSetting('machine_type')
-		if machine.startswith('ultimaker'):
-			if machine not in self._platformMesh:
-				meshes = meshLoader.loadMeshes(resources.getPathForMesh(machine + '_platform.stl'))
+		machine_type = profile.getMachineSetting('machine_type')
+		if machine_type not in self._platformMesh:
+			self._platformMesh[machine_type] = None
+
+			filename = None
+			texture_name = None
+			offset = [0,0,0]
+			texture_offset = [0,0,0]
+			texture_scale = 1.0
+			if machine_type == 'ultimaker2' or machine_type == 'ultimaker2extended':
+				filename = resources.getPathForMesh('ultimaker2_platform.stl')
+				offset = [-9,-37,145]
+				texture_name = 'Ultimaker2backplate.png'
+				texture_offset = [9,150,-5]
+			elif machine_type == 'ultimaker2go':
+				filename = resources.getPathForMesh('ultimaker2go_platform.stl')
+				offset = [0,-42,145]
+				texture_offset = [0,105,-5]
+				texture_name = 'Ultimaker2backplate.png'
+				texture_scale = 0.9
+			elif machine_type == 'ultimaker_plus':
+				filename = resources.getPathForMesh('ultimaker2_platform.stl')
+				offset = [0,-37,145]
+				texture_offset = [0,150,-5]
+				texture_name = 'UltimakerPlusbackplate.png'
+			elif machine_type == 'ultimaker':
+				filename = resources.getPathForMesh('ultimaker_platform.stl')
+				offset = [0,0,2.5]
+			elif machine_type == 'Witbox':
+				filename = resources.getPathForMesh('Witbox_platform.stl')
+				offset = [0,-37,145]
+
+			if filename is not None:
+				meshes = meshLoader.loadMeshes(filename)
 				if len(meshes) > 0:
-					self._platformMesh[machine] = meshes[0]
-				else:
-					self._platformMesh[machine] = None
-				if machine == 'ultimaker2' or machine == 'ultimaker_plus':
-					self._platformMesh[machine]._drawOffset = numpy.array([0,-37,145], numpy.float32)
-				else:
-					self._platformMesh[machine]._drawOffset = numpy.array([0,0,2.5], numpy.float32)
+					self._platformMesh[machine_type] = meshes[0]
+					self._platformMesh[machine_type]._drawOffset = numpy.array(offset, numpy.float32)
+					self._platformMesh[machine_type].texture = None
+					if texture_name is not None:
+						self._platformMesh[machine_type].texture = openglHelpers.loadGLTexture(texture_name)
+						self._platformMesh[machine_type].texture_offset = texture_offset
+						self._platformMesh[machine_type].texture_scale = texture_scale
+		if self._platformMesh[machine_type] is not None:
+			mesh = self._platformMesh[machine_type]
 			glColor4f(1,1,1,0.5)
 			self._objectShader.bind()
-			self._renderObject(self._platformMesh[machine], False, False)
+			self._renderObject(mesh, False, False)
 			self._objectShader.unbind()
 
 			#For the Ultimaker 2 render the texture on the back plate to show the Ultimaker2 text.
-			if machine == 'ultimaker2' or machine == 'ultimaker_plus':
-				if not hasattr(self._platformMesh[machine], 'texture'):
-					if machine == 'ultimaker2':
-						self._platformMesh[machine].texture = openglHelpers.loadGLTexture('Ultimaker2backplate.png')
-					else:
-						self._platformMesh[machine].texture = openglHelpers.loadGLTexture('UltimakerPlusbackplate.png')
-				glBindTexture(GL_TEXTURE_2D, self._platformMesh[machine].texture)
+			if mesh.texture is not None:
+				glBindTexture(GL_TEXTURE_2D, mesh.texture)
 				glEnable(GL_TEXTURE_2D)
 				glPushMatrix()
 				glColor4f(1,1,1,1)
 
-				glTranslate(0,150,-5)
+				glTranslate(mesh.texture_offset[0], mesh.texture_offset[1], mesh.texture_offset[2])
+				glScalef(mesh.texture_scale, mesh.texture_scale, mesh.texture_scale)
 				h = 50
 				d = 8
 				w = 100
 				glEnable(GL_BLEND)
-				glBlendFunc(GL_DST_COLOR, GL_ZERO)
+				glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA)
+				glEnable(GL_ALPHA_TEST)
+				glAlphaFunc(GL_GREATER, 0.0)
 				glBegin(GL_QUADS)
 				glTexCoord2f(1, 0)
 				glVertex3f( w, 0, h)
@@ -1291,22 +1410,9 @@ class SceneView(openglGui.glGuiPanel):
 				glVertex3f(-w, d, 0)
 				glEnd()
 				glDisable(GL_TEXTURE_2D)
+				glDisable(GL_ALPHA_TEST)
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 				glPopMatrix()
-				
-		elif machine.startswith('Witbox'):
-			if machine not in self._platformMesh:
-				meshes = meshLoader.loadMeshes(resources.getPathForMesh(machine + '_platform.stl'))
-				if len(meshes) > 0:
-					self._platformMesh[machine] = meshes[0]
-				else:
-					self._platformMesh[machine] = None
-				if machine == 'Witbox':
-					self._platformMesh[machine]._drawOffset = numpy.array([0,-37,145], numpy.float32)
-			glColor4f(1,1,1,0.5)
-			self._objectShader.bind()
-			self._renderObject(self._platformMesh[machine], False, False)
-			self._objectShader.unbind()
 		else:
 			glColor4f(0,0,0,1)
 			glLineWidth(3)

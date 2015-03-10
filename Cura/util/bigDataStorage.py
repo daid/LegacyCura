@@ -13,7 +13,7 @@ class BigDataStorage(object):
 
 	def write(self, data):
 		self._active.write(data)
-		if self._active.tell() > 1024 * 1024 * 100:
+		if self._active.tell() > 1024 * 1024 * 50:
 			self._active = StringIO.StringIO()
 			self._list.append(self._active)
 
@@ -35,14 +35,16 @@ class BigDataStorage(object):
 				ret = self.activeRead(size)
 		return ret
 
-	def replaceAtStart(self, key, value):
+	def replaceAtStart(self, dictionary):
 		data = self._list[0].getvalue()
 		block0 = data[0:2048]
-		value = (value + ' ' * len(key))[:len(key)]
-		block0 = block0.replace(key, value)
+		block1 = StringIO.StringIO()
 		self._list[0] = StringIO.StringIO()
+		block1.write(data[2048:])
+		self._list.insert(1, block1)
+		for key, value in dictionary.items():
+			block0 = block0.replace(key, str(value))
 		self._list[0].write(block0)
-		self._list[0].write(data[2048:])
 
 	def __len__(self):
 		ret = 0
@@ -60,11 +62,11 @@ class BigDataStorage(object):
 	def next(self):
 		if self._iter_index < len(self._list):
 			ret = self._list[self._iter_index].readline()
-			if ret == '':
+			if ret == '' or (ret[-1] != '\n' and ret[-1] != '\r'):
 				self._iter_index += 1
 				if self._iter_index < len(self._list):
 					self._list[self._iter_index].seek(0)
-				return self.next()
+				return ret + self.next()
 			return ret
 		raise StopIteration
 

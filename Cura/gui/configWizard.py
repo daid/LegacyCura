@@ -265,19 +265,18 @@ class PrintrbotPage(InfoPage):
 			("Simple Makers Kit", 100, 100, 100, 0.4, 1.75, 208, 40, 70, 30, 1, True),
 			(":" + _("Older models"),),
 			("Original", 130, 130, 130, 0.5, 2.95, 208, 40, 70, 30, 1, False),
-			("Simple Maker's Edition v1", 100, 100, 100, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Simple Maker's Edition v2 (2013 Printrbot Simple)", 100, 100, 100, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Simple Maker's Edition v3 (2014 Printrbot Simple)", 100, 100, 100, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Simple Maker's Edition v4 (Model 1405)", 100, 100, 100, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Jr v1", 150, 100, 80, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Jr v2", 150, 150, 150, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("LC v2", 150, 150, 150, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Plus v2", 200, 200, 200, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Plus v2.1", 200, 200, 200, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Plus v2.2 (Model 1404/140422)", 250, 250, 250, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Plus v2.3 (Model 140501)", 250, 250, 250, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Plus v2.4 (Model 140507)", 250, 250, 250, 0.5, 1.75, 208, 40, 70, 30, 1, False),
-			("Go v2 Large", 609, 305, 305, 0.5, 1.75, 208, 35, 70, 30, 1, False),
+			("Simple Maker's Edition v1", 100, 100, 100, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Simple Maker's Edition v2 (2013 Printrbot Simple)", 100, 100, 100, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Simple Maker's Edition v3 (2014 Printrbot Simple)", 100, 100, 100, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Jr v1", 115, 120, 80, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Jr v2", 150, 150, 150, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("LC v1", 150, 150, 150, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("LC v2", 150, 150, 150, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Plus v1", 200, 200, 200, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Plus v2", 200, 200, 200, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Plus v2.1", 185, 220, 200, 0.4, 1.75, 208, 40, 70, 30, 1, False),
+			("Plus v2.2 (Model 1404/140422/140501/140507)", 250, 250, 250, 0.4, 1.75, 208, 40, 70, 30, 1, True),
+			("Go v2 Large", 505, 306, 310, 0.4, 1.75, 208, 35, 70, 30, 1, True),
 		]
 
 		super(PrintrbotPage, self).__init__(parent, _("Printrbot Selection"))
@@ -329,13 +328,10 @@ G21        ;metric values
 G90        ;absolute positioning
 M82        ;set extruder to absolute mode
 M107       ;start with the fan off
-
 G28 X0 Y0  ;move X/Y to min endstops
 G28 Z0     ;move Z to min endstops
 G29        ;Run the auto bed leveling
-
 G1 Z15.0 F{travel_speed} ;move the platform down 15mm
-
 G92 E0                  ;zero the extruded length
 G1 F200 E3              ;extrude 3mm of feed stock
 G92 E0                  ;zero the extruded length again
@@ -390,9 +386,9 @@ class CustomRepRapInfoPage(InfoPage):
 		self.AddText(_("You will have to manually install Marlin or Sprinter firmware."))
 		self.AddSeperator()
 		self.machineName = self.AddLabelTextCtrl(_("Machine name"), "RepRap")
-		self.machineWidth = self.AddLabelTextCtrl(_("Machine width (mm)"), "80")
-		self.machineDepth = self.AddLabelTextCtrl(_("Machine depth (mm)"), "80")
-		self.machineHeight = self.AddLabelTextCtrl(_("Machine height (mm)"), "55")
+		self.machineWidth = self.AddLabelTextCtrl(_("Machine width X (mm)"), "80")
+		self.machineDepth = self.AddLabelTextCtrl(_("Machine depth Y (mm)"), "80")
+		self.machineHeight = self.AddLabelTextCtrl(_("Machine height Z (mm)"), "55")
 		self.nozzleSize = self.AddLabelTextCtrl(_("Nozzle size (mm)"), "0.5")
 		self.heatedBed = self.AddCheckbox(_("Heated bed"))
 		self.HomeAtCenter = self.AddCheckbox(_("Bed center is 0,0,0 (RoStock)"))
@@ -421,6 +417,10 @@ class MachineSelectPage(InfoPage):
 		self.Ultimaker2Radio = self.AddRadioButton("Ultimaker2", style=wx.RB_GROUP)
 		self.Ultimaker2Radio.SetValue(True)
 		self.Ultimaker2Radio.Bind(wx.EVT_RADIOBUTTON, self.OnUltimaker2Select)
+		self.Ultimaker2ExtRadio = self.AddRadioButton("Ultimaker2extended")
+		self.Ultimaker2ExtRadio.Bind(wx.EVT_RADIOBUTTON, self.OnUltimaker2Select)
+		self.Ultimaker2GoRadio = self.AddRadioButton("Ultimaker2go")
+		self.Ultimaker2GoRadio.Bind(wx.EVT_RADIOBUTTON, self.OnUltimaker2Select)
 		self.UltimakerRadio = self.AddRadioButton("Ultimaker Original")
 		self.UltimakerRadio.Bind(wx.EVT_RADIOBUTTON, self.OnUltimakerSelect)
 		self.UltimakerOPRadio = self.AddRadioButton("Ultimaker Original+")
@@ -464,14 +464,29 @@ class MachineSelectPage(InfoPage):
 
 	def StoreData(self):
 		profile.putProfileSetting('retraction_enable', 'True')
-		if self.Ultimaker2Radio.GetValue():
-			profile.putMachineSetting('machine_width', '230')
-			profile.putMachineSetting('machine_depth', '225')
-			profile.putMachineSetting('machine_height', '205')
-			profile.putMachineSetting('machine_name', 'ultimaker2')
-			profile.putMachineSetting('machine_type', 'ultimaker2')
+		if self.Ultimaker2Radio.GetValue() or self.Ultimaker2GoRadio.GetValue() or self.Ultimaker2ExtRadio.GetValue():
+			if self.Ultimaker2Radio.GetValue():
+				profile.putMachineSetting('machine_width', '230')
+				profile.putMachineSetting('machine_depth', '225')
+				profile.putMachineSetting('machine_height', '205')
+				profile.putMachineSetting('machine_name', 'ultimaker2')
+				profile.putMachineSetting('machine_type', 'ultimaker2')
+				profile.putMachineSetting('has_heated_bed', 'True')
+			if self.Ultimaker2GoRadio.GetValue():
+				profile.putMachineSetting('machine_width', '120')
+				profile.putMachineSetting('machine_depth', '120')
+				profile.putMachineSetting('machine_height', '115')
+				profile.putMachineSetting('machine_name', 'ultimaker2go')
+				profile.putMachineSetting('machine_type', 'ultimaker2go')
+				profile.putMachineSetting('has_heated_bed', 'False')
+			if self.Ultimaker2ExtRadio.GetValue():
+				profile.putMachineSetting('machine_width', '230')
+				profile.putMachineSetting('machine_depth', '225')
+				profile.putMachineSetting('machine_height', '315')
+				profile.putMachineSetting('machine_name', 'ultimaker2extended')
+				profile.putMachineSetting('machine_type', 'ultimaker2extended')
+				profile.putMachineSetting('has_heated_bed', 'False')
 			profile.putMachineSetting('machine_center_is_zero', 'False')
-			profile.putMachineSetting('has_heated_bed', 'True')
 			profile.putMachineSetting('gcode_flavor', 'UltiGCode')
 			profile.putMachineSetting('extruder_head_size_min_x', '40.0')
 			profile.putMachineSetting('extruder_head_size_min_y', '10.0')

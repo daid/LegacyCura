@@ -100,6 +100,9 @@ class EngineResult(object):
 			return None
 		return _('%0.2f meter %0.0f gram') % (float(self._filamentMM[e]) / 1000.0, self.getFilamentWeight(e) * 1000.0)
 
+	def getFilamentAmountMeters(self, e=0):
+		return float(self._filamentMM[e]) / 1000.0
+
 	def getLog(self):
 		return self._engineLog
 
@@ -118,10 +121,13 @@ class EngineResult(object):
 	def setHash(self, hash):
 		self._modelHash = hash
 
+	def addReplaceTag(self, key, value):
+		self._replaceInfo[key] = value
+
+	def applyReplaceTags(self):
+		self._gcodeData.replaceAtStart(self._replaceInfo)
+
 	def setFinished(self, result):
-		if result:
-			for k, v in self._replaceInfo.items():
-				self._gcodeData.replaceAtStart(k, v)
 		self._finished = result
 
 	def isFinished(self):
@@ -292,7 +298,10 @@ class Engine(object):
 	def _runEngine(self, scene, overrides, old_thread):
 		if old_thread is not None:
 			if self._process is not None:
-				self._process.terminate()
+				try:
+					self._process.terminate()
+				except:
+					pass
 			old_thread.join()
 		self._callback(-1.0)
 
@@ -404,6 +413,11 @@ class Engine(object):
 			returnCode = self._process.wait()
 			logThread.join()
 			if returnCode == 0:
+				self._result.addReplaceTag('#P_TIME#', self._result.getPrintTime())
+				self._result.addReplaceTag('#F_AMNT#', self._result.getFilamentAmountMeters(0))
+				self._result.addReplaceTag('#F_WGHT#', math.floor(self._result.getFilamentWeight(0) * 1000.0))
+				self._result.addReplaceTag('#F_COST#', self._result.getFilamentCost(0))
+				self._result.applyReplaceTags()
 				plugin_error = pluginInfo.runPostProcessingPlugins(self._result)
 				if plugin_error is not None:
 					print plugin_error
@@ -416,6 +430,7 @@ class Engine(object):
 				self._callback(-1.0)
 			self._process = None
 		except MemoryError:
+			traceback.print_exc()
 			self._result.addLog("MemoryError")
 			self._callback(-1.0)
 
@@ -452,7 +467,7 @@ class Engine(object):
 					radius = profile.getProfileSettingFloat('filament_diameter') / 2.0
 					self._result._filamentMM[1] /= (math.pi * radius * radius)
 			elif line.startswith('Replace:'):
-				self._result._replaceInfo[line.split(':')[1].strip()] = line.split(':')[2].strip()
+				self._result.addReplaceTag(line.split(':')[1].strip(), line.split(':')[2].strip())
 			else:
 				self._result.addLog(line)
 			line = stderr.readline()
@@ -469,6 +484,7 @@ class Engine(object):
 			'downSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_bottom') == 'True' else 0,
 			'upSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_top') == 'True' else 0,
 			'infillOverlap': int(profile.getProfileSettingFloat('fill_overlap')),
+			'perimeterBeforeInfill': 1 if profile.getProfileSetting('perimeter_before_infill') == 'True' else 0,
 			'initialSpeedupLayers': int(4),
 			'initialLayerSpeed': int(profile.getProfileSettingFloat('bottom_layer_speed')),
 			'printSpeed': int(profile.getProfileSettingFloat('print_speed')),
@@ -491,7 +507,6 @@ class Engine(object):
 			'retractionAmountExtruderSwitch': int(profile.getProfileSettingFloat('retraction_dual_amount') * 1000),
 			'retractionZHop': int(profile.getProfileSettingFloat('retraction_hop') * 1000),
 			'minimalExtrusionBeforeRetraction': int(profile.getProfileSettingFloat('retraction_minimal_extrusion') * 1000),
-			'enableCombing': 1 if profile.getProfileSetting('retraction_combing') == 'True' else 0,
 			'multiVolumeOverlap': int(profile.getProfileSettingFloat('overlap_dual') * 1000),
 			'objectSink': max(0, int(profile.getProfileSettingFloat('object_sink') * 1000)),
 			'minimalLayerTime': int(profile.getProfileSettingFloat('cool_min_layer_time')),
@@ -514,6 +529,12 @@ class Engine(object):
 		settings['fanFullOnLayerNr'] = (fanFullHeight - settings['initialLayerThickness'] - 1) / settings['layerThickness'] + 1
 		if settings['fanFullOnLayerNr'] < 0:
 			settings['fanFullOnLayerNr'] = 0
+		if profile.getProfileSetting('retraction_combing') == 'All':
+			settings['enableCombing'] = 1
+		elif profile.getProfileSetting('retraction_combing') == 'No Skin':
+			settings['enableCombing'] = 2
+		else:
+			settings['enableCombing'] = 0
 		if profile.getProfileSetting('support_type') == 'Lines':
 			settings['supportType'] = 1
 
@@ -571,7 +592,7 @@ class Engine(object):
 			settings['gcodeFlavor'] = 2
 		elif profile.getMachineSetting('gcode_flavor') == 'BFB':
 			settings['gcodeFlavor'] = 3
-		elif profile.getMachineSetting('gcode_flavor') == 'Mach3':
+		elif profile.getMachineSetting('gcode_flavor') == 'Mach3/LinuxCNC':
 			settings['gcodeFlavor'] = 4
 		elif profile.getMachineSetting('gcode_flavor') == 'RepRap (Volumetric)':
 			settings['gcodeFlavor'] = 5

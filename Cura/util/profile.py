@@ -154,7 +154,7 @@ class setting(object):
 				result = res
 			elif res == validators.WARNING and result != validators.ERROR:
 				result = res
-			if res != validators.SUCCESS:
+			if len(err) > 0:
 				msgs.append(err)
 		return result, '\n'.join(msgs)
 
@@ -186,6 +186,7 @@ setting('print_temperature',         210, int,   'basic',    _('Speed and Temper
 setting('print_temperature2',          0, int,   'basic',    _('Speed and Temperature')).setRange(0,340).setLabel(_("2nd nozzle temperature (C)"), _("Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required."))
 setting('print_temperature3',          0, int,   'basic',    _('Speed and Temperature')).setRange(0,340).setLabel(_("3th nozzle temperature (C)"), _("Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required."))
 setting('print_temperature4',          0, int,   'basic',    _('Speed and Temperature')).setRange(0,340).setLabel(_("4th nozzle temperature (C)"), _("Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required."))
+setting('print_temperature5',          0, int,   'basic',    _('Speed and Temperature')).setRange(0,340).setLabel(_("5th nozzle temperature (C)"), _("Temperature used for printing. Set at 0 to pre-heat yourself.\nFor PLA a value of 210C is usually used.\nFor ABS a value of 230C or higher is required."))
 setting('print_bed_temperature',      70, int,   'basic',    _('Speed and Temperature')).setRange(0,340).setLabel(_("Bed temperature (C)"), _("Temperature used for the heated printer bed. Set at 0 to pre-heat yourself."))
 setting('support',                'None', [_('None'), _('Touching buildplate'), _('Everywhere')], 'basic', _('Support')).setExpertSubCategory(_('Support')).setLabel(_("Support type"), _("Type of support structure build.\n\"Touching buildplate\" is the most commonly used support setting.\n\nNone does not do any support.\nTouching buildplate only creates support where the support structure will touch the build platform.\nEverywhere creates support even on top of parts of the model."))
 setting('platform_adhesion',      'None', [_('None'), _('Brim'), _('Raft')], 'basic', _('Support')).setExpertSubCategory([_('Skirt'), _('Brim'), _('Raft')]).setLabel(_("Platform adhesion type"), _("Different options that help in preventing corners from lifting due to warping.\nBrim adds a single layer thick flat area around your object which is easy to cut off afterwards, and it is the recommended option.\nRaft adds a thick raster below the object and a thin interface between this and your object.\n(Note that enabling the brim or raft disables the skirt)"))
@@ -197,12 +198,13 @@ setting('filament_diameter',        2.85, float, 'basic',    _('Filament')).setR
 setting('filament_diameter2',          0, float, 'basic',    _('Filament')).setRange(0).setLabel(_("Diameter2 (mm)"), _("Diameter of your filament for the 2nd nozzle. Use 0 to use the same diameter as for nozzle 1."))
 setting('filament_diameter3',          0, float, 'basic',    _('Filament')).setRange(0).setLabel(_("Diameter3 (mm)"), _("Diameter of your filament for the 3th nozzle. Use 0 to use the same diameter as for nozzle 1."))
 setting('filament_diameter4',          0, float, 'basic',    _('Filament')).setRange(0).setLabel(_("Diameter4 (mm)"), _("Diameter of your filament for the 4th nozzle. Use 0 to use the same diameter as for nozzle 1."))
+setting('filament_diameter5',          0, float, 'basic',    _('Filament')).setRange(0).setLabel(_("Diameter5 (mm)"), _("Diameter of your filament for the 5th nozzle. Use 0 to use the same diameter as for nozzle 1."))
 setting('filament_flow',            100., float, 'basic',    _('Filament')).setRange(5,300).setLabel(_("Flow (%)"), _("Flow compensation, the amount of material extruded is multiplied by this value"))
 setting('retraction_speed',         40.0, float, 'advanced', _('Retraction')).setRange(0.1).setLabel(_("Speed (mm/s)"), _("Speed at which the filament is retracted, a higher retraction speed works better. But a very high retraction speed can lead to filament grinding."))
 setting('retraction_amount',         4.5, float, 'advanced', _('Retraction')).setRange(0).setLabel(_("Distance (mm)"), _("Amount of retraction, set at 0 for no retraction at all. A value of 4.5mm seems to generate good results."))
 setting('retraction_dual_amount',   16.5, float, 'advanced', _('Retraction')).setRange(0).setLabel(_("Dual extrusion switch amount (mm)"), _("Amount of retraction when switching nozzle with dual-extrusion, set at 0 for no retraction at all. A value of 16.0mm seems to generate good results."))
 setting('retraction_min_travel',     1.5, float, 'expert',   _('Retraction')).setRange(0).setLabel(_("Minimum travel (mm)"), _("Minimum amount of travel needed for a retraction to happen at all. To make sure you do not get a lot of retractions in a small area."))
-setting('retraction_combing',       True, bool,  'expert',   _('Retraction')).setLabel(_("Enable combing"), _("Combing is the act of avoiding holes in the print for the head to travel over. If combing is disabled the printer head moves straight from the start point to the end point and it will always retract."))
+setting('retraction_combing',      'All',  [_('Off'),_('All'),_('No Skin')], 'expert', _('Retraction')).setLabel(_("Enable combing"), _("Combing is the act of avoiding holes in the print for the head to travel over. If combing is \'Off\' the printer head moves straight from the start point to the end point and it will always retract.  If \'All\', enable combing on all surfaces.  If \'No Skin\', enable combing on all except skin surfaces."))
 setting('retraction_minimal_extrusion',0.02, float,'expert', _('Retraction')).setRange(0).setLabel(_("Minimal extrusion before retracting (mm)"), _("The minimal amount of extrusion that needs to be done before retracting again if a retraction needs to happen before this minimal is reached the retraction is ignored.\nThis avoids retracting a lot on the same piece of filament which flattens the filament and causes grinding issues."))
 setting('retraction_hop',            0.0, float, 'expert',   _('Retraction')).setRange(0).setLabel(_("Z hop when retracting (mm)"), _("When a retraction is done, the head is lifted by this amount to travel over the print. A value of 0.075 works well. This feature has a lot of positive effect on delta towers."))
 setting('bottom_thickness',          0.3, float, 'advanced', _('Quality')).setRange(0).setLabel(_("Initial layer thickness (mm)"), _("Layer thickness of the bottom layer. A thicker bottom layer makes sticking to the bed easier. Set to 0.0 to have the bottom layer thickness the same as the other layers."))
@@ -230,6 +232,7 @@ setting('cool_head_lift',          False, bool,  'expert',   _('Cool')).setLabel
 setting('solid_top', True, bool, 'expert', _('Infill')).setLabel(_("Solid infill top"), _("Create a solid top surface, if set to false the top is filled with the fill percentage. Useful for cups/vases."))
 setting('solid_bottom', True, bool, 'expert', _('Infill')).setLabel(_("Solid infill bottom"), _("Create a solid bottom surface, if set to false the bottom is filled with the fill percentage. Useful for buildings."))
 setting('fill_overlap', 15, int, 'expert', _('Infill')).setRange(0,100).setLabel(_("Infill overlap (%)"), _("Amount of overlap between the infill and the walls. There is a slight overlap with the walls and the infill so the walls connect firmly to the infill."))
+setting('perimeter_before_infill', False, bool, 'expert', _('Infill')).setLabel(_("Infill prints after perimeters"), _("Print infill after perimeter lines. This can reduce infill from showing through the surface. If not checked, infill will print before perimeter lines."))
 setting('support_type', 'Lines', ['Grid', 'Lines'], 'expert', _('Support')).setLabel(_("Structure type"), _("The type of support structure.\nGrid is very strong and can come off in 1 piece, however, sometimes it is too strong.\nLines are single walled lines that break off one at a time. Which is more work to remove, but as it is less strong it does work better on tricky prints."))
 setting('support_angle', 60, float, 'expert', _('Support')).setRange(0,90).setLabel(_("Overhang angle for support (deg)"), _("The minimal angle that overhangs need to have to get support. With 90 degree being horizontal and 0 degree being vertical."))
 setting('support_fill_rate', 15, int, 'expert', _('Support')).setRange(0,100).setLabel(_("Fill amount (%)"), _("Amount of infill structure in the support material, less material gives weaker support which is easier to remove. 15% seems to be a good average."))
@@ -485,6 +488,21 @@ setting('save_profile', 'False', bool, 'preference', 'hidden').setLabel(_("Save 
 setting('filament_cost_kg', '0', float, 'preference', 'hidden').setLabel(_("Cost (price/kg)"), _("Cost of your filament per kg, to estimate the cost of the final print."))
 setting('filament_cost_meter', '0', float, 'preference', 'hidden').setLabel(_("Cost (price/m)"), _("Cost of your filament per meter, to estimate the cost of the final print."))
 setting('auto_detect_sd', 'True', bool, 'preference', 'hidden').setLabel(_("Auto detect SD card drive"), _("Auto detect the SD card. You can disable this because on some systems external hard-drives or USB sticks are detected as SD card."))
+
+def _getMyDocumentsFolder():
+	if platform.system() == "Windows":
+		path = os.path.expanduser('~/Documents')
+	else:
+		path = os.path.expanduser('~/')
+	if not os.path.exists(path):
+		path = ''
+	try:
+		path = unicode(path)
+	except UnicodeDecodeError:
+		path = ''
+	return path
+
+setting('sdcard_rootfolder', _getMyDocumentsFolder(), str, 'preference', 'hidden').setLabel(_("Base folder to replicate on SD card"), _("The specified folder will be used as a base path. Any gcode generated from object coming from within that folder will be automatically saved on the SD card at the same sub-folder. Any object coming from outside of this path will save the gcode on the root folder of the card."))
 setting('check_for_updates', 'True', bool, 'preference', 'hidden').setLabel(_("Check for updates"), _("Check for newer versions of Cura on startup"))
 setting('submit_slice_information', 'False', bool, 'preference', 'hidden').setLabel(_("Send usage statistics"), _("Submit anonymous usage information to improve future versions of Cura"))
 setting('youmagine_token', '', str, 'preference', 'hidden')
@@ -515,14 +533,16 @@ setting('machine_center_is_zero', 'False', bool, 'machine', 'hidden').setLabel(_
 setting('machine_shape', 'Square', ['Square','Circular'], 'machine', 'hidden').setLabel(_("Build area shape"), _("The shape of machine build area."))
 setting('ultimaker_extruder_upgrade', 'False', bool, 'machine', 'hidden')
 setting('has_heated_bed', 'False', bool, 'machine', 'hidden').setLabel(_("Heated bed"), _("If you have an heated bed, this enabled heated bed settings (requires restart)"))
-setting('gcode_flavor', 'RepRap (Marlin/Sprinter)', ['RepRap (Marlin/Sprinter)', 'RepRap (Volumetric)', 'UltiGCode', 'MakerBot', 'BFB', 'Mach3'], 'machine', 'hidden').setLabel(_("GCode Flavor"), _("Flavor of generated GCode.\nRepRap is normal 5D GCode which works on Marlin/Sprinter based firmwares.\nUltiGCode is a variation of the RepRap GCode which puts more settings in the machine instead of the slicer.\nMakerBot GCode has a few changes in the way GCode is generated, but still requires MakerWare to generate to X3G.\nBFB style generates RPM based code.\nMach3 uses A,B,C instead of E for extruders."))
-setting('extruder_amount', '1', ['1','2','3','4'], 'machine', 'hidden').setLabel(_("Extruder count"), _("Amount of extruders in your machine."))
+setting('gcode_flavor', 'RepRap (Marlin/Sprinter)', ['RepRap (Marlin/Sprinter)', 'RepRap (Volumetric)', 'UltiGCode', 'MakerBot', 'BFB', 'Mach3/LinuxCNC'], 'machine', 'hidden').setLabel(_("GCode Flavor"), _("Flavor of generated GCode.\nRepRap is normal 5D GCode which works on Marlin/Sprinter based firmwares.\nUltiGCode is a variation of the RepRap GCode which puts more settings in the machine instead of the slicer.\nMakerBot GCode has a few changes in the way GCode is generated, but still requires MakerWare to generate to X3G.\nBFB style generates RPM based code.\nMach3 uses A,B,C instead of E for extruders."))
+setting('extruder_amount', '1', ['1','2','3','4','5'], 'machine', 'hidden').setLabel(_("Extruder count"), _("Amount of extruders in your machine."))
 setting('extruder_offset_x1', '0.0', float, 'machine', 'hidden').setLabel(_("Offset X"), _("The offset of your secondary extruder compared to the primary."))
 setting('extruder_offset_y1', '21.6', float, 'machine', 'hidden').setLabel(_("Offset Y"), _("The offset of your secondary extruder compared to the primary."))
 setting('extruder_offset_x2', '0.0', float, 'machine', 'hidden').setLabel(_("Offset X"), _("The offset of your tertiary extruder compared to the primary."))
 setting('extruder_offset_y2', '0.0', float, 'machine', 'hidden').setLabel(_("Offset Y"), _("The offset of your tertiary extruder compared to the primary."))
 setting('extruder_offset_x3', '0.0', float, 'machine', 'hidden').setLabel(_("Offset X"), _("The offset of your forth extruder compared to the primary."))
 setting('extruder_offset_y3', '0.0', float, 'machine', 'hidden').setLabel(_("Offset Y"), _("The offset of your forth extruder compared to the primary."))
+setting('extruder_offset_x4', '0.0', float, 'machine', 'hidden').setLabel(_("Offset X"), _("The offset of your forth extruder compared to the primary."))
+setting('extruder_offset_y4', '0.0', float, 'machine', 'hidden').setLabel(_("Offset Y"), _("The offset of your forth extruder compared to the primary."))
 setting('steps_per_e', '0', float, 'machine', 'hidden').setLabel(_("E-Steps per 1mm filament"), _("Amount of steps per mm filament extrusion. If set to 0 then this value is ignored and the value in your firmware is used."))
 setting('serial_port', 'AUTO', str, 'machine', 'hidden').setLabel(_("Serial port"), _("Serial port to use for communication with the printer"))
 setting('serial_port_auto', '', str, 'machine', 'hidden')
@@ -541,14 +561,21 @@ validators.warningAbove(settingsDictionary['layer_height'], lambda : (float(getP
 validators.wallThicknessValidator(settingsDictionary['wall_thickness'])
 validators.warningAbove(settingsDictionary['print_speed'], 150.0, _("It is highly unlikely that your machine can achieve a printing speed above 150mm/s"))
 validators.printSpeedValidator(settingsDictionary['print_speed'])
+validators.printSpeedValidator(settingsDictionary['bottom_layer_speed'])
+validators.printSpeedValidator(settingsDictionary['infill_speed'])
+validators.printSpeedValidator(settingsDictionary['solidarea_speed'])
+validators.printSpeedValidator(settingsDictionary['inset0_speed'])
+validators.printSpeedValidator(settingsDictionary['insetx_speed'])
 validators.warningAbove(settingsDictionary['print_temperature'], 260.0, _("Temperatures above 260C could damage your machine, be careful!"))
 validators.warningAbove(settingsDictionary['print_temperature2'], 260.0, _("Temperatures above 260C could damage your machine, be careful!"))
 validators.warningAbove(settingsDictionary['print_temperature3'], 260.0, _("Temperatures above 260C could damage your machine, be careful!"))
 validators.warningAbove(settingsDictionary['print_temperature4'], 260.0, _("Temperatures above 260C could damage your machine, be careful!"))
+validators.warningAbove(settingsDictionary['print_temperature5'], 260.0, _("Temperatures above 260C could damage your machine, be careful!"))
 validators.warningAbove(settingsDictionary['filament_diameter'], 3.5, _("Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm."))
 validators.warningAbove(settingsDictionary['filament_diameter2'], 3.5, _("Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm."))
 validators.warningAbove(settingsDictionary['filament_diameter3'], 3.5, _("Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm."))
 validators.warningAbove(settingsDictionary['filament_diameter4'], 3.5, _("Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm."))
+validators.warningAbove(settingsDictionary['filament_diameter5'], 3.5, _("Are you sure your filament is that thick? Normal filament is around 3mm or 1.75mm."))
 validators.warningAbove(settingsDictionary['travel_speed'], 300.0, _("It is highly unlikely that your machine can achieve a travel speed above 300mm/s"))
 validators.warningAbove(settingsDictionary['bottom_thickness'], lambda : (float(getProfileSetting('nozzle_size')) * 3.0 / 4.0), _("A bottom layer of more then %.2fmm (3/4 nozzle size) usually give bad results and is not recommended."))
 
@@ -556,9 +583,11 @@ validators.warningAbove(settingsDictionary['bottom_thickness'], lambda : (float(
 settingsDictionary['print_temperature2'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 1)
 settingsDictionary['print_temperature3'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 2)
 settingsDictionary['print_temperature4'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 3)
+settingsDictionary['print_temperature5'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 4)
 settingsDictionary['filament_diameter2'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 1)
 settingsDictionary['filament_diameter3'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 2)
 settingsDictionary['filament_diameter4'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 3)
+settingsDictionary['filament_diameter5'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 4)
 settingsDictionary['support_dual_extrusion'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 1)
 settingsDictionary['retraction_dual_amount'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 1)
 settingsDictionary['wipe_tower'].addCondition(lambda : int(getMachineSetting('extruder_amount')) > 1)
@@ -572,10 +601,12 @@ settingsDictionary['print_temperature'].addCondition(lambda : getMachineSetting(
 settingsDictionary['print_temperature2'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['print_temperature3'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['print_temperature4'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
+settingsDictionary['print_temperature5'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['filament_diameter'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['filament_diameter2'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['filament_diameter3'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['filament_diameter4'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
+settingsDictionary['filament_diameter5'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['filament_flow'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['print_bed_temperature'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
 settingsDictionary['retraction_speed'].addCondition(lambda : getMachineSetting('gcode_flavor') != 'UltiGCode')
@@ -705,6 +736,9 @@ def loadProfile(filename, allMachines = False):
 				section = 'alterations'
 			if profileParser.has_option(section, set.getName()):
 				set.setValue(unicode(profileParser.get(section, set.getName()), 'utf-8', 'replace'))
+	#Upgrade setting from older ini file
+	if getProfileSetting('retraction_combing') == '1':
+		putProfileSetting('retraction_combing', 'All')
 
 def saveProfile(filename, allMachines = False):
 	"""
@@ -776,7 +810,7 @@ def resetProfile():
 	elif getMachineSetting('machine_type') == 'ultimaker_plus':
 		putProfileSetting('nozzle_size', '0.4')
 		putProfileSetting('retraction_enable', 'True')
-	elif getMachineSetting('machine_type') == 'ultimaker2':
+	elif getMachineSetting('machine_type').startswith('ultimaker2'):
 		putProfileSetting('nozzle_size', '0.4')
 		putProfileSetting('retraction_enable', 'True')
 	else:
@@ -1170,14 +1204,17 @@ def getMachineSizePolygons():
 	else:
 		ret.append(numpy.array([[-size[0]/2,-size[1]/2],[size[0]/2,-size[1]/2],[size[0]/2, size[1]/2], [-size[0]/2, size[1]/2]], numpy.float32))
 
-	if getMachineSetting('machine_type') == 'ultimaker2':
+	if getMachineSetting('machine_type').startswith('ultimaker2'):
 		#UM2 no-go zones
 		w = 25
-		h = 10
+		w2 = 5
+		h = 8
+		if getMachineSetting('machine_type') == 'ultimaker2go':
+			w2 = 25
 		ret.append(numpy.array([[-size[0]/2,-size[1]/2],[-size[0]/2+w+2,-size[1]/2], [-size[0]/2+w,-size[1]/2+h], [-size[0]/2,-size[1]/2+h]], numpy.float32))
-		ret.append(numpy.array([[ size[0]/2-w-2,-size[1]/2],[ size[0]/2,-size[1]/2], [ size[0]/2,-size[1]/2+h],[ size[0]/2-w,-size[1]/2+h]], numpy.float32))
+		ret.append(numpy.array([[ size[0]/2-w2-2,-size[1]/2],[ size[0]/2,-size[1]/2], [ size[0]/2,-size[1]/2+h],[ size[0]/2-w2,-size[1]/2+h]], numpy.float32))
 		ret.append(numpy.array([[-size[0]/2+w+2, size[1]/2],[-size[0]/2, size[1]/2], [-size[0]/2, size[1]/2-h],[-size[0]/2+w, size[1]/2-h]], numpy.float32))
-		ret.append(numpy.array([[ size[0]/2, size[1]/2],[ size[0]/2-w-2, size[1]/2], [ size[0]/2-w, size[1]/2-h],[ size[0]/2, size[1]/2-h]], numpy.float32))
+		ret.append(numpy.array([[ size[0]/2, size[1]/2],[ size[0]/2-w2-2, size[1]/2], [ size[0]/2-w2, size[1]/2-h],[ size[0]/2, size[1]/2-h]], numpy.float32))
 	return ret
 
 #returns the number of extruders minimal used. Normally this returns 1, but with dual-extrusion support material it returns 2
@@ -1193,6 +1230,8 @@ def minimalExtruderCount():
 def getGCodeExtension():
 	if getMachineSetting('gcode_flavor') == 'BFB':
 		return '.bfb'
+	if getMachineSetting('gcode_flavor') == 'Mach3/LinuxCNC':
+		return '.ngc'
 	return '.gcode'
 
 #########################################################
@@ -1231,34 +1270,6 @@ def replaceTagMatch(m):
 		return pre + str(int(f))
 	return pre + str(f)
 
-def replaceGCodeTags(filename, gcodeInt):
-	f = open(filename, 'r+')
-	data = f.read(2048)
-	data = data.replace('#P_TIME#', ('%5d:%02d' % (int(gcodeInt.totalMoveTimeMinute / 60), int(gcodeInt.totalMoveTimeMinute % 60)))[-8:])
-	data = data.replace('#F_AMNT#', ('%8.2f' % (gcodeInt.extrusionAmount / 1000))[-8:])
-	data = data.replace('#F_WGHT#', ('%8.2f' % (gcodeInt.calculateWeight() * 1000))[-8:])
-	cost = gcodeInt.calculateCost()
-	if cost is None:
-		cost = 'Unknown'
-	data = data.replace('#F_COST#', ('%8s' % (cost.split(' ')[0]))[-8:])
-	f.seek(0)
-	f.write(data)
-	f.close()
-
-def replaceGCodeTagsFromSlicer(filename, slicerInt):
-	f = open(filename, 'r+')
-	data = f.read(2048)
-	data = data.replace('#P_TIME#', ('%8.2f' % (int(slicerInt._printTimeSeconds)))[-8:])
-	data = data.replace('#F_AMNT#', ('%8.2f' % (slicerInt._filamentMM[0]))[-8:])
-	data = data.replace('#F_WGHT#', ('%8.2f' % (float(slicerInt.getFilamentWeight()) * 1000))[-8:])
-	cost = slicerInt.getFilamentCost()
-	if cost is None:
-		cost = 'Unknown'
-	data = data.replace('#F_COST#', ('%8s' % (cost.split(' ')[0]))[-8:])
-	f.seek(0)
-	f.write(data)
-	f.close()
-
 ### Get aleration raw contents. (Used internally in Cura)
 def getAlterationFile(filename):
 	if filename in tempOverride:
@@ -1291,6 +1302,9 @@ def getAlterationFileContents(filename, extruderCount = 1):
 			return 'M25 ;Stop reading from this point on.\n;CURA_PROFILE_STRING:%s\n' % (getProfileString())
 		return ''
 	if filename == 'start.gcode':
+		gcode_parameter_key = 'S'
+		if getMachineSetting('gcode_flavor') == 'Mach3/LinuxCNC':
+			gcode_parameter_key = 'P'
 		if extruderCount > 1:
 			alterationContents = getAlterationFile("start%d.gcode" % (extruderCount))
 		#For the start code, hack the temperature and the steps per E value into it. So the temperature is reached before the start code extrusion.
@@ -1304,22 +1318,22 @@ def getAlterationFileContents(filename, extruderCount = 1):
 			bedTemp = getProfileSettingFloat('print_bed_temperature')
 
 		if bedTemp > 0 and not isTagIn('{print_bed_temperature}', alterationContents):
-			prefix += 'M190 S%f\n' % (bedTemp)
+			prefix += 'M190 %s%f\n' % (gcode_parameter_key, bedTemp)
 		if temp > 0 and not isTagIn('{print_temperature}', alterationContents):
-			if extruderCount > 0:
+			if extruderCount > 1:
 				for n in xrange(1, extruderCount):
 					t = temp
 					if n > 0 and getProfileSettingFloat('print_temperature%d' % (n+1)) > 0:
 						t = getProfileSettingFloat('print_temperature%d' % (n+1))
-					prefix += 'M104 T%d S%f\n' % (n, t)
+					prefix += 'M104 T%d %s%f\n' % (n, gcode_parameter_key, t)
 				for n in xrange(0, extruderCount):
 					t = temp
 					if n > 0 and getProfileSettingFloat('print_temperature%d' % (n+1)) > 0:
 						t = getProfileSettingFloat('print_temperature%d' % (n+1))
-					prefix += 'M109 T%d S%f\n' % (n, t)
+					prefix += 'M109 T%d %s%f\n' % (n, gcode_parameter_key, t)
 				prefix += 'T0\n'
 			else:
-				prefix += 'M109 S%f\n' % (temp)
+				prefix += 'M109 %s%f\n' % (gcode_parameter_key, temp)
 	elif filename == 'end.gcode':
 		if extruderCount > 1:
 			alterationContents = getAlterationFile("end%d.gcode" % (extruderCount))
