@@ -1,4 +1,4 @@
-#Name: Tweak At Z 4.0.1
+#Name: Tweak At Z 4.0.2
 #Info: Change printing parameters at a given height
 #Help: TweakAtZ
 #Depend: GCode
@@ -43,8 +43,8 @@
 ##        extruder three code removed, tweaking print speed, save call of Publisher class,
 ##        uses previous value from other plugins also on UltiGCode
 ##V4.0.1: Bugfix for doubled G1 commands
-
-version = '4.0.1'
+##V4.0.2: uses Cura progress bar instead of its own
+version = '4.0.2'
 
 import re
 import wx
@@ -128,18 +128,14 @@ try:
 except:
 	targetL_i = -100000
 
-if Publisher is not None:
-	if targetL_i > -100000:
-		wx.CallAfter(Publisher().sendMessage, "pluginupdate",
-					 "OpenPluginProgressWindow;TweakAtZ;Tweak At Z plugin is executed at layer " + str(targetL_i))
-	else:
-		wx.CallAfter(Publisher().sendMessage, "pluginupdate",
-					 "OpenPluginProgressWindow;TweakAtZ;Tweak At Z plugin is executed at height " + str(targetZ) + "mm")
 with open(filename, "w") as file:
 	for line in lines:
 		if int(i*100/l) > lastpercentage and Publisher is not None: #progressbar
 			lastpercentage = int(i*100/l)
-			wx.CallAfter(Publisher().sendMessage, "pluginupdate", "Progress;" + str(lastpercentage))
+			if targetL_i > -100000:
+				wx.CallAfter(Publisher().sendMessage, "pluginupdate", ("TweakAtZ Layer %d" % targetL_i) + ";" + str(lastpercentage))
+			else:
+				wx.CallAfter(Publisher().sendMessage, "pluginupdate", ("TweakAtZ %1.2f" % targetZ) + "mm;" + str(lastpercentage))
 		if ';Layer count:' in line:
 			TWinstances += 1
 			file.write(';TweakAtZ instances: %d\n' % TWinstances)
@@ -202,8 +198,8 @@ with open(filename, "w") as file:
 				if 'G1' in line and x != None and y != None and f != None and e != None and newZ==z:
 					file.write("G1 F%d X%1.3f Y%1.3f E%1.5f\n" % (int(f/100.0*float(printspeed)),getValue(line,'X'),
 																  getValue(line,'Y'),getValue(line,'E')))
-                                else: #G1 command but not a print movement
-                                        file.write(line)
+				else: #G1 command but not a print movement
+					file.write(line)
 			# no tweaking on retraction hops which have no x and y coordinate:
 			if (newZ != z) and (x is not None) and (y is not None):
 				z = newZ
@@ -266,7 +262,3 @@ with open(filename, "w") as file:
 					else:
 						file.write("M606 ;recalls saved settings\n")
 		i+=1
-if Publisher is not None:
-	wx.CallAfter(Publisher().sendMessage, "pluginupdate", "Progress;100")
-	time.sleep(1)
-	wx.CallAfter(Publisher().sendMessage, "pluginupdate", "ClosePluginProgressWindow")
