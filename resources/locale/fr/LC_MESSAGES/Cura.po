@@ -791,7 +791,7 @@ msgstr "Vider la plateforme\tF5"
 
 #: Cura/gui/mainWindow.py:78
 msgid "Clear platform"
-msgstr "Vider la plateau"
+msgstr "Vider le plateau"
 
 #: Cura/gui/mainWindow.py:82
 msgid "Print...\tCTRL+P"
@@ -863,7 +863,7 @@ msgstr "Imprimer tous les objets à la fois"
 
 #: Cura/gui/mainWindow.py:155
 msgid "Print one at a time"
-msgstr "Imprimer une objet à la fois"
+msgstr "Imprimer un objet à la fois"
 
 #: Cura/gui/mainWindow.py:162
 msgid "Tools"
