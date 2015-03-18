@@ -1356,6 +1356,22 @@ class SceneView(openglGui.glGuiPanel):
 			elif machine_type == 'Witbox':
 				filename = resources.getPathForMesh('Witbox_platform.stl')
 				offset = [0,-37,145]
+			elif machine_type == 'P3SteelMM':
+				filename = resources.getPathForMesh('P3SteelMM_platform.stl')
+				offset = [0,0,0]
+			elif machine_type == 'Notillus':
+				filename = resources.getPathForMesh('Notillus_platform.stl')				
+				offset = [0,0,0]
+			elif machine_type == 'LulzbotAO100':
+				filename = resources.getPathForMesh('LulzbotAO100_platform.stl')
+				offset = [0,0,0]
+			elif machine_type == 'PrusaI2':
+				filename = resources.getPathForMesh('PrusaI2_platform.stl')
+				offset = [0,0,0]
+			elif machine_type == 'PrusaI3':
+				filename = resources.getPathForMesh('PrusaI3_platform.stl')
+				offset = [0,0,0]				
+
 
 			if filename is not None:
 				meshes = meshLoader.loadMeshes(filename)
