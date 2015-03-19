@@ -71,7 +71,7 @@ class EngineResult(object):
 
 	def getFilamentWeight(self, e=0):
 		#Calculates the weight of the filament in kg
-		radius = float(profile.getProfileSetting('filament_diameter')) / 2
+		radius = profile.getProfileSettingFloat('filament_diameter') / 2
 		volumeM3 = (self._filamentMM[e] * (math.pi * radius * radius)) / (1000*1000*1000)
 		return volumeM3 * profile.getPreferenceFloat('filament_physical_density')
 
