@@ -30,7 +30,10 @@ WIN_PORTABLE_PY_VERSION=2.7.2.1
 
 ##Which CuraEngine to use
 if [ -z ${CURA_ENGINE_REPO:-} ] ; then
-	CURA_ENGINE_REPO="git@github.com:Ultimaker/CuraEngine.git"
+	CURA_ENGINE_REPO="https://github.com/Ultimaker/CuraEngine.git"
+fi
+if [ -z ${CURA_ENGINE_REPO_PUSHURL:-} ] ; then
+	CURA_ENGINE_REPO_PUSHURL="git@github.com:Ultimaker/CuraEngine.git"
 fi
 
 #############################
@@ -72,15 +75,17 @@ function extract
 
 function gitClone
 {
-	echo "Cloning $1 into $2"
-	if [ -d $2 ]; then
-		cd $2
+	echo "Cloning $1 into $3"
+	echo "  with push URL $2"
+	if [ -d $3 ]; then
+		cd $3
 		git clean -dfx
 		git reset --hard
 		git pull
 		cd -
 	else
-		git clone $1 $2
+		git clone $1 $3
+		git config remote.origin.pushurl "$2"
 	fi
 }
 
@@ -148,7 +153,10 @@ fi
 
 
 #Build the Ultimaker Original firmwares.
-gitClone git@github.com:Ultimaker/Marlin.git _UltimakerMarlin
+gitClone \
+  https://github.com/Ultimaker/Marlin.git \
+  git@github.com:Ultimaker/Marlin.git \
+  _UltimakerMarlin
 cd _UltimakerMarlin/Marlin
 git checkout Marlin_v1
 git pull
@@ -170,7 +178,10 @@ $MAKE -j 3 HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_V
 $MAKE -j 3 HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_UltimakerMarlin_Plus_Dual_115200 DEFINES="'VERSION_BASE=\"Ultimaker+:${BUILD_NAME}\"' 'VERSION_PROFILE=\"115200_dual\"' BAUDRATE=115200 TEMP_SENSOR_1=20 EXTRUDERS=2"
 cd -
 
-gitClone git@github.com:Ultimaker/Ultimaker2Marlin.git _Ultimaker2Marlin
+gitClone \
+  https://github.com/Ultimaker/Ultimaker2Marlin.git \
+  git@github.com:Ultimaker/Ultimaker2Marlin.git \
+  _Ultimaker2Marlin
 cd _Ultimaker2Marlin/Marlin
 git checkout master
 git pull
@@ -223,7 +234,10 @@ if [ "$BUILD_TARGET" = "darwin" ]; then
     #Add cura version file (should read the version from the bundle with pyobjc, but will figure that out later)
     echo $BUILD_NAME > scripts/darwin/dist/Cura.app/Contents/Resources/version
 	rm -rf CuraEngine
-	gitClone ${CURA_ENGINE_REPO} CuraEngine
+	gitClone \
+	  ${CURA_ENGINE_REPO} \
+	  ${CURA_ENGINE_REPO_PUSHURL} \
+	  CuraEngine
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -258,8 +272,14 @@ fi
 
 if [ "$BUILD_TARGET" = "freebsd" ]; then
 	export CXX="c++"
-	gitClone https://github.com/GreatFruitOmsk/Power Power
-	gitClone ${CURA_ENGINE_REPO} CuraEngine
+	gitClone \
+	  https://github.com/GreatFruitOmsk/Power \
+	  git@github.com:GreatFruitOmsk/Power \
+	  Power
+	gitClone \
+	  ${CURA_ENGINE_REPO} \
+	  ${CURA_ENGINE_REPO_PUSHURL} \
+	  CuraEngine
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	gmake -j4 -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -304,8 +324,14 @@ fi
 
 if [ "$BUILD_TARGET" = "debian_i386" ]; then
     export CXX="g++ -m32"
-	gitClone https://github.com/GreatFruitOmsk/Power Power
-	gitClone ${CURA_ENGINE_REPO} CuraEngine
+	gitClone \
+	  https://github.com/GreatFruitOmsk/Power \
+	  git@github.com:GreatFruitOmsk/Power \
+	  Power
+	gitClone \
+	  ${CURA_ENGINE_REPO} \
+	  ${CURA_ENGINE_REPO_PUSHURL} \
+	  CuraEngine
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -334,8 +360,14 @@ fi
 
 if [ "$BUILD_TARGET" = "debian_amd64" ]; then
     export CXX="g++ -m64"
-	gitClone https://github.com/GreatFruitOmsk/Power Power
-	gitClone ${CURA_ENGINE_REPO} CuraEngine
+	gitClone \
+	  https://github.com/GreatFruitOmsk/Power \
+	  git@github.com:GreatFruitOmsk/Power \
+	  Power
+	gitClone \
+	  ${CURA_ENGINE_REPO} \
+	  ${CURA_ENGINE_REPO_PUSHURL} \
+	  CuraEngine
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -364,8 +396,14 @@ fi
 
 if [ "$BUILD_TARGET" = "debian_armhf" ]; then
     export CXX="g++"
-	gitClone https://github.com/GreatFruitOmsk/Power Power
-	gitClone ${CURA_ENGINE_REPO} CuraEngine
+	gitClone \
+	  https://github.com/GreatFruitOmsk/Power \
+	  git@github.com:GreatFruitOmsk/Power \
+	  Power
+	gitClone \
+	  ${CURA_ENGINE_REPO} \
+	  ${CURA_ENGINE_REPO_PUSHURL} \
+	  CuraEngine
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -410,8 +448,14 @@ function fedoraCreateSRPM() {
   local _namePower="Power"
   local _nameCuraEngine="CuraEngine"
 
-  gitClone "https://github.com/GreatFruitOmsk/Power" "$_namePower"
-  gitClone "$CURA_ENGINE_REPO" "$_nameCuraEngine"
+  gitClone \
+    "https://github.com/GreatFruitOmsk/Power" \
+    "git@github.com:GreatFruitOmsk/Power" \
+    "$_namePower"
+  gitClone \
+    "$CURA_ENGINE_REPO" \
+    "$CURA_ENGINE_REPO_PUSHURL" \
+    "$_nameCuraEngine"
 
   cd "$_namePower"
   local _gitPower="$(git rev-list -1 HEAD)"
@@ -534,9 +578,15 @@ if [ $BUILD_TARGET = "win32" ]; then
 	downloadURL http://sourceforge.net/projects/comtypes/files/comtypes/0.6.2/comtypes-0.6.2.win32.exe
 	downloadURL http://www.uwe-sieber.de/files/ejectmedia.zip
 	#Get the power module for python
-	gitClone https://github.com/GreatFruitOmsk/Power Power
+	gitClone \
+	  https://github.com/GreatFruitOmsk/Power \
+	  git@github.com:GreatFruitOmsk/Power \
+	  Power
     if [ $? != 0 ]; then echo "Failed to clone Power"; exit 1; fi
-	gitClone ${CURA_ENGINE_REPO} CuraEngine
+	gitClone \
+	  ${CURA_ENGINE_REPO} \
+	  ${CURA_ENGINE_REPO_PUSHURL} \
+	  CuraEngine
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 fi
 
