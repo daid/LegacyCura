@@ -81,7 +81,7 @@ class mainWindow(wx.Frame):
 		self.fileMenu.AppendSeparator()
 		i = self.fileMenu.Append(-1, _("Print...\tCTRL+P"))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene.OnPrintButton(1), i)
-		i = self.fileMenu.Append(-1, _("Save GCode..."))
+		i = self.fileMenu.Append(-1, _("Save GCode...\tCTRL+G"))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene.showSaveGCode(), i)
 		i = self.fileMenu.Append(-1, _("Show slice engine log..."))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene._showEngineLog(), i)
