@@ -4,7 +4,7 @@ Section: misc
 Priority: optional
 Architecture: [ARCH]
 Essential: no
-Depends: python-wxgtk2.8, python-opengl, python-serial, python-numpy
+Depends: python-wxgtk2.8 | python-wxgtk3.0, python-opengl, python-serial, python-numpy
 Maintainer: Daid <daid303@gmail.com>
 Provides: cura
 Installed-Size: 10000
