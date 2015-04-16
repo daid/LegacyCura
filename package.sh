@@ -335,7 +335,8 @@ if [ "$BUILD_TARGET" = "debian_i386" ]; then
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
-	sudo rm -rf scripts/linux/${BUILD_TARGET}/usr/share/cura
+	sudo chown `whoami`:`whoami` scripts/linux/${BUILD_TARGET} -R
+	rm -rf scripts/linux/${BUILD_TARGET}/usr/share/cura
 	mkdir -p scripts/linux/${BUILD_TARGET}/usr/share/cura
 	cp -a Cura scripts/linux/${BUILD_TARGET}/usr/share/cura/
 	cp -a resources scripts/linux/${BUILD_TARGET}/usr/share/cura/
@@ -371,7 +372,8 @@ if [ "$BUILD_TARGET" = "debian_amd64" ]; then
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
-	sudo rm -rf scripts/linux/${BUILD_TARGET}/usr/share/cura
+	sudo chown `whoami`:`whoami` scripts/linux/${BUILD_TARGET} -R
+	rm -rf scripts/linux/${BUILD_TARGET}/usr/share/cura
 	mkdir -p scripts/linux/${BUILD_TARGET}/usr/share/cura
 	cp -a Cura scripts/linux/${BUILD_TARGET}/usr/share/cura/
 	cp -a resources scripts/linux/${BUILD_TARGET}/usr/share/cura/
@@ -407,7 +409,8 @@ if [ "$BUILD_TARGET" = "debian_armhf" ]; then
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
-	sudo rm -rf scripts/linux/${BUILD_TARGET}/usr/share/cura
+	sudo chown `whoami`:`whoami` scripts/linux/${BUILD_TARGET} -R
+	rm -rf scripts/linux/${BUILD_TARGET}/usr/share/cura
 	mkdir -p scripts/linux/${BUILD_TARGET}/usr/share/cura
 	cp -a Cura scripts/linux/${BUILD_TARGET}/usr/share/cura/
 	cp -a resources scripts/linux/${BUILD_TARGET}/usr/share/cura/
