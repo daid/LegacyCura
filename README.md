@@ -132,13 +132,6 @@ Note if you already have Python installed via Homebrew, you have to uninstall it
 You can also install [official build](http://www.python.org/ftp/python/2.7.3/python-2.7.3-macosx10.6.dmg).
 
 
-FreeBSD
---------
-On FreeBSD simply use the Port Tree (`cd /usr/ports/cad/cura`) to create (`make package`) and install (`make install`) the package as root. Port will check for all necessary dependencies. You can also use the provided binary package with `pkg install Cura`.
-
-If you want to create an archive for local use the `package.sh freebsd` script (as an ordinary user) will give you a tarball with the program.
-
-
 ###Configure Virtualenv
 Create new virtualenv. If you have [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/) installed:
 `mkvirtualenv Cura`
@@ -224,3 +217,8 @@ Ensure that virtualenv is activated, so `python` points to the python of your vi
 Note that application is only guaranteed to work on Mac OS X version used to build and higher, but may not support lower versions.
 E.g. Cura built on 10.8 will work on 10.8 and 10.7, but not on 10.6. In other hand, Cura built on 10.6 will work on 10.6, 10.7 and 10.8.
 
+FreeBSD
+--------
+On FreeBSD simply use the Port Tree (`cd /usr/ports/cad/cura`) to create (`make package`) and install (`make install`) the package as root. Port will check for all necessary dependencies. You can also use the provided binary package with `pkg install Cura`.
+
+If you want to create an archive for local use the `package.sh freebsd` script (as an ordinary user) will give you a tarball with the program.
