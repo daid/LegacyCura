@@ -41,9 +41,9 @@ addColorCommand(255, 100, 0, sendGCode, "G91; G1 E-1 F120; G90")
 addColorCommand(255,  80, 0, sendGCode, "G91; G1 E-10 F120; G90")
 
 addColorCommand(255, 255, 0, sendGCode, "G28")
-addColorCommand(240, 255, 0, sendGCode, "G28 X0")
-addColorCommand(220, 255, 0, sendGCode, "G28 Y0")
-addColorCommand(200, 255, 0, sendGCode, "G28 Z0")
+addColorCommand(240, 255, 0, sendGCode, "G28 X")
+addColorCommand(220, 255, 0, sendGCode, "G28 Y")
+addColorCommand(200, 255, 0, sendGCode, "G28 Z")
 
 addSpinner(180, 0, 160, sendGCode, "M104 S%d")
 addSpinner(180, 0, 180, sendGCode, "M140 S%d")
