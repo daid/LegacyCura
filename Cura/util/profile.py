@@ -367,7 +367,7 @@ G28 Z0     ;move Z to min endstops
 
 G1 Z15.0 F{travel_speed} ;move the platform down 15mm
 
-T2                      ;Switch to the 2nd extruder
+T2                      ;Switch to the 3rd extruder
 G92 E0                  ;zero the extruded length
 G1 F200 E10             ;extrude 10mm of feed stock
 G92 E0                  ;zero the extruded length again
@@ -428,7 +428,7 @@ G1 F200 E10             ;extrude 10mm of feed stock
 G92 E0                  ;zero the extruded length again
 G1 F200 E-{retraction_dual_amount}
 
-T2                      ;Switch to the 3th extruder
+T2                      ;Switch to the 3rd extruder
 G92 E0                  ;zero the extruded length
 G1 F200 E10             ;extrude 10mm of feed stock
 G92 E0                  ;zero the extruded length again
