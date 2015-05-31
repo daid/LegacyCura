@@ -35,6 +35,9 @@ fi
 if [ -z ${CURA_ENGINE_REPO_PUSHURL:-} ] ; then
 	CURA_ENGINE_REPO_PUSHURL="git@github.com:Ultimaker/CuraEngine.git"
 fi
+if [ -z ${CURA_ENGINE_BRANCH:-} ]; then
+	CURA_ENGINE_BRANCH="legacy"
+fi
 
 JOBS=${JOBS:-3}
 
@@ -86,7 +89,11 @@ function gitClone
 		git pull
 		cd -
 	else
-		git clone $1 $3
+		if [ ! -z "$4" ]; then
+			git clone $1 $3 --branch $4
+		else
+			git clone $1 $3
+		fi
 		git config remote.origin.pushurl "$2"
 	fi
 }
@@ -239,7 +246,8 @@ if [ "$BUILD_TARGET" = "darwin" ]; then
 	gitClone \
 	  ${CURA_ENGINE_REPO} \
 	  ${CURA_ENGINE_REPO_PUSHURL} \
-	  CuraEngine
+	  CuraEngine \
+	  ${CURA_ENGINE_BRANCH}
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -281,7 +289,8 @@ if [ "$BUILD_TARGET" = "freebsd" ]; then
 	gitClone \
 	  ${CURA_ENGINE_REPO} \
 	  ${CURA_ENGINE_REPO_PUSHURL} \
-	  CuraEngine
+	  CuraEngine \
+	  ${CURA_ENGINE_BRANCH}
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	gmake -j4 -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -333,7 +342,8 @@ if [ "$BUILD_TARGET" = "debian_i386" ]; then
 	gitClone \
 	  ${CURA_ENGINE_REPO} \
 	  ${CURA_ENGINE_REPO_PUSHURL} \
-	  CuraEngine
+	  CuraEngine \
+	  ${CURA_ENGINE_BRANCH}
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -370,7 +380,8 @@ if [ "$BUILD_TARGET" = "debian_amd64" ]; then
 	gitClone \
 	  ${CURA_ENGINE_REPO} \
 	  ${CURA_ENGINE_REPO_PUSHURL} \
-	  CuraEngine
+	  CuraEngine \
+	  ${CURA_ENGINE_BRANCH}
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
@@ -407,7 +418,8 @@ if [ "$BUILD_TARGET" = "debian_armhf" ]; then
 	gitClone \
 	  ${CURA_ENGINE_REPO} \
 	  ${CURA_ENGINE_REPO_PUSHURL} \
-	  CuraEngine
+	  CuraEngine \
+	  ${CURA_ENGINE_BRANCH}
     if [ $? != 0 ]; then echo "Failed to clone CuraEngine"; exit 1; fi
 	$MAKE -C CuraEngine VERSION=${BUILD_NAME}
     if [ $? != 0 ]; then echo "Failed to build CuraEngine"; exit 1; fi
