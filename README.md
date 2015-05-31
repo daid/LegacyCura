@@ -24,6 +24,8 @@ Packaging
 Cura development comes with a script "package.sh", this script has been designed to run under *nix OSes (Linux, MacOS, FreeBSD). For Windows the package.sh script can be run from bash using git.
 The "package.sh" script generates a final release package. You should not need it during development, unless you are changing the release process. If you want to distribute your own version of Cura, then the package.sh script will allow you to do that.
 
+The "package.sh" script understands a number of envrionement variables defined at the top of the script. Review and adjust settings to match your needs.
+
 Both MacOS and Linux require some extra instructions for development, as you need to prepare an environment. Look below at the proper section to see what is needed.
 
 Fedora
@@ -169,6 +171,10 @@ Assuming you have virtualenv at *~/.virtualenvs/Cura/* and [wxPython sources](ht
 2. `make install`
     Note to speedup the process I recommend you to enable multicore build by adding the -j*cores* flag:
     `make -j4 install`
+
+    Chances are high that compilation will fail with type mismatch error in Obj-C code. If it's the case then apply a patch at *scripts/darwin/wxPython-src-2.9.4.0.patch*.
+    If it won't fix all the errors, just modify source files manually by casting types to those expected by clang.
+
 3. `cd` into *~/Downloads/wxPython-src-2.9.4.0/wxPython/*
 4. Build wxPython (Note `python` is the python of your virtualenv):
 
@@ -210,8 +216,12 @@ Required python packages are specified in *requirements.txt* and *requirements_d
 If you use virtualenv, installing requirements as easy as `pip install -r requirements_darwin.txt`
 
 
+###Install Arduino.app
+[Arduino.app](http://www.arduino.cc/en/Main/Software) is required to compile certain components used by Cura. Tested version on Mac OS X is 1.0.5 but recent releases should also work.
+
+
 ###Package Cura into application
-Ensure that virtualenv is activated, so `python` points to the python of your virtualenv (e.g. ~/.virtualenvs/Cura/bin/python).Use package.sh to build Cura:
+Ensure that virtualenv is activated, so `python` points to the python of your virtualenv (e.g. ~/.virtualenvs/Cura/bin/python). Use package.sh to build Cura:
 `./package.sh darwin`
 
 Note that application is only guaranteed to work on Mac OS X version used to build and higher, but may not support lower versions.
