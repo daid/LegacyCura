@@ -29,10 +29,10 @@ TARGET_DIR=Cura-${BUILD_NAME}-${BUILD_TARGET}
 WIN_PORTABLE_PY_VERSION=2.7.2.1
 
 ##Which CuraEngine to use
-if [ -z ${CURA_ENGINE_REPO:-} ] ; then
+if [ -z ${CURA_ENGINE_REPO:-} ]; then
 	CURA_ENGINE_REPO="https://github.com/Ultimaker/CuraEngine.git"
 fi
-if [ -z ${CURA_ENGINE_REPO_PUSHURL:-} ] ; then
+if [ -z ${CURA_ENGINE_REPO_PUSHURL:-} ]; then
 	CURA_ENGINE_REPO_PUSHURL="git@github.com:Ultimaker/CuraEngine.git"
 fi
 if [ -z ${CURA_ENGINE_BRANCH:-} ]; then
@@ -155,6 +155,7 @@ else
 	ARDUINO_PATH=/usr/share/arduino
 	ARDUINO_VERSION=105
 fi
+
 
 if [ ! -d "$ARDUINO_PATH" ]; then
   echo "Arduino path '$ARDUINO_PATH' doesn't exist"
@@ -621,7 +622,7 @@ if [ $BUILD_TARGET = "win32" ]; then
 	else
 		CXX=i686-w64-mingw32-g++
 	fi
-	
+
 	#For windows extract portable python to include it.
 	extract PortablePython_${WIN_PORTABLE_PY_VERSION}.exe \$_OUTDIR/App
 	extract PortablePython_${WIN_PORTABLE_PY_VERSION}.exe \$_OUTDIR/Lib/site-packages
@@ -648,7 +649,7 @@ if [ $BUILD_TARGET = "win32" ]; then
 	#mv ffmpeg-20120927-git-13f0cd6-win32-static/bin/ffmpeg.exe ${TARGET_DIR}/Cura/
 	#mv ffmpeg-20120927-git-13f0cd6-win32-static/licenses ${TARGET_DIR}/Cura/ffmpeg-licenses/
 	mv Win32/EjectMedia.exe ${TARGET_DIR}/Cura/
-	
+
 	rm -rf Power/
 	rm -rf \$_OUTDIR
 	rm -rf PURELIB

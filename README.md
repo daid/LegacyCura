@@ -221,7 +221,7 @@ If you use virtualenv, installing requirements as easy as `pip install -r requir
 
 
 ###Package Cura into application
-Ensure that virtualenv is activated, so `python` points to the python of your virtualenv (e.g. ~/.virtualenvs/Cura/bin/python).Use package.sh to build Cura:
+Ensure that virtualenv is activated, so `python` points to the python of your virtualenv (e.g. ~/.virtualenvs/Cura/bin/python). Use package.sh to build Cura:
 `./package.sh darwin`
 
 Note that application is only guaranteed to work on Mac OS X version used to build and higher, but may not support lower versions.
