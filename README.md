@@ -171,6 +171,10 @@ Assuming you have virtualenv at *~/.virtualenvs/Cura/* and [wxPython sources](ht
 2. `make install`
     Note to speedup the process I recommend you to enable multicore build by adding the -j*cores* flag:
     `make -j4 install`
+
+    Chances are high that compilation will fail with type mismatch error in Obj-C code. If it's the case then apply a patch at *scripts/darwin/wxPython-src-2.9.4.0.patch*.
+    If it won't fix all the errors, just modify source files manually by casting types to those expected by clang.
+
 3. `cd` into *~/Downloads/wxPython-src-2.9.4.0/wxPython/*
 4. Build wxPython (Note `python` is the python of your virtualenv):
 
