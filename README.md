@@ -216,6 +216,10 @@ Required python packages are specified in *requirements.txt* and *requirements_d
 If you use virtualenv, installing requirements as easy as `pip install -r requirements_darwin.txt`
 
 
+###Install Arduino.app
+[Arduino.app](http://www.arduino.cc/en/Main/Software) is required to compile certain components used by Cura. Tested version on Mac OS X is 1.0.5 but recent releases should also work.
+
+
 ###Package Cura into application
 Ensure that virtualenv is activated, so `python` points to the python of your virtualenv (e.g. ~/.virtualenvs/Cura/bin/python).Use package.sh to build Cura:
 `./package.sh darwin`
