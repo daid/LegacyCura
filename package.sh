@@ -89,7 +89,7 @@ function gitClone
 		git pull
 		cd -
 	else
-		if [ ! -z "$4" ]; then
+		if [ ! -z "${4-}" ]; then
 			git clone $1 $3 --branch $4
 		else
 			git clone $1 $3
