@@ -26,20 +26,10 @@ class newVersionDialog(wx.Dialog):
 		s.Add(wx.StaticText(p, -1, '(This dialog is only shown once)'))
 		s.Add(wx.StaticLine(p), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=10)
 		s.Add(wx.StaticText(p, -1, 'New in this version:'))
-		s.Add(wx.StaticText(p, -1, '* Improved handling of large 3D models'))
-		s.Add(wx.StaticText(p, -1, '* Added top/bottom speed setting'))
-		s.Add(wx.StaticText(p, -1, '* Improved quickprint profiles (thanks to Paul Candler)'))
-		s.Add(wx.StaticText(p, -1, '* Added single layer view (thanks to pmsimard)'))
-		s.Add(wx.StaticText(p, -1, '* Added option to replicate local folder structure to SD card (thanks to pmsimard'))
-		s.Add(wx.StaticText(p, -1, '* Added UM2go support'))
-		s.Add(wx.StaticText(p, -1, '* Added UM2extended support'))
-		s.Add(wx.StaticText(p, -1, '* Improved UM2 platform rendering, to show where the actual bed clips are located'))
-		s.Add(wx.StaticText(p, -1, '* Fixed problems with PauseAtHeight plugin (thanks to pmsimard)'))
-		s.Add(wx.StaticText(p, -1, '* Finally fixed the filament and print time tags in the gcode'))
-		s.Add(wx.StaticText(p, -1, '* Fixed plugins with UltiGCode'))
-		s.Add(wx.StaticText(p, -1, '* New TweakAtZ 4.0 from Dim3nsioneer'))
-		s.Add(wx.StaticText(p, -1, '* Improved support for Mach3 and LinuxCNC based printers'))
-		s.Add(wx.StaticText(p, -1, '* Added flow in cubic mm on each of the speed settings tooltips'))
+		s.Add(wx.StaticText(p, -1, '* Fixed a small issue where Cura sometimes failed enable the save button'))
+		s.Add(wx.StaticText(p, -1, '* Added save gcode shortcut key (CTRL+G)'))
+		s.Add(wx.StaticText(p, -1, '* Updated UM2, UM2go and UM2extended firmware for the new support url on errors'))
+		s.Add(wx.StaticText(p, -1, '* Fixed small issue in the UM2go firmware'))
 
 		self.hasUltimaker = None
 		self.hasUltimaker2 = None
@@ -55,7 +45,7 @@ class newVersionDialog(wx.Dialog):
 			button = wx.Button(p, -1, 'Install now')
 			self.Bind(wx.EVT_BUTTON, self.OnUltimakerFirmware, button)
 			s.Add(button, flag=wx.TOP, border=5)
-		if self.hasUltimaker2 is not None:
+		if self.hasUltimaker2 is not None and False:
 			s.Add(wx.StaticLine(p), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=10)
 			s.Add(wx.StaticText(p, -1, 'New firmware for your Ultimaker2:'))
 			s.Add(wx.StaticText(p, -1, '* Added option to change filament when pausing during a print.'))

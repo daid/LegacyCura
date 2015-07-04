@@ -67,6 +67,9 @@ class InstallFirmware(wx.Dialog):
 			port = profile.getMachineSetting('serial_port')
 		if filename is None:
 			filename = getDefaultFirmware(machineIndex)
+			self._default_firmware = True
+		else:
+			self._default_firmware = False
 		if filename is None:
 			wx.MessageBox(_("I am sorry, but Cura does not ship with a default firmware for your machine configuration."), _("Firmware update"), wx.OK | wx.ICON_ERROR)
 			self.Destroy()
@@ -132,18 +135,19 @@ class InstallFirmware(wx.Dialog):
 			wx.CallAfter(self.Close)
 			return
 
-		if self._machine_type == 'ultimaker':
-			if programmer.hasChecksumFunction():
-				wx.CallAfter(self.updateLabel, _("Failed to install firmware:\nThis firmware is not compatible with this machine.\nTrying to install UMO firmware on an UM2 or UMO+?"))
-				programmer.close()
-				wx.CallAfter(self.okButton.Enable)
-				return
-		if self._machine_type == 'ultimaker_plus' or self._machine_type == 'ultimaker2':
-			if not programmer.hasChecksumFunction():
-				wx.CallAfter(self.updateLabel, _("Failed to install firmware:\nThis firmware is not compatible with this machine.\nTrying to install UM2 or UMO+ firmware on an UMO?"))
-				programmer.close()
-				wx.CallAfter(self.okButton.Enable)
-				return
+		if self._default_firmware:
+			if self._machine_type == 'ultimaker':
+				if programmer.hasChecksumFunction():
+					wx.CallAfter(self.updateLabel, _("Failed to install firmware:\nThis firmware is not compatible with this machine.\nTrying to install UMO firmware on an UM2 or UMO+?"))
+					programmer.close()
+					wx.CallAfter(self.okButton.Enable)
+					return
+			if self._machine_type == 'ultimaker_plus' or self._machine_type == 'ultimaker2':
+				if not programmer.hasChecksumFunction():
+					wx.CallAfter(self.updateLabel, _("Failed to install firmware:\nThis firmware is not compatible with this machine.\nTrying to install UM2 or UMO+ firmware on an UMO?"))
+					programmer.close()
+					wx.CallAfter(self.okButton.Enable)
+					return
 
 		wx.CallAfter(self.updateLabel, _("Uploading firmware..."))
 		try:

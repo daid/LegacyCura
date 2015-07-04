@@ -71,7 +71,7 @@ class EngineResult(object):
 
 	def getFilamentWeight(self, e=0):
 		#Calculates the weight of the filament in kg
-		radius = float(profile.getProfileSetting('filament_diameter')) / 2
+		radius = profile.getProfileSettingFloat('filament_diameter') / 2
 		volumeM3 = (self._filamentMM[e] * (math.pi * radius * radius)) / (1000*1000*1000)
 		return volumeM3 * profile.getPreferenceFloat('filament_physical_density')
 
@@ -484,6 +484,7 @@ class Engine(object):
 			'downSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_bottom') == 'True' else 0,
 			'upSkinCount': int(profile.calculateSolidLayerCount()) if profile.getProfileSetting('solid_top') == 'True' else 0,
 			'infillOverlap': int(profile.getProfileSettingFloat('fill_overlap')),
+			'perimeterBeforeInfill': 1 if profile.getProfileSetting('perimeter_before_infill') == 'True' else 0,
 			'initialSpeedupLayers': int(4),
 			'initialLayerSpeed': int(profile.getProfileSettingFloat('bottom_layer_speed')),
 			'printSpeed': int(profile.getProfileSettingFloat('print_speed')),

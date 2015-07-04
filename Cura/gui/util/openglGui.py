@@ -504,13 +504,14 @@ class glButton(glGuiControl):
 			openglHelpers.glDrawQuad(pos[0]-bs/2, pos[1]+bs/2, bs, bs / 4)
 			glColor4ub(255,255,255,255)
 			openglHelpers.glDrawQuad(pos[0]-bs/2+2, pos[1]+bs/2+2, (bs - 5) * progress + 1, bs / 4 - 4)
-		elif len(self._altTooltip) > 0:
+		if len(self._altTooltip) > 0:
 			glPushMatrix()
 			glTranslatef(pos[0], pos[1], 0)
 			glTranslatef(0, 0.6*bs, 0)
 			glTranslatef(0, 6, 0)
 			#glTranslatef(0.6*bs*scale, 0, 0)
-
+			if progress is not None:
+				glTranslatef(0, bs/4+4, 0) #shifts text to the bottom if progress bar is active
 			for line in self._altTooltip.split('\n'):
 				glPushMatrix()
 				glColor4ub(60,60,60,255)
@@ -806,7 +807,7 @@ class glNumberCtrl(glGuiControl):
 		self._callback = callback
 		self._value = str(value)
 		self._selectPos = 0
-		self._maxLen = 6
+		self._maxLen = 7
 		self._inCallback = False
 		super(glNumberCtrl, self).__init__(parent, pos)
 

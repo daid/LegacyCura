@@ -81,7 +81,7 @@ class mainWindow(wx.Frame):
 		self.fileMenu.AppendSeparator()
 		i = self.fileMenu.Append(-1, _("Print...\tCTRL+P"))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene.OnPrintButton(1), i)
-		i = self.fileMenu.Append(-1, _("Save GCode..."))
+		i = self.fileMenu.Append(-1, _("Save GCode...\tCTRL+G"))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene.showSaveGCode(), i)
 		i = self.fileMenu.Append(-1, _("Show slice engine log..."))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene._showEngineLog(), i)
@@ -316,8 +316,15 @@ class mainWindow(wx.Frame):
 		elif cmd[0] == "ClosePluginProgressWindow":
 			self.dialogframe.Destroy()
 			self.dialogframe=None
-		else:
-			print "Unknown Plugin update received: " + cmd[0]
+		else: #assume first token to be the name and second token the percentage
+			if len(cmd)>=2:
+				number = int(cmd[1])
+			else:
+				number = 100
+			# direct output to Cura progress bar
+			self.scene.printButton.setProgressBar(float(number)/100.)
+			self.scene.printButton.setBottomText('%s' % (cmd[0]))
+			self.scene.QueueRefresh()
 
 	def onTimer(self, e):
 		#Check if there is something in the clipboard
