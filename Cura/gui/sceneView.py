@@ -1356,7 +1356,9 @@ class SceneView(openglGui.glGuiPanel):
 			elif machine_type == 'Witbox':
 				filename = resources.getPathForMesh('Witbox_platform.stl')
 				offset = [0,-37,145]
-
+			elif machine_type == 'PrusaI3':
+				filename = resources.getPathForMesh('PrusaI3_platform.stl')
+				offset = [0, 0, 0]
 			if filename is not None:
 				meshes = meshLoader.loadMeshes(filename)
 				if len(meshes) > 0:
