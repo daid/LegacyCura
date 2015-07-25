@@ -1356,6 +1356,12 @@ class SceneView(openglGui.glGuiPanel):
 			elif machine_type == 'Witbox':
 				filename = resources.getPathForMesh('Witbox_platform.stl')
 				offset = [0,-37,145]
+			elif machine_type == 'Scalar M':
+				filename = resources.getPathForMesh('ScalarM_platform.stl')
+				offset = [107,-150,3.6]
+			elif machine_type == 'Scalar XL':
+				filename = resources.getPathForMesh('ScalarXL_platform.stl')
+				offset = [217,160,18]
 
 			if filename is not None:
 				meshes = meshLoader.loadMeshes(filename)

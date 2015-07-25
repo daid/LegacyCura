@@ -431,6 +431,10 @@ class MachineSelectPage(InfoPage):
 		self.LulzbotTazRadio.Bind(wx.EVT_RADIOBUTTON, self.OnLulzbotSelect)
 		self.LulzbotMiniRadio = self.AddRadioButton("Lulzbot Mini")
 		self.LulzbotMiniRadio.Bind(wx.EVT_RADIOBUTTON, self.OnLulzbotSelect)
+		self.ScalarMRadio = self.AddRadioButton("Scalar M")
+		self.ScalarMRadio.Bind(wx.EVT_RADIOBUTTON, self.OnScalarSelect)
+		self.ScalarXLRadio = self.AddRadioButton("Scalar XL")
+		self.ScalarXLRadio.Bind(wx.EVT_RADIOBUTTON, self.OnScalarSelect)
 		self.OtherRadio = self.AddRadioButton(_("Other (Ex: RepRap, MakerBot, Witbox)"))
 		self.OtherRadio.Bind(wx.EVT_RADIOBUTTON, self.OnOtherSelect)
 		self.AddSeperator()
@@ -454,6 +458,9 @@ class MachineSelectPage(InfoPage):
 
 	def OnLulzbotSelect(self, e):
 		wx.wizard.WizardPageSimple.Chain(self, self.GetParent().lulzbotReadyPage)
+
+	def OnScalarSelect(self, e):
+		wx.wizard.WizardPageSimple.Chain(self, self.GetParent().scalarReadyPage)
 
 	def OnOtherSelect(self, e):
 		wx.wizard.WizardPageSimple.Chain(self, self.GetParent().otherMachineSelectPage)
@@ -550,6 +557,214 @@ class MachineSelectPage(InfoPage):
 			profile.putMachineSetting('extruder_head_size_max_x', '0.0')
 			profile.putMachineSetting('extruder_head_size_max_y', '0.0')
 			profile.putMachineSetting('extruder_head_size_height', '0.0')
+		elif self.ScalarMRadio.GetValue() or self.ScalarXLRadio.GetValue():
+			if self.ScalarMRadio.GetValue():
+				profile.putMachineSetting('machine_name', 'Scalar M')				
+				profile.putMachineSetting('machine_type', 'Scalar M')
+				profile.putMachineSetting('machine_width', '300')
+				profile.putMachineSetting('machine_depth', '220')
+				profile.putMachineSetting('machine_height', '250')
+				profile.putMachineSetting('extruder_amount', '1')
+				profile.putProfileSetting('layer_height', '0.15')
+				profile.putProfileSetting('wall_thickness', '1.2')
+				profile.putProfileSetting('nozzle_size', '0.4')
+				profile.putProfileSetting('wall_thickness', '1.2')
+				profile.putProfileSetting('print_speed', '50')
+				profile.putProfileSetting('print_temperature', '205')
+				profile.putProfileSetting('print_bed_temperature', '60')
+				profile.putProfileSetting('retraction_speed', '40')
+				profile.putProfileSetting('retraction_amount', '10')
+				profile.putProfileSetting('travel_speed', '100')
+				profile.putProfileSetting('solidarea_speed', '40')
+				profile.putProfileSetting('inset0_speed', '40')
+				profile.putProfileSetting('insetx_speed', '45')
+				profile.putProfileSetting('skirt_line_count', '3')
+				profile.putProfileSetting('fan_speed', '80')
+				profile.putProfileSetting('fan_speed_max', '80')
+			else:
+				profile.putMachineSetting('machine_name', 'Scalar XL')				
+				profile.putMachineSetting('machine_type', 'Scalar XL')
+				profile.putMachineSetting('machine_width', '435')
+				profile.putMachineSetting('machine_depth', '320')
+				profile.putMachineSetting('machine_height', '350')
+				profile.putMachineSetting('extruder_amount', '1')
+				profile.putProfileSetting('layer_height', '0.2')
+				profile.putProfileSetting('nozzle_size', '0.6')
+				profile.putProfileSetting('wall_thickness', '1.2')
+				profile.putProfileSetting('print_speed', '50')
+				profile.putProfileSetting('print_temperature', '210')
+				profile.putProfileSetting('print_bed_temperature', '60')
+				profile.putProfileSetting('retraction_speed', '40')
+				profile.putProfileSetting('retraction_amount', '2.5')
+				profile.putProfileSetting('travel_speed', '80')
+				profile.putProfileSetting('solidarea_speed', '40')
+				profile.putProfileSetting('inset0_speed', '40')
+				profile.putProfileSetting('insetx_speed', '40')
+				profile.putProfileSetting('skirt_line_count', '2')
+				profile.putProfileSetting('fan_speed', '80')
+				profile.putProfileSetting('fan_speed_max', '80')
+			profile.putMachineSetting('has_heated_bed', 'True')
+			profile.putMachineSetting('gcode_flavor', 'RepRap (Marlin/Sprinter)')
+			profile.putMachineSetting('serial_baud', '115200')
+			profile.putMachineSetting('machine_center_is_zero', 'False')
+			profile.putProfileSetting('retraction_enable', 'True')
+			profile.putProfileSetting('solid_layer_thickness', '1')
+			profile.putProfileSetting('fill_density', '20')
+			profile.putProfileSetting('filament_diameter', '3')
+			profile.putProfileSetting('bottom_thickness', '0.2')
+			profile.putProfileSetting('bottom_layer_speed', '20')
+			profile.putProfileSetting('infill_speed', '0.0')
+			profile.putProfileSetting('cool_min_layer_time', '10')
+			profile.putProfileSetting('fan_enabled', 'True')
+			profile.putProfileSetting('solid_top', 'True')
+			profile.putProfileSetting('solid_bottom', 'True')
+			profile.putProfileSetting('perimeter_before_infill', 'False')
+			profile.setAlterationFile('start.gcode', """;Sliced at: {day} {date} {time}
+;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
+;Print time: {print_time}
+;Filament used: {filament_amount}m {filament_weight}g
+;Filament cost: {filament_cost}
+;M190 S{print_bed_temperature} ;Uncomment to add your own bed temperature line
+;M109 S{print_temperature} ;Uncomment to add your own temperature line
+G21        ;metric values
+G90        ;absolute positioning
+M82        ;set extruder to absolute mode
+M107       ;start with the fan off
+G28 
+G29        ;Run the auto bed leveling
+G1 Z15.0 F{travel_speed} ;move the platform down 15mm
+G92 E0                  ;zero the extruded length
+G1 F200 E10              ;extrude 3mm of feed stock
+G92 E0                  ;zero the extruded length again
+G1 F{travel_speed}
+;Put printing message on LCD screen
+M117 Printing...
+""")
+			profile.setAlterationFile('end.gcode', """;;End GCode
+M104 S0                     ;extruder heater off
+M140 S0                     ;heated bed heater off (if you have it)
+G91                                    ;relative positioning
+G1 E-1 F300                            ;retract the filament a bit before lifting the nozzle, to release some of the pressure
+G1 Z+0.5 E-5 X-20 Y-20 F{travel_speed} ;move Z up a bit and retract filament even more
+G28 X0 Y0                              ;move X/Y to min endstops, so the head is out of the way
+M84                         ;steppers off
+G90                         ;absolute positioning
+;{profile_string}
+;Sound Notification
+M300 S1567 P267
+M300 S0 P133
+M300 S1567 P267
+M300 S0 P133
+M300 S1567 P267
+M300 S0 P133
+M300 S1244 P200
+M300 S0 P66
+M300 S932 P100
+M300 S1567 P267
+M300 S0 P133
+M300 S1244 P200
+M300 S0 P66
+M300 S932 P100
+M300 S1567 P535
+M300 S0 P267
+M300 S0 P66
+M300 S2349 P267
+M300 S0 P133
+M300 S2349 P267
+M300 S0 P133
+M300 S2349 P267
+M300 S0 P133
+M300 S2489 P200
+M300 S0 P66
+M300 S932 P100
+M300 S1479 P267
+M300 S0 P133
+M300 S1244 P200
+M300 S0 P66
+M300 S932 P100
+M300 S1567 P535
+M300 S0 P267
+M300 S0 P66
+M300 S3135 P267
+M300 S0 P133
+M300 S1567 P200
+M300 S0 P66
+M300 S1567 P100
+M300 S3135 P267
+M300 S0 P133
+M300 S2959 P200
+M300 S0 P66
+M300 S2793 P100
+M300 S2637 P100
+M300 S2489 P100
+M300 S2637 P133
+M300 S0 P267
+M300 S1661 P133
+M300 S0 P66
+M300 S2217 P267
+M300 S0 P133
+M300 S2093 P200
+M300 S0 P66
+M300 S987 P100
+M300 S932 P100
+M300 S880 P100
+M300 S932 P133
+M300 S0 P267
+M300 S1244 P133
+M300 S0 P66
+M300 S1479 P267
+M300 S0 P133
+M300 S1244 P200
+M300 S0 P66
+M300 S1567 P100
+M300 S932 P267
+M300 S0 P133
+M300 S1567 P200
+M300 S0 P66
+M300 S932 P100
+M300 S2349 P535
+M300 S0 P267
+M300 S0 P66
+M300 S3135 P267
+M300 S0 P133
+M300 S1567 P200
+M300 S0 P66
+M300 S1567 P100
+M300 S3135 P267
+M300 S0 P133
+M300 S2959 P200
+M300 S0 P66
+M300 S2793 P100
+M300 S2637 P100
+M300 S2489 P100
+M300 S2637 P133
+M300 S0 P267
+M300 S1661 P133
+M300 S0 P66
+M300 S2217 P267
+M300 S0 P133
+M300 S2093 P200
+M300 S0 P66
+M300 S987 P100
+M300 S932 P100
+M300 S880 P100
+M300 S932 P133
+M300 S0 P267
+M300 S1244 P133
+M300 S0 P66
+M300 S1479 P267
+M300 S0 P133
+M300 S1244 P200
+M300 S0 P66
+M300 S1567 P100
+M300 S1567 P267
+M300 S0 P133
+M300 S1244 P200
+M300 S0 P66
+M300 S932 P100
+M300 S1567 P535
+""")
+
 		else:
 			profile.putMachineSetting('machine_width', '80')
 			profile.putMachineSetting('machine_depth', '80')
@@ -1028,6 +1243,13 @@ class LulzbotReadyPage(InfoPage):
 		self.AddText(_('Cura is now ready to be used with your Lulzbot.'))
 		self.AddSeperator()
 
+class ScalarReadyPage(InfoPage):
+	def __init__(self, parent):
+		super(ScalarReadyPage, self).__init__(parent, _("Scalar M/XL"))
+		self.AddText(_('Cura is now ready to be used with your Scalar M/XL 3D printer.'))
+		self.AddSeperator()
+
+
 class ConfigWizard(wx.wizard.Wizard):
 	def __init__(self, addNew = False):
 		super(ConfigWizard, self).__init__(None, -1, _("Configuration Wizard"))
@@ -1056,6 +1278,7 @@ class ConfigWizard(wx.wizard.Wizard):
 
 		self.ultimaker2ReadyPage = Ultimaker2ReadyPage(self)
 		self.lulzbotReadyPage = LulzbotReadyPage(self)
+		self.scalarReadyPage = ScalarReadyPage(self)
 
 		wx.wizard.WizardPageSimple.Chain(self.firstInfoPage, self.machineSelectPage)
 		#wx.wizard.WizardPageSimple.Chain(self.machineSelectPage, self.ultimaker2ReadyPage)
