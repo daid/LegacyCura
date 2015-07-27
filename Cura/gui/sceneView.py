@@ -1358,7 +1358,7 @@ class SceneView(openglGui.glGuiPanel):
 				offset = [0,-37,145]
 			elif machine_type == 'Hephestos':
 				filename = resources.getPathForMesh('hephestos_platform.stl')
-				offset = [0,0,81.5]
+				offset = [0,0,-80]
 
 			if filename is not None:
 				meshes = meshLoader.loadMeshes(filename)
