@@ -86,6 +86,9 @@ function gitClone
 		cd $3
 		git clean -dfx
 		git reset --hard
+		if [ ! -z "${4-}" ]; then
+			git checkout $4
+		fi
 		git pull
 		cd -
 	else
