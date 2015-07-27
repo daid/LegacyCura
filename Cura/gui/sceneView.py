@@ -1354,10 +1354,10 @@ class SceneView(openglGui.glGuiPanel):
 				filename = resources.getPathForMesh('ultimaker_platform.stl')
 				offset = [0,0,2.5]
 			elif machine_type == 'Witbox':
-				filename = resources.getPathForMesh('Witbox_platform.stl')
+				filename = resources.getPathForMesh('witbox_platform.stl')
 				offset = [0,-37,145]
 			elif machine_type == 'Hephestos':
-				filename = resources.getPathForMesh('prusa_Hephestos_platform.stl')
+				filename = resources.getPathForMesh('hephestos_platform.stl')
 				offset = [0,0,81.5]
 
 			if filename is not None:
