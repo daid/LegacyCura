@@ -474,6 +474,7 @@ class Engine(object):
 
 	def _engineSettings(self, extruderCount):
 		settings = {
+			'nozzleSize': int(profile.getProfileSettingFloat('nozzle_size') * 1000),
 			'layerThickness': int(profile.getProfileSettingFloat('layer_height') * 1000),
 			'initialLayerThickness': int(profile.getProfileSettingFloat('bottom_thickness') * 1000) if profile.getProfileSettingFloat('bottom_thickness') > 0.0 else int(profile.getProfileSettingFloat('layer_height') * 1000),
 			'filamentDiameter': int(profile.getProfileSettingFloat('filament_diameter') * 1000),

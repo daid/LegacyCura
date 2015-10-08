@@ -15,6 +15,7 @@ class simpleModePanel(wx.Panel):
 
 		self._print_profile_options = []
 		self._print_material_options = []
+		self._print_nozzle_options = []
 
 		printTypePanel = wx.Panel(self)
 		for filename in resources.getSimpleModeProfiles():
@@ -46,9 +47,21 @@ class simpleModePanel(wx.Panel):
 			if profile.getPreference('simpleModeMaterial') == base_filename:
 				button.SetValue(True)
 
+		printNozzlePanel = wx.Panel(self)
+		for nozzle_size in [0.4, 0.25, 0.6, 0.8, 1.0]:
+			name = str(nozzle_size) + "mm"
+			button = wx.RadioButton(printNozzlePanel, -1, name, style=wx.RB_GROUP if len(self._print_nozzle_options) == 0 else 0)
+			button.nozzle_size = nozzle_size
+			button.nozzle_name = name
+			self._print_nozzle_options.append(button)
+			if profile.getPreference('simpleModeNozzle') == name:
+				button.SetValue(True)
+
 		if profile.getMachineSetting('gcode_flavor') == 'UltiGCode':
 			printMaterialPanel.Show(False)
-		
+		else:
+			printNozzlePanel.Show(False)
+
 		self.printSupport = wx.CheckBox(self, -1, _("Print support structure"))
 
 		sizer = wx.GridBagSizer()
@@ -70,10 +83,18 @@ class simpleModePanel(wx.Panel):
 		printMaterialPanel.GetSizer().Add(boxsizer, flag=wx.EXPAND)
 		sizer.Add(printMaterialPanel, (1,0), flag=wx.EXPAND)
 
+		sb = wx.StaticBox(printNozzlePanel, label=_("Nozzle:"))
+		boxsizer = wx.StaticBoxSizer(sb, wx.VERTICAL)
+		for button in self._print_nozzle_options:
+			boxsizer.Add(button)
+		printNozzlePanel.SetSizer(wx.BoxSizer(wx.VERTICAL))
+		printNozzlePanel.GetSizer().Add(boxsizer, flag=wx.EXPAND)
+		sizer.Add(printNozzlePanel, (2,0), flag=wx.EXPAND)
+
 		sb = wx.StaticBox(self, label=_("Other:"))
 		boxsizer = wx.StaticBoxSizer(sb, wx.VERTICAL)
 		boxsizer.Add(self.printSupport)
-		sizer.Add(boxsizer, (2,0), flag=wx.EXPAND)
+		sizer.Add(boxsizer, (3,0), flag=wx.EXPAND)
 
 		for button in self._print_profile_options:
 			button.Bind(wx.EVT_RADIOBUTTON, self._update)
@@ -89,6 +110,9 @@ class simpleModePanel(wx.Panel):
 		for button in self._print_material_options:
 			if button.GetValue():
 				profile.putPreference('simpleModeMaterial', button.base_filename)
+		for button in self._print_nozzle_options:
+			if button.GetValue():
+				profile.putPreference('simpleModeNozzle', button.nozzle_name)
 		self._callback()
 
 	def getSettingOverrides(self):
@@ -115,6 +139,11 @@ class simpleModePanel(wx.Panel):
 						if setting.isProfile():
 							if cp.has_option('profile', setting.getName()):
 								settings[setting.getName()] = cp.get('profile', setting.getName())
+		else:
+			for button in self._print_nozzle_options:
+				if button.GetValue():
+					settings['nozzle_size'] = button.nozzle_size
+					# TODO: Apply nozzle size to profile.
 
 		if self.printSupport.GetValue():
 			settings['support'] = "Exterior Only"
