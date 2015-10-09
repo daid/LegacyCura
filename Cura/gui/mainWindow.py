@@ -75,7 +75,7 @@ class mainWindow(wx.Frame):
 		self.Bind(wx.EVT_MENU, lambda e: self.scene.showSaveModel(), i)
 		i = self.fileMenu.Append(-1, _("Reload platform\tF5"))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene.reloadScene(e), i)
-		i = self.fileMenu.Append(-1, _("Clear platform"))
+		i = self.fileMenu.Append(-1, _("Clear platform\tCTRL+D"))
 		self.Bind(wx.EVT_MENU, lambda e: self.scene.OnDeleteAll(e), i)
 
 		self.fileMenu.AppendSeparator()
