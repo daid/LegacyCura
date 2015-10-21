@@ -100,6 +100,8 @@ class simpleModePanel(wx.Panel):
 			button.Bind(wx.EVT_RADIOBUTTON, self._update)
 		for button in self._print_material_options:
 			button.Bind(wx.EVT_RADIOBUTTON, self._update)
+		for button in self._print_nozzle_options:
+			button.Bind(wx.EVT_RADIOBUTTON, self._update)
 
 		self.printSupport.Bind(wx.EVT_CHECKBOX, self._update)
 
@@ -142,13 +144,13 @@ class simpleModePanel(wx.Panel):
 		else:
 			for button in self._print_nozzle_options:
 				if button.GetValue():
-					factor = button.nozzle_size / settings['nozzle_size']
+					factor = button.nozzle_size / float(settings['nozzle_size'])
 
 					settings['nozzle_size'] = button.nozzle_size
-					settings['bottom_thickness'] *= factor
-					settings['layer_height'] *= factor
-					settings['wall_thickness'] *= factor
-					settings['solid_layer_thickness'] *= (1.0 + factor) / 2.0
+					settings['bottom_thickness'] = float(settings['bottom_thickness']) * factor
+					settings['layer_height'] = float(settings['layer_height']) * factor
+					settings['wall_thickness'] = float(settings['wall_thickness']) * factor
+					settings['solid_layer_thickness'] = float(settings['solid_layer_thickness']) * ((1.0 + factor) / 2.0)
 
 		if self.printSupport.GetValue():
 			settings['support'] = "Exterior Only"
