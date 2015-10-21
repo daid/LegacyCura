@@ -142,8 +142,13 @@ class simpleModePanel(wx.Panel):
 		else:
 			for button in self._print_nozzle_options:
 				if button.GetValue():
+					factor = button.nozzle_size / settings['nozzle_size']
+
 					settings['nozzle_size'] = button.nozzle_size
-					# TODO: Apply nozzle size to profile.
+					settings['bottom_thickness'] *= factor
+					settings['layer_height'] *= factor
+					settings['wall_thickness'] *= factor
+					settings['solid_layer_thickness'] *= (1.0 + factor) / 2.0
 
 		if self.printSupport.GetValue():
 			settings['support'] = "Exterior Only"
