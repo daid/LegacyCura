@@ -11,6 +11,9 @@ class simpleModePanel(wx.Panel):
 	"Main user interface window for Quickprint mode"
 	def __init__(self, parent, callback):
 		super(simpleModePanel, self).__init__(parent)
+
+		self._use_nozzle_options = False
+
 		self._callback = callback
 
 		self._print_profile_options = []
@@ -59,7 +62,7 @@ class simpleModePanel(wx.Panel):
 
 		if profile.getMachineSetting('gcode_flavor') == 'UltiGCode':
 			printMaterialPanel.Show(False)
-		else:
+		if not self._use_nozzle_options or profile.getMachineSetting('gcode_flavor') != 'UltiGCode':
 			printNozzlePanel.Show(False)
 
 		self.printSupport = wx.CheckBox(self, -1, _("Print support structure"))
@@ -141,7 +144,7 @@ class simpleModePanel(wx.Panel):
 						if setting.isProfile():
 							if cp.has_option('profile', setting.getName()):
 								settings[setting.getName()] = cp.get('profile', setting.getName())
-		else:
+		elif self._use_nozzle_options:
 			for button in self._print_nozzle_options:
 				if button.GetValue():
 					factor = button.nozzle_size / float(settings['nozzle_size'])
