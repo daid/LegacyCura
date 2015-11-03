@@ -2140,7 +2140,7 @@ msgstr ""
 
 #: Cura/util/profile.py:211
 msgid "Initial layer line width (%)"
-msgstr "Épaisseur de ligne pour la première couche (mm)"
+msgstr "Épaisseur de ligne pour la première couche (%)"
 
 #: Cura/util/profile.py:211
 msgid ""

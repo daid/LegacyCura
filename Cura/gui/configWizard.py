@@ -260,6 +260,7 @@ class PrintrbotPage(InfoPage):
 	def __init__(self, parent):
 		self._printer_info = [
 			# X, Y, Z, Nozzle Size, Filament Diameter, PrintTemperature, Print Speed, Travel Speed, Retract speed, Retract amount, use bed level sensor
+			("Play", 100, 100, 130, 0.4, 1.75, 208, 40, 70, 30, 1, True),
 			("Simple Metal", 150, 150, 150, 0.4, 1.75, 208, 40, 70, 30, 1, True),
 			("Metal Plus", 250, 250, 250, 0.4, 1.75, 208, 40, 70, 30, 1, True),
 			("Simple Makers Kit", 100, 100, 100, 0.4, 1.75, 208, 40, 70, 30, 1, True),
