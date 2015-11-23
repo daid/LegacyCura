@@ -49,8 +49,10 @@ def getDefaultMachineProfiles():
 	path = os.path.normpath(os.path.join(resourceBasePath, 'machine_profiles', '*.ini'))
 	return glob.glob(path)
 
-def getSimpleModeProfiles():
-	path = os.path.normpath(os.path.join(resourceBasePath, 'quickprint', 'profiles', '*.ini'))
+def getSimpleModeProfiles(machine_type):
+	path = os.path.normpath(os.path.join(resourceBasePath, 'quickprint', 'profiles', machine_type, '*.ini'))
+	if not os.path.isdir(os.path.dirname(path)):
+		path = os.path.normpath(os.path.join(resourceBasePath, 'quickprint', 'profiles', '*.ini'))
 	user_path = os.path.normpath(os.path.expanduser(os.path.join('~', '.Cura', 'quickprint', 'profiles')))
 	if os.path.isdir(user_path):
 		files = sorted(glob.glob(os.path.join(user_path, '*.ini')))

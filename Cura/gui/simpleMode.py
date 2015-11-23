@@ -12,28 +12,38 @@ class simpleModePanel(wx.Panel):
 	def __init__(self, parent, callback):
 		super(simpleModePanel, self).__init__(parent)
 
-		self._use_nozzle_options = False
-
 		self._callback = callback
 
 		self._print_profile_options = []
 		self._print_material_options = []
 		self._print_nozzle_options = []
 
+		nozzle_options = []
 		printTypePanel = wx.Panel(self)
-		for filename in resources.getSimpleModeProfiles():
+		for filename in resources.getSimpleModeProfiles(profile.getMachineSetting('machine_type')):
 			cp = configparser.ConfigParser()
 			cp.read(filename)
 			base_filename = os.path.splitext(os.path.basename(filename))[0]
 			name = base_filename
 			if cp.has_option('info', 'name'):
 				name = cp.get('info', 'name')
-			button = wx.RadioButton(printTypePanel, -1, name, style=wx.RB_GROUP if len(self._print_profile_options) == 0 else 0)
-			button.base_filename = base_filename
-			button.filename = filename
-			self._print_profile_options.append(button)
-			if profile.getPreference('simpleModeProfile') == base_filename:
-				button.SetValue(True)
+			nozzle = profile.getProfileSetting('nozzle_size')
+			if cp.has_option('profile', 'nozzle_size'):
+				nozzle = cp.get('profile', 'nozzle_size')
+				if nozzle not in nozzle_options:
+					nozzle_options.append(nozzle)
+			for button in self._print_profile_options:
+				if button.GetLabel() == name:
+					button.filename[nozzle] = filename
+					nozzle = None
+
+			if nozzle is not None:
+				button = wx.RadioButton(printTypePanel, -1, name, style=wx.RB_GROUP if len(self._print_profile_options) == 0 else 0)
+				button.base_filename = base_filename
+				button.filename = {nozzle: filename}
+				self._print_profile_options.append(button)
+				if profile.getPreference('simpleModeProfile') == base_filename:
+					button.SetValue(True)
 
 		printMaterialPanel = wx.Panel(self)
 		for filename in resources.getSimpleModeMaterials():
@@ -51,7 +61,7 @@ class simpleModePanel(wx.Panel):
 				button.SetValue(True)
 
 		printNozzlePanel = wx.Panel(self)
-		for nozzle_size in [0.4, 0.25, 0.6, 0.8, 1.0]:
+		for nozzle_size in nozzle_options:
 			name = str(nozzle_size) + "mm"
 			button = wx.RadioButton(printNozzlePanel, -1, name, style=wx.RB_GROUP if len(self._print_nozzle_options) == 0 else 0)
 			button.nozzle_size = nozzle_size
@@ -62,7 +72,7 @@ class simpleModePanel(wx.Panel):
 
 		if profile.getMachineSetting('gcode_flavor') == 'UltiGCode':
 			printMaterialPanel.Show(False)
-		if not self._use_nozzle_options or profile.getMachineSetting('gcode_flavor') != 'UltiGCode':
+		if len(nozzle_options) < 1:
 			printNozzlePanel.Show(False)
 
 		self.printSupport = wx.CheckBox(self, -1, _("Print support structure"))
@@ -127,10 +137,14 @@ class simpleModePanel(wx.Panel):
 				continue
 			settings[setting.getName()] = setting.getDefault()
 
+		nozzle = profile.getProfileSetting('nozzle_size')
+		for button in self._print_nozzle_options:
+			if button.GetValue():
+				nozzle = button.nozzle_size
 		for button in self._print_profile_options:
 			if button.GetValue():
 				cp = configparser.ConfigParser()
-				cp.read(button.filename)
+				cp.read(button.filename[nozzle])
 				for setting in profile.settingsList:
 					if setting.isProfile():
 						if cp.has_option('profile', setting.getName()):
@@ -144,16 +158,6 @@ class simpleModePanel(wx.Panel):
 						if setting.isProfile():
 							if cp.has_option('profile', setting.getName()):
 								settings[setting.getName()] = cp.get('profile', setting.getName())
-		elif self._use_nozzle_options:
-			for button in self._print_nozzle_options:
-				if button.GetValue():
-					factor = button.nozzle_size / float(settings['nozzle_size'])
-
-					settings['nozzle_size'] = button.nozzle_size
-					settings['bottom_thickness'] = float(settings['bottom_thickness']) * factor
-					settings['layer_height'] = float(settings['layer_height']) * factor
-					settings['wall_thickness'] = float(settings['wall_thickness']) * factor
-					settings['solid_layer_thickness'] = float(settings['solid_layer_thickness']) * ((1.0 + factor) / 2.0)
 
 		if self.printSupport.GetValue():
 			settings['support'] = "Exterior Only"
