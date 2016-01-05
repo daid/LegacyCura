@@ -100,10 +100,12 @@ class mainWindow(wx.Frame):
 		i = self.fileMenu.Append(-1, _("Load Profile from GCode..."))
 		self.normalModeOnlyItems.append(i)
 		self.Bind(wx.EVT_MENU, self.OnLoadProfileFromGcode, i)
-		self.fileMenu.AppendSeparator()
-		i = self.fileMenu.Append(-1, _("Reset Profile to default"))
-		self.normalModeOnlyItems.append(i)
-		self.Bind(wx.EVT_MENU, self.OnResetProfile, i)
+
+		# self.fileMenu.AppendSeparator()
+		## Disabled the reset profile option, as it resets to global defaults, not machine defaults.
+		# i = self.fileMenu.Append(-1, _("Reset Profile to default"))
+		# self.normalModeOnlyItems.append(i)
+		# self.Bind(wx.EVT_MENU, self.OnResetProfile, i)
 
 		self.fileMenu.AppendSeparator()
 		i = self.fileMenu.Append(-1, _("Preferences...\tCTRL+,"))
@@ -567,6 +569,10 @@ class mainWindow(wx.Frame):
 		if result:
 			profile.resetProfile()
 			for k, v in self.simpleSettingsPanel.getSettingOverrides().items():
+				if k == 'nozzle_size':
+					v = round(float(v) * 1.14, 2)
+				if k == 'wall_thickness':
+					v = round(float(v) * 1.14, 1)
 				profile.putProfileSetting(k, v)
 			self.updateProfileToAllControls()
 		self.updateSliceMode()

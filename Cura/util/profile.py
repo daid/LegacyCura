@@ -480,9 +480,9 @@ setting('postSwitchExtruder.gcode', """;Switch between the current extruder and 
 """, str, 'alteration', 'alteration')
 
 setting('startMode', 'Simple', ['Simple', 'Normal'], 'preference', 'hidden')
-setting('simpleModeProfile', '2_normal', str, 'preference', 'hidden')
-setting('simpleModeMaterial', '1_pla', str, 'preference', 'hidden')
-setting('simpleModeNozzle', 'Nozzle: 0.4', str, 'preference', 'hidden')
+setting('simpleModeProfile', 'Normal', str, 'preference', 'hidden')
+setting('simpleModeMaterial', 'Pla', str, 'preference', 'hidden')
+setting('simpleModeNozzle', '0.4', str, 'preference', 'hidden')
 setting('oneAtATime', 'True', bool, 'preference', 'hidden')
 setting('lastFile', os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'resources', 'example', 'UltimakerRobot_support.stl')), str, 'preference', 'hidden')
 setting('save_profile', 'False', bool, 'preference', 'hidden').setLabel(_("Save profile on slice"), _("When slicing save the profile as [stl_file]_profile.ini next to the model."))
@@ -1301,6 +1301,9 @@ def getAlterationFileContents(filename, extruderCount = 1):
 	if getMachineSetting('gcode_flavor') == 'UltiGCode':
 		if filename == 'end.gcode':
 			return 'M25 ;Stop reading from this point on.\n;CURA_PROFILE_STRING:%s\n' % (getProfileString())
+		if filename == 'start.gcode':
+			if getPreference('startMode') == 'Simple' and getPreference('simpleModeMaterial') != '':
+				return ';MTYPE:%s\n' % (getPreference('simpleModeMaterial'))
 		return ''
 	if filename == 'start.gcode':
 		gcode_parameter_key = 'S'

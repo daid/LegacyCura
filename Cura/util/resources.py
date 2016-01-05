@@ -8,6 +8,7 @@ __copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AG
 import os
 import sys
 import glob
+import ConfigParser as configparser
 
 import gettext
 
@@ -51,6 +52,11 @@ def getDefaultMachineProfiles():
 
 def getSimpleModeProfiles(machine_type):
 	path = os.path.normpath(os.path.join(resourceBasePath, 'quickprint', 'profiles', machine_type, '*.ini'))
+	if os.path.isfile(os.path.join(os.path.dirname(path), 'redirect.ini')):
+		cp = configparser.ConfigParser()
+		cp.read(os.path.join(os.path.dirname(path), 'redirect.ini'))
+		machine_type = cp.get('target', 'machine_type')
+		return getSimpleModeProfiles(machine_type)
 	if not os.path.isdir(os.path.dirname(path)):
 		path = os.path.normpath(os.path.join(resourceBasePath, 'quickprint', 'profiles', '*.ini'))
 	user_path = os.path.normpath(os.path.expanduser(os.path.join('~', '.Cura', 'quickprint', 'profiles')))

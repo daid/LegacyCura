@@ -155,14 +155,16 @@ class CuraApp(wx.App):
 		self.SetTopWindow(self.mainWindow)
 		self.mainWindow.Show()
 		self.mainWindow.OnDropFiles(self.loadFiles)
+		self.new_version_dialog = None
 		if profile.getPreference('last_run_version') != version.getVersion(False):
 			profile.putPreference('last_run_version', version.getVersion(False))
-			newVersionDialog.newVersionDialog().Show()
+			self.new_version_dialog = newVersionDialog.newVersionDialog().Show()
 
 		setFullScreenCapable(self.mainWindow)
 
 		if sys.platform.startswith('darwin'):
 			wx.CallAfter(self.StupidMacOSWorkaround)
+
 
 	def StupidMacOSWorkaround(self):
 		"""
@@ -173,6 +175,9 @@ class CuraApp(wx.App):
 		wx.PostEvent(dlg, wx.CommandEvent(wx.EVT_CLOSE.typeId))
 		dlg.ShowModal()
 		dlg.Destroy()
+
+		if self.new_version_dialog is not None:
+			self.new_version_dialog.Show()
 
 if platform.system() == "Darwin": #Mac magic. Dragons live here. THis sets full screen options.
 	try:

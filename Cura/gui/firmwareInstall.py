@@ -6,6 +6,7 @@ import threading
 import sys
 import time
 import serial
+import webbrowser
 
 from Cura.avr_isp import stk500v2
 from Cura.avr_isp import ispBase
@@ -56,6 +57,10 @@ def getDefaultFirmware(machineIndex = None):
 		if extruders > 1:
 			return resources.getPathForFirmware("MarlinUltimaker2extended-dual.hex")
 		return resources.getPathForFirmware("MarlinUltimaker2extended.hex")
+	if machine_type == 'ultimaker2+':
+		return resources.getPathForFirmware("MarlinUltimaker2Plus.hex")
+	if machine_type == 'ultimaker2+extended':
+		return resources.getPathForFirmware("MarlinUltimaker2PlusExtended.hex")
 	if machine_type == 'Witbox':
 		return resources.getPathForFirmware("MarlinWitbox.hex")
 	return None
@@ -63,6 +68,7 @@ def getDefaultFirmware(machineIndex = None):
 class InstallFirmware(wx.Dialog):
 	def __init__(self, parent = None, filename = None, port = None, machineIndex = None):
 		super(InstallFirmware, self).__init__(parent=parent, title="Firmware install for %s" % (profile.getMachineSetting('machine_name', machineIndex).title()), size=(250, 100))
+		self._driver_url = 'https://ultimaker.com/en/support/18627-change-arduino-drivers'
 		if port is None:
 			port = profile.getMachineSetting('serial_port')
 		if filename is None:
@@ -88,6 +94,7 @@ class InstallFirmware(wx.Dialog):
 		self.okButton.Disable()
 		self.okButton.Bind(wx.EVT_BUTTON, self.OnOk)
 		sizer.Add(self.okButton, 0, flag=wx.ALIGN_CENTER|wx.ALL, border=5)
+
 		self.SetSizer(sizer)
 
 		self.filename = filename
@@ -142,7 +149,7 @@ class InstallFirmware(wx.Dialog):
 					programmer.close()
 					wx.CallAfter(self.okButton.Enable)
 					return
-			if self._machine_type == 'ultimaker_plus' or self._machine_type == 'ultimaker2':
+			if self._machine_type == 'ultimaker_plus' or self._machine_type.startswith('ultimaker2'):
 				if not programmer.hasChecksumFunction():
 					wx.CallAfter(self.updateLabel, _("Failed to install firmware:\nThis firmware is not compatible with this machine.\nTrying to install UM2 or UMO+ firmware on an UMO?"))
 					programmer.close()
@@ -154,10 +161,17 @@ class InstallFirmware(wx.Dialog):
 			programmer.programChip(hexFile)
 			wx.CallAfter(self.updateLabel, _("Done!\nInstalled firmware: %s") % (os.path.basename(self.filename)))
 		except ispBase.IspError as e:
-			wx.CallAfter(self.updateLabel, _("Failed to write firmware.\n") + str(e))
+			wx.CallAfter(self.showError, e)
 
 		programmer.close()
 		wx.CallAfter(self.okButton.Enable)
+
+	def showError(self, e):
+		self.updateLabel(_("Failed to write firmware: %s\nYou might need to update your drivers. Goto:\n%s") % (str(e), self._driver_url))
+		self.okButton.SetLabel(_("Close, open support page"))
+		self.Layout()
+		self.Fit()
+		self.okButton.Bind(wx.EVT_BUTTON, self.OnOkUrl)
 
 	def updateLabel(self, text):
 		self.progressLabel.SetLabel(text)
@@ -171,6 +185,11 @@ class InstallFirmware(wx.Dialog):
 	def OnOk(self, e):
 		self.Close()
 		taskbar.setBusy(self.GetParent(), False)
+
+	def OnOkUrl(self, e):
+		self.Close()
+		taskbar.setBusy(self.GetParent(), False)
+		webbrowser.open(self._driver_url)
 
 	def OnClose(self, e):
 		self.Destroy()

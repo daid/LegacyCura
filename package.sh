@@ -22,7 +22,7 @@ BUILD_TARGET=${1:-none}
 ##Do we need to create the final archive
 ARCHIVE_FOR_DISTRIBUTION=1
 ##Which version name are we appending to the final archive
-export BUILD_NAME=15.04.3
+export BUILD_NAME=15.04.4-RC8
 TARGET_DIR=Cura-${BUILD_NAME}-${BUILD_TARGET}
 
 ##Which versions of external programs to use
@@ -199,15 +199,28 @@ gitClone \
 cd _Ultimaker2Marlin/Marlin
 git checkout master
 git pull
-$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2 DEFINES="'STRING_CONFIG_H_AUTHOR=\"Version:_${BUILD_NAME}\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
-$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2Dual DEFINES="'STRING_CONFIG_H_AUTHOR=\"Version:_${BUILD_NAME}\"' TEMP_SENSOR_1=20 EXTRUDERS=2"
+$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2 DEFINES="'STRING_CONFIG_H_AUTHOR=\"Vers:_${BUILD_NAME}\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
+$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2Dual DEFINES="'STRING_CONFIG_H_AUTHOR=\"Vers:_${BUILD_NAME}\"' TEMP_SENSOR_1=20 EXTRUDERS=2"
 git checkout UM2go
 git pull
-$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2go DEFINES="'STRING_CONFIG_H_AUTHOR=\"Version:_${BUILD_NAME}go\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
+$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2go DEFINES="'STRING_CONFIG_H_AUTHOR=\"Vers:_${BUILD_NAME}go\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
 git checkout UM2extended
 git pull
-$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2extended DEFINES="'STRING_CONFIG_H_AUTHOR=\"Version:_${BUILD_NAME}ex\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
-$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2extendedDual DEFINES="'STRING_CONFIG_H_AUTHOR=\"Version:_${BUILD_NAME}ex\"' TEMP_SENSOR_1=20 EXTRUDERS=2"
+$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2extended DEFINES="'STRING_CONFIG_H_AUTHOR=\"Vers:_${BUILD_NAME}ex\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
+$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2extendedDual DEFINES="'STRING_CONFIG_H_AUTHOR=\"Vers:_${BUILD_NAME}ex\"' TEMP_SENSOR_1=20 EXTRUDERS=2"
+cd -
+
+gitClone \
+  https://github.com/Ultimaker/UM2.1-Firmware.git \
+  git@github.com:Ultimaker/UM2.1-Firmware.git \
+  _Ultimaker2PlusMarlin
+cd _Ultimaker2PlusMarlin/Marlin
+git checkout UM2.1_JarJar
+git pull
+$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2Plus DEFINES="'STRING_CONFIG_H_AUTHOR=\"Vers:_${BUILD_NAME}\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
+git checkout UM2.1_JarJarExtended
+git pull
+$MAKE -j ${JOBS} HARDWARE_MOTHERBOARD=72 ARDUINO_INSTALL_DIR=${ARDUINO_PATH} ARDUINO_VERSION=${ARDUINO_VERSION} BUILD_DIR=_Ultimaker2PlusExtended DEFINES="'STRING_CONFIG_H_AUTHOR=\"Vers:_${BUILD_NAME}ex\"' TEMP_SENSOR_1=0 EXTRUDERS=1"
 cd -
 
 cp _UltimakerMarlin/Marlin/_UltimakerMarlin_250000/Marlin.hex resources/firmware/MarlinUltimaker-250000.hex
@@ -222,11 +235,15 @@ cp _UltimakerMarlin/Marlin/_UltimakerMarlin_Plus_250000/Marlin.hex resources/fir
 cp _UltimakerMarlin/Marlin/_UltimakerMarlin_Plus_115200/Marlin.hex resources/firmware/MarlinUltimaker-UMOP-115200.hex
 cp _UltimakerMarlin/Marlin/_UltimakerMarlin_Plus_Dual_250000/Marlin.hex resources/firmware/MarlinUltimaker-UMOP-250000-dual.hex
 cp _UltimakerMarlin/Marlin/_UltimakerMarlin_Plus_Dual_115200/Marlin.hex resources/firmware/MarlinUltimaker-UMOP-115200-dual.hex
+
 cp _Ultimaker2Marlin/Marlin/_Ultimaker2/Marlin.hex resources/firmware/MarlinUltimaker2.hex
 cp _Ultimaker2Marlin/Marlin/_Ultimaker2Dual/Marlin.hex resources/firmware/MarlinUltimaker2-dual.hex
 cp _Ultimaker2Marlin/Marlin/_Ultimaker2go/Marlin.hex resources/firmware/MarlinUltimaker2go.hex
 cp _Ultimaker2Marlin/Marlin/_Ultimaker2extended/Marlin.hex resources/firmware/MarlinUltimaker2extended.hex
 cp _Ultimaker2Marlin/Marlin/_Ultimaker2extendedDual/Marlin.hex resources/firmware/MarlinUltimaker2extended-dual.hex
+
+cp _Ultimaker2PlusMarlin/Marlin/_Ultimaker2Plus/Marlin.hex resources/firmware/MarlinUltimaker2Plus.hex
+cp _Ultimaker2PlusMarlin/Marlin/_Ultimaker2PlusExtended/Marlin.hex resources/firmware/MarlinUltimaker2PlusExtended.hex
 
 #############################
 # Darwin
