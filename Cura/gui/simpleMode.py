@@ -157,7 +157,7 @@ class simpleModePanel(wx.Panel):
 		self.platform_adhesion_panel = wx.Panel(self)
 		self.platform_adhesion_label = wx.StaticText(self.platform_adhesion_panel, -1, _("Platform adhesion"))
 		self.platform_adhesion_combo = wx.ComboBox(self.platform_adhesion_panel, -1, '', choices=[_("None"), _("Brim")], style=wx.CB_DROPDOWN|wx.CB_READONLY)
-		self.platform_adhesion_combo.SetSelection(1)
+		self.platform_adhesion_combo.SetSelection(int(profile.getPreference('simpleModePlatformAdhesion')))
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(self.platform_adhesion_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.TOP, 10)
 		sizer.Add(self.platform_adhesion_combo, 0, wx.ALIGN_CENTER_VERTICAL | wx.TOP, 10)
@@ -233,6 +233,7 @@ class simpleModePanel(wx.Panel):
 		profile.putPreference('simpleModeProfile', profile_name)
 		profile.putPreference('simpleModeMaterial', material_name)
 		profile.putPreference('simpleModeNozzle', nozzle_name)
+		profile.putPreference('simpleModePlatformAdhesion', self.platform_adhesion_combo.GetSelection())
 
 		self._updateAvailableOptions()
 		self._callback()
