@@ -569,10 +569,11 @@ class mainWindow(wx.Frame):
 		if result:
 			profile.resetProfile()
 			for k, v in self.simpleSettingsPanel.getSettingOverrides().items():
-				if k == 'nozzle_size':
-					v = round(float(v) * 1.14, 2)
-				if k == 'wall_thickness':
-					v = round(float(v) * 1.14, 1)
+				if profile.getMachineSetting('machine_type').startswith('ultimaker2+'):
+					if k == 'nozzle_size':
+						v = round(float(v) * 1.14, 2)
+					if k == 'wall_thickness':
+						v = round(float(v) * 1.14, 1)
 				profile.putProfileSetting(k, v)
 			self.updateProfileToAllControls()
 		self.updateSliceMode()
