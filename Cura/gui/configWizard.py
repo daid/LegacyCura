@@ -471,8 +471,8 @@ class MachineSelectPage(InfoPage):
 		profile.putProfileSetting('retraction_enable', 'True')
 		if self.Ultimaker2Radio.GetValue() or self.Ultimaker2GoRadio.GetValue() or self.Ultimaker2ExtRadio.GetValue() or self.Ultimaker2PlusRadio.GetValue() or self.Ultimaker2PlusExtRadio.GetValue():
 			if self.Ultimaker2Radio.GetValue() or self.Ultimaker2PlusRadio.GetValue():
-				profile.putMachineSetting('machine_width', '230')
-				profile.putMachineSetting('machine_depth', '225')
+				profile.putMachineSetting('machine_width', '223')
+				profile.putMachineSetting('machine_depth', '223')
 				profile.putMachineSetting('machine_height', '205')
 				if self.Ultimaker2PlusRadio.GetValue():
 					profile.putMachineSetting('machine_name', 'Ultimaker 2+')
@@ -482,8 +482,8 @@ class MachineSelectPage(InfoPage):
 					profile.putMachineSetting('machine_type', 'ultimaker2')
 				profile.putMachineSetting('has_heated_bed', 'True')
 			if self.Ultimaker2ExtRadio.GetValue() or self.Ultimaker2PlusExtRadio.GetValue():
-				profile.putMachineSetting('machine_width', '230')
-				profile.putMachineSetting('machine_depth', '225')
+				profile.putMachineSetting('machine_width', '223')
+				profile.putMachineSetting('machine_depth', '223')
 				profile.putMachineSetting('machine_height', '315')
 				if self.Ultimaker2PlusExtRadio.GetValue():
 					profile.putMachineSetting('machine_name', 'Ultimaker 2 Extended+')
