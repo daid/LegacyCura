@@ -1334,10 +1334,13 @@ class SceneView(openglGui.glGuiPanel):
 			offset = [0,0,0]
 			texture_offset = [0,0,0]
 			texture_scale = 1.0
-			if machine_type == 'ultimaker2' or machine_type == 'ultimaker2extended':
+			if machine_type == 'ultimaker2' or machine_type == 'ultimaker2extended' or machine_type == 'ultimaker2+' or machine_type == 'ultimaker2+extended':
 				filename = resources.getPathForMesh('ultimaker2_platform.stl')
 				offset = [-9,-37,145]
-				texture_name = 'Ultimaker2backplate.png'
+				if machine_type.startswith('ultimaker2+'):
+					texture_name = 'Ultimaker2plusbackplate.png'
+				else:
+					texture_name = 'Ultimaker2backplate.png'
 				texture_offset = [9,150,-5]
 			elif machine_type == 'ultimaker2go':
 				filename = resources.getPathForMesh('ultimaker2go_platform.stl')

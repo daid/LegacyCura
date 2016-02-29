@@ -605,6 +605,8 @@ class Engine(object):
 			settings['wipeTowerSize'] = int(math.sqrt(profile.getProfileSettingFloat('wipe_tower_volume') * 1000 * 1000 * 1000 / settings['layerThickness']))
 		if profile.getProfileSetting('ooze_shield') == 'True':
 			settings['enableOozeShield'] = 1
+		if profile.getPreference('startMode') == 'Simple':
+			settings['nozzleSize'] = int(profile.getPreferenceFloat('simpleModeNozzle') * 1000)
 		return settings
 
 	def _runEngineProcess(self, cmdList):
