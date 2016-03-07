@@ -274,7 +274,7 @@ class AutoUpdateFirmware(wx.Dialog):
 				time.sleep(0.5)
 				self.OnInstall()
 				try:
-					self._serial = serial.Serial(self.port, 115200)
+					self._serial = serial.Serial(self.port, 250000)
 				except:
 					pass
 			time.sleep(0.5)

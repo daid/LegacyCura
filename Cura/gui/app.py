@@ -148,6 +148,8 @@ class CuraApp(wx.App):
 					return
 		if profile.getMachineSetting('machine_name') == '':
 			return
+		self.checkMachineConfigurations()
+
 		self.mainWindow = mainWindow.mainWindow()
 		if self.splash is not None:
 			self.splash.Show(False)
@@ -164,6 +166,18 @@ class CuraApp(wx.App):
 
 		if sys.platform.startswith('darwin'):
 			wx.CallAfter(self.StupidMacOSWorkaround)
+
+	# Apply automatic configuration changes to work around bugs of previous Cura releases.
+	def checkMachineConfigurations(self):
+		from Cura.util import profile
+		for index in xrange(0, profile.getMachineCount()):
+			machine_type = profile.getMachineSetting('machine_type', index)
+			# Fix the Ultimaker2 build volume, which was wrong in previous version of Cura.
+			if machine_type.startswith('ultimaker2') and not machine_type.startswith('ultimaker2go'):
+				if abs(float(profile.getMachineSetting('machine_width', index)) - 230) < 10:
+					profile.putMachineSetting('machine_width', '223', index)
+				if abs(float(profile.getMachineSetting('machine_depth', index)) - 230) < 10:
+					profile.putMachineSetting('machine_depth', '223', index)
 
 
 	def StupidMacOSWorkaround(self):
