@@ -1,11 +1,22 @@
+"""
+Module to read intel hex files into binary data blobs.
+IntelHex files are commonly used to distribute firmware
+See: http://en.wikipedia.org/wiki/Intel_HEX
+"""
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 import io
 
 def readHex(filename):
+	"""
+	Read an verify an intel hex file. Return the data as an list of bytes.
+	"""
 	data = []
 	extraAddr = 0
 	f = io.open(filename, "r")
 	for line in f:
 		line = line.strip()
+		if len(line) < 1:
+			continue
 		if line[0] != ':':
 			raise Exception("Hex file has a line not starting with ':'")
 		recLen = int(line[1:3], 16)

@@ -1,12 +1,15 @@
-from __future__ import absolute_import
+"""
+Api for taskbar. Only for windows 7 or higher (filling up the icon while its progressing).
+"""
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 try:
 	import comtypes.client as cc
-	cc.GetModule('taskbarlib.tlb')
+	foo = cc.GetModule('taskbarlib.tlb')
 	import comtypes.gen.TaskbarLib as tbl
 
 	ITaskbarList3 = cc.CreateObject("{56FDF344-FD6D-11d0-958A-006097C9A090}", interface=tbl.ITaskbarList3)
-	ITaskbarList3.HrInit()
+	foo = ITaskbarList3.HrInit()
 
 	#Stops displaying progress and returns the button to its normal state. Call this method with this flag to dismiss the progress bar when the operation is complete or canceled.
 	TBPF_NOPROGRESS = 0x00000000
@@ -23,20 +26,20 @@ except:
 	ITaskbarList3 = None
 
 def setBusy(frame, busy):
-	if ITaskbarList3 is not None:
+	if ITaskbarList3 is not None and frame is not None:
 		if busy:
 			ITaskbarList3.SetProgressState(frame.GetHandle(), TBPF_INDETERMINATE)
 		else:
 			ITaskbarList3.SetProgressState(frame.GetHandle(), TBPF_NOPROGRESS)
 
 def setPause(frame, pause):
-	if ITaskbarList3 is not None:
+	if ITaskbarList3 is not None and frame is not None:
 		if pause:
 			ITaskbarList3.SetProgressState(frame.GetHandle(), TBPF_PAUSED)
 		else:
 			ITaskbarList3.SetProgressState(frame.GetHandle(), TBPF_NORMAL)
 
 def setProgress(frame, done, total):
-	if ITaskbarList3 is not None:
+	if ITaskbarList3 is not None and frame is not None:
 		ITaskbarList3.SetProgressState(frame.GetHandle(), TBPF_NORMAL)
 		ITaskbarList3.SetProgressValue(frame.GetHandle(), done, total)

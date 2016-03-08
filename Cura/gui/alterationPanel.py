@@ -1,17 +1,25 @@
-from __future__ import absolute_import
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import wx, wx.stc
 
 from Cura.gui.util import gcodeTextArea
 from Cura.util import profile
-
+#Panel to change the start & endcode of the gcode.
 class alterationPanel(wx.Panel):
-	def __init__(self, parent):
+	def __init__(self, parent, callback):
 		wx.Panel.__init__(self, parent,-1)
 
-		self.alterationFileList = ['start.gcode', 'end.gcode', 'nextobject.gcode', 'replace.csv']
-		if int(profile.getPreference('extruder_amount')) > 1:
-			self.alterationFileList.append('switchExtruder.gcode')
+		self.callback = callback
+		self.alterationFileList = ['start.gcode', 'end.gcode']#, 'nextobject.gcode', 'replace.csv'
+		if int(profile.getMachineSetting('extruder_amount')) > 1:
+			self.alterationFileList += ['preSwitchExtruder.gcode', 'postSwitchExtruder.gcode']
+			self.alterationFileList += ['start2.gcode', 'end2.gcode']
+		if int(profile.getMachineSetting('extruder_amount')) > 2:
+			self.alterationFileList += ['start3.gcode', 'end3.gcode']
+		if int(profile.getMachineSetting('extruder_amount')) > 3:
+			self.alterationFileList += ['start4.gcode', 'end4.gcode']
+		if int(profile.getMachineSetting('extruder_amount')) > 4:
+			self.alterationFileList += ['start5.gcode', 'end5.gcode']
 		self.currentFile = None
 
 		self.textArea = gcodeTextArea.GcodeTextArea(self)
@@ -44,7 +52,7 @@ class alterationPanel(wx.Panel):
 	def OnFocusLost(self, e):
 		if self.currentFile == self.list.GetSelection():
 			profile.setAlterationFile(self.alterationFileList[self.list.GetSelection()], self.textArea.GetValue())
+			self.callback()
 
 	def updateProfileToControls(self):
 		self.OnSelect(None)
-

@@ -4,6 +4,8 @@
 *.pyc
 *.zip
 *.exe
+*.po~
+*.gcode
 darwin-Cura-*
 win32-Cura-*
 linux-Cura-*
@@ -25,6 +27,14 @@ scripts/darwin/dist/*
 scripts/darwin/build/*
 scripts/darwin/Cura.dmg.sparseimage
 scripts/win32/dist/*
+scripts/linux/debian*/usr/*
+scripts/linux/debian*/DEBIAN/control
+scripts/linux/*.deb
 log.txt
 output.txt
 *.bak
+CuraEngine
+Power
+power
+_*
+*~

@@ -1,9 +1,14 @@
-from __future__ import absolute_import
+"""
+The version utility module is used to get the current Cura version, and check for updates.
+It can also see if we are running a development build of Cura.
+"""
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import os
 import sys
 import urllib2
 import platform
+import subprocess
 try:
 	from xml.etree import cElementTree as ElementTree
 except:
@@ -12,15 +17,27 @@ except:
 from Cura.util import resources
 
 def getVersion(getGitVersion = True):
-	gitPath = os.path.abspath(os.path.join(os.path.split(os.path.abspath(__file__))[0], "../../.git"))
+	gitPath = os.path.abspath(os.path.join(os.path.split(os.path.abspath(__file__))[0], "../.."))
 	if hasattr(sys, 'frozen'):
 		versionFile = os.path.normpath(os.path.join(resources.resourceBasePath, "version"))
 	else:
 		versionFile = os.path.abspath(os.path.join(os.path.split(os.path.abspath(__file__))[0], "../version"))
-	if os.path.exists(gitPath):
+
+	if getGitVersion:
+		try:
+			gitProcess = subprocess.Popen(args = "git show -s --pretty=format:%H", shell = True, cwd = gitPath, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+			(stdoutdata, stderrdata) = gitProcess.communicate()
+
+			if gitProcess.returncode == 0:
+				return stdoutdata
+		except:
+			pass
+
+	gitHeadFile = gitPath + "/.git/refs/heads/master"
+	if os.path.isfile(gitHeadFile):
 		if not getGitVersion:
 			return "dev"
-		f = open(gitPath + "/refs/heads/master", "r")
+		f = open(gitHeadFile, "r")
 		version = f.readline()
 		f.close()
 		return version.strip()
@@ -35,17 +52,18 @@ def getVersion(getGitVersion = True):
 		version = f.readline()
 		f.close()
 		return version.strip()
-	return "?"
+	return "UNKNOWN" #No idea what the version is. TODO:Tell the user.
 
 def isDevVersion():
 	gitPath = os.path.abspath(os.path.join(os.path.split(os.path.abspath(__file__))[0], "../../.git"))
-	return os.path.exists(gitPath)
+	hgPath  = os.path.abspath(os.path.join(os.path.split(os.path.abspath(__file__))[0], "../../.hg"))
+	return os.path.exists(gitPath) or os.path.exists(hgPath)
 
 def checkForNewerVersion():
 	if isDevVersion():
 		return None
 	try:
-		updateBaseURL = 'http://software.ultimaker.com'
+		updateBaseURL = ''
 		localVersion = map(int, getVersion(False).split('.'))
 		while len(localVersion) < 3:
 			localVersion += [1]
@@ -61,7 +79,7 @@ def checkForNewerVersion():
 				if version > localVersion:
 					return "%s/current/%s" % (updateBaseURL, filename)
 	except:
-		print sys.exc_info()
+		#print sys.exc_info()
 		return None
 	return None
 
