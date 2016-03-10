@@ -106,6 +106,7 @@ class SceneView(openglGui.glGuiPanel):
 
 		self.youMagineButton = openglGui.glButton(self, 26, _("Share on YouMagine"), (2,0), lambda button: youmagineGui.youmagineManager(self.GetTopLevelParent(), self._scene))
 		self.youMagineButton.setDisabled(True)
+		self.youMagineButton.setHidden(True)
 
 		self.notification = openglGui.glNotification(self, (0, 0))
 
