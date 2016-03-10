@@ -50,7 +50,8 @@ class Youmagine(object):
 	def __init__(self, authToken, progressCallback = None):
 		self._hostUrl = 'api.youmagine.com'
 		self._viewUrl = 'www.youmagine.com'
-		self._authUrl = 'https://www.youmagine.com/integrations/cura/authorized_integrations/new'
+		self._apiVersion = 'v1'
+		self._authUrl = 'https://www.youmagine.com/integrations/cura/authorized_integrations/new?'
 		self._authToken = authToken
 		self._userName = None
 		self._userID = None
@@ -98,24 +99,15 @@ class Youmagine(object):
 	def isHostReachable(self):
 		return self._hostReachable
 
-	def viewUrlForDesign(self, id):
-		return 'https://%s/designs/%d' % (self._viewUrl, id)
+	def viewUrlForDesign(self, designId):
+		return 'https://%s/designs/%d' % (self._viewUrl, designId)
 
-	def editUrlForDesign(self, id):
-		return 'https://%s/designs/%d/edit' % (self._viewUrl, id)
+	def editUrlForDesign(self, designId):
+		return 'https://%s/%s/designs/%d?auth_token=%s' % (self._hostUrl,  self._apiVersion,  designId,  self._authToken)
 
 	def isAuthorized(self):
-		if self._authToken is None:
+		if self._authToken is None or self._authToken == '':
 			return False
-		if self._userName is None:
-			#No username yet, try to request the username to see if the authToken is valid.
-			result = self._request('GET', '/authorized_integrations/%s/whoami.json' % (self._authToken))
-
-			if 'error' in result:
-				self._authToken = None
-				return False
-			self._userName = result['screen_name']
-			self._userID = result['id']
 		return True
 
 	def createDesign(self, name, description, category, license):
@@ -125,40 +117,38 @@ class Youmagine(object):
 			lines = textwrap.wrap(excerpt, 300)
 			excerpt = lines[0]
 			description = '\n'.join(lines[1:])
-		res = self._request('POST', '/designs.json', {'design[name]': name, 'design[excerpt]': excerpt, 'design[description]': description, 'design[design_category_id]': filter(lambda n: n[0] == category, self._categories)[0][1], 'design[license]': filter(lambda n: n[0] == license, self._licenses)[0][1]})
+		design = {'design[name]': name, 'design[excerpt]': excerpt, 'design[description]': description, 'design[design_category_id]': filter(lambda n: n[0] == category, self._categories)[0][1], 'design[license]': filter(lambda n: n[0] == license, self._licenses)[0][1]}
+		res = self._request('POST',  '/%s/designs?auth_token=%s' % (self._apiVersion,  self._authToken), design)
 		if 'id' in res:
 			return res['id']
-		print res
 		return None
 
-	def publishDesign(self, id):
-		res = self._request('PUT', '/designs/%d/mark_as/publish.json' % (id), {'ignore': 'me'})
+	def publishDesign(self, designId):
+		res = self._request('PUT',  '/%s/designs/%d?auth_token=%s' % (self._apiVersion, designId, self._authToken))
 		if res is not None:
 			return False
 		return True
 
 	def createDocument(self, designId, name, contents):
-		res = self._request('POST', '/designs/%d/documents.json' % (designId), {'document[name]': name, 'document[description]': 'Uploaded from Cura'}, {'document[file]': (name, contents)})
+		document = {'document[name]': name, 'document[description]': 'Uploaded from Cura'}
+		files = {'document[file]': (name, contents)}
+		res = self._request('POST', '/%s/designs/%d/documents?auth_token=%s' % (self._apiVersion, designId,  self._authToken),  document,  files)
 		if 'id' in res:
 			return res['id']
-		print res
 		return None
 
 	def createImage(self, designId, name, contents):
-		res = self._request('POST', '/designs/%d/images.json' % (designId), {'image[name]': name, 'image[description]': 'Uploaded from Cura'}, {'image[file]': (name, contents)})
+		res = self._request('POST', '/%s/designs/%d/images?auth_token=%s' % (self._apiVersion, designId,  self._authToken), {'image[name]': name, 'image[description]': 'Uploaded from Cura'}, {'image[file]': (name, contents)})
 		if 'id' in res:
 			return res['id']
-		print res
 		return None
 
 	def listDesigns(self):
-		res = self._request('GET', '/users/%s/designs.json' % (self._userID))
+		res = self._request('GET', '%s/users/%s/designs?auth_token=%s' % (self._apiVersion, self._userID,  self._authToken))
 		return res
 
 	def _request(self, method, url, postData = None, files = None):
 		retryCount = 2
-		if self._authToken is not None:
-			url += '?auth_token=%s' % (self._authToken)
 		error = 'Failed to connect to %s' % self._hostUrl
 		for n in xrange(0, retryCount):
 			if self._http is None:
