@@ -25,10 +25,11 @@ class newVersionDialog(wx.Dialog):
 		s.Add(wx.StaticText(p, -1, 'Welcome to the new version of Cura.'))
 		s.Add(wx.StaticText(p, -1, '(This dialog is only shown once)'))
 		s.Add(wx.StaticLine(p), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=10)
-		s.Add(wx.StaticText(p, -1, 'New in version 15.04.4:'))
-		s.Add(wx.StaticText(p, -1, '* Added Ultimaker 2+ and Ultimaker 2 Extended+ machines'))
-		s.Add(wx.StaticText(p, -1, '* Added quick print profiles for Ultimaker 2+ and Ultimaker 2 Extended+'))
-		s.Add(wx.StaticText(p, -1, '* Added feature where quickprint profiles can be per nozzle size and material'))
+		s.Add(wx.StaticText(p, -1, 'New in version 15.04.5:'))
+		s.Add(wx.StaticText(p, -1, '* Fixed Ultimaker2 family build volume, which was configured too big by default.'))
+		s.Add(wx.StaticText(p, -1, '* Bugfix for nozzle sizes being incorrectly copied when switching from quickprint to full settings.'))
+		s.Add(wx.StaticText(p, -1, '* Bugfix for selected platform adhesion type not being remembered in quickprint mode.'))
+		s.Add(wx.StaticText(p, -1, '* Bugfix for head size of the Ultimaker2+, which caused the head to bump into prints in one-at-a-time mode.'))
 
 		self.has_machine = {}
 		for n in xrange(0, profile.getMachineCount()):
@@ -44,21 +45,18 @@ class newVersionDialog(wx.Dialog):
 			button = wx.Button(p, -1, 'Install now')
 			self.Bind(wx.EVT_BUTTON, lambda e: self.OnFirmwareInstall(self.has_machine['ultimaker']), button)
 			s.Add(button, flag=wx.TOP, border=5)
-		if 'ultimaker2' in self.has_machine and False:
+		if 'ultimaker2' in self.has_machine and True:
 			s.Add(wx.StaticLine(p), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=10)
 			s.Add(wx.StaticText(p, -1, 'New firmware for your Ultimaker 2:'))
-			s.Add(wx.StaticText(p, -1, '* Added option to change filament when pausing during a print.'))
-			s.Add(wx.StaticText(p, -1, '* Prevent temperature display jitter (thanks to TinkerGnome)'))
-			s.Add(wx.StaticText(p, -1, '* Fixed problems with filenames containing an umlaut.'))
-			s.Add(wx.StaticText(p, -1, '* Improved pause handling (thanks to ThinkerGnome)'))
+			s.Add(wx.StaticText(p, -1, '* Updated error messages, to assist in getting better support'))
 			button = wx.Button(p, -1, 'Install now')
 			self.Bind(wx.EVT_BUTTON, lambda e: self.OnFirmwareInstall(self.has_machine['ultimaker2']), button)
 			s.Add(button, flag=wx.TOP, border=5)
 		if 'ultimaker2+' in self.has_machine and True:
 			s.Add(wx.StaticLine(p), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=10)
 			s.Add(wx.StaticText(p, -1, 'New firmware for your Ultimaker 2+:'))
-			s.Add(wx.StaticText(p, -1, '* Fixed temperature stability.'))
-			s.Add(wx.StaticText(p, -1, '* Fixed print starting problems when a material warning was ignored'))
+			s.Add(wx.StaticText(p, -1, '* Updated error messages, to assist in getting better support'))
+			s.Add(wx.StaticText(p, -1, '* Bugfix for the import/export material settings which was not working properly'))
 			button = wx.Button(p, -1, 'Install now')
 			self.Bind(wx.EVT_BUTTON, lambda e: self.OnFirmwareInstall(self.has_machine['ultimaker2+']), button)
 			s.Add(button, flag=wx.TOP, border=5)
