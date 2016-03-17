@@ -178,6 +178,8 @@ class CuraApp(wx.App):
 					profile.putMachineSetting('machine_width', '223', index)
 				if abs(float(profile.getMachineSetting('machine_depth', index)) - 230) < 10:
 					profile.putMachineSetting('machine_depth', '223', index)
+				if abs(float(profile.getMachineSetting('machine_depth', index)) - 315) < 1:
+					profile.putMachineSetting('machine_depth', '305', index)
 
 
 	def StupidMacOSWorkaround(self):
