@@ -137,6 +137,16 @@ class machineSettingsDialog(wx.Dialog):
 			configBase.SettingRow(right, 'serial_port', ['AUTO'] + machineCom.serialList(), index=idx)
 			configBase.SettingRow(right, 'serial_baud', ['AUTO'] + map(str, machineCom.baudrateList()), index=idx)
 
+			configBase.TitleRow(right, _("Firmware settings (time estimate)"))
+			configBase.SettingRow(right, 'machine_acceleration', index=idx)
+			configBase.SettingRow(right, 'machine_max_acceleration[0]', index=idx)
+			configBase.SettingRow(right, 'machine_max_acceleration[1]', index=idx)
+			configBase.SettingRow(right, 'machine_max_acceleration[2]', index=idx)
+			configBase.SettingRow(right, 'machine_max_acceleration[3]', index=idx)
+			configBase.SettingRow(right, 'machine_max_xy_jerk', index=idx)
+			configBase.SettingRow(right, 'machine_max_z_jerk', index=idx)
+			configBase.SettingRow(right, 'machine_max_e_jerk', index=idx)
+
 			self.nb.AddPage(main, profile.getMachineSetting('machine_name', idx).title())
 
 		self.nb.SetSelection(int(profile.getPreferenceFloat('active_machine')))

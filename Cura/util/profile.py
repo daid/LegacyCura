@@ -557,6 +557,15 @@ setting('extruder_head_size_max_x', '0.0', float, 'machine', 'hidden').setLabel(
 setting('extruder_head_size_max_y', '0.0', float, 'machine', 'hidden').setLabel(_("Head size towards Y max (mm)"), _("The head size when printing multiple objects, measured from the tip of the nozzle towards the outer part of the head. 35mm for an Ultimaker if the fan is on the left side."))
 setting('extruder_head_size_height', '0.0', float, 'machine', 'hidden').setLabel(_("Printer gantry height (mm)"), _("The height of the gantry holding up the printer head. If an object is higher then this then you cannot print multiple objects one for one. 60mm for an Ultimaker."))
 
+setting('machine_acceleration', '3000.0', float, 'machine', 'hidden').setLabel(_("Acceleration"), _("."))
+setting('machine_max_acceleration[0]', '9000.0', float, 'machine', 'hidden').setLabel(_("Max acceleration X"), _("."))
+setting('machine_max_acceleration[1]', '9000.0', float, 'machine', 'hidden').setLabel(_("Max acceleration Y"), _("."))
+setting('machine_max_acceleration[2]', '100.0', float, 'machine', 'hidden').setLabel(_("Max acceleration Z"), _("."))
+setting('machine_max_acceleration[3]', '10000.0', float, 'machine', 'hidden').setLabel(_("Max acceleration E"), _("."))
+setting('machine_max_xy_jerk', '20.0', float, 'machine', 'hidden').setLabel(_("XY \"Jerk\""), _("."))
+setting('machine_max_z_jerk', '0.4', float, 'machine', 'hidden').setLabel(_("Z \"Jerk\""), _("."))
+setting('machine_max_e_jerk', '5.0', float, 'machine', 'hidden').setLabel(_("E \"Jerk\""), _("."))
+
 validators.warningAbove(settingsDictionary['filament_flow'], 150, _("More flow than 150% is rare and usually not recommended."))
 validators.warningBelow(settingsDictionary['filament_flow'], 50, _("Less flow than 50% is rare and usually not recommended."))
 validators.warningAbove(settingsDictionary['layer_height'], lambda : (float(getProfileSetting('nozzle_size')) * 80.0 / 100.0), _("Thicker layers then %.2fmm (80%% nozzle size) usually give bad results and are not recommended."))
