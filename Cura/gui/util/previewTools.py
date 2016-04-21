@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import math
 import wx
@@ -9,8 +9,8 @@ OpenGL.ERROR_CHECKING = False
 from OpenGL.GLU import *
 from OpenGL.GL import *
 
-from Cura.gui.util import opengl
-
+from Cura.gui.util import openglHelpers
+#TODO: Rename these. Name is vague.
 class toolNone(object):
 	def __init__(self, parent):
 		self.parent = parent
@@ -63,7 +63,7 @@ class toolInfo(object):
 			glTranslate(0, (radius + 5) * (90 - self.parent.pitch) / 10,0)
 		else:
 			glTranslate(0,-(radius + 5),0)
-		opengl.glDrawStringCenter("%dx%dx%d" % (size[0], size[1], size[2]))
+		openglHelpers.glDrawStringCenter("%dx%dx%d" % (size[0], size[1], size[2]))
 		glPopMatrix()
 
 		glColor(255,255,255)
@@ -149,6 +149,7 @@ class toolRotate(object):
 			else:
 				self.dragPlane = 'YZ'
 				self.dragStartAngle = math.atan2(cursorX0[2], cursorX0[1]) * 180 / math.pi
+			self.dragEndAngle = self.dragStartAngle
 			return True
 		return False
 
@@ -207,7 +208,7 @@ class toolRotate(object):
 				glEnd()
 				glTranslatef(1.1,0,0)
 				glColor4ub(0,0,0,255)
-				opengl.glDrawStringCenter("%d" % (abs(self.dragEndAngle - self.dragStartAngle)))
+				openglHelpers.glDrawStringCenter("%d" % (abs(self.dragEndAngle - self.dragStartAngle) + 0.5))
 				glColor4ub(255,64,64,255)
 				glPopMatrix()
 		else:
@@ -236,7 +237,7 @@ class toolRotate(object):
 				glEnd()
 				glTranslatef(0,1.1,0)
 				glColor4ub(0,0,0,255)
-				opengl.glDrawStringCenter("%d" % (abs(self.dragEndAngle - self.dragStartAngle)))
+				openglHelpers.glDrawStringCenter("%d" % (abs(self.dragEndAngle - self.dragStartAngle)))
 				glColor4ub(64,255,64,255)
 				glPopMatrix()
 		else:
@@ -265,7 +266,7 @@ class toolRotate(object):
 				glEnd()
 				glTranslatef(1.1,0,0)
 				glColor4ub(0,0,0,255)
-				opengl.glDrawStringCenter("%d" % (abs(self.dragEndAngle - self.dragStartAngle)))
+				openglHelpers.glDrawStringCenter("%d" % (round(abs(self.dragEndAngle - self.dragStartAngle))))
 				glColor4ub(255,255,0,255)
 				glPopMatrix()
 		else:
@@ -315,7 +316,7 @@ class toolScale(object):
 		return t
 
 	def _nodeSize(self):
-		return float(self.parent.zoom) / float(self.parent.GetSize().GetWidth()) * 6.0
+		return float(self.parent._zoom) / float(self.parent.GetSize().GetWidth()) * 6.0
 
 	def OnMouseMove(self, p0, p1):
 		self.node = self._traceNodes(p0, p1)
@@ -398,16 +399,16 @@ class toolScale(object):
 			radius *= self.scale
 		glPushMatrix()
 		glTranslate(0,0,size[2]/2 + 5)
-		glRotate(-self.parent.yaw, 0,0,1)
-		if self.parent.pitch < 80:
+		glRotate(-self.parent._yaw, 0,0,1)
+		if self.parent._pitch < 80:
 			glTranslate(0, radius + 5,0)
-		elif self.parent.pitch < 100:
-			glTranslate(0, (radius + 5) * (90 - self.parent.pitch) / 10,0)
+		elif self.parent._pitch < 100:
+			glTranslate(0, (radius + 5) * (90 - self.parent._pitch) / 10,0)
 		else:
 			glTranslate(0,-(radius + 5),0)
 		if self.parent.tempMatrix is not None:
 			size = (numpy.matrix([size]) * self.parent.tempMatrix).getA().flatten()
-		opengl.glDrawStringCenter("W, D, H: %0.1f, %0.1f, %0.1f mm" % (size[0], size[1], size[2]))
+		openglHelpers.glDrawStringCenter("W, D, H: %0.1f, %0.1f, %0.1f mm" % (size[0], size[1], size[2]))
 		glPopMatrix()
 
 		glLineWidth(1)
@@ -428,10 +429,10 @@ class toolScale(object):
 			glColor3ub(255,255,255)
 		else:
 			glColor3ub(192,192,192)
-		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		openglHelpers.DrawBox([-s,-s,-s], [s,s,s])
 		if self.node == 1:
 			glColor3ub(0,0,0)
-			opengl.glDrawStringCenter("%0.2f" % ((scaleX + scaleY + scaleZ) / 3.0))
+			openglHelpers.glDrawStringCenter("%0.2f" % ((scaleX + scaleY + scaleZ) / 3.0))
 
 		if self.node == 2:
 			glColor3ub(255,64,64)
@@ -439,10 +440,10 @@ class toolScale(object):
 			glColor3ub(128,0,0)
 		glPushMatrix()
 		glTranslatef(sx,0,0)
-		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		openglHelpers.DrawBox([-s,-s,-s], [s,s,s])
 		if self.node == 2:
 			glColor3ub(0,0,0)
-			opengl.glDrawStringCenter("%0.2f" % (scaleX))
+			openglHelpers.glDrawStringCenter("%0.2f" % (scaleX))
 		glPopMatrix()
 		if self.node == 3:
 			glColor3ub(64,255,64)
@@ -450,10 +451,10 @@ class toolScale(object):
 			glColor3ub(0,128,0)
 		glPushMatrix()
 		glTranslatef(0,sy,0)
-		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		openglHelpers.DrawBox([-s,-s,-s], [s,s,s])
 		if self.node == 3:
 			glColor3ub(0,0,0)
-			opengl.glDrawStringCenter("%0.2f" % (scaleY))
+			openglHelpers.glDrawStringCenter("%0.2f" % (scaleY))
 		glPopMatrix()
 		if self.node == 4:
 			glColor3ub(64,64,255)
@@ -461,10 +462,10 @@ class toolScale(object):
 			glColor3ub(0,0,128)
 		glPushMatrix()
 		glTranslatef(0,0,sz)
-		opengl.DrawBox([-s,-s,-s], [s,s,s])
+		openglHelpers.DrawBox([-s,-s,-s], [s,s,s])
 		if self.node == 4:
 			glColor3ub(0,0,0)
-			opengl.glDrawStringCenter("%0.2f" % (scaleZ))
+			openglHelpers.glDrawStringCenter("%0.2f" % (scaleZ))
 		glPopMatrix()
 
 		glEnable(GL_DEPTH_TEST)

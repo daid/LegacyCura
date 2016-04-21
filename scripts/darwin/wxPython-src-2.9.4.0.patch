@@ -1,0 +1,20 @@
+--- /Users/kentzo/Downloads/wxPython-src-2.9.4.0 2/src/osx/webview_webkit.mm	2012-07-20 22:19:02.000000000 -0500
++++ /Users/kentzo/Downloads/wxPython-src-2.9.4.0/src/osx/webview_webkit.mm	2015-05-30 00:45:13.000000000 -0500
+@@ -924,7 +924,7 @@
+ wxVector<wxSharedPtr<wxWebViewHistoryItem> > wxWebViewWebKit::GetBackwardHistory()
+ {
+     wxVector<wxSharedPtr<wxWebViewHistoryItem> > backhist;
+-    WebBackForwardList* history = [m_webView backForwardList];
++    WebBackForwardList* history = (WebBackForwardList *)[m_webView backForwardList];
+     int count = [history backListCount];
+     for(int i = -count; i < 0; i++)
+     {
+@@ -942,7 +942,7 @@
+ wxVector<wxSharedPtr<wxWebViewHistoryItem> > wxWebViewWebKit::GetForwardHistory()
+ {
+     wxVector<wxSharedPtr<wxWebViewHistoryItem> > forwardhist;
+-    WebBackForwardList* history = [m_webView backForwardList];
++    WebBackForwardList* history = (WebBackForwardList *)[m_webView backForwardList];
+     int count = [history forwardListCount];
+     for(int i = 1; i <= count; i++)
+     {
