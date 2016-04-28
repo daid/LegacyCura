@@ -25,6 +25,8 @@ class newVersionDialog(wx.Dialog):
 		s.Add(wx.StaticText(p, -1, 'Welcome to the new version of Cura.'))
 		s.Add(wx.StaticText(p, -1, '(This dialog is only shown once)'))
 		s.Add(wx.StaticLine(p), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=10)
+		s.Add(wx.StaticText(p, -1, 'New in version 15.04.6:'))
+		s.Add(wx.StaticText(p, -1, '* Improved material profiles for PLA, ABS and CPE for the Ultimaker 2+ family.'))
 		s.Add(wx.StaticText(p, -1, 'New in version 15.04.5:'))
 		s.Add(wx.StaticText(p, -1, '* Fixed Ultimaker2 family build volume, which was configured too big by default.'))
 		s.Add(wx.StaticText(p, -1, '* Bugfix for nozzle sizes being incorrectly copied when switching from quickprint to full settings.'))
