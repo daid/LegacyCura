@@ -90,7 +90,7 @@ To build and install Cura, run the following commands:
 ```bash
 git clone https://github.com/daid/Cura.git
 
-sudo apt-get install python-opengl python-numpy python-serial python-setuptools python-wxgtk2.8 curl
+sudo apt-get install python-opengl python-numpy python-serial python-setuptools python-wxgtk2.8 curl arduino
 
 cd Cura
 
