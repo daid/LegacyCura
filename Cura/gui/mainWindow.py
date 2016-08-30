@@ -33,7 +33,7 @@ except:
 
 class mainWindow(wx.Frame):
 	def __init__(self):
-		super(mainWindow, self).__init__(None, title='Cura - ' + version.getVersion())
+		super(mainWindow, self).__init__(None, title='Legacy Cura - ' + version.getVersion())
 
 		wx.EVT_CLOSE(self, self.OnClose)
 
