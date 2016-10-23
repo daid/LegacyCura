@@ -178,10 +178,11 @@ class GLVBO(GLReferenceCounter):
 
 	def render(self):
 		glEnableClientState(GL_VERTEX_ARRAY)
+		if self._hasNormals:
+			glEnableClientState(GL_NORMAL_ARRAY)
 		if self._buffers is None:
 			glVertexPointer(3, GL_FLOAT, 0, self._vertexArray)
 			if self._hasNormals:
-				glEnableClientState(GL_NORMAL_ARRAY)
 				glNormalPointer(GL_FLOAT, 0, self._normalArray)
 			if self._hasIndices:
 				glDrawElements(self._renderType, self._size, GL_UNSIGNED_INT, self._indicesArray)
@@ -193,23 +194,23 @@ class GLVBO(GLReferenceCounter):
 					glDrawArrays(self._renderType, i * batchSize, batchSize)
 				glDrawArrays(self._renderType, extraStartPos, extraCount)
 		else:
+			if self._hasIndices:
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self._bufferIndices)
 			for info in self._buffers:
 				glBindBuffer(GL_ARRAY_BUFFER, info['buffer'])
 				if self._hasNormals:
-					glEnableClientState(GL_NORMAL_ARRAY)
 					glVertexPointer(3, GL_FLOAT, 2*3*4, c_void_p(0))
 					glNormalPointer(GL_FLOAT, 2*3*4, c_void_p(3 * 4))
 				else:
 					glVertexPointer(3, GL_FLOAT, 3*4, c_void_p(0))
 				if self._hasIndices:
-					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self._bufferIndices)
 					glDrawElements(self._renderType, self._size, GL_UNSIGNED_INT, c_void_p(0))
 				else:
 					glDrawArrays(self._renderType, 0, info['size'])
 
-				glBindBuffer(GL_ARRAY_BUFFER, 0)
-				if self._hasIndices:
-					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
+			glBindBuffer(GL_ARRAY_BUFFER, 0)
+			if self._hasIndices:
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
 
 		glDisableClientState(GL_VERTEX_ARRAY)
 		if self._hasNormals:
