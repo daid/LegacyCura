@@ -320,7 +320,7 @@ class PrintrbotPage(InfoPage):
 				if data[10]:
 					profile.setAlterationFile('start.gcode', """;Sliced at: {day} {date} {time}
 ;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
-;Print time: {print_time}
+;Print time: {print_time}, short: {print_time_short}
 ;Filament used: {filament_amount}m {filament_weight}g
 ;Filament cost: {filament_cost}
 ;M190 S{print_bed_temperature} ;Uncomment to add your own bed temperature line

@@ -264,7 +264,7 @@ setting('object_center_y', -1, float, 'hidden', 'hidden')
 
 setting('start.gcode', """;Sliced at: {day} {date} {time}
 ;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
-;Print time: {print_time}
+;Print time: {print_time}, short: {print_time_short}
 ;Filament used: {filament_amount}m {filament_weight}g
 ;Filament cost: {filament_cost}
 ;M190 S{print_bed_temperature} ;Uncomment to add your own bed temperature line
@@ -303,7 +303,7 @@ G90                         ;absolute positioning
 #######################################################################################
 setting('start2.gcode', """;Sliced at: {day} {date} {time}
 ;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
-;Print time: {print_time}
+;Print time: {print_time}, short: {print_time_short}
 ;Filament used: {filament_amount}m {filament_weight}g
 ;Filament cost: {filament_cost}
 ;M190 S{print_bed_temperature} ;Uncomment to add your own bed temperature line
@@ -351,7 +351,7 @@ G90                         ;absolute positioning
 #######################################################################################
 setting('start3.gcode', """;Sliced at: {day} {date} {time}
 ;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
-;Print time: {print_time}
+;Print time: {print_time}, short: {print_time_short}
 ;Filament used: {filament_amount}m {filament_weight}g
 ;Filament cost: {filament_cost}
 ;M190 S{print_bed_temperature} ;Uncomment to add your own bed temperature line
@@ -405,7 +405,7 @@ G90                         ;absolute positioning
 """, str, 'alteration', 'alteration')
 setting('start4.gcode', """;Sliced at: {day} {date} {time}
 ;Basic settings: Layer height: {layer_height} Walls: {wall_thickness} Fill: {fill_density}
-;Print time: {print_time}
+;Print time: {print_time}, short: {print_time_short}
 ;Filament used: {filament_amount}m {filament_weight}g
 ;Filament cost: {filament_cost}
 ;M190 S{print_bed_temperature} ;Uncomment to add your own bed temperature line
@@ -1259,6 +1259,8 @@ def replaceTagMatch(m):
 		return pre + ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][int(time.strftime('%w'))]
 	if tag == 'print_time':
 		return pre + '#P_TIME#'
+	if tag == 'print_time_short':
+		return pre + '#P_TIME_SHORT#'
 	if tag == 'filament_amount':
 		return pre + '#F_AMNT#'
 	if tag == 'filament_weight':

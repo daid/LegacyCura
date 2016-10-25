@@ -95,6 +95,13 @@ class EngineResult(object):
 			return _('%d hour %d minutes') % (int(self._printTimeSeconds / 60 / 60), int(self._printTimeSeconds / 60) % 60)
 		return _('%d hours %d minutes') % (int(self._printTimeSeconds / 60 / 60), int(self._printTimeSeconds / 60) % 60)
 
+	def getPrintTimeShort(self):
+		if self._printTimeSeconds is None:
+			return ''
+		if int(self._printTimeSeconds / 60 / 60) < 1:
+			return _('%dmin') % (int(self._printTimeSeconds / 60) % 60)
+		return _('%dh %dmin') % (int(self._printTimeSeconds / 60 / 60), int(self._printTimeSeconds / 60) % 60)
+
 	def getFilamentAmount(self, e=0):
 		if self._filamentMM[e] == 0.0:
 			return None
@@ -414,6 +421,7 @@ class Engine(object):
 			logThread.join()
 			if returnCode == 0:
 				self._result.addReplaceTag('#P_TIME#', self._result.getPrintTime())
+				self._result.addReplaceTag('#P_TIME_SHORT#', self._result.getPrintTimeShort())
 				self._result.addReplaceTag('#F_AMNT#', self._result.getFilamentAmountMeters(0))
 				self._result.addReplaceTag('#F_WGHT#', math.floor(self._result.getFilamentWeight(0) * 1000.0))
 				self._result.addReplaceTag('#F_COST#', self._result.getFilamentCost(0))
