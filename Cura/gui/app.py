@@ -79,9 +79,10 @@ class CuraApp(wx.App):
 		pass
 
 	def OnActivate(self, e):
-		if e.GetActive():
-			self.GetTopWindow().Raise()
-		e.Skip()
+		if sys.platform.startswith('darwin'):
+			if e.GetActive():
+				self.GetTopWindow().Raise()
+			e.Skip()
 
 	def Win32SocketListener(self, port):
 		import socket
