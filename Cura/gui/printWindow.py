@@ -294,10 +294,15 @@ class printWindowPlugin(wx.Frame):
 				self._progressBar.SetValue(0)
 		info = connection.getStatusString()
 		info += '\n'
-		if self._printerConnection.getTemperature(0) is not None:
-			info += 'Temperature: %d' % (self._printerConnection.getTemperature(0))
-		if self._printerConnection.getBedTemperature() > 0:
-			info += ' Bed: %d' % (self._printerConnection.getBedTemperature())
+		value = self._printerConnection.getTemperature(0)
+		if value is not None:
+			info += 'Temperature: %d' % (value)
+		value = self._printerConnection.getBedTemperature()
+		if value is not None:
+			info += ' Bed: %d' % (value)
+		value = self._printerConnection.getZ()
+		if value is not None:
+			info += ' Z: %.2f' % (value)
 		if self._infoText is not None:
 			self._infoText.SetLabel(info)
 		else:

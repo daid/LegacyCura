@@ -125,6 +125,9 @@ class printerConnectionBase(object):
 	def getBedTemperature(self):
 		return None
 
+	def getZ(self):
+		return 0.0
+
 	# Get the connection status string. This is displayed to the user and can be used to communicate
 	#  various information to the user.
 	def getStatusString(self):

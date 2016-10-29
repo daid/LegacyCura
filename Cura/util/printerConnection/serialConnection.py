@@ -62,6 +62,7 @@ class serialConnection(printerConnectionBase.printerConnectionBase):
 		self._targetTemperature = []
 		self._bedTemperature = 0
 		self._targetBedTemperature = 0
+		self._z = 0.0
 		self._log = []
 
 		self._commState = None
@@ -157,6 +158,9 @@ class serialConnection(printerConnectionBase.printerConnectionBase):
 	def getBedTemperature(self):
 		return self._bedTemperature
 
+	def getZ(self):
+		return self._z
+
 	#Are we able to send a direct command with sendCommand at this moment in time.
 	def isAbleToSendDirectCommand(self):
 		return self.isActiveConnectionOpen()
@@ -212,6 +216,9 @@ class serialConnection(printerConnectionBase.printerConnectionBase):
 				self._doCallback()
 			elif line[0] == 'progress':
 				self._printProgress = int(line[1])
+				self._doCallback()
+			elif line[0] == 'changeZ':
+				self._z = float(line[1])
 				self._doCallback()
 			else:
 				print line
