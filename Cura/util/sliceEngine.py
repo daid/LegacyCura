@@ -343,7 +343,7 @@ class Engine(object):
 						objMax[1] = max(oMax[1], objMax[1])
 			if objMin is None:
 				return
-			pos += (objMin + objMax) / 2.0 * 1000
+			pos = numpy.add( pos, (objMin + objMax) / 2.0 * 1000, out=pos, casting='unsafe')
 			commandList += ['-s', 'posx=%d' % int(pos[0]), '-s', 'posy=%d' % int(pos[1])]
 
 			vertexTotal = [0] * 4
