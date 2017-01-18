@@ -61,25 +61,33 @@ def isDevVersion():
 
 def checkForNewerVersion():
 	if isDevVersion():
+		print("Running development version, skip updateCheck")
 		return None
 	try:
-		updateBaseURL = 'http://software.ultimaker.com'
-		localVersion = map(int, getVersion(False).split('.'))
+		updateBaseURL = 'https://github.com/moebyus/LegacyCura/releases/download/latest'
+		localVersion = map(int, getVersion(False).split('.')[0:3])
 		while len(localVersion) < 3:
 			localVersion += [1]
 		latestFile = urllib2.urlopen("%s/latest.xml" % (updateBaseURL))
 		latestXml = latestFile.read()
 		latestFile.close()
 		xmlTree = ElementTree.fromstring(latestXml)
+		print("Comprobando actualizaciones.... Version local:")
+		print(localVersion)
 		for release in xmlTree.iter('release'):
 			os = str(release.attrib['os'])
 			version = [int(release.attrib['major']), int(release.attrib['minor']), int(release.attrib['revision'])]
 			filename = release.find("filename").text
+			print("os:")
+			print(os)
+			print("ver:")
+			print(version)
+			print("-")
 			if platform.system() == os:
 				if version > localVersion:
-					return "%s/current/%s" % (updateBaseURL, filename)
+					return filename
 	except:
-		#print sys.exc_info()
+		print sys.exc_info()
 		return None
 	return None
 

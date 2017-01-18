@@ -1,6 +1,12 @@
 Cura
 ====
 
+Todo el credito a ultimaker por el desarrollo de Cura, asi como a todos sus colaboradores. En este repositorio colgamos nuestra personalización y mejoras.
+
+All credit to ultimaker and all the collaborators for Cura. In this repository we hang our personalization and improvements.
+
+
+
 Read this, it's important!
 ===========================
 

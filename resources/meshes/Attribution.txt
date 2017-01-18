@@ -1,3 +1,16 @@
 * ultimaker_platform.stl: 3D platform from the Ultimaker. Derivative from Ultimaker lasercut drawings. CC BY-NC 3.0 license (http://creativecommons.org/licenses/by-nc/3.0/)
   http://www.thingiverse.com/thing:13571
 * ultimaker2_platform.stl: 3D platform from the Ultimaker2, released by Ultimaker for Cura. CC BY-NC 3.0 license (http://creativecommons.org/licenses/by-nc/3.0/)
+*Models below made by Moebyus Machines, released under CC BY-NC 3.0 license (http://creativecommons.org/licenses/by-nc/3.0/), and can be shared and used freely for none-commercial purposes as long as attribution is added:
+-M3_platform.stl
+-Melta_platform.stl
+-MeltaXL_platform.stl
+-MoebyusOne_platform.stl
+-PrusaGeneric_platform.stl
+-PrusaI3MM-L_platform.stl
+-PrusaI3MM-LS_platform.stl
+-PrusaI3MM_platform.stl
+-Sirius1_platform.stl
+-Sirius11_platform.stl
+-SteelMM-L_platform.stl
+-SteelMM_platform.stl

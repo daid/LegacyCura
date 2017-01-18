@@ -2,1021 +2,20 @@
 # Copyright (C) 2013
 # This file is distributed under the same license as the Cura package.
 # Ilya Kulakov <kulakov.ilya@gmail.com>, 2013.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Cura\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-03 10:33+0100\n"
+"POT-Creation-Date: 2017-01-19 00:04+0100\n"
 "PO-Revision-Date: 2014-06-30 16:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.5\n"
-"Language: en\n"
-
-#: Cura/gui/app.py:144 Cura/gui/mainWindow.py:642
-msgid "A new version of Cura is available, would you like to download?"
-msgstr "Cura'nın yeni bir versiyonu hazır, indirmek ister misiniz ? "
-
-#: Cura/gui/app.py:144 Cura/gui/mainWindow.py:642
-msgid "New version available"
-msgstr "Yeni bir versiyon hazır"
-
-#: Cura/gui/configWizard.py:231
-msgid "Add new machine wizard"
-msgstr "Yeni cihaz sihirbazı ekle"
-
-#: Cura/gui/configWizard.py:233
-msgid "First time run wizard"
-msgstr "İlk açılış sihirbazı"
-
-#: Cura/gui/configWizard.py:234
-msgid "Welcome, and thanks for trying Cura!"
-msgstr "Hoşgeldiniz, Cura'yı denediğiniz için teşekkür ederiz !"
-
-#: Cura/gui/configWizard.py:236
-msgid "This wizard will help you in setting up Cura for your machine."
-msgstr "Sihirbaz cihazınıza Cura'yı kurmanıza yardım ediyor"
-
-#: Cura/gui/configWizard.py:239
-#, fuzzy
-msgid "Select your language:"
-msgstr "Cihazınızı seçin"
-
-#: Cura/gui/configWizard.py:266
-#, fuzzy
-msgid "Older models"
-msgstr "3B model aç"
-
-#: Cura/gui/configWizard.py:282
-msgid "Printrbot Selection"
-msgstr ""
-
-#: Cura/gui/configWizard.py:284
-#, fuzzy
-msgid "Select which Printrbot machine you have:"
-msgstr "Hangi tür cihaza sahipsiniz: "
-
-#: Cura/gui/configWizard.py:345
-#, fuzzy
-msgid "Other machine information"
-msgstr "Cihazın mm cinsinden boyutu"
-
-#: Cura/gui/configWizard.py:346
-msgid "The following pre-defined machine profiles are available"
-msgstr "Sıradaki önceden-tanımlı cihaz profilleri hazır"
-
-#: Cura/gui/configWizard.py:347
-msgid ""
-"Note that these profiles are not guaranteed to give good results,\n"
-"or work at all. Extra tweaks might be required.\n"
-"If you find issues with the predefined profiles,\n"
-"or want an extra profile.\n"
-"Please report it at the github issue tracker."
-msgstr ""
-"Bu profillerin iyi sonuçlar vereceği veya çalışacağı garanti değildir. \n"
-" Ekstra uğraşma gerekli olabilir. \n"
-"Eğer önceden-tanımlı profillerle ilgili bir sorun yaşıyorsanız \n"
-" veya ekstra bir profil istiyorsanız lütfen bunu github issue tracker'a "
-"bildirin.  "
-
-#: Cura/gui/configWizard.py:358
-msgid "Custom..."
-msgstr ""
-
-#: Cura/gui/configWizard.py:376
-msgid "Cura Ready!"
-msgstr ""
-
-#: Cura/gui/configWizard.py:377
-msgid "Cura is now ready to be used!"
-msgstr "Cura şimdi kullanıma hazır !"
-
-#: Cura/gui/configWizard.py:381
-#, fuzzy
-msgid "Custom RepRap information"
-msgstr "Anonim kullanıcı bilgisi yükle:"
-
-#: Cura/gui/configWizard.py:382
-msgid ""
-"RepRap machines can be vastly different, so here you can set your own "
-"settings."
-msgstr ""
-"RepRap cihazları büyük ölçüde farklı olabilir, bu yüzden buradan kendi "
-"ayarlarınızı oluşturabilirsiniz."
-
-#: Cura/gui/configWizard.py:383
-msgid ""
-"Be sure to review the default profile before running it on your machine."
-msgstr ""
-"Varsayılan profili cihazınıza yüklemeden önce gözden geçirdiğinize emin "
-"olunuz."
-
-#: Cura/gui/configWizard.py:384
-msgid ""
-"If you like a default profile for your machine added,\n"
-"then make an issue on github."
-msgstr ""
-"Eğer cihazınıza özel bir varsayılan profilin eklenmesini istiyorsanız bunu "
-"github'a bildirin."
-
-#: Cura/gui/configWizard.py:386
-msgid "You will have to manually install Marlin or Sprinter firmware."
-msgstr "Marlin veya Sprinter yazılımını manuel olarak yüklemelisiniz."
-
-#: Cura/gui/configWizard.py:388
-msgid "Machine name"
-msgstr "Cihaz adı"
-
-#: Cura/gui/configWizard.py:389
-#, fuzzy
-msgid "Machine width X (mm)"
-msgstr "Cihaz eni (mm)"
-
-#: Cura/gui/configWizard.py:390
-#, fuzzy
-msgid "Machine depth Y (mm)"
-msgstr "Cihaz derinliği (mm)"
-
-#: Cura/gui/configWizard.py:391
-#, fuzzy
-msgid "Machine height Z (mm)"
-msgstr "Cihaz yüksekliği (mm)"
-
-#: Cura/gui/configWizard.py:392 Cura/util/profile.py:183
-msgid "Nozzle size (mm)"
-msgstr "Baskı ucu çapı (mm)"
-
-#: Cura/gui/configWizard.py:393 Cura/util/profile.py:534
-msgid "Heated bed"
-msgstr "Isınmış levha"
-
-#: Cura/gui/configWizard.py:394
-msgid "Bed center is 0,0,0 (RoStock)"
-msgstr "Levha merkezi 0,0,0'dir (RoStock)."
-
-#: Cura/gui/configWizard.py:414
-msgid "Select your machine"
-msgstr "Cihazınızı seçin"
-
-#: Cura/gui/configWizard.py:415
-msgid "What kind of machine do you have:"
-msgstr "Hangi tür cihaza sahipsiniz: "
-
-#: Cura/gui/configWizard.py:434
-#, fuzzy
-msgid "Other (Ex: RepRap, MakerBot, Witbox)"
-msgstr "Diğer (Ör: RepRap, MakerBot)"
-
-#: Cura/gui/configWizard.py:437
-msgid ""
-"The collection of anonymous usage information helps with the continued "
-"improvement of Cura."
-msgstr ""
-"Anonim kullanıcı bilgisi koleksiyonu Cura'nın sürekli gelişimine yardım "
-"eder. "
-
-#: Cura/gui/configWizard.py:438
-msgid ""
-"This does NOT submit your models online nor gathers any privacy related "
-"information."
-msgstr ""
-"Bu, modellerinizi online olarak paylaşmaz veya hakkınızda herhangi bir özel "
-"bilgi toplamaz."
-
-#: Cura/gui/configWizard.py:439
-msgid "Submit anonymous usage information:"
-msgstr "Anonim kullanıcı bilgisi yükle:"
-
-#: Cura/gui/configWizard.py:440
-msgid "For full details see: http://wiki.ultimaker.com/Cura:stats"
-msgstr "Tüm detaylar için: http://wiki.ultimaker.com/Cura:stats"
-
-#: Cura/gui/configWizard.py:572
-msgid "Select upgraded parts you have"
-msgstr "Güncellediğiniz parçalarınızı seçiniz"
-
-#: Cura/gui/configWizard.py:573
-msgid ""
-"To assist you in having better default settings for your Ultimaker\n"
-"Cura would like to know which upgrades you have in your machine."
-msgstr ""
-"Ultimaker 2'ye uygun varsayılan ayarları oluşturma konusunda size yardımcı "
-"olmak için \n"
-"Cura cihazınızda hangi güncellemelerin olduğunu bilmek istiyor."
-
-#: Cura/gui/configWizard.py:575
-msgid "Extruder drive upgrade"
-msgstr "Extruder sürücü güncellemesi"
-
-#: Cura/gui/configWizard.py:576
-#, fuzzy
-msgid "Heated printer bed (kit)"
-msgstr "Isı"
-
-#: Cura/gui/configWizard.py:577
-msgid "Heated printer bed (self built)"
-msgstr "Isı"
-
-#: Cura/gui/configWizard.py:578
-msgid "Dual extrusion (experimental)"
-msgstr "Çift extrusion (deneysel)"
-
-#: Cura/gui/configWizard.py:580
-msgid ""
-"If you have an Ultimaker bought after october 2012 you will have the\n"
-"Extruder drive upgrade. If you do not have this upgrade,\n"
-"it is highly recommended to improve reliability."
-msgstr ""
-"Eğer 2012 Ekim'inden sonra bir Ultimaker aldıysanız, extruder sürücü "
-"güncellemesine sahipsiniz. Eğer bu güncellemeye sahip değilseniz, "
-"cihazınızın güvenilirliğini arttırmak için bu güncellemeyi yapmanız "
-"önerilir. "
-
-#: Cura/gui/configWizard.py:581
-msgid ""
-"This upgrade can be bought from the Ultimaker webshop\n"
-"or found on thingiverse as thing:26094"
-msgstr ""
-"Bu güncelleme Ultimaker webshop'tan alınabilir \n"
-" veya thingiverse'de thing:26094 olarak bulunabilir."
-
-#: Cura/gui/configWizard.py:603
-msgid "Upgrade Ultimaker Firmware"
-msgstr "Ultimaker Firmware'ını Güncelle"
-
-#: Cura/gui/configWizard.py:604
-msgid ""
-"Firmware is the piece of software running directly on your 3D printer.\n"
-"This firmware controls the step motors, regulates the temperature\n"
-"and ultimately makes your printer work."
-msgstr ""
-"Firmware doğrudan 3D yazıcınızda çalışan yazılım parçasıdır. \n"
-"Bu firmware step motorları kontrol eder, sıcaklığı ayarlar, \n"
-"and sonuç olarak yazıcınızın çalışmasını sağlar."
-
-#: Cura/gui/configWizard.py:606
-msgid ""
-"The firmware shipping with new Ultimakers works, but upgrades\n"
-"have been made to make better prints, and make calibration easier."
-msgstr ""
-"Yeni Ultimaker'lardaki firmware taşıması çalışıyor, ancak daha iyi "
-"baskılar \n"
-"yapılması ve kalibrasyonun daha kolay olması için güncellemeler yapıldı."
-
-#: Cura/gui/configWizard.py:608
-msgid ""
-"Cura requires these new features and thus\n"
-"your firmware will most likely need to be upgraded.\n"
-"You will get the chance to do so now."
-msgstr ""
-"Cura'nın bu yeni özelliklere ihtiyacı var ve bu nedenle \n"
-"sahip olduğunuz firmware'ın güncellenmesi gerek.Birazdan bu güncellemeyi "
-"yapma şansınız olacak. "
-
-#: Cura/gui/configWizard.py:614
-msgid "Do not upgrade to this firmware if:"
-msgstr "Eğer sıradakiler geçerliyse bu firmware'a güncelleme:"
-
-#: Cura/gui/configWizard.py:615
-msgid "* You have an older machine based on ATMega1280 (Rev 1 machine)"
-msgstr "*Eğer ATMega1280 (Rev 1 Machine) ile çalışan eski bir cihazınız varsa"
-
-#: Cura/gui/configWizard.py:616
-msgid "* Build your own heated bed"
-msgstr ""
-
-#: Cura/gui/configWizard.py:617
-msgid "* Have other changes in the firmware"
-msgstr "* Firmware ile ilgili başka değişikliklere sahipseniz"
-
-#: Cura/gui/configWizard.py:637
-msgid "Ultimaker Checkup"
-msgstr ""
-
-#: Cura/gui/configWizard.py:651
-msgid ""
-"It is a good idea to do a few sanity checks now on your Ultimaker.\n"
-"You can skip these if you know your machine is functional."
-msgstr ""
-"Şimdi Ultimaker'ınızda birkaç mantıklı denetleme yürütebilirsiniz. \n"
-"Ancak cihazınızın çalıştığına eminseniz bu adımı atlayabilirsiniz."
-
-#: Cura/gui/configWizard.py:652
-msgid "Run checks"
-msgstr "Denetlemeleri yürüt"
-
-#: Cura/gui/configWizard.py:652
-msgid "Skip checks"
-msgstr "Denetlemeleri atla"
-
-#: Cura/gui/configWizard.py:656
-msgid "Communication:"
-msgstr "İletişim:"
-
-#: Cura/gui/configWizard.py:657
-msgid "Temperature:"
-msgstr "Sıcaklık:"
-
-#: Cura/gui/configWizard.py:658
-msgid "Endstops:"
-msgstr "Durdurucular: "
-
-#: Cura/gui/configWizard.py:663
-msgid "Show error log"
-msgstr "Hata seyir defterini göster"
-
-#: Cura/gui/configWizard.py:697 Cura/gui/configWizard.py:1134
-#: Cura/gui/configWizard.py:1353
-msgid "Connecting to machine."
-msgstr "Cihaza bağlanılıyor."
-
-#: Cura/gui/configWizard.py:718
-msgid "Cooldown before temperature check."
-msgstr "Sıcaklık denetlemesinden önce soğutma"
-
-#: Cura/gui/configWizard.py:724 Cura/gui/configWizard.py:731
-msgid "Checking the heater and temperature sensor."
-msgstr "Isıtıcıyı ve sıcaklık sensorünü denetleme."
-
-#: Cura/gui/configWizard.py:742
-msgid "Please make sure none of the endstops are pressed."
-msgstr "Lütfen hiçbir durdurucunun basılı olmadığına emin olunuz."
-
-#: Cura/gui/configWizard.py:755
-msgid "Temperature measurement FAILED!"
-msgstr "Sıcaklık ölçümü HATALI!"
-
-#: Cura/gui/configWizard.py:760
-#, python-format
-msgid "Head temperature: %d"
-msgstr "Baskı ucu sıcaklığı: %d"
-
-#: Cura/gui/configWizard.py:767 Cura/gui/configWizard.py:776
-#, python-format
-msgid "Communication State: %s"
-msgstr "İletişim durumu: %s"
-
-#: Cura/gui/configWizard.py:770 Cura/gui/configWizard.py:1311
-#: Cura/gui/configWizard.py:1529
-msgid "Failed to establish connection with the printer."
-msgstr "Yazıcıyla bağlantı kurulamadı."
-
-#: Cura/gui/configWizard.py:816 Cura/gui/configWizard.py:825
-msgid "Please press the left X endstop."
-msgstr "Lütfen soldaki X durdurucusuna basınız."
-
-#: Cura/gui/configWizard.py:820
-msgid "Please press the right X endstop."
-msgstr "Lütfen sağdaki X durdurucusuna basınız."
-
-#: Cura/gui/configWizard.py:830
-msgid "Please press the front Y endstop."
-msgstr "Lütfen öndeki Y durdurucusuna basınız."
-
-#: Cura/gui/configWizard.py:836 Cura/gui/configWizard.py:845
-msgid "Please press the top Z endstop."
-msgstr "Lütfen üstteki Z durdurucusuna basınız."
-
-#: Cura/gui/configWizard.py:840
-msgid "Please press the back Y endstop."
-msgstr "Lütfen arkadaki Y durdurucusuna basınız."
-
-#: Cura/gui/configWizard.py:852 Cura/gui/configWizard.py:865
-msgid "Checkup finished"
-msgstr "Denetleme bitti"
-
-#: Cura/gui/configWizard.py:859
-msgid "Please press the bottom Z endstop."
-msgstr "Lütfen alttaki Z durdurucusuna basınız."
-
-#: Cura/gui/configWizard.py:880 Cura/gui/configWizard.py:903
-msgid "Ultimaker Calibration"
-msgstr ""
-
-#: Cura/gui/configWizard.py:908
-msgid "Calibrating the Steps Per E requires some manual actions."
-msgstr ""
-"Adımları her bir E için kalibre etmek bazı elle yapılması gereken eylemler "
-"içerir. "
-
-#: Cura/gui/configWizard.py:909
-msgid "First remove any filament from your machine."
-msgstr "Öncelikle cihazınızda bulunan herhangi bir filamenti kaldırın. "
-
-#: Cura/gui/configWizard.py:910
-msgid ""
-"Next put in your filament so the tip is aligned with the\n"
-"top of the extruder drive."
-msgstr ""
-"Filamentinizi, ucu filament iticinin üst kısmı ike aynı hizaya gelecek "
-"şekilde içeriye sokunuz. "
-
-#: Cura/gui/configWizard.py:911
-msgid "We'll push the filament 100mm"
-msgstr "Filament 100 mm itilecek"
-
-#: Cura/gui/configWizard.py:912
-msgid "Extrude 100mm filament"
-msgstr "Filamenti 100 mm baskı ucundan çıkar"
-
-#: Cura/gui/configWizard.py:913
-msgid ""
-"Now measure the amount of extruded filament:\n"
-"(this can be more or less then 100mm)"
-msgstr ""
-"Şimdi extrude edilmiş filament miktarını giriniz: \n"
-"(Bu 100 mm'den fazla ya da az olabilir.)"
-
-#: Cura/gui/configWizard.py:914
-msgid "Save"
-msgstr "Kaydet"
-
-#: Cura/gui/configWizard.py:915
-msgid "This results in the following steps per E:"
-msgstr "Bu E başına sıradaki adımlarla sonuçlanır:"
-
-#: Cura/gui/configWizard.py:917
-msgid "You can repeat these steps to get better calibration."
-msgstr "Daha iyi bir kalibrasyon için bu adımları tekrarlayabilirsiniz."
-
-#: Cura/gui/configWizard.py:920
-msgid ""
-"If you still have filament in your printer which needs\n"
-"heat to remove, press the heat up button below:"
-msgstr ""
-"Eğer yazıcınızda çıkarılmak için ısıtılması gereken \n"
-"filament varsa, alttaki ısıtma butonuna basınız. "
-
-#: Cura/gui/configWizard.py:921
-msgid "Heatup for filament removal"
-msgstr "Filament çıkarılması için ısıt"
-
-#: Cura/gui/configWizard.py:946 Cura/gui/configWizard.py:980
-msgid ""
-"Error: Failed to open serial port to machine\n"
-"If this keeps happening, try disconnecting and reconnecting the USB cable"
-msgstr ""
-"Hata: Cihaza seri port açma sırasında hata oluştu. \n"
-"Eğer bu hata tekrar ederse, bağlantıyı kopardıktan sorna USB kablosunu "
-"yeniden takmanız önerilir. "
-
-#: Cura/gui/configWizard.py:1020
-msgid "Ultimaker2"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1021
-msgid "Congratulations on your the purchase of your brand new Ultimaker2."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1022
-#, fuzzy
-msgid "Cura is now ready to be used with your Ultimaker2."
-msgstr "Cura şimdi kullanıma hazır !"
-
-#: Cura/gui/configWizard.py:1027
-msgid "Lulzbot TAZ/Mini"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1028
-#, fuzzy
-msgid "Cura is now ready to be used with your Lulzbot."
-msgstr "Cura şimdi kullanıma hazır !"
-
-#: Cura/gui/configWizard.py:1033
-msgid "Configuration Wizard"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1094 Cura/gui/configWizard.py:1542
-#, fuzzy
-msgid "Bed leveling wizard"
-msgstr "Baskı levhası hizalama yazılımını aç..."
-
-#: Cura/gui/configWizard.py:1096
-#, fuzzy
-msgid "This wizard will help you in leveling your printer bed"
-msgstr "Sihirbaz cihazınıza Cura'yı kurmanıza yardım ediyor"
-
-#: Cura/gui/configWizard.py:1098
-#, fuzzy
-msgid "It will do the following steps"
-msgstr "Bu E başına sıradaki adımlarla sonuçlanır:"
-
-#: Cura/gui/configWizard.py:1099
-msgid "* Move the printer head to each corner"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1100
-msgid "  and let you adjust the height of the bed to the nozzle"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1101
-msgid "* Print a line around the bed to check if it is level"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1104 Cura/gui/configWizard.py:1329
-#, fuzzy
-msgid "Connect to printer"
-msgstr "Cihaza bağlanılıyor."
-
-#: Cura/gui/configWizard.py:1108 Cura/gui/configWizard.py:1335
-#, fuzzy
-msgid "Resume"
-msgstr "En basa al"
-
-#: Cura/gui/configWizard.py:1109
-msgid "Up 0.2mm"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1109
-msgid "Down 0.2mm"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1110
-msgid "Up 10mm"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1110
-msgid "Down 10mm"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1170
-msgid "Homing printer..."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1180
-msgid "Moving head to back center..."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1187
-msgid "Moving head to back left corner..."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1195 Cura/gui/configWizard.py:1209
-msgid "Moving head to front right corner..."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1202
-msgid "Moving head to back right corner..."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1216
-msgid "Heating up printer..."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1223
-msgid "Printing a square on the printer bed at 0.3mm height."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1263
-msgid ""
-"Adjust the front left screw of your printer bed\n"
-"So the nozzle just hits the bed."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1268
-msgid ""
-"Adjust the back screw of your printer bed\n"
-"So the nozzle just hits the bed."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1270
-msgid ""
-"Adjust the back left screw of your printer bed\n"
-"So the nozzle just hits the bed."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1274
-msgid ""
-"Adjust the back right screw of your printer bed\n"
-"So the nozzle just hits the bed."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1278
-msgid ""
-"Adjust the front right screw of your printer bed\n"
-"So the nozzle just hits the bed."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1282
-#, python-format
-msgid "Heating up printer: %d/%d"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1284
-msgid ""
-"The printer is hot now. Please insert some PLA filament into the printer."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1293
-msgid "Use the up/down buttons to move the bed and adjust your Z endstop."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1305
-msgid ""
-"Calibration finished.\n"
-"The squares on the bed should slightly touch each other."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1326
-#, fuzzy
-msgid ""
-"This wizard will help you in calibrating the printer head offsets of your "
-"dual extrusion machine"
-msgstr "Sihirbaz cihazınıza Cura'yı kurmanıza yardım ediyor"
-
-#: Cura/gui/configWizard.py:1359
-msgid "Printing initial calibration cross"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1407
-msgid ""
-"Please measure the distance between the horizontal lines in millimeters."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1417
-msgid "Printing the fine calibration lines."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1472
-msgid ""
-"Which horizontal line number lays perfect on top of each other? Front most "
-"line is zero."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1483
-#, python-format
-msgid "Calibration finished. Offsets are: %s %s"
-msgstr ""
-
-#: Cura/gui/configWizard.py:1496
-msgid "Please load both extruders with PLA."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1505
-msgid "Homing printer and heating up both extruders."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1515
-msgid "Please measure the distance between the vertical lines in millimeters."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1522
-msgid ""
-"Which vertical line number lays perfect on top of each other? Leftmost line "
-"is zero."
-msgstr ""
-
-#: Cura/gui/configWizard.py:1571
-msgid "Head offset wizard"
-msgstr ""
-
-#: Cura/gui/expertConfig.py:27
-#, fuzzy
-msgid "Expert config"
-msgstr "Gelişmiş"
-
-#: Cura/gui/firmwareInstall.py:71
-msgid ""
-"I am sorry, but Cura does not ship with a default firmware for your machine "
-"configuration."
-msgstr ""
-"Üzgünüz, ancak Cura cihazınızın konfigürasyonuna uygun bir firmware ile "
-"birlikte gelmez. "
-
-#: Cura/gui/firmwareInstall.py:71 Cura/gui/firmwareInstall.py:76
-#: Cura/gui/firmwareInstall.py:131 Cura/gui/mainWindow.py:572
-msgid "Firmware update"
-msgstr "Firmware güncellemesi"
-
-#: Cura/gui/firmwareInstall.py:76
-msgid ""
-"Cura only supports firmware updates for ATMega2560 based hardware.\n"
-"So updating your RepRap with Cura might or might not work."
-msgstr ""
-"Cura sadece ATMega2560 tabanlı donanıma uygun firmware güncellemelerini "
-"destekler. \n"
-"Bu yüzden RepRap'inizi Cura ile güncellemek işe yaramayabilir. "
-
-#: Cura/gui/firmwareInstall.py:84 Cura/gui/firmwareInstall.py:188
-msgid "OK"
-msgstr "Tamam"
-
-#: Cura/gui/firmwareInstall.py:105 Cura/gui/firmwareInstall.py:272
-msgid "Reading firmware..."
-msgstr "Firmware okunuyor..."
-
-#: Cura/gui/firmwareInstall.py:107 Cura/gui/firmwareInstall.py:274
-msgid "Connecting to machine..."
-msgstr "Cihaza bağlanılıyor..."
-
-#: Cura/gui/firmwareInstall.py:111 Cura/gui/firmwareInstall.py:278
-msgid ""
-"Please connect the printer to\n"
-"your computer with the USB cable."
-msgstr ""
-"Lütfen yazıcınızı USB kablosuyla \n"
-"bilgisayarınıza bağlayınız."
-
-#: Cura/gui/firmwareInstall.py:130
-msgid ""
-"Failed to find machine for firmware upgrade\n"
-"Is your machine connected to the PC?"
-msgstr ""
-"Firmware güncellemesi için cihaz bulunamadı. \n"
-"Cihazınız bilgisayarınıza bağlı mı ?"
-
-#: Cura/gui/firmwareInstall.py:137
-msgid ""
-"Failed to install firmware:\n"
-"This firmware is not compatible with this machine.\n"
-"Trying to install UMO firmware on an UM2 or UMO+?"
-msgstr ""
-
-#: Cura/gui/firmwareInstall.py:143
-msgid ""
-"Failed to install firmware:\n"
-"This firmware is not compatible with this machine.\n"
-"Trying to install UM2 or UMO+ firmware on an UMO?"
-msgstr ""
-
-#: Cura/gui/firmwareInstall.py:148 Cura/gui/firmwareInstall.py:300
-msgid "Uploading firmware..."
-msgstr "Firmware yükleniyor..."
-
-#: Cura/gui/firmwareInstall.py:151 Cura/gui/firmwareInstall.py:303
-#, python-format
-msgid ""
-"Done!\n"
-"Installed firmware: %s"
-msgstr ""
-"Hazır!\n"
-"Firmware kuruldu: %s"
-
-#: Cura/gui/firmwareInstall.py:153 Cura/gui/firmwareInstall.py:305
-msgid "Failed to write firmware.\n"
-msgstr "Firmware yazma hatası. \n"
-
-#: Cura/gui/firmwareInstall.py:297
-#, fuzzy
-msgid "Failed to connect to programmer.\n"
-msgstr "YouMagine.com'a bağlanılamadı"
-
-#: Cura/gui/mainWindow.py:72
-msgid "Load model file...\tCTRL+L"
-msgstr "Model dosyası yükle...\tCTRL+L"
-
-#: Cura/gui/mainWindow.py:74
-msgid "Save model...\tCTRL+S"
-msgstr "Modeli kaydet...\tCTRL+S"
-
-#: Cura/gui/mainWindow.py:76
-msgid "Reload platform\tF5"
-msgstr "Platformu yenile \tF5"
-
-#: Cura/gui/mainWindow.py:78
-msgid "Clear platform"
-msgstr "Platformu temizle"
-
-#: Cura/gui/mainWindow.py:82
-msgid "Print...\tCTRL+P"
-msgstr "Yazdır...\tCTRL+P"
-
-#: Cura/gui/mainWindow.py:84 Cura/gui/sceneView.py:319
-msgid "Save GCode..."
-msgstr "G-Kod'u kaydet..."
-
-#: Cura/gui/mainWindow.py:86
-msgid "Show slice engine log..."
-msgstr "Dilimleme motoru seyir defterini göster..."
-
-#: Cura/gui/mainWindow.py:90
-msgid "Open Profile..."
-msgstr "Profili aç..."
-
-#: Cura/gui/mainWindow.py:93
-msgid "Save Profile..."
-msgstr "Profili kaydet..."
-
-#: Cura/gui/mainWindow.py:100
-msgid "Load Profile from GCode..."
-msgstr "G-Koddan profil yükle"
-
-#: Cura/gui/mainWindow.py:104
-msgid "Reset Profile to default"
-msgstr "Profili varsayılana ayarla"
-
-#: Cura/gui/mainWindow.py:109
-msgid "Preferences...\tCTRL+,"
-msgstr "Tercihler...\tCTRL+,"
-
-#: Cura/gui/mainWindow.py:111 Cura/gui/mainWindow.py:480
-msgid "Machine settings..."
-msgstr "Cihaz ayarları..."
-
-#: Cura/gui/mainWindow.py:117
-msgid "Recent Model Files"
-msgstr "Son Model Dosyaları"
-
-#: Cura/gui/mainWindow.py:124
-msgid "Recent Profile Files"
-msgstr "Son Profil Dosyaları"
-
-#: Cura/gui/mainWindow.py:130
-msgid "Quit"
-msgstr "Çık"
-
-#: Cura/gui/mainWindow.py:132
-msgid "File"
-msgstr "Dosya"
-
-#: Cura/gui/mainWindow.py:140
-msgid "Minecraft map import..."
-msgstr "Minecraft haritası ekle..."
-
-#: Cura/gui/mainWindow.py:144
-msgid "PID Debugger..."
-msgstr "PID Debug edici..."
-
-#: Cura/gui/mainWindow.py:146
-#, fuzzy
-msgid "Auto Firmware Update..."
-msgstr "Firmware güncellemesi"
-
-#: Cura/gui/mainWindow.py:153
-msgid "Print all at once"
-msgstr "Hepsini aynı anda bas"
-
-#: Cura/gui/mainWindow.py:155
-msgid "Print one at a time"
-msgstr "Birer birer bas"
-
-#: Cura/gui/mainWindow.py:162
-msgid "Tools"
-msgstr "Araçlar"
-
-#: Cura/gui/mainWindow.py:168 Cura/util/profile.py:183
-msgid "Machine"
-msgstr "Cihaz"
-
-#: Cura/gui/mainWindow.py:171
-msgid "Switch to quickprint..."
-msgstr "Hızlı-baskıya geç..."
-
-#: Cura/gui/mainWindow.py:175
-msgid "Switch to full settings..."
-msgstr "Tam ayarlara geç..."
-
-#: Cura/gui/mainWindow.py:180
-msgid "Open expert settings...\tCTRL+E"
-msgstr "Gelişmiş ayarları aç...\tCTRL+E"
-
-#: Cura/gui/mainWindow.py:184
-msgid "Run bed leveling wizard..."
-msgstr "Baskı levhası hizalama yazılımını aç..."
-
-#: Cura/gui/mainWindow.py:186
-msgid "Run head offset wizard..."
-msgstr ""
-
-#: Cura/gui/mainWindow.py:189
-msgid "Expert"
-msgstr "Gelişmiş"
-
-#: Cura/gui/mainWindow.py:192
-msgid "Online documentation..."
-msgstr "Çevrimiçi belgeleme..."
-
-#: Cura/gui/mainWindow.py:194
-msgid "Report a problem..."
-msgstr "Hata bildir..."
-
-#: Cura/gui/mainWindow.py:196
-msgid "Check for update..."
-msgstr "Güncellemeleri denetle..."
-
-#: Cura/gui/mainWindow.py:198
-msgid "Open YouMagine website..."
-msgstr "YouMagine sitesini aç..."
-
-#: Cura/gui/mainWindow.py:200
-msgid "About Cura..."
-msgstr "Cura hakkında..."
-
-#: Cura/gui/mainWindow.py:202
-msgid "Help"
-msgstr "Yardım"
-
-#: Cura/gui/mainWindow.py:390
-msgid ""
-"For \"One at a time\" printing, you need to have entered the correct head "
-"size and gantry height in the machine settings"
-msgstr ""
-"\"Hepsini aynı anda bas\" baskı seçeneği için cihaz ayarlarına doğru yazıcı "
-"başı boyutlarını ve gantry yüksekliği girmelisiniz."
-
-#: Cura/gui/mainWindow.py:390
-msgid "One at a time warning"
-msgstr "Her seferinde bir uyarı"
-
-#: Cura/gui/mainWindow.py:478
-#, fuzzy
-msgid "Add new machine..."
-msgstr "Yeni cihaz sihirbazı ekle"
-
-#: Cura/gui/mainWindow.py:486
-msgid "Install default firmware..."
-msgstr "Varsayılan firmware'ı kur..."
-
-#: Cura/gui/mainWindow.py:489
-msgid "Install custom firmware..."
-msgstr "Özel firmware yükle..."
-
-#: Cura/gui/mainWindow.py:493
-msgid "Select profile file to load"
-msgstr "Yüklenecek profili seçiniz"
-
-#: Cura/gui/mainWindow.py:505
-msgid "Select gcode file to load profile from"
-msgstr "Profilin kendisinden yükleneceği gkodunu seçiniz"
-
-#: Cura/gui/mainWindow.py:520
-msgid ""
-"No profile found in GCode file.\n"
-"This feature only works with GCode files made by Cura 12.07 or newer."
-msgstr ""
-"G-Kod dosyasında profil bulunamadı. \n"
-"Bu özellik sadece Cura 12.07 ve daha yeni Cura versiyonları tarafından "
-"oluşturulan G-Kod dosyaları için çalışır. "
-
-#: Cura/gui/mainWindow.py:520
-msgid "Profile load error"
-msgstr "Profil yükleme hatası"
-
-#: Cura/gui/mainWindow.py:524 Cura/gui/mainWindow.py:534
-msgid "Select profile file to save"
-msgstr "Kaydedilecek profili seç"
-
-#: Cura/gui/mainWindow.py:544
-msgid ""
-"This will reset all profile settings to defaults.\n"
-"Unless you have saved your current profile, all settings will be lost!\n"
-"Do you really want to reset?"
-msgstr ""
-"Bu bütün profil ayarlarını varsayılana geri yükler. \n"
-" Eğer şuanki profilinizi kaydetmediyseniz, bütün değişiklikler "
-"kaybedilecektir! \n"
-"Gerçekten tüm profil ayarlarını sıfırlamak istiyor musunuz ? "
-
-#: Cura/gui/mainWindow.py:544
-msgid "Profile reset"
-msgstr "Profili yeniden başlat"
-
-#: Cura/gui/mainWindow.py:557
-msgid ""
-"Copy the settings from quickprint to your full settings?\n"
-"(This will overwrite any full setting modifications you have)"
-msgstr ""
-
-#: Cura/gui/mainWindow.py:557
-#, fuzzy
-msgid "Profile copy"
-msgstr "Profili yeniden başlat"
-
-#: Cura/gui/mainWindow.py:572
-msgid ""
-"Warning: Installing a custom firmware does not guarantee that you machine "
-"will function correctly, and could damage your machine."
-msgstr ""
-"Uyarı: Özel bir firmware yüklemek cihazınızın doğru çalışacağını "
-"garantilemez ve cihazınıza zarar verebilir. "
-
-#: Cura/gui/mainWindow.py:573 Cura/gui/mainWindow.py:616
-msgid "Open firmware to upload"
-msgstr "Yüklenecek firmware aç"
-
-#: Cura/gui/mainWindow.py:645
-msgid "You are running the latest version of Cura!"
-msgstr "Cura'nın en yeni versiyonunu kullanıyorsunuz!"
-
-#: Cura/gui/mainWindow.py:645
-msgid "Awesome!"
-msgstr "Mükemmel!"
-
-#: Cura/gui/mainWindow.py:690
-msgid "Basic"
-msgstr ""
-
-#: Cura/gui/mainWindow.py:694
-msgid "Advanced"
-msgstr ""
-
-#: Cura/gui/mainWindow.py:700
-msgid "Plugins"
-msgstr "Eklentiler"
 
 #: Cura/gui/pluginPanel.py:31
 msgid "Plugins:"
@@ -1038,133 +37,13 @@ msgstr "Herhangi bir şey eklemeden önce bir eklenti seçmelisiniz."
 msgid "Error: no plugin selected"
 msgstr "Hata: eklenti seçilmedi"
 
-#: Cura/gui/preferencesDialog.py:15
-#, fuzzy
-msgid "Preferences"
-msgstr "Tercihler...\tCTRL+,"
-
-#: Cura/gui/preferencesDialog.py:29
-msgid "Print window"
-msgstr "Baskı penceresi"
-
-#: Cura/gui/preferencesDialog.py:32
-msgid "Colours"
-msgstr "Renkler"
-
-#: Cura/gui/preferencesDialog.py:38 Cura/util/profile.py:509
-msgid "Language"
-msgstr "Dil"
-
-#: Cura/gui/preferencesDialog.py:41
-msgid "Filament settings"
-msgstr "Filament ayarları"
-
-#: Cura/gui/preferencesDialog.py:58
-msgid "Cura settings"
-msgstr "Cura ayarları"
-
-#: Cura/gui/preferencesDialog.py:80
-msgid "Select replication root folder"
-msgstr ""
-
-#: Cura/gui/preferencesDialog.py:97 Cura/gui/preferencesDialog.py:113
-msgid "Machine settings"
-msgstr "Cihaz ayarları"
-
-#: Cura/gui/preferencesDialog.py:124
-msgid "Printer head size"
-msgstr "Baskı başı büyüklüğü"
-
-#: Cura/gui/preferencesDialog.py:132
-#, python-format
-msgid "Extruder %d"
-msgstr "Extruder &d"
-
-#: Cura/gui/preferencesDialog.py:136
-msgid "Communication settings"
-msgstr "İletişim ayarları"
-
-#: Cura/gui/preferencesDialog.py:148
-msgid "Ok"
-msgstr ""
-
-#: Cura/gui/preferencesDialog.py:152
-#, fuzzy
-msgid "Add new machine"
-msgstr "Yeni cihaz sihirbazı ekle"
-
-#: Cura/gui/preferencesDialog.py:156
-#, fuzzy
-msgid "Remove machine"
-msgstr "Cihazınızı seçin"
-
-#: Cura/gui/preferencesDialog.py:160 Cura/gui/preferencesDialog.py:196
-#, fuzzy
-msgid "Change machine name"
-msgstr "Cihaz adı"
-
-#: Cura/gui/preferencesDialog.py:182
-msgid "Cannot remove the last machine configuration in Cura"
-msgstr "Cura'daki son cihaz konfigürasyonu kaldırılamıyor"
-
-#: Cura/gui/preferencesDialog.py:182
-msgid "Machine remove error"
-msgstr "Cihaz çıkarma hatası"
-
-#: Cura/gui/preferencesDialog.py:196
-msgid "Enter the new name:"
-msgstr ""
-
-#: Cura/gui/printWindow.py:33 Cura/gui/printWindow.py:312
-#, python-format
-msgid "Printing on %s"
-msgstr "%s ile yazdırılıyor"
-
-#: Cura/gui/printWindow.py:324
-msgid ""
-"Your computer is running on battery power.\n"
-"Connect your computer to AC power or your print might not finish."
-msgstr ""
-"Bilgisayarınız batarya üzerinden çalışıyor. \n"
-"Bilgisayarınızı bir AC güç kaynağına bağlayın, yoksa baskınız bitmeyebilir. "
-
-#: Cura/gui/printWindow.py:334
-#, fuzzy
-msgid ""
-"InfoLine from printer connection\n"
-"InfoLine from dialog\n"
-"Extra line\n"
-"More lines for layout\n"
-"More lines for layout\n"
-"More lines for layout"
-msgstr ""
-"Yazıcı bağlantısından InfoLine \n"
-"Dialogtan InfoLine \n"
-"Ekstra line"
-
-#: Cura/gui/printWindow.py:336
-msgid "Connect"
-msgstr "Bağlan"
-
-#: Cura/gui/printWindow.py:338 Cura/gui/sceneView.py:66
-msgid "Print"
-msgstr "Yazdır"
-
-#: Cura/gui/printWindow.py:339
-msgid "Pause"
-msgstr "Durdur"
-
-#: Cura/gui/printWindow.py:340
-msgid "Cancel print"
-msgstr "Baskıyı iptal et"
-
-#: Cura/gui/printWindow.py:341
-msgid "Error log"
-msgstr "Hata seyir defteri"
-
 #: Cura/gui/sceneView.py:65
 msgid "Load"
 msgstr "Yükle"
+
+#: Cura/gui/sceneView.py:66 Cura/gui/printWindow.py:338
+msgid "Print"
+msgstr "Yazdır"
 
 #: Cura/gui/sceneView.py:70
 msgid "Rotate"
@@ -1258,54 +137,58 @@ msgstr "Katmanlar"
 msgid "Share on YouMagine"
 msgstr "YouMagine'da paylas"
 
-#: Cura/gui/sceneView.py:227
+#: Cura/gui/sceneView.py:228
 msgid "Open 3D model"
 msgstr "3B model aç"
 
-#: Cura/gui/sceneView.py:252
+#: Cura/gui/sceneView.py:253
 msgid "Save 3D model"
 msgstr "3B modeli kaydet"
 
-#: Cura/gui/sceneView.py:316 Cura/gui/sceneView.py:1004
+#: Cura/gui/sceneView.py:317 Cura/gui/sceneView.py:1004
 #, python-format
 msgid "Print with %s"
 msgstr "%s ile yazdır"
 
 #: Cura/gui/sceneView.py:320
+msgid "Save GCode..."
+msgstr "G-Kod'u kaydet..."
+
+#: Cura/gui/sceneView.py:321
 msgid "Slice engine log..."
 msgstr "Dilimleme makinesi seyir defteri "
 
-#: Cura/gui/sceneView.py:347 Cura/gui/sceneView.py:1007
+#: Cura/gui/sceneView.py:348 Cura/gui/sceneView.py:1007
 msgid "Save toolpath"
 msgstr "Ayarlamalari kaydet"
 
-#: Cura/gui/sceneView.py:394
+#: Cura/gui/sceneView.py:395
 msgid "The slicing engine reported the following"
 msgstr "Dilimleme makinesi raporu"
 
-#: Cura/gui/sceneView.py:394
+#: Cura/gui/sceneView.py:395
 msgid "Engine log..."
 msgstr "Makine seyir defteri "
 
-#: Cura/gui/sceneView.py:533
+#: Cura/gui/sceneView.py:534
 msgid "How many copies do you want?"
 msgstr "Kaç tane kopya istiyorsunuz ? "
 
-#: Cura/gui/sceneView.py:533
+#: Cura/gui/sceneView.py:534
 msgid "Number of copies"
 msgstr "Kopya sayısı"
 
-#: Cura/gui/sceneView.py:533
+#: Cura/gui/sceneView.py:534
 msgid "Multiply"
 msgstr "Çoğalt"
 
-#: Cura/gui/sceneView.py:556
+#: Cura/gui/sceneView.py:557
 msgid ""
 "Cannot fit all the requested duplicates. Do you want to try and reset object "
 "positions?"
 msgstr ""
 
-#: Cura/gui/sceneView.py:556
+#: Cura/gui/sceneView.py:557
 msgid "Reset Positions"
 msgstr ""
 
@@ -1354,19 +237,1239 @@ msgstr "Ayarlamaları SD karta kaydet"
 msgid "Overhang view not working due to lack of OpenGL shaders support."
 msgstr ""
 
-#: Cura/gui/simpleMode.py:52
+#: Cura/gui/printWindow.py:33 Cura/gui/printWindow.py:312
+#, python-format
+msgid "Printing on %s"
+msgstr "%s ile yazdırılıyor"
+
+#: Cura/gui/printWindow.py:324
+msgid ""
+"Your computer is running on battery power.\n"
+"Connect your computer to AC power or your print might not finish."
+msgstr ""
+"Bilgisayarınız batarya üzerinden çalışıyor. \n"
+"\vBilgisayarınızı bir AC güç kaynağına bağlayın, yoksa baskınız "
+"bitmeyebilir. "
+
+#: Cura/gui/printWindow.py:334
+#, fuzzy
+msgid ""
+"InfoLine from printer connection\n"
+"InfoLine from dialog\n"
+"Extra line\n"
+"More lines for layout\n"
+"More lines for layout\n"
+"More lines for layout"
+msgstr ""
+"Yazıcı bağlantısından InfoLine \n"
+"\vDialogtan InfoLine \n"
+"\vEkstra line"
+
+#: Cura/gui/printWindow.py:336
+msgid "Connect"
+msgstr "Bağlan"
+
+#: Cura/gui/printWindow.py:339
+msgid "Pause"
+msgstr "Durdur"
+
+#: Cura/gui/printWindow.py:340
+msgid "Cancel print"
+msgstr "Baskıyı iptal et"
+
+#: Cura/gui/printWindow.py:341
+msgid "Error log"
+msgstr "Hata seyir defteri"
+
+#: Cura/gui/preferencesDialog.py:15
+#, fuzzy
+msgid "Preferences"
+msgstr "Tercihler...\tCTRL+,"
+
+#: Cura/gui/preferencesDialog.py:29
+msgid "Print window"
+msgstr "Baskı penceresi"
+
+#: Cura/gui/preferencesDialog.py:32
+msgid "Colours"
+msgstr "Renkler"
+
+#: Cura/gui/preferencesDialog.py:38 Cura/util/profile.py:512
+msgid "Language"
+msgstr "Dil"
+
+#: Cura/gui/preferencesDialog.py:41
+msgid "Filament settings"
+msgstr "Filament ayarları"
+
+#: Cura/gui/preferencesDialog.py:58
+msgid "Cura settings"
+msgstr "Cura ayarları"
+
+#: Cura/gui/preferencesDialog.py:80
+msgid "Select replication root folder"
+msgstr ""
+
+#: Cura/gui/preferencesDialog.py:97 Cura/gui/preferencesDialog.py:113
+msgid "Machine settings"
+msgstr "Cihaz ayarları"
+
+#: Cura/gui/preferencesDialog.py:124
+msgid "Printer head size"
+msgstr "Baskı başı büyüklüğü"
+
+#: Cura/gui/preferencesDialog.py:132
+#, python-format
+msgid "Extruder %d"
+msgstr "Extruder &d"
+
+#: Cura/gui/preferencesDialog.py:136
+msgid "Communication settings"
+msgstr "İletişim ayarları"
+
+#: Cura/gui/preferencesDialog.py:158
+msgid "Ok"
+msgstr ""
+
+#: Cura/gui/preferencesDialog.py:162
+#, fuzzy
+msgid "Add new machine"
+msgstr "Yeni cihaz sihirbazı ekle"
+
+#: Cura/gui/preferencesDialog.py:166
+#, fuzzy
+msgid "Remove machine"
+msgstr "Cihazınızı seçin"
+
+#: Cura/gui/preferencesDialog.py:170 Cura/gui/preferencesDialog.py:206
+#, fuzzy
+msgid "Change machine name"
+msgstr "Cihaz adı"
+
+#: Cura/gui/preferencesDialog.py:192
+msgid "Cannot remove the last machine configuration in Cura"
+msgstr "Cura'daki son cihaz konfigürasyonu kaldırılamıyor"
+
+#: Cura/gui/preferencesDialog.py:192
+msgid "Machine remove error"
+msgstr "Cihaz çıkarma hatası"
+
+#: Cura/gui/preferencesDialog.py:206
+msgid "Enter the new name:"
+msgstr ""
+
+#: Cura/gui/firmwareInstall.py:80
+msgid ""
+"I am sorry, but Cura does not ship with a default firmware for your machine "
+"configuration."
+msgstr ""
+"Üzgünüz, ancak Cura cihazınızın konfigürasyonuna uygun bir firmware ile "
+"birlikte gelmez. "
+
+#: Cura/gui/firmwareInstall.py:80 Cura/gui/firmwareInstall.py:85
+#: Cura/gui/firmwareInstall.py:141 Cura/gui/mainWindow.py:586
+msgid "Firmware update"
+msgstr "Firmware güncellemesi"
+
+#: Cura/gui/firmwareInstall.py:85
+msgid ""
+"Cura only supports firmware updates for ATMega2560 based hardware.\n"
+"So updating your RepRap with Cura might or might not work."
+msgstr ""
+"Cura sadece ATMega2560 tabanlı donanıma uygun firmware güncellemelerini "
+"destekler. \n"
+"\vBu yüzden RepRap'inizi Cura ile güncellemek işe yaramayabilir. "
+
+#: Cura/gui/firmwareInstall.py:93 Cura/gui/firmwareInstall.py:211
+msgid "OK"
+msgstr "Tamam"
+
+#: Cura/gui/firmwareInstall.py:115 Cura/gui/firmwareInstall.py:295
+msgid "Reading firmware..."
+msgstr "Firmware okunuyor..."
+
+#: Cura/gui/firmwareInstall.py:117 Cura/gui/firmwareInstall.py:297
+msgid "Connecting to machine..."
+msgstr "Cihaza bağlanılıyor..."
+
+#: Cura/gui/firmwareInstall.py:121 Cura/gui/firmwareInstall.py:301
+msgid ""
+"Please connect the printer to\n"
+"your computer with the USB cable."
+msgstr ""
+"Lütfen yazıcınızı USB kablosuyla \n"
+"\vbilgisayarınıza bağlayınız."
+
+#: Cura/gui/firmwareInstall.py:140
+msgid ""
+"Failed to find machine for firmware upgrade\n"
+"Is your machine connected to the PC?"
+msgstr ""
+"Firmware güncellemesi için cihaz bulunamadı. \n"
+"\vCihazınız bilgisayarınıza bağlı mı ?"
+
+#: Cura/gui/firmwareInstall.py:148
+msgid ""
+"Failed to install firmware:\n"
+"This firmware is not compatible with this machine.\n"
+"Trying to install UMO firmware on an UM2 or UMO+?"
+msgstr ""
+
+#: Cura/gui/firmwareInstall.py:154
+msgid ""
+"Failed to install firmware:\n"
+"This firmware is not compatible with this machine.\n"
+"Trying to install UM2 or UMO+ firmware on an UMO?"
+msgstr ""
+
+#: Cura/gui/firmwareInstall.py:159 Cura/gui/firmwareInstall.py:323
+msgid "Uploading firmware..."
+msgstr "Firmware yükleniyor..."
+
+#: Cura/gui/firmwareInstall.py:162 Cura/gui/firmwareInstall.py:326
+#, python-format
+msgid ""
+"Done!\n"
+"Installed firmware: %s"
+msgstr ""
+"Hazır!\n"
+"\vFirmware kuruldu: %s"
+
+#: Cura/gui/firmwareInstall.py:170
+#, python-format
+msgid ""
+"Failed to write firmware: %s\n"
+"You might need to update your drivers. Goto:\n"
+"%s"
+msgstr ""
+
+#: Cura/gui/firmwareInstall.py:171
+msgid "Close, open support page"
+msgstr ""
+
+#: Cura/gui/firmwareInstall.py:320
+#, fuzzy
+msgid "Failed to connect to programmer.\n"
+msgstr "YouMagine.com'a bağlanılamadı"
+
+#: Cura/gui/firmwareInstall.py:328
+msgid "Failed to write firmware.\n"
+msgstr "Firmware yazma hatası. \n"
+
+#: Cura/gui/app.py:146 Cura/gui/mainWindow.py:657
+msgid "A new version of Cura is available, would you like to download?"
+msgstr "Cura'nın yeni bir versiyonu hazır, indirmek ister misiniz ? "
+
+#: Cura/gui/app.py:146 Cura/gui/mainWindow.py:657
+msgid "New version available"
+msgstr "Yeni bir versiyon hazır"
+
+#: Cura/gui/mainWindow.py:72
+msgid "Load model file...\tCTRL+L"
+msgstr "Model dosyası yükle...\tCTRL+L"
+
+#: Cura/gui/mainWindow.py:74
+msgid "Save model...\tCTRL+S"
+msgstr "Modeli kaydet...\tCTRL+S"
+
+#: Cura/gui/mainWindow.py:76
+msgid "Reload platform\tF5"
+msgstr "Platformu yenile \tF5"
+
+#: Cura/gui/mainWindow.py:78
+#, fuzzy
+msgid "Clear platform\tCTRL+D"
+msgstr "Platformu temizle"
+
+#: Cura/gui/mainWindow.py:82
+msgid "Print...\tCTRL+P"
+msgstr "Yazdır...\tCTRL+P"
+
+#: Cura/gui/mainWindow.py:84
+#, fuzzy
+msgid "Save GCode...\tCTRL+G"
+msgstr "Modeli kaydet...\tCTRL+S"
+
+#: Cura/gui/mainWindow.py:86
+msgid "Show slice engine log..."
+msgstr "Dilimleme motoru seyir defterini göster..."
+
+#: Cura/gui/mainWindow.py:90
+msgid "Open Profile..."
+msgstr "Profili aç..."
+
+#: Cura/gui/mainWindow.py:93
+msgid "Save Profile..."
+msgstr "Profili kaydet..."
+
+#: Cura/gui/mainWindow.py:100
+msgid "Load Profile from GCode..."
+msgstr "G-Koddan profil yükle"
+
+#: Cura/gui/mainWindow.py:111
+msgid "Preferences...\tCTRL+,"
+msgstr "Tercihler...\tCTRL+,"
+
+#: Cura/gui/mainWindow.py:113 Cura/gui/mainWindow.py:489
+msgid "Machine settings..."
+msgstr "Cihaz ayarları..."
+
+#: Cura/gui/mainWindow.py:119
+msgid "Recent Model Files"
+msgstr "Son Model Dosyaları"
+
+#: Cura/gui/mainWindow.py:126
+msgid "Recent Profile Files"
+msgstr "Son Profil Dosyaları"
+
+#: Cura/gui/mainWindow.py:132
+msgid "Quit"
+msgstr "Çık"
+
+#: Cura/gui/mainWindow.py:134
+msgid "File"
+msgstr "Dosya"
+
+#: Cura/gui/mainWindow.py:142
+msgid "Minecraft map import..."
+msgstr "Minecraft haritası ekle..."
+
+#: Cura/gui/mainWindow.py:146
+msgid "PID Debugger..."
+msgstr "PID Debug edici..."
+
+#: Cura/gui/mainWindow.py:148
+#, fuzzy
+msgid "Auto Firmware Update..."
+msgstr "Firmware güncellemesi"
+
+#: Cura/gui/mainWindow.py:155
+msgid "Print all at once"
+msgstr "Hepsini aynı anda bas"
+
+#: Cura/gui/mainWindow.py:157
+msgid "Print one at a time"
+msgstr "Birer birer bas"
+
+#: Cura/gui/mainWindow.py:164
+msgid "Tools"
+msgstr "Araçlar"
+
+#: Cura/gui/mainWindow.py:170 Cura/util/profile.py:202
+msgid "Machine"
+msgstr "Cihaz"
+
+#: Cura/gui/mainWindow.py:173
+msgid "Switch to quickprint..."
+msgstr "Hızlı-baskıya geç..."
+
+#: Cura/gui/mainWindow.py:177
+msgid "Switch to full settings..."
+msgstr "Tam ayarlara geç..."
+
+#: Cura/gui/mainWindow.py:182
+msgid "Open expert settings...\tCTRL+E"
+msgstr "Gelişmiş ayarları aç...\tCTRL+E"
+
+#: Cura/gui/mainWindow.py:186
+msgid "Run bed leveling wizard..."
+msgstr "Baskı levhası hizalama yazılımını aç..."
+
+#: Cura/gui/mainWindow.py:188
+msgid "Run head offset wizard..."
+msgstr ""
+
+#: Cura/gui/mainWindow.py:191
+msgid "Expert"
+msgstr "Gelişmiş"
+
+#: Cura/gui/mainWindow.py:194
+msgid "Online documentation..."
+msgstr "Çevrimiçi belgeleme..."
+
+#: Cura/gui/mainWindow.py:196
+msgid "Report a problem..."
+msgstr "Hata bildir..."
+
+#: Cura/gui/mainWindow.py:198
+msgid "Check for update..."
+msgstr "Güncellemeleri denetle..."
+
+#: Cura/gui/mainWindow.py:200
+msgid "Open YouMagine website..."
+msgstr "YouMagine sitesini aç..."
+
+#: Cura/gui/mainWindow.py:202
+msgid "About Cura..."
+msgstr "Cura hakkında..."
+
+#: Cura/gui/mainWindow.py:204
+msgid "Help"
+msgstr "Yardım"
+
+#: Cura/gui/mainWindow.py:399
+msgid ""
+"For \"One at a time\" printing, you need to have entered the correct head "
+"size and gantry height in the machine settings"
+msgstr ""
+"\"Hepsini aynı anda bas\" baskı seçeneği için cihaz ayarlarına doğru yazıcı "
+"başı boyutlarını ve gantry yüksekliği girmelisiniz."
+
+#: Cura/gui/mainWindow.py:399
+msgid "One at a time warning"
+msgstr "Her seferinde bir uyarı"
+
+#: Cura/gui/mainWindow.py:487
+#, fuzzy
+msgid "Add new machine..."
+msgstr "Yeni cihaz sihirbazı ekle"
+
+#: Cura/gui/mainWindow.py:495
+msgid "Install default firmware..."
+msgstr "Varsayılan firmware'ı kur..."
+
+#: Cura/gui/mainWindow.py:498
+msgid "Install custom firmware..."
+msgstr "Özel firmware yükle..."
+
+#: Cura/gui/mainWindow.py:502
+msgid "Select profile file to load"
+msgstr "Yüklenecek profili seçiniz"
+
+#: Cura/gui/mainWindow.py:514
+msgid "Select gcode file to load profile from"
+msgstr "Profilin kendisinden yükleneceği gkodunu seçiniz"
+
+#: Cura/gui/mainWindow.py:529
+msgid ""
+"No profile found in GCode file.\n"
+"This feature only works with GCode files made by Cura 12.07 or newer."
+msgstr ""
+"G-Kod dosyasında profil bulunamadı. \n"
+"\vBu özellik sadece Cura 12.07 ve daha yeni Cura versiyonları tarafından "
+"oluşturulan G-Kod dosyaları için çalışır. "
+
+#: Cura/gui/mainWindow.py:529
+msgid "Profile load error"
+msgstr "Profil yükleme hatası"
+
+#: Cura/gui/mainWindow.py:533 Cura/gui/mainWindow.py:543
+msgid "Select profile file to save"
+msgstr "Kaydedilecek profili seç"
+
+#: Cura/gui/mainWindow.py:553
+msgid ""
+"This will reset all profile settings to defaults.\n"
+"Unless you have saved your current profile, all settings will be lost!\n"
+"Do you really want to reset?"
+msgstr ""
+"Bu bütün profil ayarlarını varsayılana geri yükler. \n"
+" \vEğer şuanki profilinizi kaydetmediyseniz, bütün değişiklikler "
+"kaybedilecektir! \n"
+"\vGerçekten tüm profil ayarlarını sıfırlamak istiyor musunuz ? "
+
+#: Cura/gui/mainWindow.py:553
+msgid "Profile reset"
+msgstr "Profili yeniden başlat"
+
+#: Cura/gui/mainWindow.py:566
+msgid ""
+"Copy the settings from quickprint to your full settings?\n"
+"(This will overwrite any full setting modifications you have)"
+msgstr ""
+
+#: Cura/gui/mainWindow.py:566
+#, fuzzy
+msgid "Profile copy"
+msgstr "Profili yeniden başlat"
+
+#: Cura/gui/mainWindow.py:586
+msgid ""
+"Warning: Installing a custom firmware does not guarantee that you machine "
+"will function correctly, and could damage your machine."
+msgstr ""
+"Uyarı: Özel bir firmware yüklemek cihazınızın doğru çalışacağını "
+"garantilemez ve cihazınıza zarar verebilir. "
+
+#: Cura/gui/mainWindow.py:587 Cura/gui/mainWindow.py:630
+msgid "Open firmware to upload"
+msgstr "Yüklenecek firmware aç"
+
+#: Cura/gui/mainWindow.py:660
+msgid "You are running the latest version of Cura!"
+msgstr "Cura'nın en yeni versiyonunu kullanıyorsunuz!"
+
+#: Cura/gui/mainWindow.py:660
+msgid "Awesome!"
+msgstr "Mükemmel!"
+
+#: Cura/gui/mainWindow.py:705
+msgid "Basic"
+msgstr ""
+
+#: Cura/gui/mainWindow.py:709
+msgid "Advanced"
+msgstr ""
+
+#: Cura/gui/mainWindow.py:715
+msgid "Plugins"
+msgstr "Eklentiler"
+
+#: Cura/gui/util/openglGui.py:242
+msgid "An error has occurred during the 3D view drawing."
+msgstr "3D görüntü çizimi sırasında bir hata oluştu."
+
+#: Cura/gui/util/openglGui.py:250
+msgid "3D window error"
+msgstr "3B pencere hatası"
+
+#: Cura/gui/util/engineResultView.py:29
+msgid "Single Layer"
+msgstr ""
+
+#: Cura/gui/util/engineResultView.py:186
+#, python-format
+msgid "Loading toolpath for visualization (%d%%)"
+msgstr ""
+
+#: Cura/gui/configWizard.py:234
+msgid "Add new machine wizard"
+msgstr "Yeni cihaz sihirbazı ekle"
+
+#: Cura/gui/configWizard.py:236
+msgid "First time run wizard"
+msgstr "İlk açılış sihirbazı"
+
+#: Cura/gui/configWizard.py:237
+msgid "Welcome, and thanks for trying Cura!"
+msgstr "Hoşgeldiniz, Cura'yı denediğiniz için teşekkür ederiz !"
+
+#: Cura/gui/configWizard.py:239
+msgid "This wizard will help you in setting up Cura for your machine."
+msgstr "Sihirbaz cihazınıza Cura'yı kurmanıza yardım ediyor"
+
+#: Cura/gui/configWizard.py:242
+#, fuzzy
+msgid "Select your language:"
+msgstr "Cihazınızı seçin"
+
+#: Cura/gui/configWizard.py:272
+#, fuzzy
+msgid "Older models"
+msgstr "3B model aç"
+
+#: Cura/gui/configWizard.py:288
+msgid "Printrbot Selection"
+msgstr ""
+
+#: Cura/gui/configWizard.py:290
+#, fuzzy
+msgid "Select which Printrbot machine you have:"
+msgstr "Hangi tür cihaza sahipsiniz: "
+
+#: Cura/gui/configWizard.py:351
+#, fuzzy
+msgid "Other machine information"
+msgstr "Cihazın mm cinsinden boyutu"
+
+#: Cura/gui/configWizard.py:352
+msgid "The following pre-defined machine profiles are available"
+msgstr "Sıradaki önceden-tanımlı cihaz profilleri hazır"
+
+#: Cura/gui/configWizard.py:353
+msgid ""
+"Note that these profiles are not guaranteed to give good results,\n"
+"or work at all. Extra tweaks might be required.\n"
+"If you find issues with the predefined profiles,\n"
+"or want an extra profile.\n"
+"Please report it at the github issue tracker."
+msgstr ""
+"Bu profillerin iyi sonuçlar vereceği veya çalışacağı garanti değildir. \n"
+" Ekstra uğraşma gerekli olabilir. \n"
+"Eğer önceden-tanımlı profillerle ilgili bir sorun yaşıyorsanız \n"
+" veya ekstra bir profil istiyorsanız lütfen bunu github issue tracker'a "
+"bildirin.  "
+
+#: Cura/gui/configWizard.py:364
+msgid "Custom..."
+msgstr ""
+
+#: Cura/gui/configWizard.py:382
+msgid "Cura Ready!"
+msgstr ""
+
+#: Cura/gui/configWizard.py:383
+msgid "Cura is now ready to be used!"
+msgstr "Cura şimdi kullanıma hazır !"
+
+#: Cura/gui/configWizard.py:387
+#, fuzzy
+msgid "Custom RepRap information"
+msgstr "Anonim kullanıcı bilgisi yükle:"
+
+#: Cura/gui/configWizard.py:388
+msgid ""
+"RepRap machines can be vastly different, so here you can set your own "
+"settings."
+msgstr ""
+"RepRap cihazları büyük ölçüde farklı olabilir, bu yüzden buradan kendi "
+"ayarlarınızı oluşturabilirsiniz."
+
+#: Cura/gui/configWizard.py:389
+msgid ""
+"Be sure to review the default profile before running it on your machine."
+msgstr ""
+"Varsayılan profili cihazınıza yüklemeden önce gözden geçirdiğinize emin "
+"olunuz."
+
+#: Cura/gui/configWizard.py:390
+msgid ""
+"If you like a default profile for your machine added,\n"
+"then make an issue on github."
+msgstr ""
+"Eğer cihazınıza özel bir varsayılan profilin eklenmesini istiyorsanız bunu "
+"github'a bildirin."
+
+#: Cura/gui/configWizard.py:392
+msgid "You will have to manually install Marlin or Sprinter firmware."
+msgstr "Marlin veya Sprinter yazılımını manuel olarak yüklemelisiniz."
+
+#: Cura/gui/configWizard.py:394
+msgid "Machine name"
+msgstr "Cihaz adı"
+
+#: Cura/gui/configWizard.py:395
+#, fuzzy
+msgid "Machine width X (mm)"
+msgstr "Cihaz eni (mm)"
+
+#: Cura/gui/configWizard.py:396
+#, fuzzy
+msgid "Machine depth Y (mm)"
+msgstr "Cihaz derinliği (mm)"
+
+#: Cura/gui/configWizard.py:397
+#, fuzzy
+msgid "Machine height Z (mm)"
+msgstr "Cihaz yüksekliği (mm)"
+
+#: Cura/gui/configWizard.py:398 Cura/util/profile.py:202
+msgid "Nozzle size (mm)"
+msgstr "Baskı ucu çapı (mm)"
+
+#: Cura/gui/configWizard.py:399 Cura/util/profile.py:537
+msgid "Heated bed"
+msgstr "Isınmış levha"
+
+#: Cura/gui/configWizard.py:400
+msgid "Bed center is 0,0,0 (RoStock)"
+msgstr "Levha merkezi 0,0,0'dir (RoStock)."
+
+#: Cura/gui/configWizard.py:420
+#, fuzzy
+msgid "Select your machine brand and model"
+msgstr "Cihazınızı seçin"
+
+#: Cura/gui/configWizard.py:471
+msgid ""
+"The collection of anonymous usage information helps with the continued "
+"improvement of Cura."
+msgstr ""
+"Anonim kullanıcı bilgisi koleksiyonu Cura'nın sürekli gelişimine yardım "
+"eder. "
+
+#: Cura/gui/configWizard.py:472
+msgid ""
+"This does NOT submit your models online nor gathers any privacy related "
+"information."
+msgstr ""
+"Bu, modellerinizi online olarak paylaşmaz veya hakkınızda herhangi bir özel "
+"bilgi toplamaz."
+
+#: Cura/gui/configWizard.py:473
+msgid "Submit anonymous usage information:"
+msgstr "Anonim kullanıcı bilgisi yükle:"
+
+#: Cura/gui/configWizard.py:474
+msgid "For full details see: http://wiki.ultimaker.com/Cura:stats"
+msgstr "Tüm detaylar için: http://wiki.ultimaker.com/Cura:stats"
+
+#: Cura/gui/configWizard.py:539
+msgid "Select upgraded parts you have"
+msgstr "Güncellediğiniz parçalarınızı seçiniz"
+
+#: Cura/gui/configWizard.py:540
+msgid ""
+"To assist you in having better default settings for your Ultimaker\n"
+"Cura would like to know which upgrades you have in your machine."
+msgstr ""
+"Ultimaker 2'ye uygun varsayılan ayarları oluşturma konusunda size yardımcı "
+"olmak için \n"
+"\vCura cihazınızda hangi güncellemelerin olduğunu bilmek istiyor."
+
+#: Cura/gui/configWizard.py:542
+msgid "Extruder drive upgrade"
+msgstr "Extruder sürücü güncellemesi"
+
+#: Cura/gui/configWizard.py:543
+#, fuzzy
+msgid "Heated printer bed (kit)"
+msgstr "Isı"
+
+#: Cura/gui/configWizard.py:544
+msgid "Heated printer bed (self built)"
+msgstr "Isı"
+
+#: Cura/gui/configWizard.py:545
+msgid "Dual extrusion (experimental)"
+msgstr "Çift extrusion (deneysel)"
+
+#: Cura/gui/configWizard.py:547
+msgid ""
+"If you have an Ultimaker bought after october 2012 you will have the\n"
+"Extruder drive upgrade. If you do not have this upgrade,\n"
+"it is highly recommended to improve reliability."
+msgstr ""
+"Eğer 2012 Ekim'inden sonra bir Ultimaker aldıysanız, extruder sürücü "
+"güncellemesine sahipsiniz. Eğer bu güncellemeye sahip değilseniz, "
+"cihazınızın güvenilirliğini arttırmak için bu güncellemeyi yapmanız "
+"önerilir. "
+
+#: Cura/gui/configWizard.py:548
+msgid ""
+"This upgrade can be bought from the Ultimaker webshop\n"
+"or found on thingiverse as thing:26094"
+msgstr ""
+"Bu güncelleme Ultimaker webshop'tan alınabilir \n"
+" \vveya thingiverse'de thing:26094 olarak bulunabilir."
+
+#: Cura/gui/configWizard.py:570
+msgid "Upgrade Ultimaker Firmware"
+msgstr "Ultimaker Firmware'ını Güncelle"
+
+#: Cura/gui/configWizard.py:571 Cura/gui/configWizard.py:991
+msgid ""
+"Firmware is the piece of software running directly on your 3D printer.\n"
+"This firmware controls the step motors, regulates the temperature\n"
+"and ultimately makes your printer work."
+msgstr ""
+"Firmware doğrudan 3D yazıcınızda çalışan yazılım parçasıdır. \n"
+"\vBu firmware step motorları kontrol eder, sıcaklığı ayarlar, \n"
+"\vand sonuç olarak yazıcınızın çalışmasını sağlar."
+
+#: Cura/gui/configWizard.py:573
+msgid ""
+"The firmware shipping with new Ultimakers works, but upgrades\n"
+"have been made to make better prints, and make calibration easier."
+msgstr ""
+"Yeni Ultimaker'lardaki firmware taşıması çalışıyor, ancak daha iyi "
+"baskılar \n"
+"\vyapılması ve kalibrasyonun daha kolay olması için güncellemeler yapıldı."
+
+#: Cura/gui/configWizard.py:575
+msgid ""
+"Cura requires these new features and thus\n"
+"your firmware will most likely need to be upgraded.\n"
+"You will get the chance to do so now."
+msgstr ""
+"Cura'nın bu yeni özelliklere ihtiyacı var ve bu nedenle \n"
+"\vsahip olduğunuz firmware'ın güncellenmesi gerek.\vBirazdan bu güncellemeyi "
+"yapma şansınız olacak. "
+
+#: Cura/gui/configWizard.py:581
+msgid "Do not upgrade to this firmware if:"
+msgstr "Eğer sıradakiler geçerliyse bu firmware'a güncelleme:"
+
+#: Cura/gui/configWizard.py:582
+msgid "* You have an older machine based on ATMega1280 (Rev 1 machine)"
+msgstr "*Eğer ATMega1280 (Rev 1 Machine) ile çalışan eski bir cihazınız varsa"
+
+#: Cura/gui/configWizard.py:583
+msgid "* Build your own heated bed"
+msgstr ""
+
+#: Cura/gui/configWizard.py:584
+msgid "* Have other changes in the firmware"
+msgstr "* Firmware ile ilgili başka değişikliklere sahipseniz"
+
+#: Cura/gui/configWizard.py:604
+msgid "Ultimaker Checkup"
+msgstr ""
+
+#: Cura/gui/configWizard.py:618
+msgid ""
+"It is a good idea to do a few sanity checks now on your Ultimaker.\n"
+"You can skip these if you know your machine is functional."
+msgstr ""
+"Şimdi Ultimaker'ınızda birkaç mantıklı denetleme yürütebilirsiniz. \n"
+"\vAncak cihazınızın çalıştığına eminseniz bu adımı atlayabilirsiniz."
+
+#: Cura/gui/configWizard.py:619
+msgid "Run checks"
+msgstr "Denetlemeleri yürüt"
+
+#: Cura/gui/configWizard.py:619
+msgid "Skip checks"
+msgstr "Denetlemeleri atla"
+
+#: Cura/gui/configWizard.py:623
+msgid "Communication:"
+msgstr "İletişim:"
+
+#: Cura/gui/configWizard.py:624
+msgid "Temperature:"
+msgstr "Sıcaklık:"
+
+#: Cura/gui/configWizard.py:625
+msgid "Endstops:"
+msgstr "Durdurucular: "
+
+#: Cura/gui/configWizard.py:630
+msgid "Show error log"
+msgstr "Hata seyir defterini göster"
+
+#: Cura/gui/configWizard.py:664 Cura/gui/configWizard.py:1243
+#: Cura/gui/configWizard.py:1462
+msgid "Connecting to machine."
+msgstr "Cihaza bağlanılıyor."
+
+#: Cura/gui/configWizard.py:685
+msgid "Cooldown before temperature check."
+msgstr "Sıcaklık denetlemesinden önce soğutma"
+
+#: Cura/gui/configWizard.py:691 Cura/gui/configWizard.py:698
+msgid "Checking the heater and temperature sensor."
+msgstr "Isıtıcıyı ve sıcaklık sensorünü denetleme."
+
+#: Cura/gui/configWizard.py:709
+msgid "Please make sure none of the endstops are pressed."
+msgstr "Lütfen hiçbir durdurucunun basılı olmadığına emin olunuz."
+
+#: Cura/gui/configWizard.py:722
+msgid "Temperature measurement FAILED!"
+msgstr "Sıcaklık ölçümü HATALI!"
+
+#: Cura/gui/configWizard.py:727
+#, python-format
+msgid "Head temperature: %d"
+msgstr "Baskı ucu sıcaklığı: %d"
+
+#: Cura/gui/configWizard.py:734 Cura/gui/configWizard.py:743
+#, python-format
+msgid "Communication State: %s"
+msgstr "İletişim durumu: %s"
+
+#: Cura/gui/configWizard.py:737 Cura/gui/configWizard.py:1420
+#: Cura/gui/configWizard.py:1638
+msgid "Failed to establish connection with the printer."
+msgstr "Yazıcıyla bağlantı kurulamadı."
+
+#: Cura/gui/configWizard.py:783 Cura/gui/configWizard.py:792
+msgid "Please press the left X endstop."
+msgstr "Lütfen soldaki X durdurucusuna basınız."
+
+#: Cura/gui/configWizard.py:787
+msgid "Please press the right X endstop."
+msgstr "Lütfen sağdaki X durdurucusuna basınız."
+
+#: Cura/gui/configWizard.py:797
+msgid "Please press the front Y endstop."
+msgstr "Lütfen öndeki Y durdurucusuna basınız."
+
+#: Cura/gui/configWizard.py:803 Cura/gui/configWizard.py:812
+msgid "Please press the top Z endstop."
+msgstr "Lütfen üstteki Z durdurucusuna basınız."
+
+#: Cura/gui/configWizard.py:807
+msgid "Please press the back Y endstop."
+msgstr "Lütfen arkadaki Y durdurucusuna basınız."
+
+#: Cura/gui/configWizard.py:819 Cura/gui/configWizard.py:832
+msgid "Checkup finished"
+msgstr "Denetleme bitti"
+
+#: Cura/gui/configWizard.py:826
+msgid "Please press the bottom Z endstop."
+msgstr "Lütfen alttaki Z durdurucusuna basınız."
+
+#: Cura/gui/configWizard.py:847 Cura/gui/configWizard.py:869
+msgid "Ultimaker Calibration"
+msgstr ""
+
+#: Cura/gui/configWizard.py:874
+msgid "Calibrating the Steps Per E requires some manual actions."
+msgstr ""
+"Adımları her bir E için kalibre etmek bazı elle yapılması gereken eylemler "
+"içerir. "
+
+#: Cura/gui/configWizard.py:875
+msgid "First remove any filament from your machine."
+msgstr "Öncelikle cihazınızda bulunan herhangi bir filamenti kaldırın. "
+
+#: Cura/gui/configWizard.py:876
+msgid ""
+"Next put in your filament so the tip is aligned with the\n"
+"top of the extruder drive."
+msgstr ""
+"Filamentinizi, ucu filament iticinin üst kısmı ike aynı hizaya gelecek "
+"şekilde içeriye sokunuz. "
+
+#: Cura/gui/configWizard.py:877
+msgid "We'll push the filament 100mm"
+msgstr "Filament 100 mm itilecek"
+
+#: Cura/gui/configWizard.py:878
+msgid "Extrude 100mm filament"
+msgstr "Filamenti 100 mm baskı ucundan çıkar"
+
+#: Cura/gui/configWizard.py:879
+msgid ""
+"Now measure the amount of extruded filament:\n"
+"(this can be more or less then 100mm)"
+msgstr ""
+"Şimdi extrude edilmiş filament miktarını giriniz: \n"
+"\v(Bu 100 mm'den fazla ya da az olabilir.)"
+
+#: Cura/gui/configWizard.py:880
+msgid "Save"
+msgstr "Kaydet"
+
+#: Cura/gui/configWizard.py:881
+msgid "This results in the following steps per E:"
+msgstr "Bu E başına sıradaki adımlarla sonuçlanır:"
+
+#: Cura/gui/configWizard.py:883
+msgid "You can repeat these steps to get better calibration."
+msgstr "Daha iyi bir kalibrasyon için bu adımları tekrarlayabilirsiniz."
+
+#: Cura/gui/configWizard.py:886
+msgid ""
+"If you still have filament in your printer which needs\n"
+"heat to remove, press the heat up button below:"
+msgstr ""
+"Eğer yazıcınızda çıkarılmak için ısıtılması gereken \n"
+"\vfilament varsa, alttaki ısıtma butonuna basınız. "
+
+#: Cura/gui/configWizard.py:887
+msgid "Heatup for filament removal"
+msgstr "Filament çıkarılması için ısıt"
+
+#: Cura/gui/configWizard.py:912 Cura/gui/configWizard.py:946
+msgid ""
+"Error: Failed to open serial port to machine\n"
+"If this keeps happening, try disconnecting and reconnecting the USB cable"
+msgstr ""
+"Hata: Cihaza seri port açma sırasında hata oluştu. \n"
+"\vEğer bu hata tekrar ederse, bağlantıyı kopardıktan sorna USB kablosunu "
+"yeniden takmanız önerilir. "
+
+#: Cura/gui/configWizard.py:986
+msgid "Ultimaker 2"
+msgstr ""
+
+#: Cura/gui/configWizard.py:987
+msgid "Congratulations on your the purchase of your brand new Ultimaker 2."
+msgstr ""
+
+#: Cura/gui/configWizard.py:988
+#, fuzzy
+msgid "Cura is now ready to be used with your Ultimaker 2."
+msgstr "Cura şimdi kullanıma hazır !"
+
+#: Cura/gui/configWizard.py:993
+msgid ""
+"For the best experience it is recommended to update your firmware right now."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1003
+msgid "Lulzbot TAZ/Mini"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1004
+#, fuzzy
+msgid "Cura is now ready to be used with your Lulzbot."
+msgstr "Cura şimdi kullanıma hazır !"
+
+#: Cura/gui/configWizard.py:1011
+msgid "Select your machine"
+msgstr "Cihazınızı seçin"
+
+#: Cura/gui/configWizard.py:1012
+msgid "What kind of machine do you have:"
+msgstr "Hangi tür cihaza sahipsiniz: "
+
+#: Cura/gui/configWizard.py:1134
+msgid "Configuration Wizard"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1203 Cura/gui/configWizard.py:1651
+#, fuzzy
+msgid "Bed leveling wizard"
+msgstr "Baskı levhası hizalama yazılımını aç..."
+
+#: Cura/gui/configWizard.py:1205
+#, fuzzy
+msgid "This wizard will help you in leveling your printer bed"
+msgstr "Sihirbaz cihazınıza Cura'yı kurmanıza yardım ediyor"
+
+#: Cura/gui/configWizard.py:1207
+#, fuzzy
+msgid "It will do the following steps"
+msgstr "Bu E başına sıradaki adımlarla sonuçlanır:"
+
+#: Cura/gui/configWizard.py:1208
+msgid "* Move the printer head to each corner"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1209
+msgid "  and let you adjust the height of the bed to the nozzle"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1210
+msgid "* Print a line around the bed to check if it is level"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1213 Cura/gui/configWizard.py:1438
+#, fuzzy
+msgid "Connect to printer"
+msgstr "Cihaza bağlanılıyor."
+
+#: Cura/gui/configWizard.py:1217 Cura/gui/configWizard.py:1444
+#, fuzzy
+msgid "Resume"
+msgstr "En basa al"
+
+#: Cura/gui/configWizard.py:1218
+msgid "Up 0.2mm"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1218
+msgid "Down 0.2mm"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1219
+msgid "Up 10mm"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1219
+msgid "Down 10mm"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1279
+msgid "Homing printer..."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1289
+msgid "Moving head to back center..."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1296
+msgid "Moving head to back left corner..."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1304 Cura/gui/configWizard.py:1318
+msgid "Moving head to front right corner..."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1311
+msgid "Moving head to back right corner..."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1325
+msgid "Heating up printer..."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1332
+msgid "Printing a square on the printer bed at 0.3mm height."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1372
+msgid ""
+"Adjust the front left screw of your printer bed\n"
+"So the nozzle just hits the bed."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1377
+msgid ""
+"Adjust the back screw of your printer bed\n"
+"So the nozzle just hits the bed."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1379
+msgid ""
+"Adjust the back left screw of your printer bed\n"
+"So the nozzle just hits the bed."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1383
+msgid ""
+"Adjust the back right screw of your printer bed\n"
+"So the nozzle just hits the bed."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1387
+msgid ""
+"Adjust the front right screw of your printer bed\n"
+"So the nozzle just hits the bed."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1391
+#, python-format
+msgid "Heating up printer: %d/%d"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1393
+msgid ""
+"The printer is hot now. Please insert some PLA filament into the printer."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1402
+msgid "Use the up/down buttons to move the bed and adjust your Z endstop."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1414
+msgid ""
+"Calibration finished.\n"
+"The squares on the bed should slightly touch each other."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1435
+#, fuzzy
+msgid ""
+"This wizard will help you in calibrating the printer head offsets of your "
+"dual extrusion machine"
+msgstr "Sihirbaz cihazınıza Cura'yı kurmanıza yardım ediyor"
+
+#: Cura/gui/configWizard.py:1468
+msgid "Printing initial calibration cross"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1516
+msgid ""
+"Please measure the distance between the horizontal lines in millimeters."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1526
+msgid "Printing the fine calibration lines."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1581
+msgid ""
+"Which horizontal line number lays perfect on top of each other? Front most "
+"line is zero."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1592
+#, python-format
+msgid "Calibration finished. Offsets are: %s %s"
+msgstr ""
+
+#: Cura/gui/configWizard.py:1605
+msgid "Please load both extruders with PLA."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1614
+msgid "Homing printer and heating up both extruders."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1624
+msgid "Please measure the distance between the vertical lines in millimeters."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1631
+msgid ""
+"Which vertical line number lays perfect on top of each other? Leftmost line "
+"is zero."
+msgstr ""
+
+#: Cura/gui/configWizard.py:1680
+msgid "Head offset wizard"
+msgstr ""
+
+#: Cura/gui/moebyusGui.py:145
+msgid "Moebyus Firmware"
+msgstr ""
+
+#: Cura/gui/moebyusGui.py:176
+#, fuzzy
+msgid "Moebyus Machines"
+msgstr "Cihaz"
+
+#: Cura/gui/moebyusGui.py:192
+msgid "Select Model:"
+msgstr ""
+
+#: Cura/gui/moebyusGui.py:299
+#, fuzzy
+msgid "Cura is now ready!"
+msgstr "Cura şimdi kullanıma hazır !"
+
+#: Cura/gui/moebyusGui.py:301
+msgid "Thanks for installing our software, now you're ready to print"
+msgstr ""
+
+#: Cura/gui/moebyusGui.py:304
+#, fuzzy
+msgid "You can find the latest version of this software at: "
+msgstr "Cura'nın en yeni versiyonunu kullanıyorsunuz!"
+
+#: Cura/gui/moebyusGui.py:305
+msgid "https://github.com/moebyus/cura/releases"
+msgstr ""
+
+#: Cura/gui/moebyusGui.py:307
+msgid ""
+"Also you can find and Download all the files regarding your machine at: "
+msgstr ""
+
+#: Cura/gui/moebyusGui.py:308
+msgid "https://github.com/moebyus"
+msgstr ""
+
+#: Cura/gui/moebyusGui.py:311
+msgid "May the Force be with you..."
+msgstr ""
+
+#: Cura/gui/simpleMode.py:156
 msgid "Print support structure"
 msgstr "Destek yapısı yazdır"
 
-#: Cura/gui/simpleMode.py:57
-msgid "Select a quickprint profile:"
-msgstr "Hızlı-baskı profili seçin:"
+#: Cura/gui/simpleMode.py:158
+#, fuzzy
+msgid "Platform adhesion"
+msgstr "Platforma yapışma türü"
 
-#: Cura/gui/simpleMode.py:65
+#: Cura/gui/simpleMode.py:159 Cura/util/profile.py:190 Cura/util/profile.py:191
+msgid "None"
+msgstr "Hiçbiri"
+
+#: Cura/gui/simpleMode.py:159 Cura/gui/simpleMode.py:304
+#: Cura/util/profile.py:191 Cura/util/profile.py:244
+msgid "Brim"
+msgstr "Kenar"
+
+#: Cura/gui/simpleMode.py:159 Cura/gui/simpleMode.py:306
+#: Cura/util/profile.py:191 Cura/util/profile.py:245 Cura/util/profile.py:246
+#: Cura/util/profile.py:247 Cura/util/profile.py:248 Cura/util/profile.py:249
+#: Cura/util/profile.py:250 Cura/util/profile.py:251 Cura/util/profile.py:252
+#: Cura/util/profile.py:253 Cura/util/profile.py:254 Cura/util/profile.py:255
+msgid "Raft"
+msgstr "Raft"
+
+#: Cura/gui/simpleMode.py:170
+msgid "Nozzle:"
+msgstr ""
+
+#: Cura/gui/simpleMode.py:178
 msgid "Material:"
 msgstr "Malzeme: "
 
-#: Cura/gui/simpleMode.py:73
+#: Cura/gui/simpleMode.py:186
+#, fuzzy
+msgid "Profile:"
+msgstr "Profili yeniden başlat"
+
+#: Cura/gui/simpleMode.py:194
 msgid "Other:"
 msgstr "Diğer:"
 
@@ -1385,22 +1488,6 @@ msgstr "En (mm)"
 #: Cura/gui/tools/imageToMesh.py:40
 msgid "Depth (mm)"
 msgstr "Derinlik (mm)"
-
-#: Cura/gui/tools/projector.py:42
-msgid "Edit"
-msgstr "Düzenle"
-
-#: Cura/gui/tools/projector.py:43
-msgid "Rectangle"
-msgstr "Dikdörtgen"
-
-#: Cura/gui/tools/projector.py:44
-msgid "Circle"
-msgstr "Çember"
-
-#: Cura/gui/tools/projector.py:45
-msgid "Draw curves"
-msgstr "Eğri çiz"
 
 #: Cura/gui/tools/youmagineGui.py:78
 msgid "Checking token"
@@ -1481,8 +1568,8 @@ msgid ""
 "and authorize Cura to access your account."
 msgstr ""
 "YouMagine'da dizaynlarınızı paylaşmak için \n"
-"YouMagine.com'da bir hesaba ihtiyacınız var \n"
-"ve hesabınıza ulaşması için Cura'ya yetki vermelisiniz."
+"\vYouMagine.com'da bir hesaba ihtiyacınız var \n"
+"\vve hesabınıza ulaşması için Cura'ya yetki vermelisiniz."
 
 #: Cura/gui/tools/youmagineGui.py:239
 msgid ""
@@ -1492,9 +1579,9 @@ msgid ""
 "from YouMagine.com"
 msgstr ""
 "Bu bir tarayıcı penceresi açar. Bu tarayıcı penceresi yoluyla \n"
-"Cura'ya YouMagine hesabınıza ulaşma yetkisi verebilirsiniz. \n"
-"Herhangi bir zamanda Cura'nın YouMagine.com hesabınıza \n"
-"olan bağlantısını kesebilirsiniz.  "
+"\vCura'ya YouMagine hesabınıza ulaşma yetkisi verebilirsiniz. \n"
+"\vHerhangi bir zamanda Cura'nın YouMagine.com hesabınıza \n"
+"\volan bağlantısını kesebilirsiniz.  "
 
 #: Cura/gui/tools/youmagineGui.py:274
 msgid "Design name"
@@ -1523,8 +1610,8 @@ msgid ""
 "until you publish it yourself on YouMagine.com"
 msgstr ""
 "Dizaynı yüklemeden hemen sonra yayınla. \n"
-"Bu seçenek işaretli olmadığında siz kendiniz yayınlamayana \n"
-"kadar dizayn YouMagine.com'da yayınlanmaz."
+"\vBu seçenek işaretli olmadığında siz kendiniz yayınlamayana \n"
+"\vkadar dizayn YouMagine.com'da yayınlanmaz."
 
 #: Cura/gui/tools/youmagineGui.py:305
 msgid "Design name:"
@@ -1570,22 +1657,10 @@ msgstr "Sisteminizde webcam bulunamadı"
 msgid "Webcam error"
 msgstr "Webcam hatası"
 
-#: Cura/gui/util/engineResultView.py:29
-msgid "Single Layer"
-msgstr ""
-
-#: Cura/gui/util/engineResultView.py:186
-#, python-format
-msgid "Loading toolpath for visualization (%d%%)"
-msgstr ""
-
-#: Cura/gui/util/openglGui.py:242
-msgid "An error has occurred during the 3D view drawing."
-msgstr "3D görüntü çizimi sırasında bir hata oluştu."
-
-#: Cura/gui/util/openglGui.py:250
-msgid "3D window error"
-msgstr "3B pencere hatası"
+#: Cura/gui/expertConfig.py:27
+#, fuzzy
+msgid "Expert config"
+msgstr "Gelişmiş"
 
 #: Cura/util/profile.py:178 Cura/util/profile.py:179 Cura/util/profile.py:180
 #: Cura/util/profile.py:210 Cura/util/profile.py:211 Cura/util/profile.py:212
@@ -1605,7 +1680,7 @@ msgid ""
 "0.25mm with an Ultimaker for very fast prints at low quality."
 msgstr ""
 "Milimetre cinsinden katman kalınlığı. \n"
-"Bu baskınızın kalitesinin belirleyen en önemli ayardır. Normal kalitedeki "
+"\vBu baskınızın kalitesinin belirleyen en önemli ayardır. Normal kalitedeki "
 "baskılar için 0.1 mm, yüksek kalitedeki baskılar için ise 0.06 mm'dir. "
 "Ultimaker'ın hızlı olarak düşük kalite baskılar yapmasını istiyorsanız 0.25 "
 "mm'ye de çıkabilirsiniz.  "
@@ -1621,8 +1696,8 @@ msgid ""
 "of perimeter lines and the thickness of those perimeter lines."
 msgstr ""
 "Dış kabuğun yatay yönde kalınlığıdır. \n"
-"Bu baskı ucu boyutuyla birlikte çevre hatlarının \n"
-"sayısını ve bu hatların kalınlığını belirlemek için kullanılır. "
+"\vBu baskı ucu boyutuyla birlikte çevre hatlarının \n"
+"\vsayısını ve bu hatların kalınlığını belirlemek için kullanılır. "
 
 #: Cura/util/profile.py:180 Cura/util/profile.py:203 Cura/util/profile.py:204
 #: Cura/util/profile.py:205 Cura/util/profile.py:206 Cura/util/profile.py:207
@@ -1660,12 +1735,12 @@ msgid ""
 msgstr ""
 "Bu tavan ve tabandaki katmanların kalınlığını ayarlar. Bu bölgelere eklenen "
 "katı katmanlar bu değer ve katman kalınlığı değeriyle hesaplanır. \n"
-"Bu değerin katman değerinin bir katı olması mantıklıdır. Ayrıca sağlam bir "
+"\vBu değerin katman değerinin bir katı olması mantıklıdır. Ayrıca sağlam bir "
 "parça elde etmek için bu değerin duvar kalınlığı değerine yakın olmasına "
 "dikkat ediniz. "
 
 #: Cura/util/profile.py:182 Cura/util/profile.py:232 Cura/util/profile.py:233
-#: Cura/util/profile.py:234
+#: Cura/util/profile.py:234 Cura/util/profile.py:235
 msgid "Infill"
 msgstr "Dolgu"
 
@@ -1684,30 +1759,20 @@ msgstr ""
 "Bu baskınızın içlerinin hangi yoğunlukta dolu olacağını kontrol eder. "
 "Tamamen katı bir parça için % 100'ü, tamamen boş bir parça için % 0'ı "
 "kullanınız. Genellikle % 20 gibi bir değer yeterlidir. \n"
-"Bu baskınızın dış görünümünü etkilemez. Sadece parçanızın ne kadar sağlam "
+"\vBu baskınızın dış görünümünü etkilemez. Sadece parçanızın ne kadar sağlam "
 "olacağını belirler. "
 
-#: Cura/util/profile.py:183
-msgid ""
-"The nozzle size is very important, this is used to calculate the line width "
-"of the infill, and used to calculate the amount of outside wall lines and "
-"thickness for the wall thickness you entered in the print settings."
-msgstr ""
-"Baskı ucu boyutu önemlidir. Bu iç dolgunun hatlarının enini, dış duvar "
-"hatlarının miktarını ve baskı ayarlarında oluşturduğunuz duvar kalınlığını "
-"hesaplamanızı sağlar. "
-
-#: Cura/util/profile.py:184 Cura/util/profile.py:185 Cura/util/profile.py:186
-#: Cura/util/profile.py:187 Cura/util/profile.py:188 Cura/util/profile.py:189
-#: Cura/util/profile.py:190
+#: Cura/util/profile.py:183 Cura/util/profile.py:184 Cura/util/profile.py:185
+#: Cura/util/profile.py:186 Cura/util/profile.py:187 Cura/util/profile.py:188
+#: Cura/util/profile.py:189
 msgid "Speed and Temperature"
 msgstr "Hız ve Sıcaklık"
 
-#: Cura/util/profile.py:184
+#: Cura/util/profile.py:183
 msgid "Print speed (mm/s)"
 msgstr "Baskı hızı"
 
-#: Cura/util/profile.py:184
+#: Cura/util/profile.py:183
 msgid ""
 "Speed at which printing happens. A well adjusted Ultimaker can reach 150mm/"
 "s, but for good quality prints you want to print slower. Printing speed "
@@ -1719,12 +1784,12 @@ msgstr ""
 "yazdırmanız önerilir. Yazdırma hızı birçok faktöre bağlıdır. Bu yüzden "
 "optimal ayarları deneyerek bulmalısınız. "
 
-#: Cura/util/profile.py:185
+#: Cura/util/profile.py:184
 msgid "Printing temperature (C)"
 msgstr "Baskı sıcaklığı (C)"
 
-#: Cura/util/profile.py:185 Cura/util/profile.py:186 Cura/util/profile.py:187
-#: Cura/util/profile.py:188 Cura/util/profile.py:189
+#: Cura/util/profile.py:184 Cura/util/profile.py:185 Cura/util/profile.py:186
+#: Cura/util/profile.py:187 Cura/util/profile.py:188
 msgid ""
 "Temperature used for printing. Set at 0 to pre-heat yourself.\n"
 "For PLA a value of 210C is usually used.\n"
@@ -1732,60 +1797,56 @@ msgid ""
 msgstr ""
 "Baskı sırasında kullanılan sıcaklık. Kendiniz önceden ısıtmak için 0'a "
 "ayarlayınız. \n"
-"PLA için genellikle 210 C değeri kullanılır. \n"
-"ABS için genellikle 230 C veya daha yüksek bir değer gereklidir. "
+"\vPLA için genellikle 210 C değeri kullanılır. \n"
+"\vABS için genellikle 230 C veya daha yüksek bir değer gereklidir. "
 
-#: Cura/util/profile.py:186
+#: Cura/util/profile.py:185
 msgid "2nd nozzle temperature (C)"
 msgstr "İkinci baskı ucu sıcaklığı (C)"
 
-#: Cura/util/profile.py:187
+#: Cura/util/profile.py:186
 msgid "3th nozzle temperature (C)"
 msgstr "Üçüncü baskı ucu sıcaklığı (C)"
 
-#: Cura/util/profile.py:188
+#: Cura/util/profile.py:187
 msgid "4th nozzle temperature (C)"
 msgstr "Dördüncü baskı ucu sıcaklığı (C)"
 
-#: Cura/util/profile.py:189
+#: Cura/util/profile.py:188
 #, fuzzy
 msgid "5th nozzle temperature (C)"
 msgstr "Üçüncü baskı ucu sıcaklığı (C)"
 
-#: Cura/util/profile.py:190
+#: Cura/util/profile.py:189
 msgid "Bed temperature (C)"
 msgstr "Levha sıcaklığı (C)"
 
-#: Cura/util/profile.py:190
+#: Cura/util/profile.py:189
 msgid ""
 "Temperature used for the heated printer bed. Set at 0 to pre-heat yourself."
 msgstr ""
 "Isınmış baskı levhası için kullanılan sıcaklıktır. Önceden ısıtmak için 0'a "
 "ayarlayınız."
 
-#: Cura/util/profile.py:191 Cura/util/profile.py:192
-msgid "None"
-msgstr "Hiçbiri"
-
-#: Cura/util/profile.py:191
+#: Cura/util/profile.py:190
 msgid "Touching buildplate"
 msgstr "Baskı levhasına yapışık"
 
-#: Cura/util/profile.py:191
+#: Cura/util/profile.py:190
 msgid "Everywhere"
 msgstr "Heryere"
 
-#: Cura/util/profile.py:191 Cura/util/profile.py:192 Cura/util/profile.py:193
-#: Cura/util/profile.py:235 Cura/util/profile.py:236 Cura/util/profile.py:237
-#: Cura/util/profile.py:238 Cura/util/profile.py:239
+#: Cura/util/profile.py:190 Cura/util/profile.py:191 Cura/util/profile.py:192
+#: Cura/util/profile.py:236 Cura/util/profile.py:237 Cura/util/profile.py:238
+#: Cura/util/profile.py:239 Cura/util/profile.py:240
 msgid "Support"
 msgstr "Destek"
 
-#: Cura/util/profile.py:191
+#: Cura/util/profile.py:190
 msgid "Support type"
 msgstr "Destek türü"
 
-#: Cura/util/profile.py:191
+#: Cura/util/profile.py:190
 msgid ""
 "Type of support structure build.\n"
 "\"Touching buildplate\" is the most commonly used support setting.\n"
@@ -1796,34 +1857,23 @@ msgid ""
 "Everywhere creates support even on top of parts of the model."
 msgstr ""
 "Oluşturulacak destek yapısı türü. \n"
-"\"Baskı levhasına yapışık\" en sık kullanılan destek ayarıdır. \n"
-"\n"
-"\"Hiçbiri\" ayarı herhangi bir destek oluşturmaz. \n"
-"\"Baskı levhasına yapışık\" ayarı, destek yapısının sadece baskı levhasına "
+"\v\"Baskı levhasına yapışık\" en sık kullanılan destek ayarıdır. \n"
+"\v\n"
+"\v\"Hiçbiri\" ayarı herhangi bir destek oluşturmaz. \n"
+"\v\"Baskı levhasına yapışık\" ayarı, destek yapısının sadece baskı levhasına "
 "dokunacağı yerlerde destek yapısı oluşturur. \n"
-"\"Heryere\" ayarı nesnenin üst kısmı dahil her yere destek yapısı ekler. "
+"\v\"Heryere\" ayarı nesnenin üst kısmı dahil her yere destek yapısı ekler. "
 
-#: Cura/util/profile.py:192 Cura/util/profile.py:243
-msgid "Brim"
-msgstr "Kenar"
-
-#: Cura/util/profile.py:192 Cura/util/profile.py:244 Cura/util/profile.py:245
-#: Cura/util/profile.py:246 Cura/util/profile.py:247 Cura/util/profile.py:248
-#: Cura/util/profile.py:249 Cura/util/profile.py:250 Cura/util/profile.py:251
-#: Cura/util/profile.py:252 Cura/util/profile.py:253 Cura/util/profile.py:254
-msgid "Raft"
-msgstr "Raft"
-
-#: Cura/util/profile.py:192 Cura/util/profile.py:224 Cura/util/profile.py:225
+#: Cura/util/profile.py:191 Cura/util/profile.py:224 Cura/util/profile.py:225
 #: Cura/util/profile.py:226
 msgid "Skirt"
 msgstr ""
 
-#: Cura/util/profile.py:192
+#: Cura/util/profile.py:191
 msgid "Platform adhesion type"
 msgstr "Platforma yapışma türü"
 
-#: Cura/util/profile.py:192
+#: Cura/util/profile.py:191
 msgid ""
 "Different options that help in preventing corners from lifting due to "
 "warping.\n"
@@ -1834,30 +1884,30 @@ msgid ""
 "(Note that enabling the brim or raft disables the skirt)"
 msgstr ""
 "Köşelerdeki eğrilik ve yamuklaşmayı engelleyen farklı seçeneklerdir. \n"
-"Kenar (Brim) seçeneği nesnenin etrafına sonradan çıkarılmak üzere kalın bir "
-"katman ekler ve önerilen seçenektir.  \n"
-"Raft ise nesnenin altına kalın bir raster ve bu raster ve nesne arasında "
+"\vKenar (Brim) seçeneği nesnenin etrafına sonradan çıkarılmak üzere kalın "
+"bir katman ekler ve önerilen seçenektir.  \n"
+"\vRaft ise nesnenin altına kalın bir raster ve bu raster ve nesne arasında "
 "ince bir arayüz ekler. \n"
-"(Kenar veya raft seçeneğini aktif etmenin etek seçeneğini engellediğini not "
-"ediniz.) "
+"\v(Kenar veya raft seçeneğini aktif etmenin etek seçeneğini engellediğini "
+"not ediniz.) "
 
-#: Cura/util/profile.py:193
+#: Cura/util/profile.py:192
 msgid "Both"
 msgstr "İkisi de"
 
-#: Cura/util/profile.py:193
+#: Cura/util/profile.py:192
 msgid "First extruder"
 msgstr "İlk extruder"
 
-#: Cura/util/profile.py:193
+#: Cura/util/profile.py:192
 msgid "Second extruder"
 msgstr "İkinci extruder"
 
-#: Cura/util/profile.py:193
+#: Cura/util/profile.py:192
 msgid "Support dual extrusion"
 msgstr "Çift extrusion destekleme"
 
-#: Cura/util/profile.py:193
+#: Cura/util/profile.py:192
 msgid ""
 "Which extruder to use for support material, for break-away support you can "
 "use both extruders.\n"
@@ -1868,20 +1918,21 @@ msgid ""
 msgstr ""
 "Hangi extruder'ın destek yapısını yapacağını ayarlar. Break-away destek "
 "yapısı için iki extruder'ı da destek yapısı için kullanabilirsiniz. \n"
-"Ancak iki malzemeden biri daha pahalı ise destek yapısını yapması için tek "
+"\vAncak iki malzemeden biri daha pahalı ise destek yapısını yapması için tek "
 "bir extruder seçebilirsiniz. Bu daha fazla extruder değişimine sebep olur. \n"
-"İkinci extruder'ı suda çözünen materyallerin çözünmesi için de "
+"\vİkinci extruder'ı suda çözünen materyallerin çözünmesi için de "
 "kullanabilirsiniz. "
 
-#: Cura/util/profile.py:194 Cura/util/profile.py:195 Cura/util/profile.py:196
+#: Cura/util/profile.py:193 Cura/util/profile.py:194 Cura/util/profile.py:195
 msgid "Dual extrusion"
 msgstr "Çift extrusion"
 
-#: Cura/util/profile.py:194
-msgid "Wipe&prime tower"
+#: Cura/util/profile.py:193
+#, fuzzy
+msgid "Wipe & prime tower"
 msgstr "Silme-başlatma kulesi"
 
-#: Cura/util/profile.py:194
+#: Cura/util/profile.py:193
 msgid ""
 "The wipe-tower is a tower printed on every layer when switching between "
 "nozzles.\n"
@@ -1889,14 +1940,15 @@ msgid ""
 "print the 2nd color."
 msgstr ""
 "Silme-kulesi her katmanda baskı uçları değişiminde basılır. \n"
-"Yeni rengin basılması için ikinci baskı ucu kullanılmadan önce, önceki baskı "
-"ucunun başı bu kule sayesinde temizlenir."
+"\vYeni rengin basılması için ikinci baskı ucu kullanılmadan önce, önceki "
+"baskı ucunun başı bu kule sayesinde temizlenir."
 
-#: Cura/util/profile.py:195
-msgid "Wipe&prime tower volume per layer (mm3)"
+#: Cura/util/profile.py:194
+#, fuzzy
+msgid "Wipe & prime tower volume per layer (mm3)"
 msgstr "Katman başına silme-başlatma kulesi (mm3)"
 
-#: Cura/util/profile.py:195
+#: Cura/util/profile.py:194
 msgid ""
 "The amount of material put in the wipe/prime tower.\n"
 "This is done in volume because in general you want to extrude a\n"
@@ -1905,17 +1957,17 @@ msgid ""
 "This means that with thinner layers, your tower gets bigger."
 msgstr ""
 "Silme-başlatma kulesi için kullanılan malzeme miktarıdır. \n"
-"Bu hacim cinsinden hesaplanır, çünkü genellikle baskı ucunu temizlemek "
+"\vBu hacim cinsinden hesaplanır, çünkü genellikle baskı ucunu temizlemek "
 "için \n"
-"katman yüksekliğinden bağımsız olarak belli bir hacimde filament extrude "
-"edilir.Bu yüzden ince katmanlar kulenin daha fazla büyüyeceği anlamına "
+"\vkatman yüksekliğinden bağımsız olarak belli bir hacimde filament extrude "
+"edilir.\vBu yüzden ince katmanlar kulenin daha fazla büyüyeceği anlamına "
 "gelir. "
 
-#: Cura/util/profile.py:196
+#: Cura/util/profile.py:195
 msgid "Ooze shield"
 msgstr "Sızma koruması"
 
-#: Cura/util/profile.py:196
+#: Cura/util/profile.py:195
 msgid ""
 "The ooze shield is a 1 line thick shell around the object which stands a few "
 "mm from the object.\n"
@@ -1924,30 +1976,30 @@ msgstr ""
 "Sızma koruması kendisinden birkaç mm uzakta olan nesnenin etrafını saran bir "
 "hat kalınlığındaki kabuktur. "
 
-#: Cura/util/profile.py:197 Cura/util/profile.py:198 Cura/util/profile.py:199
-#: Cura/util/profile.py:200 Cura/util/profile.py:201 Cura/util/profile.py:202
+#: Cura/util/profile.py:196 Cura/util/profile.py:197 Cura/util/profile.py:198
+#: Cura/util/profile.py:199 Cura/util/profile.py:200 Cura/util/profile.py:201
 msgid "Filament"
 msgstr "Filament"
 
-#: Cura/util/profile.py:197
+#: Cura/util/profile.py:196
 msgid "Diameter (mm)"
 msgstr "Çap (mm)"
 
-#: Cura/util/profile.py:197
+#: Cura/util/profile.py:196
 msgid ""
 "Diameter of your filament, as accurately as possible.\n"
 "If you cannot measure this value you will have to calibrate it, a higher "
 "number means less extrusion, a smaller number generates more extrusion."
 msgstr ""
 "Olabildiğince doğru olarak filamentinizin çapı. \n"
-"Eğer bu değeri ölçemiyorsanız ,kalibre etmek zorundasınız: daha yüksek bir "
+"\vEğer bu değeri ölçemiyorsanız ,kalibre etmek zorundasınız: daha yüksek bir "
 "sayı daha az extrusion, daha küçük bir sayı daha fazla extrusion oluşturur.  "
 
-#: Cura/util/profile.py:198
+#: Cura/util/profile.py:197
 msgid "Diameter2 (mm)"
 msgstr "Çap2 (mm)"
 
-#: Cura/util/profile.py:198
+#: Cura/util/profile.py:197
 msgid ""
 "Diameter of your filament for the 2nd nozzle. Use 0 to use the same diameter "
 "as for nozzle 1."
@@ -1955,11 +2007,11 @@ msgstr ""
 "İkinci baskı ucu için filament çapınız: Birinci baskı ucuyla aynı çapta ise "
 "0 giriniz."
 
-#: Cura/util/profile.py:199
+#: Cura/util/profile.py:198
 msgid "Diameter3 (mm)"
 msgstr "Çap3 (mm)"
 
-#: Cura/util/profile.py:199
+#: Cura/util/profile.py:198
 msgid ""
 "Diameter of your filament for the 3th nozzle. Use 0 to use the same diameter "
 "as for nozzle 1."
@@ -1967,11 +2019,11 @@ msgstr ""
 "Üçüncü baskı ucu için filament çapınız: Birinci baskı ucuyla aynı çapta ise "
 "0 giriniz."
 
-#: Cura/util/profile.py:200
+#: Cura/util/profile.py:199
 msgid "Diameter4 (mm)"
 msgstr "Çap (4)"
 
-#: Cura/util/profile.py:200
+#: Cura/util/profile.py:199
 msgid ""
 "Diameter of your filament for the 4th nozzle. Use 0 to use the same diameter "
 "as for nozzle 1."
@@ -1979,12 +2031,12 @@ msgstr ""
 "Dördüncü baskı ucu için filament çapınız: Birinci baskı ucuyla aynı çapta "
 "ise 0 giriniz."
 
-#: Cura/util/profile.py:201
+#: Cura/util/profile.py:200
 #, fuzzy
 msgid "Diameter5 (mm)"
 msgstr "Çap (mm)"
 
-#: Cura/util/profile.py:201
+#: Cura/util/profile.py:200
 #, fuzzy
 msgid ""
 "Diameter of your filament for the 5th nozzle. Use 0 to use the same diameter "
@@ -1993,16 +2045,26 @@ msgstr ""
 "Üçüncü baskı ucu için filament çapınız: Birinci baskı ucuyla aynı çapta ise "
 "0 giriniz."
 
-#: Cura/util/profile.py:202
+#: Cura/util/profile.py:201
 msgid "Flow (%)"
 msgstr "Akış (%)"
 
-#: Cura/util/profile.py:202
+#: Cura/util/profile.py:201
 msgid ""
 "Flow compensation, the amount of material extruded is multiplied by this "
 "value"
 msgstr ""
 "Akış telafisi, dışarıya akıtılan materyalin miktarı bu değerle çarpılır"
+
+#: Cura/util/profile.py:202
+msgid ""
+"The nozzle size is very important, this is used to calculate the line width "
+"of the infill, and used to calculate the amount of outside wall lines and "
+"thickness for the wall thickness you entered in the print settings."
+msgstr ""
+"Baskı ucu boyutu önemlidir. Bu iç dolgunun hatlarının enini, dış duvar "
+"hatlarının miktarını ve baskı ayarlarında oluşturduğunuz duvar kalınlığını "
+"hesaplamanızı sağlar. "
 
 #: Cura/util/profile.py:203
 msgid "Speed (mm/s)"
@@ -2092,7 +2154,7 @@ msgstr ""
 "Bir geri çekme işleminden hemen sonra meydana gelecek olası bir yeniden geri "
 "çekme işleminden önce dışarıya sıkılması gereken minimum erimiş filament "
 "miktarıdır. Eğer bu minimum miktar sıkılmadan önce başka bir geri çekme "
-"meydana gelecek ise, bu geri çekme meydana gelmez.  Bu bir filamentin aynı "
+"meydana gelecek ise, bu geri çekme meydana gelmez.  \vBu bir filamentin aynı "
 "bölgesinde gereğinden fazla geri çekme yapılmasını ve böylece filamentin "
 "aşınmasını önler. "
 
@@ -2302,7 +2364,7 @@ msgstr ""
 "Etek ilk katmanda nesne etrafına çizilen hattır. Bu extruder'ınızı "
 "başlatmaya yardım eder ve nesnenin baskı levhasına sığıp sığmadığını "
 "görmenizi sağlar. \n"
-"0 değerini girmek etek seçeneğini engeller. Küçük objeler basarken birden "
+"\v0 değerini girmek etek seçeneğini engeller. Küçük objeler basarken birden "
 "fazla etek hattı extruder'ınızı başlatmanıza yardımcı olabilir. "
 
 #: Cura/util/profile.py:225
@@ -2316,7 +2378,7 @@ msgid ""
 "this distance."
 msgstr ""
 "Etek ve ilk katman arasındaki uzaklıktır. \n"
-"Bu minimum uzaklıktır, bu uzaklıktan itibaren dışarıya doğru birden fazla "
+"\vBu minimum uzaklıktır, bu uzaklıktan itibaren dışarıya doğru birden fazla "
 "etek hattı eklenebilir. "
 
 #: Cura/util/profile.py:226
@@ -2332,7 +2394,7 @@ msgstr ""
 "Etek hattının minimum uzunluğudur. Eğer minimum uzunluğa ulaşılmadıysa bu "
 "uzunluğa ulaşmak için otomatik olarak dışa doğru daha fazla etek hattı "
 "eklenir. \n"
-" Not: Eğer hat sayacı 0'a ayarlanırsa bu özellik yok sayılır."
+" \vNot: Eğer hat sayacı 0'a ayarlanırsa bu özellik yok sayılır."
 
 #: Cura/util/profile.py:227
 msgid "Fan full on at height (mm)"
@@ -2410,7 +2472,7 @@ msgid ""
 "Create a solid top surface, if set to false the top is filled with the fill "
 "percentage. Useful for cups/vases."
 msgstr ""
-"Katı tavan katmanı oluştur.Eğer seçilmezse nesne tavanı iç dolgu oranı ile "
+"Katı tavan katmanı oluştur.\vEğer seçilmezse nesne tavanı iç dolgu oranı ile "
 "aynı oranda doldurulur. Kupa bardak veya vazolar için kullanışlıdır. "
 
 #: Cura/util/profile.py:233
@@ -2422,7 +2484,7 @@ msgid ""
 "Create a solid bottom surface, if set to false the bottom is filled with the "
 "fill percentage. Useful for buildings."
 msgstr ""
-"Katı taban katmanı oluştur.Eğer seçilmezse nesne tabanı iç dolgu oranı ile "
+"Katı taban katmanı oluştur.\vEğer seçilmezse nesne tabanı iç dolgu oranı ile "
 "aynı oranda doldurulur. Yapı ve binalar için kullanışlıdır. "
 
 #: Cura/util/profile.py:234
@@ -2440,10 +2502,21 @@ msgstr ""
 "üste biner. "
 
 #: Cura/util/profile.py:235
+msgid "Infill prints after perimeters"
+msgstr ""
+
+#: Cura/util/profile.py:235
+msgid ""
+"Print infill after perimeter lines. This can reduce infill from showing "
+"through the surface. If not checked, infill will print before perimeter "
+"lines."
+msgstr ""
+
+#: Cura/util/profile.py:236
 msgid "Structure type"
 msgstr "Destek türü(%)"
 
-#: Cura/util/profile.py:235
+#: Cura/util/profile.py:236
 msgid ""
 "The type of support structure.\n"
 "Grid is very strong and can come off in 1 piece, however, sometimes it is "
@@ -2453,15 +2526,15 @@ msgid ""
 "prints."
 msgstr ""
 "Destek yapısı türü. \n"
-"Izgara yapısında destek çok güçlüdür ve tek parça halinde çıkabilir. Ancak "
+"\vIzgara yapısında destek çok güçlüdür ve tek parça halinde çıkabilir. Ancak "
 "bazen gereğinden fazla güçlüdür. \n"
-""
+"\v"
 
-#: Cura/util/profile.py:236
+#: Cura/util/profile.py:237
 msgid "Overhang angle for support (deg)"
 msgstr "Destek için askı açısı (derece)"
 
-#: Cura/util/profile.py:236
+#: Cura/util/profile.py:237
 #, fuzzy
 msgid ""
 "The minimal angle that overhangs need to have to get support. With 90 degree "
@@ -2470,11 +2543,11 @@ msgstr ""
 "0 derece yatay ve 90 derece dikey olmak üzere, askılı yapıların destek "
 "alması için ihtiyaçları olan minimum açı."
 
-#: Cura/util/profile.py:237
+#: Cura/util/profile.py:238
 msgid "Fill amount (%)"
 msgstr "Dolgu miktarı (%)"
 
-#: Cura/util/profile.py:237
+#: Cura/util/profile.py:238
 #, python-format
 msgid ""
 "Amount of infill structure in the support material, less material gives "
@@ -2484,24 +2557,24 @@ msgstr ""
 "çıkarılabilen destek yapısı oluşturur. Yüzde 15 destek iç dolgusu optimum "
 "bir değerdir. "
 
-#: Cura/util/profile.py:238
+#: Cura/util/profile.py:239
 msgid "Distance X/Y (mm)"
 msgstr "X/Y Mesafesi (mm)"
 
-#: Cura/util/profile.py:238
+#: Cura/util/profile.py:239
 msgid ""
 "Distance of the support material from the print, in the X/Y directions.\n"
 "0.7mm gives a nice distance from the print so the support does not stick to "
 "the print."
 msgstr ""
 "Destek ile baskı arasındaki X/Y yönlerindeki uzaklıktır. \n"
-"0.15 mm destek yapısının baskıya yapışmaması için ideal bir uzaklıktır.  "
+"\v0.15 mm destek yapısının baskıya yapışmaması için ideal bir uzaklıktır.  "
 
-#: Cura/util/profile.py:239
+#: Cura/util/profile.py:240
 msgid "Distance Z (mm)"
 msgstr "Z Mesafesi (mm)"
 
-#: Cura/util/profile.py:239
+#: Cura/util/profile.py:240
 msgid ""
 "Distance from the top/bottom of the support to the print. A small gap here "
 "makes it easier to remove the support but makes the print a bit uglier.\n"
@@ -2510,17 +2583,17 @@ msgstr ""
 "Desteğin tabanı/tavanı ile baskı arasındaki uzaklıktır. Küçük bir boşluk "
 "baskıdan sonra desteğin çıkarılmasını kolaylaştırır, ancak yüzey pürüzlü "
 "olabilir. \n"
-"0.15 mm destek yapısının kolayca ayrılması için idealdir. "
+"\v0.15 mm destek yapısının kolayca ayrılması için idealdir. "
 
-#: Cura/util/profile.py:240 Cura/util/profile.py:241
+#: Cura/util/profile.py:241 Cura/util/profile.py:242
 msgid "Black Magic"
 msgstr ""
 
-#: Cura/util/profile.py:240
+#: Cura/util/profile.py:241
 msgid "Spiralize the outer contour"
 msgstr ""
 
-#: Cura/util/profile.py:240
+#: Cura/util/profile.py:241
 msgid ""
 "Spiralize is smoothing out the Z move of the outer edge. This will create a "
 "steady Z increase over the whole print. This feature turns a solid object "
@@ -2528,21 +2601,21 @@ msgid ""
 "This feature used to be called Joris in older versions."
 msgstr ""
 
-#: Cura/util/profile.py:241
+#: Cura/util/profile.py:242
 msgid "Only follow mesh surface"
 msgstr ""
 
-#: Cura/util/profile.py:241
+#: Cura/util/profile.py:242
 msgid ""
 "Only follow the mesh surfaces of the 3D model, do not do anything else. No "
 "infill, no top/bottom, nothing."
 msgstr ""
 
-#: Cura/util/profile.py:243
+#: Cura/util/profile.py:244
 msgid "Brim line amount"
 msgstr "Kenar hattı miktarı"
 
-#: Cura/util/profile.py:243
+#: Cura/util/profile.py:244
 msgid ""
 "The amount of lines used for a brim, more lines means a larger brim which "
 "sticks better, but this also makes your effective print area smaller."
@@ -2551,11 +2624,11 @@ msgstr ""
 "kenar anlamına gelir, bu da yapışmayı kolaylaştırır. Ancak aynı anda "
 "kullanabileceğiniz etkin baskı alanını azaltır. "
 
-#: Cura/util/profile.py:244
+#: Cura/util/profile.py:245
 msgid "Extra margin (mm)"
 msgstr "Ekstra kenar boşluğu (mm)"
 
-#: Cura/util/profile.py:244
+#: Cura/util/profile.py:245
 msgid ""
 "If the raft is enabled, this is the extra raft area around the object which "
 "is also rafted. Increasing this margin will create a stronger raft while "
@@ -2566,11 +2639,11 @@ msgstr ""
 "daha fazla materyal kullanır ve diğer olası baskılar için daha az baskı "
 "alanı bırakır. "
 
-#: Cura/util/profile.py:245
+#: Cura/util/profile.py:246
 msgid "Line spacing (mm)"
 msgstr "Hat yerleşimi (mm)"
 
-#: Cura/util/profile.py:245
+#: Cura/util/profile.py:246
 msgid ""
 "When you are using the raft this is the distance between the centerlines of "
 "the raft line."
@@ -2578,103 +2651,103 @@ msgstr ""
 "Raft kullandığınızda bu, raft hatlarının merkez hatları arasındaki "
 "uzaklıktır. "
 
-#: Cura/util/profile.py:246
+#: Cura/util/profile.py:247
 msgid "Base thickness (mm)"
 msgstr "Taban kalınlığı (mm)"
 
-#: Cura/util/profile.py:246
+#: Cura/util/profile.py:247
 msgid ""
 "When you are using the raft this is the thickness of the base layer which is "
 "put down."
 msgstr "Raft kullandığınızda bu, taban katmanının kalınlığıdır. "
 
-#: Cura/util/profile.py:247
+#: Cura/util/profile.py:248
 msgid "Base line width (mm)"
 msgstr "Taban hattı eni (mm)"
 
-#: Cura/util/profile.py:247
+#: Cura/util/profile.py:248
 msgid ""
 "When you are using the raft this is the width of the base layer lines which "
 "are put down."
 msgstr "Raft kullandığınızda bu, taban katmanı hatlarının enidir. "
 
-#: Cura/util/profile.py:248
+#: Cura/util/profile.py:249
 msgid "Interface thickness (mm)"
 msgstr "Arayüz kalınlığı (mm)"
 
-#: Cura/util/profile.py:248
+#: Cura/util/profile.py:249
 msgid ""
 "When you are using the raft this is the thickness of the interface layer "
 "which is put down."
 msgstr "Raft kullandığınızda bu, arayüz katmanının kalınlığıdır.  "
 
-#: Cura/util/profile.py:249
+#: Cura/util/profile.py:250
 msgid "Interface line width (mm)"
 msgstr "Arayüz hattı eni (mm)"
 
-#: Cura/util/profile.py:249
+#: Cura/util/profile.py:250
 msgid ""
 "When you are using the raft this is the width of the interface layer lines "
 "which are put down."
 msgstr "Raft kullandığınızda bu, arayüz katmanı hatlarının enidir."
 
-#: Cura/util/profile.py:250
+#: Cura/util/profile.py:251
 msgid "Airgap"
 msgstr ""
 
-#: Cura/util/profile.py:250
+#: Cura/util/profile.py:251
 msgid "Gap between the last layer of the raft the whole print."
 msgstr ""
 
-#: Cura/util/profile.py:251
+#: Cura/util/profile.py:252
 msgid "First Layer Airgap"
 msgstr ""
 
-#: Cura/util/profile.py:251
+#: Cura/util/profile.py:252
 msgid ""
 "Gap between the last layer of the raft and the first printing layer. A small "
 "gap of 0.2mm works wonders on PLA and makes the raft easy to remove. This "
 "value is added on top of the 'Airgap' setting."
 msgstr ""
 
-#: Cura/util/profile.py:252
+#: Cura/util/profile.py:253
 msgid "Surface layers"
 msgstr ""
 
-#: Cura/util/profile.py:252
+#: Cura/util/profile.py:253
 msgid ""
 "Amount of surface layers put on top of the raft, these are fully filled "
 "layers on which the model is printed."
 msgstr ""
 
-#: Cura/util/profile.py:253
+#: Cura/util/profile.py:254
 #, fuzzy
 msgid "Surface layer thickness (mm)"
 msgstr "Başlangıçtaki katman kalınlığı (mm)"
 
-#: Cura/util/profile.py:253
+#: Cura/util/profile.py:254
 msgid "Thickness of each surface layer."
 msgstr ""
 
-#: Cura/util/profile.py:254
+#: Cura/util/profile.py:255
 #, fuzzy
 msgid "Surface layer line width (mm)"
 msgstr "Arayüz hattı eni (mm)"
 
-#: Cura/util/profile.py:254
+#: Cura/util/profile.py:255
 msgid "Width of the lines for each surface layer."
 msgstr ""
 
-#: Cura/util/profile.py:255 Cura/util/profile.py:256 Cura/util/profile.py:257
-#: Cura/util/profile.py:258
+#: Cura/util/profile.py:256 Cura/util/profile.py:257 Cura/util/profile.py:258
+#: Cura/util/profile.py:259
 msgid "Fix horrible"
 msgstr "Riskli onarım "
 
-#: Cura/util/profile.py:255
+#: Cura/util/profile.py:256
 msgid "Combine everything (Type-A)"
 msgstr "Her şeyi birleştir (Type-A)"
 
-#: Cura/util/profile.py:255 Cura/util/profile.py:256
+#: Cura/util/profile.py:256 Cura/util/profile.py:257
 msgid ""
 "This expert option adds all parts of the model together. The result is "
 "usually that internal cavities disappear. Depending on the model this can be "
@@ -2689,15 +2762,15 @@ msgstr ""
 "Type-B bütün iç boşlukları görmezden gelir ve sadece dış şekli katman olarak "
 "kabul eder. "
 
-#: Cura/util/profile.py:256
+#: Cura/util/profile.py:257
 msgid "Combine everything (Type-B)"
 msgstr "Her şeyi birleştir (Type-B)"
 
-#: Cura/util/profile.py:257
+#: Cura/util/profile.py:258
 msgid "Keep open faces"
 msgstr "Açık yüzleri koru"
 
-#: Cura/util/profile.py:257
+#: Cura/util/profile.py:258
 msgid ""
 "This expert option keeps all the open bits of the model intact. Normally "
 "Cura tries to stitch up small holes and remove everything with big holes, "
@@ -2712,15 +2785,15 @@ msgstr ""
 "çalışır, ancak bu seçenek hiçbir şeyin parçası olmayan parçalarla sonuçlanır "
 "ve sonuçta ortada ne kalırsa kalsın devam eder.  Bu seçenek genellikle "
 "istediğiniz seçenek değildir, ancak size öbür türlü düzgün parçalar "
-"oluşturamayan modelleri dilimleme imkanı verebilir. Tüm \"Fix horrible\" "
+"oluşturamayan modelleri dilimleme imkanı verebilir. \vTüm \"Fix horrible\" "
 "seçeneklerinde olduğu gibi, sonuçlar değişebilir. Kendi sorumluluğunuz "
-"altında kullanınız."
+"altında kullanınız.\v"
 
-#: Cura/util/profile.py:258
+#: Cura/util/profile.py:259
 msgid "Extensive stitching"
 msgstr "Yoğun onarım"
 
-#: Cura/util/profile.py:258
+#: Cura/util/profile.py:259
 msgid ""
 "Extensive stitching tries to fix up open holes in the model by closing the "
 "hole with touching polygons. This algorthm is quite expensive and could "
@@ -2729,47 +2802,47 @@ msgid ""
 "risk."
 msgstr ""
 "Yoğun onarım modeldeki açık delikleri çokgenlerle kapatmaya çalışır. "
-"Algoritma karmaşıktır ve işlem süresini arttırabilir. Tüm \"Fix horrible\" "
+"Algoritma karmaşıktır ve işlem süresini arttırabilir. \vTüm \"Fix horrible\" "
 "seçeneklerinde olduğu gibi, sonuçlar değişebilir. Kendi sorumluluğunuz "
 "altında kullanınız. "
 
-#: Cura/util/profile.py:486
+#: Cura/util/profile.py:489
 msgid "Save profile on slice"
 msgstr "Profili dilime kaydet"
 
-#: Cura/util/profile.py:486
+#: Cura/util/profile.py:489
 msgid ""
 "When slicing save the profile as [stl_file]_profile.ini next to the model."
 msgstr ""
-"Dilimleme (slicing) yaptığınız zaman profili modelin yanına [stl_file]"
-"_profile.ini olarak kaydedin."
+"Dilimleme (slicing) yaptığınız zaman profili modelin yanına "
+"[stl_file]_profile.ini olarak kaydedin."
 
-#: Cura/util/profile.py:487
+#: Cura/util/profile.py:490
 msgid "Cost (price/kg)"
 msgstr "Maliyet (fiyat/kg)"
 
-#: Cura/util/profile.py:487
+#: Cura/util/profile.py:490
 msgid "Cost of your filament per kg, to estimate the cost of the final print."
 msgstr ""
 "Son baskının maliyetini belirlemek için, filamentinizin kilogram başına "
 "maliyeti: "
 
-#: Cura/util/profile.py:488
+#: Cura/util/profile.py:491
 msgid "Cost (price/m)"
 msgstr "Maliyet (fiyat/m)"
 
-#: Cura/util/profile.py:488
+#: Cura/util/profile.py:491
 msgid ""
 "Cost of your filament per meter, to estimate the cost of the final print."
 msgstr ""
 "Son baskının maliyetini belirlemek için, filamentinizin metre başına "
 "maliyeti: "
 
-#: Cura/util/profile.py:489
+#: Cura/util/profile.py:492
 msgid "Auto detect SD card drive"
 msgstr "SD kart sürücüsünü otomatik olarak belirle"
 
-#: Cura/util/profile.py:489
+#: Cura/util/profile.py:492
 msgid ""
 "Auto detect the SD card. You can disable this because on some systems "
 "external hard-drives or USB sticks are detected as SD card."
@@ -2778,11 +2851,11 @@ msgstr ""
 "bazı sistemler dışarıdan takılan hard-disk veya USB bellekleri SD kart "
 "olarak algılar."
 
-#: Cura/util/profile.py:504
+#: Cura/util/profile.py:507
 msgid "Base folder to replicate on SD card"
 msgstr ""
 
-#: Cura/util/profile.py:504
+#: Cura/util/profile.py:507
 msgid ""
 "The specified folder will be used as a base path. Any gcode generated from "
 "object coming from within that folder will be automatically saved on the SD "
@@ -2790,29 +2863,29 @@ msgid ""
 "will save the gcode on the root folder of the card."
 msgstr ""
 
-#: Cura/util/profile.py:505
+#: Cura/util/profile.py:508
 msgid "Check for updates"
 msgstr "Güncellemeleri denetle"
 
-#: Cura/util/profile.py:505
+#: Cura/util/profile.py:508
 msgid "Check for newer versions of Cura on startup"
 msgstr "Başlangıçta Cura'nın yeni bir versiyonunun olup olmadığını denetle"
 
-#: Cura/util/profile.py:506
+#: Cura/util/profile.py:509
 msgid "Send usage statistics"
 msgstr "Kullanım istatistikleri gönder"
 
-#: Cura/util/profile.py:506
+#: Cura/util/profile.py:509
 msgid "Submit anonymous usage information to improve future versions of Cura"
 msgstr ""
 "Cura'nın gelecekteki versiyonlarını geliştirmek için anonim kullanıcı "
 "bilgisi gönder"
 
-#: Cura/util/profile.py:508
+#: Cura/util/profile.py:511
 msgid "Density (kg/m3)"
 msgstr "Yoğunluk (kg/m3)"
 
-#: Cura/util/profile.py:508
+#: Cura/util/profile.py:511
 msgid ""
 "Weight of the filament per m3. Around 1240 for PLA. And around 1040 for ABS. "
 "This value is used to estimate the weight if the filament used for the print."
@@ -2821,7 +2894,7 @@ msgstr ""
 "gramdır. Bu değerler yazdırılan baskının ağırlığını hesaplamak için "
 "kullanılır. "
 
-#: Cura/util/profile.py:509
+#: Cura/util/profile.py:512
 msgid ""
 "Change the language in which Cura runs. Switching language requires a "
 "restart of Cura"
@@ -2829,67 +2902,67 @@ msgstr ""
 "Cura'nın dilini değiştirin. Dil değişimi programın yeniden başlatılmasını "
 "gerektirir. "
 
-#: Cura/util/profile.py:512
+#: Cura/util/profile.py:515
 msgid "Model colour"
 msgstr "Model rengi "
 
-#: Cura/util/profile.py:512
+#: Cura/util/profile.py:515
 msgid "Display color for first extruder"
 msgstr "İlk extruder için display rengi"
 
-#: Cura/util/profile.py:513
+#: Cura/util/profile.py:516
 msgid "Model colour (2)"
 msgstr "Model rengi (2)"
 
-#: Cura/util/profile.py:513
+#: Cura/util/profile.py:516
 msgid "Display color for second extruder"
 msgstr "İkinci extruder için display rengi"
 
-#: Cura/util/profile.py:514
+#: Cura/util/profile.py:517
 msgid "Model colour (3)"
 msgstr "Model rengi (3)"
 
-#: Cura/util/profile.py:514
+#: Cura/util/profile.py:517
 msgid "Display color for third extruder"
 msgstr "Üçüncü extruder için display rengi"
 
-#: Cura/util/profile.py:515
+#: Cura/util/profile.py:518
 msgid "Model colour (4)"
 msgstr "Model rengi (4)"
 
-#: Cura/util/profile.py:515
+#: Cura/util/profile.py:518
 msgid "Display color for forth extruder"
 msgstr "Dördüncü extruder için display rengi"
 
-#: Cura/util/profile.py:516
+#: Cura/util/profile.py:519
 msgid "Printing window type"
 msgstr "Baskı penceresi türü"
 
-#: Cura/util/profile.py:516
+#: Cura/util/profile.py:519
 msgid "Select the interface used for USB printing."
 msgstr "USB yazdırma için kullanılan arayüzü seçiniz."
 
-#: Cura/util/profile.py:528
+#: Cura/util/profile.py:531
 msgid "Maximum width (mm)"
 msgstr "Maksimum en (mm)"
 
-#: Cura/util/profile.py:528 Cura/util/profile.py:529 Cura/util/profile.py:530
+#: Cura/util/profile.py:531 Cura/util/profile.py:532 Cura/util/profile.py:533
 msgid "Size of the machine in mm"
 msgstr "Cihazın mm cinsinden boyutu"
 
-#: Cura/util/profile.py:529
+#: Cura/util/profile.py:532
 msgid "Maximum depth (mm)"
 msgstr "Maksimum derinlik (mm)"
 
-#: Cura/util/profile.py:530
+#: Cura/util/profile.py:533
 msgid "Maximum height (mm)"
 msgstr "Maksimum yükseklik (mm)"
 
-#: Cura/util/profile.py:531
+#: Cura/util/profile.py:534
 msgid "Machine center 0,0"
 msgstr "Cihaz merkezi 0,0"
 
-#: Cura/util/profile.py:531
+#: Cura/util/profile.py:534
 msgid ""
 "Machines firmware defines the center of the bed as 0,0 instead of the front "
 "left corner."
@@ -2897,15 +2970,15 @@ msgstr ""
 "Cihazın firmware'ı ön sol köşe yerine baskı levhasının merkezini 0,0 olarak "
 "tanımlar.  "
 
-#: Cura/util/profile.py:532
+#: Cura/util/profile.py:535
 msgid "Build area shape"
 msgstr "Baskı alanı şekli"
 
-#: Cura/util/profile.py:532
+#: Cura/util/profile.py:535
 msgid "The shape of machine build area."
 msgstr "Cihazın baskı alanı şekli."
 
-#: Cura/util/profile.py:534
+#: Cura/util/profile.py:537
 msgid ""
 "If you have an heated bed, this enabled heated bed settings (requires "
 "restart)"
@@ -2913,11 +2986,11 @@ msgstr ""
 "Eğer baskı levhası zaten ısıtılmış ise, bu ısıtılmış levha ayarlarını "
 "aktifleştirir (yeniden başlatma gerektirir)."
 
-#: Cura/util/profile.py:535
+#: Cura/util/profile.py:538
 msgid "GCode Flavor"
 msgstr "G-Kod türü (flavor)"
 
-#: Cura/util/profile.py:535
+#: Cura/util/profile.py:538
 #, fuzzy
 msgid ""
 "Flavor of generated GCode.\n"
@@ -2930,49 +3003,49 @@ msgid ""
 "Mach3 uses A,B,C instead of E for extruders."
 msgstr ""
 "Oluşturulan G-Kod türü. \n"
-"RepRap Marlin/Sprinter tabanlı firmware'larda çalışan normal 5D G-Kod "
+"\vRepRap Marlin/Sprinter tabanlı firmware'larda çalışan normal 5D G-Kod "
 "oluşturur. \n"
-"UltiGCode, RepRap G-Kodu varyasyonudur ve dilimleyici (slicer) yerine cihaza "
-"daha fazla ayar ekler. \n"
-"MakerBot G-Kodu G-Kod'un oluşturulma şekli ile ilgili birkaç değişikliğe "
+"\vUltiGCode, RepRap G-Kodu varyasyonudur ve dilimleyici (slicer) yerine "
+"cihaza daha fazla ayar ekler. \n"
+"\vMakerBot G-Kodu G-Kod'un oluşturulma şekli ile ilgili birkaç değişikliğe "
 "sahiptir, ancak yine de X3G oluşturmak için MakerWare'a ihtiyaç duyar. "
 
-#: Cura/util/profile.py:536
+#: Cura/util/profile.py:539
 msgid "Extruder count"
 msgstr "Extruder sayacı"
 
-#: Cura/util/profile.py:536
+#: Cura/util/profile.py:539
 msgid "Amount of extruders in your machine."
 msgstr "Cihazınızdaki extruder sayısı."
 
-#: Cura/util/profile.py:537 Cura/util/profile.py:539 Cura/util/profile.py:541
-#: Cura/util/profile.py:543
+#: Cura/util/profile.py:540 Cura/util/profile.py:542 Cura/util/profile.py:544
+#: Cura/util/profile.py:546
 msgid "Offset X"
 msgstr "X'i dengele"
 
-#: Cura/util/profile.py:537 Cura/util/profile.py:538
+#: Cura/util/profile.py:540 Cura/util/profile.py:541
 msgid "The offset of your secondary extruder compared to the primary."
 msgstr "İlkiyle karşılaştırıldığında ikinci extruder dengesi."
 
-#: Cura/util/profile.py:538 Cura/util/profile.py:540 Cura/util/profile.py:542
-#: Cura/util/profile.py:544
+#: Cura/util/profile.py:541 Cura/util/profile.py:543 Cura/util/profile.py:545
+#: Cura/util/profile.py:547
 msgid "Offset Y"
 msgstr "Y'yi dengele"
 
-#: Cura/util/profile.py:539 Cura/util/profile.py:540
+#: Cura/util/profile.py:542 Cura/util/profile.py:543
 msgid "The offset of your tertiary extruder compared to the primary."
 msgstr "İlkiyle karşılaştırıldığında üçünü extruder dengesi."
 
-#: Cura/util/profile.py:541 Cura/util/profile.py:542 Cura/util/profile.py:543
-#: Cura/util/profile.py:544
+#: Cura/util/profile.py:544 Cura/util/profile.py:545 Cura/util/profile.py:546
+#: Cura/util/profile.py:547
 msgid "The offset of your forth extruder compared to the primary."
 msgstr "İlkiyle karşılaştırıldığında dördüncü extruder dengesi."
 
-#: Cura/util/profile.py:545
+#: Cura/util/profile.py:548
 msgid "E-Steps per 1mm filament"
 msgstr "1 mm filament başına E-Adımlar"
 
-#: Cura/util/profile.py:545
+#: Cura/util/profile.py:548
 msgid ""
 "Amount of steps per mm filament extrusion. If set to 0 then this value is "
 "ignored and the value in your firmware is used."
@@ -2980,19 +3053,19 @@ msgstr ""
 "Her bir mm filament extrusion'u için adım sayısı. Bu değer 0 olarak "
 "ayarlanırsa hesaba katılmaz ve firmware'ınızdaki varsayılan ayar uygulanır. "
 
-#: Cura/util/profile.py:546
+#: Cura/util/profile.py:549
 msgid "Serial port"
 msgstr "Seri port"
 
-#: Cura/util/profile.py:546
+#: Cura/util/profile.py:549
 msgid "Serial port to use for communication with the printer"
 msgstr "Yazıcıyla iletişime geçmek için kullanılacak seri port"
 
-#: Cura/util/profile.py:548
+#: Cura/util/profile.py:551
 msgid "Baudrate"
 msgstr "Baud oranı"
 
-#: Cura/util/profile.py:548
+#: Cura/util/profile.py:551
 msgid ""
 "Speed of the serial port communication\n"
 "Needs to match your firmware settings\n"
@@ -3002,11 +3075,11 @@ msgstr ""
 "cihazınızın elektronik altyapısının yazılımına uyumlu olmalıdır \n"
 "Yaygın değerler: 250000,115200,57600"
 
-#: Cura/util/profile.py:551
+#: Cura/util/profile.py:554
 msgid "Head size towards X min (mm)"
 msgstr "X minimumu doğrultusunda baskı başı boyutu (mm)"
 
-#: Cura/util/profile.py:551
+#: Cura/util/profile.py:554
 msgid ""
 "The head size when printing multiple objects, measured from the tip of the "
 "nozzle towards the outer part of the head. 75mm for an Ultimaker if the fan "
@@ -3016,11 +3089,11 @@ msgstr ""
 "baskı başının dıştan diğer tarafına kadardır. Fanın sol tarafta bulunğu bir "
 "Ultimaker için 75 mm'dir."
 
-#: Cura/util/profile.py:552
+#: Cura/util/profile.py:555
 msgid "Head size towards Y min (mm)"
 msgstr "Y minimumu doğrultusunda baskı başı boyutu (mm)"
 
-#: Cura/util/profile.py:552 Cura/util/profile.py:553
+#: Cura/util/profile.py:555 Cura/util/profile.py:556
 msgid ""
 "The head size when printing multiple objects, measured from the tip of the "
 "nozzle towards the outer part of the head. 18mm for an Ultimaker if the fan "
@@ -3030,26 +3103,26 @@ msgstr ""
 "baskı başının dıştan diğer tarafına kadardır. Fanın sol tarafta bulunğu bir "
 "Ultimaker için 18 mm'dir."
 
-#: Cura/util/profile.py:553
+#: Cura/util/profile.py:556
 msgid "Head size towards X max (mm)"
 msgstr "X maksimumu doğrultusunda baskı başı boyutu (mm)"
 
-#: Cura/util/profile.py:554
+#: Cura/util/profile.py:557
 msgid "Head size towards Y max (mm)"
 msgstr "X maksimumu doğrultusunda baskı başı boyutu (mm)"
 
-#: Cura/util/profile.py:554
+#: Cura/util/profile.py:557
 msgid ""
 "The head size when printing multiple objects, measured from the tip of the "
 "nozzle towards the outer part of the head. 35mm for an Ultimaker if the fan "
 "is on the left side."
 msgstr "Birden fazla nesne basıyorsanız baskı ucu büyüklüğü"
 
-#: Cura/util/profile.py:555
+#: Cura/util/profile.py:558
 msgid "Printer gantry height (mm)"
 msgstr "Yazıcı gantry yüksekliği (mm)"
 
-#: Cura/util/profile.py:555
+#: Cura/util/profile.py:558
 msgid ""
 "The height of the gantry holding up the printer head. If an object is higher "
 "then this then you cannot print multiple objects one for one. 60mm for an "
@@ -3058,17 +3131,56 @@ msgstr ""
 "Baskı başını tutan gantry yüksekliği. Eğer bir nesne bundan daha yüksek ise, "
 "birden fazla nesneyi teker teker basamazsınız. Ultimaker için 60 mm'dir."
 
-#: Cura/util/profile.py:557
+#: Cura/util/profile.py:560
+#, fuzzy
+msgid "Acceleration"
+msgstr "Geri çekme"
+
+#: Cura/util/profile.py:560 Cura/util/profile.py:561 Cura/util/profile.py:562
+#: Cura/util/profile.py:563 Cura/util/profile.py:564 Cura/util/profile.py:565
+#: Cura/util/profile.py:566 Cura/util/profile.py:567
+msgid "."
+msgstr ""
+
+#: Cura/util/profile.py:561
+msgid "Max acceleration X"
+msgstr ""
+
+#: Cura/util/profile.py:562
+msgid "Max acceleration Y"
+msgstr ""
+
+#: Cura/util/profile.py:563
+msgid "Max acceleration Z"
+msgstr ""
+
+#: Cura/util/profile.py:564
+msgid "Max acceleration E"
+msgstr ""
+
+#: Cura/util/profile.py:565
+msgid "XY \"Jerk\""
+msgstr ""
+
+#: Cura/util/profile.py:566
+msgid "Z \"Jerk\""
+msgstr ""
+
+#: Cura/util/profile.py:567
+msgid "E \"Jerk\""
+msgstr ""
+
+#: Cura/util/profile.py:569
 #, python-format
 msgid "More flow than 150% is rare and usually not recommended."
 msgstr "Akışın % 150 den daha fazla olması nadirdir ve genellikle önerilmez."
 
-#: Cura/util/profile.py:558
+#: Cura/util/profile.py:570
 #, python-format
 msgid "Less flow than 50% is rare and usually not recommended."
 msgstr "Akışın %50 den daha az olması nadirdir ve genellikle önerilmez. "
 
-#: Cura/util/profile.py:559
+#: Cura/util/profile.py:571
 #, python-format
 msgid ""
 "Thicker layers then %.2fmm (80%% nozzle size) usually give bad results and "
@@ -3077,7 +3189,7 @@ msgstr ""
 "Tabakalarının %2fmm'den (baskı ucu büyüklüğünün 3/4'ünden) fazla olması "
 "genellikle kötü sonuçlar verir ve önerilmez."
 
-#: Cura/util/profile.py:561
+#: Cura/util/profile.py:573
 msgid ""
 "It is highly unlikely that your machine can achieve a printing speed above "
 "150mm/s"
@@ -3085,14 +3197,14 @@ msgstr ""
 "Cihazınızın 150 mm/s'nin üzerinde bir hareket hızına sahip olması olası "
 "değildir. "
 
-#: Cura/util/profile.py:568 Cura/util/profile.py:569 Cura/util/profile.py:570
-#: Cura/util/profile.py:571 Cura/util/profile.py:572
+#: Cura/util/profile.py:580 Cura/util/profile.py:581 Cura/util/profile.py:582
+#: Cura/util/profile.py:583 Cura/util/profile.py:584
 msgid "Temperatures above 260C could damage your machine, be careful!"
 msgstr ""
 "260 C'den yüksek sıcaklıklar cihazınıza zarar verebilir, dikkatli olunuz !"
 
-#: Cura/util/profile.py:573 Cura/util/profile.py:574 Cura/util/profile.py:575
-#: Cura/util/profile.py:576 Cura/util/profile.py:577
+#: Cura/util/profile.py:585 Cura/util/profile.py:586 Cura/util/profile.py:587
+#: Cura/util/profile.py:588 Cura/util/profile.py:589
 msgid ""
 "Are you sure your filament is that thick? Normal filament is around 3mm or "
 "1.75mm."
@@ -3100,7 +3212,7 @@ msgstr ""
 "Filamentinizin bu kadar kalın olduğuna emin misiniz ? Normal bir filament 3 "
 "mm veya 1.75 mm'dir."
 
-#: Cura/util/profile.py:578
+#: Cura/util/profile.py:590
 msgid ""
 "It is highly unlikely that your machine can achieve a travel speed above "
 "300mm/s"
@@ -3108,7 +3220,7 @@ msgstr ""
 "Cihazınızın 300 mm/s'nin üzerinde bir hareket hızına sahip olması olası "
 "değildir. "
 
-#: Cura/util/profile.py:579
+#: Cura/util/profile.py:591
 #, python-format
 msgid ""
 "A bottom layer of more then %.2fmm (3/4 nozzle size) usually give bad "
@@ -3136,6 +3248,28 @@ msgstr ""
 #, python-format
 msgid "%0.2f meter %0.0f gram"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Other (Ex: RepRap, MakerBot, Witbox)"
+#~ msgstr "Diğer (Ör: RepRap, MakerBot)"
+
+#~ msgid "Reset Profile to default"
+#~ msgstr "Profili varsayılana ayarla"
+
+#~ msgid "Select a quickprint profile:"
+#~ msgstr "Hızlı-baskı profili seçin:"
+
+#~ msgid "Edit"
+#~ msgstr "Düzenle"
+
+#~ msgid "Rectangle"
+#~ msgstr "Dikdörtgen"
+
+#~ msgid "Circle"
+#~ msgstr "Çember"
+
+#~ msgid "Draw curves"
+#~ msgstr "Eğri çiz"
 
 #~ msgid "Copy profile to clipboard"
 #~ msgstr "Profili panoya kopyala"

@@ -9,3 +9,6 @@ The below models are shared under the CC BY-SA 3.0 license (http://creativecommo
 
 * UltimakerHandle.stl: Ultimaker handle by Silvius
   http://www.thingiverse.com/thing:22819
+
+* MoebyusKeyRing.stl : Moebyus keyring by Ariel Rodriguez
+  http://www.thingiverse.com/thing:2031499

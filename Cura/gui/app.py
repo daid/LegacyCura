@@ -129,7 +129,7 @@ class CuraApp(wx.App):
 		#If we haven't run it before, run the configuration wizard.
 		if profile.getMachineSetting('machine_type') == 'unknown':
 			#Check if we need to copy our examples
-			exampleFile = os.path.normpath(os.path.join(resources.resourceBasePath, 'example', 'UltimakerRobot_support.stl'))
+			exampleFile = os.path.normpath(os.path.join(resources.resourceBasePath, 'example', 'MoebyusKeyRing.stl'))
 
 			self.loadFiles = [exampleFile]
 			if self.splash is not None:
