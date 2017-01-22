@@ -2705,7 +2705,7 @@ msgstr ""
 #: Cura/util/profile.py:559
 #, python-format
 msgid ""
-"Thicker layers then %.2fmm (80%% nozzle size) usually give bad results and "
+"Thicker layers than %.2fmm (80%% nozzle size) usually give bad results and "
 "are not recommended."
 msgstr ""
 
