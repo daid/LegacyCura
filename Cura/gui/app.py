@@ -79,9 +79,7 @@ class CuraApp(wx.App):
 		pass
 
 	def OnActivate(self, e):
-		if e.GetActive():
-			self.GetTopWindow().Raise()
-		e.Skip()
+                pass
 
 	def Win32SocketListener(self, port):
 		import socket
