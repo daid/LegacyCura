@@ -1,11 +1,15 @@
-from __future__ import absolute_import
+"""
+Tool to import sections of minecraft levels into Cura.
+This makes use of the pymclevel module from David Rio Vierra
+"""
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import wx
 import glob
 import os
 import numpy
 
-from Cura.util import mesh
+from Cura.util import printableObject
 from Cura.util.meshLoaders import stl
 from Cura.util.pymclevel import mclevel
 
@@ -211,66 +215,43 @@ class minecraftImportWindow(wx.Frame):
 							faceCount += 1
 						if y == sy - 1 or not self.isSolid[blocks[x, y + 1, z]]:
 							faceCount += 1
-		m = mesh.mesh()
-		m._prepareVertexCount(faceCount * 2 * 3)
+
+		obj = printableObject.printableObject(None)
+		m = obj._addMesh()
+		m._prepareFaceCount(faceCount * 2)
 		for x in xrange(0, sx):
 			for y in xrange(0, sy):
 				for z in xrange(minZ, maxZ + 1):
 					if self.isSolid[blocks[x, y, z]]:
 						if z == maxZ or not self.isSolid[blocks[x, y, z + 1]]:
-							m.addVertex(x, y, z+1)
-							m.addVertex(x+1, y, z+1)
-							m.addVertex(x, y+1, z+1)
+							m._addFace(x, y, z+1, x+1, y, z+1, x, y+1, z+1)
 
-							m.addVertex(x+1, y+1, z+1)
-							m.addVertex(x, y+1, z+1)
-							m.addVertex(x+1, y, z+1)
+							m._addFace(x+1, y+1, z+1, x, y+1, z+1, x+1, y, z+1)
 
 						if z == minZ or not self.isSolid[blocks[x, y, z - 1]]:
-							m.addVertex(x, y, z)
-							m.addVertex(x, y+1, z)
-							m.addVertex(x+1, y, z)
+							m._addFace(x, y, z, x, y+1, z, x+1, y, z)
 
-							m.addVertex(x+1, y+1, z)
-							m.addVertex(x+1, y, z)
-							m.addVertex(x, y+1, z)
+							m._addFace(x+1, y+1, z, x+1, y, z, x, y+1, z)
 
 						if x == 0 or not self.isSolid[blocks[x - 1, y, z]]:
-							m.addVertex(x, y, z)
-							m.addVertex(x, y, z+1)
-							m.addVertex(x, y+1, z)
+							m._addFace(x, y, z, x, y, z+1, x, y+1, z)
 
-							m.addVertex(x, y+1, z+1)
-							m.addVertex(x, y+1, z)
-							m.addVertex(x, y, z+1)
+							m._addFace(x, y+1, z+1, x, y+1, z, x, y, z+1)
 
 						if x == sx - 1 or not self.isSolid[blocks[x + 1, y, z]]:
-							m.addVertex(x+1, y, z)
-							m.addVertex(x+1, y+1, z)
-							m.addVertex(x+1, y, z+1)
+							m._addFace(x+1, y, z, x+1, y+1, z, x+1, y, z+1)
 
-							m.addVertex(x+1, y+1, z+1)
-							m.addVertex(x+1, y, z+1)
-							m.addVertex(x+1, y+1, z)
+							m._addFace(x+1, y+1, z+1, x+1, y, z+1, x+1, y+1, z)
 
 						if y == 0 or not self.isSolid[blocks[x, y - 1, z]]:
-							m.addVertex(x, y, z)
-							m.addVertex(x+1, y, z)
-							m.addVertex(x, y, z+1)
+							m._addFace(x, y, z, x+1, y, z, x, y, z+1)
 
-							m.addVertex(x+1, y, z+1)
-							m.addVertex(x, y, z+1)
-							m.addVertex(x+1, y, z)
+							m._addFace(x+1, y, z+1, x, y, z+1, x+1, y, z)
 
 						if y == sy - 1 or not self.isSolid[blocks[x, y + 1, z]]:
-							m.addVertex(x, y+1, z)
-							m.addVertex(x, y+1, z+1)
-							m.addVertex(x+1, y+1, z)
+							m._addFace(x, y+1, z, x, y+1, z+1, x+1, y+1, z)
 
-							m.addVertex(x+1, y+1, z+1)
-							m.addVertex(x+1, y+1, z)
-							m.addVertex(x, y+1, z+1)
+							m._addFace(x+1, y+1, z+1, x+1, y+1, z, x, y+1, z+1)
 
-		stlFilename = os.path.join(os.path.dirname(self.level.filename), 'export.stl')
-		stl.saveAsSTL(m, stlFilename)
-		self.GetParent()._loadModels([stlFilename])
+		obj._postProcessAfterLoad()
+		self.GetParent().scene._scene.add(obj)

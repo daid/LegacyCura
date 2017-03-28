@@ -24,9 +24,61 @@ SetCompressor /SOLID lzma
 ;--------------------------------
 
 !include "MUI2.nsh"
-!include Library.nsh
+!include "Library.nsh"
 
-!define MUI_ICON "dist/Cura/resources/cura.ico"
+;--------------------------------
+
+; StrContains
+; This function does a case sensitive searches for an occurrence of a substring in a string. 
+; It returns the substring if it is found. 
+; Otherwise it returns null(""). 
+; Written by kenglish_hi
+; Adapted from StrReplace written by dandaman32
+ 
+ 
+Var STR_HAYSTACK
+Var STR_NEEDLE
+Var STR_CONTAINS_VAR_1
+Var STR_CONTAINS_VAR_2
+Var STR_CONTAINS_VAR_3
+Var STR_CONTAINS_VAR_4
+Var STR_RETURN_VAR
+ 
+Function StrContains
+  Exch $STR_NEEDLE
+  Exch 1
+  Exch $STR_HAYSTACK
+  ; Uncomment to debug
+  ;MessageBox MB_OK 'STR_NEEDLE = $STR_NEEDLE STR_HAYSTACK = $STR_HAYSTACK '
+    StrCpy $STR_RETURN_VAR ""
+    StrCpy $STR_CONTAINS_VAR_1 -1
+    StrLen $STR_CONTAINS_VAR_2 $STR_NEEDLE
+    StrLen $STR_CONTAINS_VAR_4 $STR_HAYSTACK
+    loop:
+      IntOp $STR_CONTAINS_VAR_1 $STR_CONTAINS_VAR_1 + 1
+      StrCpy $STR_CONTAINS_VAR_3 $STR_HAYSTACK $STR_CONTAINS_VAR_2 $STR_CONTAINS_VAR_1
+      StrCmp $STR_CONTAINS_VAR_3 $STR_NEEDLE found
+      StrCmp $STR_CONTAINS_VAR_1 $STR_CONTAINS_VAR_4 done
+      Goto loop
+    found:
+      StrCpy $STR_RETURN_VAR $STR_NEEDLE
+      Goto done
+    done:
+   Pop $STR_NEEDLE ;Prevent "invalid opcode" errors and keep the
+   Exch $STR_RETURN_VAR  
+FunctionEnd
+ 
+!macro _StrContainsConstructor OUT NEEDLE HAYSTACK
+  Push `${HAYSTACK}`
+  Push `${NEEDLE}`
+  Call StrContains
+  Pop `${OUT}`
+!macroend
+ 
+!define StrContains '!insertmacro "_StrContainsConstructor"'
+;--------------------------------
+
+!define MUI_ICON "dist/resources/cura.ico"
 !define MUI_BGCOLOR FFFFFF
 
 ; Directory page defines
@@ -89,18 +141,20 @@ Section "Cura ${VERSION}"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Cura_${VERSION}" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Cura_${VERSION}" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
+
+  ; Write start menu entries for all users
+  SetShellVarContext all
   
   CreateDirectory "$SMPROGRAMS\Cura ${VERSION}"
   CreateShortCut "$SMPROGRAMS\Cura ${VERSION}\Uninstall Cura ${VERSION}.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\Cura ${VERSION}\Cura ${VERSION}.lnk" "$INSTDIR\python\pythonw.exe" '-m "Cura.cura"' "$INSTDIR\Cura\resources\cura.ico" 0
-  
-  ; Give all users write permissions in the install directory, so they can read/write profile and preferences files.
-  AccessControl::GrantOnFile "$INSTDIR" "(S-1-5-32-545)" "FullAccess"
+  CreateShortCut "$SMPROGRAMS\Cura ${VERSION}\Cura ${VERSION}.lnk" "$INSTDIR\python\pythonw.exe" '-m "Cura.cura"' "$INSTDIR\resources\cura.ico" 0
   
 SectionEnd
 
 Function LaunchLink
-  ExecShell "" "$SMPROGRAMS\Cura ${VERSION}\Cura ${VERSION}.lnk"
+  ; Write start menu entries for all users
+  SetShellVarContext all
+  Exec '"$WINDIR\explorer.exe" "$SMPROGRAMS\Cura ${VERSION}\Cura ${VERSION}.lnk"'
 FunctionEnd
 
 Section "Install Arduino Drivers"
@@ -109,16 +163,18 @@ Section "Install Arduino Drivers"
   File /r "drivers\"
   
   ${If} ${RunningX64}
-    ExecWait '"$INSTDIR\drivers\dpinst64.exe" /lm'
+    IfSilent +2
+      ExecWait '"$INSTDIR\drivers\dpinst64.exe" /lm'
   ${Else}
-    ExecWait '"$INSTDIR\drivers\dpinst32.exe" /lm'
+    IfSilent +2
+      ExecWait '"$INSTDIR\drivers\dpinst32.exe" /lm'
   ${EndIf}
 SectionEnd
 
 Section "Open STL files with Cura"
 	WriteRegStr HKCR .stl "" "Cura STL model file"
 	DeleteRegValue HKCR .stl "Content Type"
-	WriteRegStr HKCR "Cura STL model file\DefaultIcon" "" "$INSTDIR\Cura\resources\stl.ico,0"
+	WriteRegStr HKCR "Cura STL model file\DefaultIcon" "" "$INSTDIR\resources\stl.ico,0"
 	WriteRegStr HKCR "Cura STL model file\shell" "" "open"
 	WriteRegStr HKCR "Cura STL model file\shell\open\command" "" '"$INSTDIR\python\pythonw.exe" -c "import os; os.chdir(\"$INSTDIR\"); import Cura.cura; Cura.cura.main()" "%1"'
 SectionEnd
@@ -126,9 +182,17 @@ SectionEnd
 Section /o "Open OBJ files with Cura"
 	WriteRegStr HKCR .obj "" "Cura OBJ model file"
 	DeleteRegValue HKCR .obj "Content Type"
-	WriteRegStr HKCR "Cura OBJ model file\DefaultIcon" "" "$INSTDIR\Cura\resources\stl.ico,0"
+	WriteRegStr HKCR "Cura OBJ model file\DefaultIcon" "" "$INSTDIR\resources\stl.ico,0"
 	WriteRegStr HKCR "Cura OBJ model file\shell" "" "open"
 	WriteRegStr HKCR "Cura OBJ model file\shell\open\command" "" '"$INSTDIR\python\pythonw.exe" -c "import os; os.chdir(\"$INSTDIR\"); import Cura.cura; Cura.cura.main()" "%1"'
+SectionEnd
+
+Section /o "Open AMF files with Cura"
+	WriteRegStr HKCR .amf "" "Cura AMF model file"
+	DeleteRegValue HKCR .amf "Content Type"
+	WriteRegStr HKCR "Cura AMF model file\DefaultIcon" "" "$INSTDIR\resources\stl.ico,0"
+	WriteRegStr HKCR "Cura AMF model file\shell" "" "open"
+	WriteRegStr HKCR "Cura AMF model file\shell\open\command" "" '"$INSTDIR\python\pythonw.exe" -c "import os; os.chdir(\"$INSTDIR\"); import Cura.cura; Cura.cura.main()" "%1"'
 SectionEnd
 
 ;--------------------------------
@@ -141,9 +205,10 @@ Section "Uninstall"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Cura_${VERSION}"
   DeleteRegKey HKLM "SOFTWARE\Cura_${VERSION}"
 
+  ; Write start menu entries for all users
+  SetShellVarContext all
   ; Remove directories used
   RMDir /r "$SMPROGRAMS\Cura ${VERSION}"
   RMDir /r "$INSTDIR"
 
 SectionEnd
-

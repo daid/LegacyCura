@@ -1,5 +1,4 @@
-# coding=utf-8
-from __future__ import absolute_import
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import wx._core #We only need the core here, which speeds up the import. As we want to show the splashscreen ASAP.
 
@@ -14,4 +13,5 @@ class splashScreen(wx.SplashScreen):
 
 	def DoCallback(self):
 		self.callback()
-		self.Destroy()
+		if self:
+			self.Destroy()

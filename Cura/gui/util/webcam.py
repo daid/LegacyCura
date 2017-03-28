@@ -1,5 +1,4 @@
-# coding=utf-8
-from __future__ import absolute_import
+__copyright__ = "Copyright (C) 2013 David Braam - Released under terms of the AGPLv3 License"
 
 import os
 import glob
@@ -27,7 +26,7 @@ except:
 	win32vidcap = None
 
 def hasWebcamSupport():
-	if cv == None and win32vidcap == None:
+	if cv is None and win32vidcap is None:
 		return False
 	if not os.path.exists(getFFMPEGpath()):
 		return False
@@ -36,46 +35,82 @@ def hasWebcamSupport():
 
 def getFFMPEGpath():
 	if platform.system() == "Windows":
-		return os.path.normpath(os.path.join(os.path.split(__file__)[0], "../ffmpeg.exe"))
+		return os.path.normpath(os.path.join(os.path.split(__file__)[0], "../../ffmpeg.exe"))
 	elif os.path.exists('/usr/bin/ffmpeg'):
 		return '/usr/bin/ffmpeg'
-	return os.path.normpath(os.path.join(os.path.split(__file__)[0], "../ffmpeg"))
+	return os.path.normpath(os.path.join(os.path.split(__file__)[0], "../../ffmpeg"))
 
 
 class webcam(object):
 	def __init__(self):
 		self._cam = None
+		self._cameraList = None
+		self._activeId = -1
 		self._overlayImage = wx.Bitmap(getPathForImage('cura-overlay.png'))
 		self._overlayUltimaker = wx.Bitmap(getPathForImage('ultimaker-overlay.png'))
-		if cv != None:
-			self._cam = highgui.cvCreateCameraCapture(-1)
-		elif win32vidcap != None:
-			try:
-				self._cam = win32vidcap.new_Dev(0, False)
-			except:
-				pass
-
 		self._doTimelapse = False
 		self._bitmap = None
 
+		#open the camera and close it to check if we have a camera, then open the camera again when we use it for the
+		# first time.
+		cameraList = []
+		tryNext = True
+		self._camId = 0
+		while tryNext:
+			tryNext = False
+			self._openCam()
+			if self._cam is not None:
+				cameraList.append(self._cam.getdisplayname())
+				tryNext = True
+				del self._cam
+				self._cam = None
+				self._camId += 1
+		self._camId = 0
+		self._activeId = -1
+		self._cameraList = cameraList
+
 	def hasCamera(self):
-		return self._cam != None
+		return len(self._cameraList) > 0
+
+	def listCameras(self):
+		return self._cameraList
+
+	def setActiveCamera(self, cameraIdx):
+		self._camId = cameraIdx
+
+	def _openCam(self):
+		if self._cameraList is not None and self._camId >= len(self._cameraList):
+			return False
+		if self._cam is not None:
+			if self._activeId != self._camId:
+				del self._cam
+				self._cam = None
+			else:
+				return True
+
+		self._activeId = self._camId
+		if cv is not None:
+			self._cam = highgui.cvCreateCameraCapture(self._camId)
+		elif win32vidcap is not None:
+			try:
+				self._cam = win32vidcap.new_Dev(self._camId, False)
+			except:
+				pass
+		return self._cam is not None
 
 	def propertyPages(self):
-		if self._cam == None:
-			return []
-		if cv != None:
+		if cv is not None:
 			#TODO Make an OpenCV property page
 			return []
-		elif win32vidcap != None:
+		elif win32vidcap is not None:
 			return ['Image properties', 'Format properties']
 
 	def openPropertyPage(self, pageType=0):
-		if self._cam == None:
+		if not self._openCam():
 			return
-		if cv != None:
+		if cv is not None:
 			pass
-		elif win32vidcap != None:
+		elif win32vidcap is not None:
 			if pageType == 0:
 				self._cam.displaycapturefilterproperties()
 			else:
@@ -85,19 +120,20 @@ class webcam(object):
 				tmp.displaycapturepinproperties()
 				self._cam = tmp
 
-	def takeNewImage(self):
-		if self._cam == None:
+	def takeNewImage(self, withOverlay = True):
+		if not self._openCam():
 			return
-		if cv != None:
+		if cv is not None:
 			frame = cv.QueryFrame(self._cam)
 			cv.CvtColor(frame, frame, cv.CV_BGR2RGB)
 			bitmap = wx.BitmapFromBuffer(frame.width, frame.height, frame.imageData)
-		elif win32vidcap != None:
+		elif win32vidcap is not None:
 			buffer, width, height = self._cam.getbuffer()
 			try:
 				wxImage = wx.EmptyImage(width, height)
 				wxImage.SetData(buffer[::-1])
-				if self._bitmap != None:
+				wxImage = wxImage.Mirror()
+				if self._bitmap is not None:
 					del self._bitmap
 				bitmap = wxImage.ConvertToBitmap()
 				del wxImage
@@ -105,13 +141,14 @@ class webcam(object):
 			except:
 				pass
 
-		dc = wx.MemoryDC()
-		dc.SelectObject(bitmap)
-		dc.DrawBitmap(self._overlayImage, bitmap.GetWidth() - self._overlayImage.GetWidth() - 5, 5, True)
-		if profile.getPreference('machine_type') == 'ultimaker':
-			dc.DrawBitmap(self._overlayUltimaker, (bitmap.GetWidth() - self._overlayUltimaker.GetWidth()) / 2,
-				bitmap.GetHeight() - self._overlayUltimaker.GetHeight() - 5, True)
-		dc.SelectObject(wx.NullBitmap)
+		if withOverlay:
+			dc = wx.MemoryDC()
+			dc.SelectObject(bitmap)
+			dc.DrawBitmap(self._overlayImage, bitmap.GetWidth() - self._overlayImage.GetWidth() - 5, 5, True)
+			if profile.getMachineSetting('machine_type').startswith('ultimaker'):
+				dc.DrawBitmap(self._overlayUltimaker, (bitmap.GetWidth() - self._overlayUltimaker.GetWidth()) / 2,
+					bitmap.GetHeight() - self._overlayUltimaker.GetHeight() - 5, True)
+			dc.SelectObject(wx.NullBitmap)
 
 		self._bitmap = bitmap
 
@@ -127,7 +164,7 @@ class webcam(object):
 		return self._bitmap
 
 	def startTimelapse(self, filename):
-		if self._cam == None:
+		if not self._openCam():
 			return
 		self._cleanTempDir()
 		self._timelapseFilename = filename

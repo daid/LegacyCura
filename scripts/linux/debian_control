@@ -1,0 +1,14 @@
+Package: cura
+Version: [BUILD_NAME]
+Section: misc
+Priority: optional
+Architecture: [ARCH]
+Essential: no
+Depends: python-wxgtk2.8 | python-wxgtk3.0, python-opengl, python-serial, python-numpy
+Maintainer: Daid <daid303@gmail.com>
+Provides: cura
+Installed-Size: 10000
+Description: Cura is a full software solution for 3D printing,
+ aimed at RepRaps and the Ultimaker. It's free software payed for
+ and maintained by Ultimaker.
+
